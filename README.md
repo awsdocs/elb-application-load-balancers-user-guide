@@ -1,4 +1,4 @@
-## Elb Application Load Balancers User Guide
+## Application Load Balancers User Guide
 
 The open source version of the User Guide for Application Load Balancers. To submit feedback or requests for changes, submit an issue or make changes and submit a pull request.
 

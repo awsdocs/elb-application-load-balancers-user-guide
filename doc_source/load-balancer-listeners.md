@@ -12,7 +12,7 @@ Listeners support the following protocols and ports:
 
 + **Ports**: 1\-65535
 
-You can use an HTTPS listener to offload the work of encryption and decryption to your load balancer so that your targets can focus on their main work\. If the listener protocol is HTTPS, you must deploy exactly one SSL server certificate on the listener\. For more information, see [HTTPS Listeners for Your Application Load Balancer](create-https-listener.md)\.
+You can use an HTTPS listener to offload the work of encryption and decryption to your load balancer so that your targets can focus on their main work\. If the listener protocol is HTTPS, you must deploy at least one SSL server certificate on the listener\. For more information, see [HTTPS Listeners for Your Application Load Balancer](create-https-listener.md)\.
 
 Application Load Balancers provide native support for Websockets\. You can use WebSockets with both HTTP and HTTPS listeners\.
 

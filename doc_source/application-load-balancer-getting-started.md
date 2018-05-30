@@ -2,7 +2,7 @@
 
 This tutorial provides a hands\-on introduction to Application Load Balancers through the AWS Management Console, a web\-based interface\. To create your first Application Load Balancer, complete the following steps\.
 
-
+**Topics**
 + [Before You Begin](#prerequisites)
 + [Step 1: Select a Load Balancer Type](#select-load-balancer-type)
 + [Step 2: Configure Your Load Balancer and Listener](#configure-load-balancer)
@@ -15,9 +15,7 @@ This tutorial provides a hands\-on introduction to Application Load Balancers th
 Alternatively, to create a Network Load Balancer, see [Getting Started with Network Load Balancers](http://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancer-getting-started.html) in the *User Guide for Network Load Balancers*\. To create a Classic Load Balancer, see [Create a Classic Load Balancer](http://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-getting-started.html) in the *User Guide for Classic Load Balancers*\.
 
 ## Before You Begin<a name="prerequisites"></a>
-
-+ Decide which two Availability Zones you will use for your EC2 instances\. Configure your virtual private cloud \(VPC\) with at least one public subnet in each of these Availability Zones\.
-
++ Decide which two Availability Zones you will use for your EC2 instances\. Configure your virtual private cloud \(VPC\) with at least one public subnet in each of these Availability Zones\. These public subnets are used to configure the load balancer\. You can launch your EC2 instances in other subnets of these Availability Zones instead\.
 + Launch at least one EC2 instance in each Availability Zone\. Be sure to install a web server, such as Apache or Internet Information Services \(IIS\), on each EC2 instance\. Ensure that the security groups for these instances allow HTTP access on port 80\.
 
 ## Step 1: Select a Load Balancer Type<a name="select-load-balancer-type"></a>
@@ -44,7 +42,7 @@ On the **Configure Load Balancer** page, complete the following procedure\.
 
 1. For **Name**, type a name for your load balancer\.
 
-   The name of your Application Load Balancer must be unique within your set of Application Load Balancers and Network Load Balancers for the region, can have a maximum of 32 characters, can contain only alphanumeric characters and hyphens, and must not begin or end with a hyphen\.
+   The name of your Application Load Balancer must be unique within your set of Application Load Balancers and Network Load Balancers for the region, can have a maximum of 32 characters, can contain only alphanumeric characters and hyphens, must not begin or end with a hyphen, and must not begin with "internal\-"\.
 
 1. For **Scheme** and **IP address type**, keep the default values\.
 
@@ -54,14 +52,11 @@ On the **Configure Load Balancer** page, complete the following procedure\.
 
 1. Choose **Next: Configure Security Settings**\.
 
-1. For this tutorial, you are not using a secure listener\. Choose **Next: Configure Security Groups**\.
+1. For this tutorial, you are not creating an HTTPS listener\. Choose **Next: Configure Security Groups**\.
 
 ## Step 3: Configure a Security Group for Your Load Balancer<a name="configure-security-groups"></a>
 
-The security group for your load balancer must allow it to communicate with registered targets on both the listener port and the health check port\. The console can create security groups for your load balancer on your behalf, with rules that specify the correct protocols and ports\.
-
-**Note**  
-If you prefer, you can create and select your own security group instead\. For more information, see [Recommended Rules](load-balancer-update-security-groups.md#security-group-recommended-rules)\.
+The security group for your load balancer must allow it to communicate with registered targets on both the listener port and the health check port\. The console can create a security group for your load balancer on your behalf, with rules that specify the correct protocols and ports\. If you prefer, you can create and select your own security group instead\. For more information, see [Recommended Rules](load-balancer-update-security-groups.md#security-group-recommended-rules)\.
 
 On the **Configure Security Groups** page, complete the following procedure to have Elastic Load Balancing create a security group for your load balancer on your behalf\.
 
@@ -122,6 +117,8 @@ Before creating the load balancer, review the settings that you selected\. After
 1. Select the newly created load balancer\.
 
 1. On the **Description** tab, copy the DNS name of the load balancer \(for example, my\-load\-balancer\-1234567890\.us\-west\-2\.elb\.amazonaws\.com\)\. Paste the DNS name into the address field of an Internet\-connected web browser\. If everything is working, the browser displays the default page of your server\.
+
+1. \(Optional\) To define additional listener rules, see [Add a Rule](listener-update-rules.md#add-rule)\.
 
 ## Step 7: Delete Your Load Balancer \(Optional\)<a name="delete-load-balancer"></a>
 

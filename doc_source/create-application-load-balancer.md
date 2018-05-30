@@ -8,7 +8,7 @@ To create a load balancer using the AWS CLI, see [Tutorial: Create an Applicatio
 
 To create a load balancer using the AWS Management Console, complete the following tasks\.
 
-
+**Topics**
 + [Step 1: Configure a Load Balancer and a Listener](#configure-load-balancer)
 + [Step 2: Configure Security Settings for an HTTPS Listener](#configure-security-settings)
 + [Step 3: Configure a Security Group](#configure-security-group)
@@ -28,7 +28,7 @@ First, provide some basic configuration information for your load balancer, such
 
 1. Choose **Create Load Balancer**\.
 
-1. Choose **Application Load Balancer**, and then choose **Continue**\.
+1. For **Application Load Balancer**, choose **Create**\.
 
 1. For **Name**, type a name for your load balancer\. For example, **my\-alb**\.
 
@@ -42,16 +42,14 @@ First, provide some basic configuration information for your load balancer, such
 
 ## Step 2: Configure Security Settings for an HTTPS Listener<a name="configure-security-settings"></a>
 
-If you created a secure listener in the previous step, configure the required security settings\. Otherwise, go to the next page in the wizard\.
+If you created an HTTPS listener in the previous step, configure the required security settings\. Otherwise, go to the next page in the wizard\.
 
 When you use HTTPS for your load balancer listener, you must deploy an SSL certificate on your load balancer\. The load balancer uses this certificate to terminate the connection and decrypt requests from clients before sending them to the targets\. For more information, see [SSL Certificates](create-https-listener.md#https-listener-certificates)\. You must also specify the security policy that the load balancer uses to negotiate SSL connections with the clients\. For more information, see [Security Policies](create-https-listener.md#describe-ssl-policies)\.
 
 **To configure a certificate and security policy**
 
 1. For **Select default certificate**, do one of the following:
-
    + If you created or imported a certificate using AWS Certificate Manager, select **Choose a certificate from ACM**, and then select the certificate from **Certificate name**\.
-
    + If you uploaded a certificate using IAM, select **Choose a certificate from IAM**, and then select the certificate from **Certificate name**\.
 
 1. For **Security policy**, we recommend that you keep the default security policy\.

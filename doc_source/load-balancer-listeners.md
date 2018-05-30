@@ -2,17 +2,25 @@
 
 Before you start using your Application Load Balancer, you must add one or more *listeners*\. A listener is a process that checks for connection requests, using the protocol and port that you configure\. The rules that you define for a listener determine how the load balancer routes requests to the targets in one or more target groups\.
 
-Contents
+**Topics**
++ [Listener Configuration](#listener-configuration)
++ [Listener Rules](#listener-rules)
++ [Host Conditions](#host-conditions)
++ [Path Conditions](#path-conditions)
++ [Create a Listener](create-listener.md)
++ [Configure HTTPS Listeners](create-https-listener.md)
++ [Update Listener Rules](listener-update-rules.md)
++ [Update Server Certificates](listener-update-certificates.md)
++ [Authenticate Users](listener-authenticate-users.md)
++ [Delete a Listener](delete-listener.md)
 
 ## Listener Configuration<a name="listener-configuration"></a>
 
 Listeners support the following protocols and ports:
-
 + **Protocols**: HTTP, HTTPS
-
 + **Ports**: 1\-65535
 
-You can use an HTTPS listener to offload the work of encryption and decryption to your load balancer so that your targets can focus on their main work\. If the listener protocol is HTTPS, you must deploy at least one SSL server certificate on the listener\. For more information, see [HTTPS Listeners for Your Application Load Balancer](create-https-listener.md)\.
+You can use an HTTPS listener to offload the work of encryption and decryption to your load balancer so that your applications can focus on their business logic\. If the listener protocol is HTTPS, you must deploy exactly one SSL server certificate on the listener\. For more information, see [HTTPS Listeners for Your Application Load Balancer](create-https-listener.md)\.
 
 Application Load Balancers provide native support for Websockets\. You can use WebSockets with both HTTP and HTTPS listeners\.
 
@@ -20,11 +28,11 @@ Application Load Balancers provide native support for HTTP/2 with HTTPS listener
 
 ## Listener Rules<a name="listener-rules"></a>
 
-Each listener has a default rule, and you can optionally define additional rules\. Each rule consists of a priority, action, optional host condition, and optional path condition\.
+Each listener has a default rule, and you can optionally define additional rules\. Each rule consists of a priority, a forward action, an optional authenticate action \(for HTTPS listeners\), an optional host condition, and an optional path condition\.
 
 ### Default Rules<a name="listener-default-rule"></a>
 
-When you create a listener, you define an action for the default rule\. Default rules can't have conditions\. If no conditions for any of a listener's rules are met, then the action for the default rule is taken\.
+When you create a listener, you define actions for the default rule\. Default rules can't have conditions\. If no conditions for any of a listener's rules are met, then the action for the default rule is performed\.
 
 The following is an example of a default rule as shown in the console:
 
@@ -36,11 +44,22 @@ Each rule has a priority\. Rules are evaluated in priority order, from the lowes
 
 ### Rule Actions<a name="listener-rule-actions"></a>
 
-Each rule action has a type and a target group\. Currently, the only supported type is `forward`, which forwards requests to the target group\. You can change the target group for a rule at any time\. For more information, see [Edit a Rule](listener-update-rules.md#edit-rule)\.
+Each rule action has a type, an order, and information required to perform the action\. The following are the supported action types:
+
+`authenticate-cognito`  
+\[HTTPS listeners\] Use Amazon Cognito to authenticate users\.
+
+`authenticate-oidc`  
+\[HTTPS listeners\] Use an identity provider that is compliant with OpenID Connect \(OIDC\) to authenticate users\.
+
+`forward`  
+Forward requests to the specified target group\.
+
+The action with the lowest order value is performed first\. Each rule must include one `forward` action\. The `forward` action must be performed last\. You can edit a rule at any time\. For more information, see [Edit a Rule](listener-update-rules.md#edit-rule)\.
 
 ### Rule Conditions<a name="listener-rule-conditions"></a>
 
-There are two types of rule conditions: host and path\. When the conditions for a rule are met, then its action is taken\.
+There are two types of rule conditions: host and path\. Each rule can have up to one host condition and up to one path condition\. When the conditions for a rule are met, then its action is performed\.
 
 ## Host Conditions<a name="host-conditions"></a>
 
@@ -49,21 +68,14 @@ You can use host conditions to define rules that forward requests to different t
 Each host condition has one hostname\. If the hostname in the host header matches the hostname in a listener rule exactly, the request is routed using that rule\.
 
 A hostname is case\-insensitive, can be up to 128 characters in length, and can contain any of the following characters\. Note that you can include up to three wildcard characters\.
-
 + A–Z, a–z, 0–9
-
 + \- \.
-
 + \* \(matches 0 or more characters\)
-
 + ? \(matches exactly 1 character\)
 
 **Example hostnames**
-
 + **example\.com**
-
 + **test\.example\.com**
-
 + **\*\.example\.com**
 
 Note that **\*\.example\.com** will match **test\.example\.com** but won't match **example\.com**\.
@@ -80,21 +92,14 @@ You can use path conditions to define rules that forward requests to different t
 Each path condition has one path pattern\. If the URL in a request matches the path pattern in a listener rule exactly, the request is routed using that rule\.
 
 A path pattern is case\-sensitive, can be up to 128 characters in length, and can contain any of the following characters\. Note that you can include up to three wildcard characters\.
-
 + A–Z, a–z, 0–9
-
 + \_ \- \. $ / \~ " ' @ : \+
-
 + & \(using &amp;\)
-
 + \* \(matches 0 or more characters\)
-
 + ? \(matches exactly 1 character\)
 
 **Example path patterns**
-
 + `/img/*`
-
 + `/js/*`
 
 Note that the path pattern is used to route requests but does not alter them\. For example, if a rule has a path pattern of `/img/*`, the rule would forward a request for `/img/picture.jpg` to the specified target group as a request for `/img/picture.jpg`\.

@@ -47,9 +47,6 @@ X-Amzn-Trace-Id: Self=1-67891234-12456789abcdef012345678;Root=1-67891233-abcdef0
 If the **X\-Amzn\-Trace\-Id** header is present and has a `Self` field, the load balancer updates the value of the `Self` field\.
 
 ## Limitations<a name="request-tracing-limits"></a>
-
 + The load balancer updates the header when it receives an incoming request, not when it receives a response\.
-
 + If the HTTP headers are greater than 7 KB, the load balancer rewrites the **X\-Amzn\-Trace\-Id** header with a `Root` field\.
-
 + With WebSockets, you can trace only until the upgrade request is successful\.

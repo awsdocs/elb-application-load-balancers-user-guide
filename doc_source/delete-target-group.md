@@ -1,6 +1,6 @@
 # Delete a Target Group<a name="delete-target-group"></a>
 
-You can delete a target group if it is not referenced by any actions\. Note that deleting a target group does not affect the targets registered with the target group\. If you no longer need a registered EC2 instance, you can stop or terminate it\.
+If a target group is not referenced by any actions, you can delete it\. Deleting a target group does not affect the targets registered with the target group\. If you no longer need a registered EC2 instance, you can stop or terminate it\.
 
 **To delete a target group using the console**
 
@@ -8,7 +8,7 @@ You can delete a target group if it is not referenced by any actions\. Note that
 
 1. On the navigation pane, under **LOAD BALANCING**, choose **Target Groups**\.
 
-1. Select the target group, and then choose **Actions**, **Delete**\.
+1. Select the target group and choose **Actions**, **Delete**\.
 
 1. When prompted for confirmation, choose **Yes**\.
 

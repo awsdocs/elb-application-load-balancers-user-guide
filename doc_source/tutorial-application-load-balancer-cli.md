@@ -3,7 +3,6 @@
 This tutorial provides a hands\-on introduction to Application Load Balancers through the AWS CLI\.
 
 ## Before You Begin<a name="prerequisites-aws-cli"></a>
-
 + Use the following command to verify that you are running a version of the AWS CLI that supports Application Load Balancers\.
 
   ```
@@ -11,7 +10,6 @@ This tutorial provides a hands\-on introduction to Application Load Balancers th
   ```
 
   If you get an error message that elbv2 is not a valid choice, update your AWS CLI\. For more information, see [Installing the AWS Command Line Interface](http://docs.aws.amazon.com/cli/latest/userguide/installing.html) in the *AWS Command Line Interface User Guide*\.
-
 + Launch your EC2 instances in a virtual private cloud \(VPC\)\. Ensure that the security groups for these instances allow access on the listener port and the health check port\. For more information, see [Target Security Groups](target-group-register-targets.md#target-security-groups)\.
 
 ## Create Your Load Balancer<a name="create-load-balancer-aws-cli"></a>
@@ -80,9 +78,7 @@ If you have a load balancer with an HTTP listener, you can add an HTTPS listener
 **To add an HTTPS listener to your load balancer**
 
 1. Create an SSL certificate for use with your load balancer using one of the following methods:
-
    + Create or import the certificate using AWS Certificate Manager \(ACM\)\. For more information, see [Request a Certificate](http://docs.aws.amazon.com/acm/latest/userguide/gs-acm-request.html) or [Importing Certificates](http://docs.aws.amazon.com/acm/latest/userguide/import-certificate.html) in the *AWS Certificate Manager User Guide*\.
-
    + Upload the certificate using AWS Identity and Access Management \(IAM\)\. For more information, see [Working with Server Certificates](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_server-certs.html) in the *IAM User Guide*\.
 
 1. Use the [create\-listener](http://docs.aws.amazon.com/cli/latest/reference/elbv2/create-listener.html) command to create the listener with a default rule that forwards requests to your target group\. You must specify an SSL certificate when you create an HTTPS listener\. Note that you can specify an SSL policy other than the default using the `--ssl-policy` option\.

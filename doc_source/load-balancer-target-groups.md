@@ -4,12 +4,13 @@ Each *target group* is used to route requests to one or more registered targets\
 
 You define health check settings for your load balancer on a per target group basis\. Each target group uses the default health check settings, unless you override them when you create the target group or modify them later on\. After you specify a target group in a rule for a listener, the load balancer continually monitors the health of all targets registered with the target group that are in an Availability Zone enabled for the load balancer\. The load balancer routes requests to the registered targets that are healthy\.
 
-
+**Topics**
 + [Routing Configuration](#target-group-routing-configuration)
 + [Target Type](#target-type)
 + [Registered Targets](#registered-targets)
 + [Target Group Attributes](#target-group-attributes)
 + [Deregistration Delay](#deregistration-delay)
++ [Slow Start Mode](#slow-start-mode)
 + [Sticky Sessions](#sticky-sessions)
 + [Create a Target Group](create-target-group.md)
 + [Health Checks for Your Target Groups](target-group-health-checks.md)
@@ -22,9 +23,7 @@ You define health check settings for your load balancer on a per target group ba
 By default, a load balancer routes requests to its targets using the protocol and port number that you specified when you created the target group\. Alternatively, you can override the port used for routing traffic to a target when you register it with the target group\.
 
 Target groups support the following protocols and ports:
-
 + **Protocols**: HTTP, HTTPS
-
 + **Ports**: 1\-65535
 
 If a target group is configured with the HTTPS protocol or uses HTTPS health checks, SSL connections to the targets use the security settings from the `ELBSecurityPolicy2016-08` policy\.
@@ -42,15 +41,10 @@ The targets are specified by instance ID\.
 The targets are specified by IP address\.
 
 When the target type is `ip`, you can specify IP addresses from one of the following CIDR blocks:
-
 + The subnets of the VPC for the target group
-
 + 10\.0\.0\.0/8 \(RFC 1918\)
-
 + 100\.64\.0\.0/10 \(RFC 6598\)
-
 + 172\.16\.0\.0/12 \(RFC 1918\)
-
 + 192\.168\.0\.0/16 \(RFC 1918\)
 
 These supported CIDR blocks enable you to register the following with a target group: ClassicLink instances, instances in a peered VPC, AWS resources that are addressable by IP address and port \(for example, databases\), and on\-premises resources linked to AWS through AWS Direct Connect or a VPN connection\.
@@ -58,7 +52,7 @@ These supported CIDR blocks enable you to register the following with a target g
 **Important**  
 You can't specify publicly routable IP addresses\.
 
-If you specify targets using an instance ID, traffic is routed to instances using the primary private IP address specified in the primary network interface for the instance\. If you specify targets using IP addresses, you can route traffic to an instance using any private IP address from one or more network interfaces\. This enables multiple applications on an instance to use the same port\. Note that each network interface can have its own security group\.
+If you specify targets using an instance ID, traffic is routed to instances using the primary private IP address specified in the primary network interface for the instance\. If you specify targets using IP addresses, you can route traffic to an instance using any private IP address from one or more network interfaces\. This enables multiple applications on an instance to use the same port\. Each network interface can have its own security group\.
 
 ## Registered Targets<a name="registered-targets"></a>
 
@@ -75,7 +69,10 @@ If you are registering targets by instance ID, you can use your load balancer wi
 The following are the target group attributes:
 
 `deregistration_delay.timeout_seconds`  
-The amount of time for Elastic Load Balancing to wait before deregistering a target\. The range is 0\-3600 seconds\. The default value is 300 seconds\.
+The amount of time for Elastic Load Balancing to wait before deregistering a target\. The range is 0–3600 seconds\. The default value is 300 seconds\.
+
+`slow_start.duration_seconds`  
+The time period, in seconds, during which the load balancer sends a newly registered target a linearly increasing share of the traffic to the target group\. The range is 30–900 seconds \(15 minutes\)\. The default is 0 seconds \(disabled\)\.
 
 `stickiness.enabled`  
 Indicates whether sticky sessions are enabled\.
@@ -88,11 +85,11 @@ The type of stickiness\. The possible value is `lb_cookie`\.
 
 ## Deregistration Delay<a name="deregistration-delay"></a>
 
-Elastic Load Balancing stops sending requests to targets that are deregistering\. By default, Elastic Load Balancing waits 300 seconds before completing the deregistration process, which can help in\-flight requests to the target to complete\. To change the amount of time that Elastic Load Balancing waits, update the deregistration delay value\. Note that you can specify a value of up to 1 hour, and that Elastic Load Balancing waits the full amount of time specified, regardless of whether there are in\-flight requests\.
+Elastic Load Balancing stops sending requests to targets that are deregistering\. By default, Elastic Load Balancing waits 300 seconds before completing the deregistration process, which can help in\-flight requests to the target to complete\. To change the amount of time that Elastic Load Balancing waits, update the deregistration delay value\. You can specify a value of up to 1 hour, and that Elastic Load Balancing waits the full amount of time specified, regardless of whether there are in\-flight requests\.
 
 If a deregistering target terminates the connection before the deregistration delay elapses, the client receives a 500\-level error response\.
 
-The initial state of a deregistering target is `draining`\. After the deregistration delay elapses, the deregistration process completes and the state of the target is `unused`\. If the target is part of an Auto Scaling group, it can be terminated and replaced\. However, connections between load balancer nodes and a deregistering target are kept for up to one hour if there are in\-flight requests\.
+The initial state of a deregistering target is `draining`\. After the deregistration delay elapses, the deregistration process completes and the state of the target is `unused`\. If the target is part of an Auto Scaling group, it can be terminated and replaced\.
 
 **To update the deregistration delay value using the console**
 
@@ -100,14 +97,39 @@ The initial state of a deregistering target is `draining`\. After the deregistra
 
 1. On the navigation pane, under **LOAD BALANCING**, choose **Target Groups**\.
 
-1. Select the target group\.
+1. Select the target group\. The current value is displayed on the **Description** tab as **Deregistration delay**\.
 
 1. On the **Description** tab, choose **Edit attributes**\.
 
 1. On the **Edit attributes** page, change the value of **Deregistration delay** as needed, and then choose **Save**\.
 
 **To update the deregistration delay value using the AWS CLI**  
-Use the [modify\-target\-group\-attributes](http://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-target-group-attributes.html) command\.
+Use the [modify\-target\-group\-attributes](http://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-target-group-attributes.html) command with the `deregistration_delay.timeout_seconds` attribute\.
+
+## Slow Start Mode<a name="slow-start-mode"></a>
+
+By default, a target starts to receive its full share of requests as soon as it is registered with a target group and passes an initial health check\. Using slow start mode gives targets time to warm up before the load balancer sends them a full share of requests\. After you enable slow start for a target group, targets enter slow start mode when they are registered with the target group and exit slow start mode when the configured slow start duration period elapses\. The load balancer linearly increases the number of requests that it can send to a target in slow start mode\. After a target exits slow start mode, the load balancer can send it a full share of requests\.
+
+**Considerations**
++ When you enable slow start for a target group, the targets already registered with the target group do not enter slow start mode\.
++ When you enable slow start for an empty target group and then register one or more targets using a single registration operation, these targets do not enter slow start mode\. Newly registered targets enter slow start mode only when there is at least one registered target that is not in slow start mode\.
++ If you deregister a target in slow start mode, the target exits slow start mode\. If you register the same target again, it enters slow start mode again\.
++ If a target in slow start mode becomes unhealthy and then healthy again before the duration period elapses, the target remains in slow start mode and exits slow start mode when the remainder of the duration period elapses\. If a target that is not in slow start mode changes from unhealthy to healthy, it does not enter slow start mode\.
+
+**To update the slow start duration value using the console**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. On the navigation pane, under **LOAD BALANCING**, choose **Target Groups**\.
+
+1. Select the target group\. The current value is displayed on the **Description** tab as **Slow start duration**\.
+
+1. On the **Description** tab, choose **Edit attributes**\.
+
+1. On the **Edit attributes** page, change the value of **Slow start duration** as needed, and then choose **Save**\. To disable slow start mode, set the duration to 0\.
+
+**To update the slow start duration value using the AWS CLI**  
+Use the [modify\-target\-group\-attributes](http://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-target-group-attributes.html) command with the `slow_start.duration_seconds` attribute\.
 
 ## Sticky Sessions<a name="sticky-sessions"></a>
 
@@ -140,4 +162,4 @@ You enable sticky sessions at the target group level\. You can also set the dura
    1. Choose **Save**\.
 
 **To enable sticky sessions using the AWS CLI**  
-Use the [modify\-target\-group\-attributes](http://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-target-group-attributes.html) command\.
+Use the [modify\-target\-group\-attributes](http://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-target-group-attributes.html) command with the `stickiness.enabled` and `stickiness.lb_cookie.duration_seconds` attributes\.

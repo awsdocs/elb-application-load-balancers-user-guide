@@ -6,7 +6,7 @@ Each load balancer node routes requests only to the healthy targets in the enabl
 
 If no Availability Zone contains a healthy target, the load balancer nodes route requests to all targets\.
 
-Note that health checks do not support WebSockets\.
+Health checks do not support WebSockets\.
 
 ## Health Check Settings<a name="health-check-settings"></a>
 
@@ -18,10 +18,10 @@ You configure health checks for the targets in a target group using the followin
 | **HealthCheckProtocol** |  The protocol the load balancer uses when performing health checks on targets\. The possible protocols are HTTP and HTTPS\. The default is the HTTP protocol\.  | 
 | **HealthCheckPort** |  The port the load balancer uses when performing health checks on targets\. The default is to use the port on which each target receives traffic from the load balancer\.  | 
 | **HealthCheckPath** |  The ping path that is the destination on the targets for health checks\. The default is /\.  | 
-| **HealthCheckTimeoutSeconds** |  The amount of time, in seconds, during which no response from a target means a failed health check\. The range is 2 to 60 seconds\. The default is 5 seconds\.  | 
-| **HealthCheckIntervalSeconds** |  The approximate amount of time, in seconds, between health checks of an individual target\. The range is 5 to 300 seconds\. The default is 30 seconds\.   | 
-| **HealthyThresholdCount** |  The number of consecutive successful health checks required before considering an unhealthy target healthy\. The range is 2 to 10\. The default is 5\.  | 
-| **UnhealthyThresholdCount** |  The number of consecutive failed health checks required before considering a target unhealthy\. The range is 2 to 10\. The default is 2\.  | 
+| **HealthCheckTimeoutSeconds** |  The amount of time, in seconds, during which no response from a target means a failed health check\. The range is 2–60 seconds\. The default is 5 seconds\.  | 
+| **HealthCheckIntervalSeconds** |  The approximate amount of time, in seconds, between health checks of an individual target\. The range is 5–300 seconds\. The default is 30 seconds\.   | 
+| **HealthyThresholdCount** |  The number of consecutive successful health checks required before considering an unhealthy target healthy\. The range is 2–10\. The default is 5\.  | 
+| **UnhealthyThresholdCount** |  The number of consecutive failed health checks required before considering a target unhealthy\. The range is 2–10\. The default is 2\.  | 
 | **Matcher** |  The HTTP codes to use when checking for a successful response from a target\. You can specify values or ranges of values between 200 and 499\. The default value is 200\.  | 
 
 ## Target Health Status<a name="target-health-states"></a>
@@ -41,7 +41,7 @@ The following table describes the possible values for the health status of a reg
 
 ## Health Check Reason Codes<a name="target-health-reason-codes"></a>
 
-If the status of a target is any value other than `Healthy`, the API returns a reason code and a description of the issue, and the console displays the same description in a tooltip\. Note that reason codes that begin with `Elb` originate on the load balancer side and reason codes that begin with `Target` originate on the target side\.
+If the status of a target is any value other than `Healthy`, the API returns a reason code and a description of the issue, and the console displays the same description in a tooltip\. Reason codes that begin with `Elb` originate on the load balancer side and reason codes that begin with `Target` originate on the target side\.
 
 
 | Reason code | Description | 
@@ -75,7 +75,7 @@ You can check the health status of the targets registered with your target group
 1. If the status is any value other than `Healthy`, view the tooltip for more information\. 
 
 **To check the health of your targets using the AWS CLI**  
-Use the [describe\-target\-health](http://docs.aws.amazon.com/cli/latest/reference/elbv2/describe-target-health.html) command\. The output of this command contains the target health state, and it includes a reason code if the status is any value other than `Healthy`\.
+Use the [describe\-target\-health](http://docs.aws.amazon.com/cli/latest/reference/elbv2/describe-target-health.html) command\. The output of this command contains the target health state\. If the status is any value other than `Healthy`, the output also includes a reason code\.
 
 ## Modify the Health Check Settings of a Target Group<a name="modify-health-check-settings"></a>
 

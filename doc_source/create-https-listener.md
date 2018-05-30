@@ -10,20 +10,21 @@ Elastic Load Balancing uses a Secure Socket Layer \(SSL\) negotiation configurat
 
 The load balancer uses an X\.509 certificate \(SSL/TLS server certificate\)\. Certificates are a digital form of identification issued by a certificate authority \(CA\)\. A certificate contains identification information, a validity period, a public key, a serial number, and the digital signature of the issuer\.
 
+When you create a certificate for use with your load balancer, you must specify a domain name\.
+
 We recommend that you create certificates for your load balancer using [AWS Certificate Manager \(ACM\)](https://aws.amazon.com/certificate-manager/)\. ACM integrates with Elastic Load Balancing so that you can deploy the certificate on your load balancer\. For more information, see the [AWS Certificate Manager User Guide](http://docs.aws.amazon.com/acm/latest/userguide/)\.
 
 Alternatively, you can use SSL/TLS tools to create a certificate signing request \(CSR\), then get the CSR signed by a CA to produce a certificate, then import the certificate into ACM or upload the certificate to AWS Identity and Access Management \(IAM\)\. For more information about importing certificates into ACM, see [Importing Certificates](http://docs.aws.amazon.com/acm/latest/userguide/import-certificate.html) in the *AWS Certificate Manager User Guide*\. For more information about uploading certificates to IAM, see [Working with Server Certificates](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_server-certs.html) in the *IAM User Guide*\.
 
-When you create a secure listener, you specify a default certificate\. You can create an optional certificate list for the listener by adding more certificates\. This enables a load balancer to support multiple domains on the same port and provide a different certificate for each domain\. For more information, see [Update Server Certificates](listener-update-certificates.md)\.
+**Important**  
+You cannot install certificates with 4096\-bit RSA keys or EC keys on your load balancer through integration with ACM\. You must upload certificates with 4096\-bit RSA keys or EC keys to IAM in order to use them with your load balancer\.
+
+When you create an HTTPS listener, you specify a default certificate\. You can create an optional certificate list for the listener by adding more certificates\. This enables a load balancer to support multiple domains on the same port and provide a different certificate for each domain\. For more information, see [Update Server Certificates](listener-update-certificates.md)\.
 
 Clients can use the Server Name Identification \(SNI\) protocol extension to specify the hostname they are trying to reach\. If the hostname doesn't match a certificate, the load balancer selects the default certificate\. If the hostname matches a single certificate, the load balancer selects this certificate\. If a hostname provided by a client matches multiple certificates, the load balancer selects the best certificate that the client can support\. Certificate selection is based on the following criteria in the following order:
-
 + Public key algorithm \(prefer ECDSA over RSA\)
-
 + Hashing algorithm \(prefer SHA over MD5\)
-
 + Key length \(prefer the largest\)
-
 + Validity period
 
 The load balancer access log entries indicate the hostname specified by the client and the certificate presented to the client\. For more information, see [Access Log Entries](load-balancer-access-logs.md#access-log-entry-format)\.
@@ -33,24 +34,19 @@ The load balancer access log entries indicate the hostname specified by the clie
 You can choose the security policy that is used for front\-end connections\. The `ELBSecurityPolicy-2016-08` security policy is always used for backend connections\. Application Load Balancers do not support custom security policies\.
 
 Elastic Load Balancing provides the following security policies for Application Load Balancers:
-
 + `ELBSecurityPolicy-2016-08`
-
 + `ELBSecurityPolicy-TLS-1-2-2017-01`
-
 + `ELBSecurityPolicy-TLS-1-1-2017-01`
-
 + `ELBSecurityPolicy-2015-05`
-
 + `ELBSecurityPolicy-TLS-1-0-2015-04`
 
-We recommend the `ELBSecurityPolicy-2016-08` policy for general use\. You can use one of the `ELBSecurityPolicy-TLS` policies to meet compliance and security standards that require disabling certain TLS protocol versions, or to support legacy clients that require deprecated ciphers\. Note that only a small percentage of Internet clients require TLS version 1\.0\. To view the TLS protocol version for requests to your load balancer, enable access logging for your load balancer and examine the access logs\. For more information, see Access Logs\.
+We recommend the `ELBSecurityPolicy-2016-08` policy for general use\. You can use one of the `ELBSecurityPolicy-TLS` policies to meet compliance and security standards that require disabling certain TLS protocol versions, or to support legacy clients that require deprecated ciphers\. Note that only a small percentage of Internet clients require TLS version 1\.0\. To view the TLS protocol version for requests to your load balancer, enable access logging for your load balancer and examine the access logs\. For more information, see [Access Logs](load-balancer-access-logs.md)\.
 
 The following table describes the security policies defined for Application Load Balancers\.
 
 
-| Security Policy | 2016\-08 \* | 
-| --- | --- | 
+| Security Policy | 2016\-08 \* | TLS\-1\-1\-2017\-01 | TLS\-1\-2\-2017\-01 | TLS\-1\-0\-2015\-04 † | 
+| --- | --- | --- | --- | --- | 
 | TLS Protocols | 
 | Protocol\-TLSv1 | ♦ |  |  | ♦ | 
 | Protocol\-TLSv1\.1 | ♦ | ♦ |  | ♦ | 
@@ -92,13 +88,13 @@ When you create an HTTPS listener, you can select the security policy that meets
 
 1. On the navigation pane, under **LOAD BALANCING**, choose **Load Balancers**\.
 
-1. Select the load balancer\.
+1. Select the load balancer and choose **Listeners**\.
 
-1. On the **Listeners** tab, for the HTTPS listener, choose **Edit**\.
+1. Select the checkbox for the HTTPS listener and choose **Edit**\.
 
-1. For **Select Security Policy**, choose a security policy\.
+1. For **Security policy**, choose a security policy\.
 
-1. Choose **Save**\.
+1. Choose **Update**\.
 
 **To update the security policy using the AWS CLI**  
 Use the [modify\-listener](http://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-listener.html) command\.

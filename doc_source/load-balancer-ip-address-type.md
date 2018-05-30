@@ -3,9 +3,7 @@
 You can configure your Application Load Balancer to route IPv4 traffic only or to route both IPv4 and IPv6 traffic\. For more information, see [IP Address Type](application-load-balancers.md#ip-address-type)\.
 
 **IPv6 Requirements**
-
 + An Internet\-facing load balancer\.
-
 + Your virtual private cloud \(VPC\) has subnets with associated IPv6 CIDR blocks\. For more information, see [IPv6 Addresses](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#ipv6-addressing) in the *Amazon EC2 User Guide*\.
 
 **To update the IP address type using the console**

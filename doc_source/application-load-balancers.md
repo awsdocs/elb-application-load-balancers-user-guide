@@ -1,8 +1,21 @@
 # Application Load Balancers<a name="application-load-balancers"></a>
 
-A *load balancer* serves as the single point of contact for clients\. Clients send requests to the load balancer, and the load balancer sends them to targets, such as EC2 instances, in two or more Availability Zones\. To configure your load balancer, you create target groups, and then register targets with your target groups\. You also create listeners to check for connection requests from clients, and listener rules to route requests from clients to the targets in one or more target groups\.
+A *load balancer* serves as the single point of contact for clients\. Clients send requests to the load balancer, and the load balancer sends them to targets, such as EC2 instances, in two or more Availability Zones\. To configure your load balancer, you create [target groups](load-balancer-target-groups.md), and then register targets with your target groups\. You also create [listeners](load-balancer-listeners.md) to check for connection requests from clients, and listener rules to route requests from clients to the targets in one or more target groups\.
 
-Contents
+**Topics**
++ [Load Balancer Security Groups](#load-balancer-security-groups)
++ [Load Balancer State](#load-balancer-state)
++ [Load Balancer Attributes](#load-balancer-attributes)
++ [IP Address Type](#ip-address-type)
++ [Deletion Protection](#deletion-protection)
++ [Connection Idle Timeout](#connection-idle-timeout)
++ [Application Load Balancers and AWS WAF](#load-balancer-waf)
++ [Create a Load Balancer](create-application-load-balancer.md)
++ [Update Availability Zones](load-balancer-subnets.md)
++ [Update Security Groups](load-balancer-update-security-groups.md)
++ [Update the Address Type](load-balancer-ip-address-type.md)
++ [Update Tags](load-balancer-tags.md)
++ [Delete a Load Balancer](load-balancer-delete.md)
 
 ## Load Balancer Security Groups<a name="load-balancer-security-groups"></a>
 
@@ -28,19 +41,22 @@ The load balancer could not be set up\.
 The following are the load balancer attributes:
 
 `access_logs.s3.enabled`  
-Indicates whether access logs stored in Amazon S3 are enabled\.
+Indicates whether access logs stored in Amazon S3 are enabled\. The default is `false`\.
 
 `access_logs.s3.bucket`  
-The name of the S3 bucket for the access logs\. For more information, see [Bucket Permissions](load-balancer-access-logs.md#access-logging-bucket-permissions)\.
+The name of the S3 bucket for the access logs\. This attribute is required if access logs are enabled\. For more information, see [Bucket Permissions](load-balancer-access-logs.md#access-logging-bucket-permissions)\.
 
 `access_logs.s3.prefix`  
-The prefix for the location in the S3 bucket\. If you don't specify a prefix, the access logs are stored in the root of the bucket\.
+The prefix for the location in the S3 bucket\.
 
 `deletion_protection.enabled`  
-Indicates whether deletion protection is enabled\.
+Indicates whether deletion protection is enabled\. The default is `false`\.
 
 `idle_timeout.timeout_seconds`  
 The idle timeout value, in seconds\. The default is 60 seconds\.
+
+`routing.http2.enabled`  
+Indicates whether HTTP/2 is enabled\. The default is `true`\.
 
 ## IP Address Type<a name="ip-address-type"></a>
 
@@ -74,7 +90,7 @@ If you enable deletion protection for your load balancer, you must disable it be
 
 1. On the **Description** tab, choose **Edit attributes**\.
 
-1. On the **Edit load balancer attributes** page, select **Enable delete protection**\.
+1. On the **Edit load balancer attributes** page, select **Enable** for **Delete Protection**, and then choose **Save**\.
 
 1. Choose **Save**\.
 
@@ -88,12 +104,12 @@ If you enable deletion protection for your load balancer, you must disable it be
 
 1. On the **Description** tab, choose **Edit attributes**\.
 
-1. On the **Edit load balancer attributes** page, clear **Enable delete protection**\.
+1. On the **Edit load balancer attributes** page, clear **Enable** for **Delete Protection**, and then choose **Save**\.
 
 1. Choose **Save**\.
 
 **To enable or disable deletion protection using the AWS CLI**  
-Use the [modify\-load\-balancer\-attributes](http://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-load-balancer-attributes.html) command\.
+Use the [modify\-load\-balancer\-attributes](http://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-load-balancer-attributes.html) command with the `deletion_protection.enabled` attribute\.
 
 ## Connection Idle Timeout<a name="connection-idle-timeout"></a>
 
@@ -118,7 +134,7 @@ For back\-end connections, we recommend that you enable the HTTP keep\-alive opt
 1. Choose **Save**\.
 
 **To update the idle timeout value using the AWS CLI**  
-Use the [modify\-load\-balancer\-attributes](http://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-load-balancer-attributes.html) command\.
+Use the [modify\-load\-balancer\-attributes](http://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-load-balancer-attributes.html) command with the `idle_timeout.timeout_seconds` attribute\.
 
 ## Application Load Balancers and AWS WAF<a name="load-balancer-waf"></a>
 

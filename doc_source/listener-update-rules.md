@@ -2,7 +2,7 @@
 
 The rules that you define for your listener determine how the load balancer routes requests to the targets in one or more target groups\.
 
-Each rule consists of a priority, action, optional host condition, and optional path condition\. For more information, see [Listener Rules](load-balancer-listeners.md#listener-rules)\.
+Each rule consists of a priority, one or more actions, an optional host condition, and an optional path condition\. For more information, see [Listener Rules](load-balancer-listeners.md#listener-rules)\.
 
 **Note**  
 The console displays a relative sequence number for each rule, not the rule priority\. You can get the priority of a rule by describing it using the AWS CLI or the Elastic Load Balancing API\.
@@ -32,13 +32,15 @@ You define a default rule when you create a listener, and you can define additio
 
    1. Choose **Insert Rule**\.
 
-   1. To configure host\-based routing, choose **Host** and type the hostname \(for example, **\*\.example\.com**\)\.
+   1. \(Optional\) To configure host\-based routing, choose **Add condition**, **Host is** and type the hostname \(for example, **\*\.example\.com**\)\. To save the condition, choose the checkmark icon
 
-   1. To configure path\-based routing, choose **Path** and type the path pattern \(for example, `/img/*`\)\. Note that if you have already added a host condition, you must choose the ampersand \(&\) to add a path condition\.
+   1. \(Optional\) To configure path\-based routing, choose **Add condition**, **Path is** and type the path pattern \(for example, `/img/*`\)\. To save the condition, choose the checkmark icon\.
 
-   1. For **Forward to**, choose a target group\.
+   1. \(Optional, HTTPS listeners\) To authenticate users, choose **Add action**, **Authenticate** and provide the requested information\. For more information, see [Authenticate Users Using an Application Load Balancer](listener-authenticate-users.md)\.
 
-   1. \(Optional\) To change the order of the rule, use the arrows\. Note that the default rule always has the last priority\.
+   1. To add a forward action, choose **Add action**, **Forward to** and choose a target group\. Each rule must have exactly one forward action\.
+
+   1. \(Optional\) To change the order of the rule, use the arrows\. The default rule always has the **last** priority\.
 
    1. Choose **Save**\.  
 ![\[The Insert Rule interface.\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/add_rule.png)
@@ -67,10 +69,8 @@ You can edit the action and conditions for a rule at any time\.
 
 1. For the rule to edit, choose the **Edit rules** icon \(the pencil\)\.
 
-1. \(Optional\) Modify the host and path conditions as needed\. For example, you can type a new hostname for the host condition, type a new path pattern for the path condition, add a path condition if you don't have one already, add a host condition if you don't have one already, or delete a condition using the **Delete condition** icon \(the trash can\)\. Note that you can't add a condition for the default rule\.  
+1. \(Optional\) Modify the conditions and actions as needed\. For example, you can edit a condition or action \(pencil icon\), add a path condition if you don't have one already, add a host condition if you don't have one already, add an authenticate action for a rule for an HTTPS listener, or delete a condition or action \(trash can icon\)\. You can't add conditions to the default rule\. Each rule must have exactly one forward action\.  
 ![\[The Edit Rule interface.\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/edit_rule.png)
-
-1. \(Optional\) Choose a new target group from **Forward to**\.
 
 1. Choose **Update**\.
 
@@ -122,11 +122,9 @@ You can delete the nondefault rules for a listener at any time\. You cannot dele
 
 1. For the listener to update, choose **View/edit rules**\.
 
-1. Choose the **Delete rules** icon \(the trash can\) in the menu bar\.
+1. Choose the **Delete rules** icon \(the minus sign\) in the menu bar\.
 
-1. Select the check box next to the rule\. Note that you can't delete the default rule for the listener\.
-
-1. Choose **Yes, Delete**\.
+1. Select the check box for the rule and choose **Delete**\. Note that you can't delete the default rule for the listener\.
 
 1. To leave this screen, choose the **Back to the load balancer** icon \(the back button\) in the menu bar\.
 

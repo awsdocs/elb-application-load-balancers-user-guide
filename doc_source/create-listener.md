@@ -3,9 +3,7 @@
 A listener is a process that checks for connection requests\. You define a listener when you create your load balancer, and you can add listeners to your load balancer at any time\.
 
 ## Prerequisites<a name="listener-prereqs"></a>
-
 + You must specify a target group for the default listener rule\. For more information, see [Create a Target Group](create-target-group.md)\.
-
 + If you create an HTTPS listener, you must specify a certificate and a security policy\. The load balancer uses the certificate to terminate the connection and decrypt requests from clients before routing them to targets\. For more information, see [SSL Certificates](create-https-listener.md#https-listener-certificates)\. The load balancer uses the security policy when negotiating SSL connections with the clients\. For more information, see [Security Policies](create-https-listener.md#describe-ssl-policies)\.
 
 ## Add a Listener<a name="add-listener"></a>
@@ -20,21 +18,19 @@ You configure a listener with a protocol and a port for connections from clients
 
 1. Select a load balancer, and choose **Listeners**, **Add listener**\.
 
-1. For **Protocol**, choose **HTTP** or **HTTPS \(Secure HTTP\)**\.
+1. For **Protocol : port**, choose **HTTP** or **HTTPS**\. Keep the default port or type a different port\.
 
-1. For **Port**, keep the default port or type a different port\.
+1. \(Optional, HTTPS listeners\) To authenticate users, for **Default actions**, choose **Add action**, **Authenticate** and provide the requested information\. To save the action, choose the checkmark icon\. For more information, see [Authenticate Users Using an Application Load Balancer](listener-authenticate-users.md)\.
 
-1. For **Default target group**, select an available target group\.
+1. For **Default actions**, choose **Add action**, **Forward to** and choose a target group\. To save the action, choose the checkmark icon\.
 
-1. \[HTTPS Listener\] For **Select default certificate**, do one of the following:
+1. \[HTTPS listeners\] For **Security policy**, we recommend that you keep the default security policy\.
 
-   + If you created or imported a certificate using AWS Certificate Manager, select **Choose a certificate from ACM**, and then select the certificate from **Certificate name**\.
+1. \[HTTPS listeners\] For **Default SSL certificate**, do one of the following:
+   + If you created or imported a certificate using AWS Certificate Manager, choose **From ACM** and choose the certificate\.
+   + If you uploaded a certificate using IAM, choose **From IAM** and choose the certificate\.
 
-   + If you uploaded a certificate using IAM, select **Choose a certificate from IAM**, and then select the certificate from **Certificate name**\.
-
-1. \[HTTPS Listener\] For **Security policy**, we recommend that you keep the default security policy\.
-
-1. Choose **Create**\.
+1. Choose **Save**\.
 
 1. \(Optional\) To define additional listener rules that forward requests based on a path pattern or a hostname, see [Add a Rule](listener-update-rules.md#add-rule)\.
 

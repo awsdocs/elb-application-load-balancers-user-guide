@@ -8,7 +8,7 @@ To learn more about CloudTrail, including how to configure and enable it, see th
 
 To monitor other actions for your load balancer, such as when a client makes a request to your load balancer, use access logs\. For more information, see [Access Logs for Your Application Load Balancer](load-balancer-access-logs.md)\.
 
-
+**Topics**
 + [Enable CloudTrail Event Logging](#enable-cloudtrail-logging)
 + [Elastic Load Balancing Event Records in CloudTrail Log Files](#cloudtrail-event-records)
 

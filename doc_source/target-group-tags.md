@@ -7,15 +7,10 @@ You can add multiple tags to each target group\. Tag keys must be unique for eac
 When you are finished with a tag, you can remove it\.
 
 **Restrictions**
-
 + Maximum number of tags per resource—50
-
 + Maximum key length—127 Unicode characters
-
 + Maximum value length—255 Unicode characters
-
-+ Tag keys and values are case sensitive\. Allowed characters are letters, spaces, and numbers representable in UTF\-8, plus the following special characters: \+ \- = \. \_ : / @\. Do not use leading or trailing spaces\.
-
++ Tag keys and values are case\-sensitive\. Allowed characters are letters, spaces, and numbers representable in UTF\-8, plus the following special characters: \+ \- = \. \_ : / @\. Do not use leading or trailing spaces\.
 + Do not use the `aws:` prefix in your tag names or values because it is reserved for AWS use\. You can't edit or delete tag names or values with this prefix\. Tags with this prefix do not count against your tags per resource limit\. 
 
 **To update the tags for a target group using the console**
@@ -26,11 +21,11 @@ When you are finished with a tag, you can remove it\.
 
 1. Select the target group\.
 
-1. On the **Tags** tab, choose **Add/Edit Tags**, and then do one or more of the following:
+1. On the **Tags** tab, choose **Add/Edit Tags** and do one or more of the following:
 
    1. To update a tag, edit the values of **Key** and **Value**\.
 
-   1. To add a new tag, choose **Create Tag** and then type values for **Key** and **Value**\.
+   1. To add a new tag, choose **Create Tag** and type values for **Key** and **Value**\.
 
    1. To delete a tag, choose the delete icon \(X\) next to the tag\.
 

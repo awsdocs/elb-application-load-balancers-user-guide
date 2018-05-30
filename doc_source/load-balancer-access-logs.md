@@ -8,7 +8,7 @@ Elastic Load Balancing supports server\-side encryption for access logs for your
 
 There is no additional charge for access logs\. You are charged storage costs for Amazon S3, but not charged for the bandwidth used by Elastic Load Balancing to send log files to Amazon S3\. For more information about storage costs, see [Amazon S3 Pricing](https://aws.amazon.com/s3/pricing/)\.
 
-
+**Topics**
 + [Access Log Files](#access-log-file-format)
 + [Access Log Entries](#access-log-entry-format)
 + [Bucket Permissions](#access-logging-bucket-permissions)
@@ -65,22 +65,14 @@ You can store your log files in your bucket for as long as you want, but you can
 
 Elastic Load Balancing logs requests sent to the load balancer, including requests that never made it to the targets\. For example, if a client sends a malformed request, or there are no healthy targets to respond to the request, the request is still logged\. Note that Elastic Load Balancing does not log health check requests\.
 
-For WebSockets, an entry is written only after the connection is closed\. If the upgraded connection can't be established, the entry is the same as for an HTTP or HTTPS request\.
+Each log entry contains the details of a single request \(or connection in the case of WebSockets\) made to the load balancer\. For WebSockets, an entry is written only after the connection is closed\. If the upgraded connection can't be established, the entry is the same as for an HTTP or HTTPS request\.
 
 **Important**  
 Elastic Load Balancing logs requests on a best\-effort basis\. We recommend that you use access logs to understand the nature of the requests, not as a complete accounting of all requests\.
 
 ### Syntax<a name="access-log-entry-syntax"></a>
 
-Each log entry contains the details of a single request \(or connection in the case of WebSockets\) made to the load balancer\. All fields in a log entry are delimited by spaces\. Each entry in a log file has the following format:
-
-```
-type timestamp elb client:port target:port request_processing_time target_processing_time response_processing_time elb_status_code target_status_code received_bytes sent_bytes "request" "user_agent" ssl_cipher ssl_protocol target_group_arn trace_id domain_name chosen_cert_arn
-```
-
-You should ignore any fields at the end of the log entry that you were not expecting\.
-
-The following table describes the fields of an access log entry\.
+The following table describes the fields of an access log entry, in order\. All fields are delimited by spaces\. When new fields are introduced, they are added to the end of the log entry\. You should ignore any fields at the end of the log entry that you were not expecting\.
 
 
 | Field | Description | 
@@ -105,6 +97,9 @@ The following table describes the fields of an access log entry\.
 | trace\_id |  The contents of the **X\-Amzn\-Trace\-Id** header\.  | 
 | domain\_name |  \[HTTPS listener\] The SNI domain provided by the client during the TLS handshake\. This value is set to `-` if the client doesn't support SNI or the domain doesn't match a certificate and the default certificate is presented to the client\.  | 
 | chosen\_cert\_arn |  \[HTTPS listener\] The ARN of the certificate presented to the client\.  | 
+| matched\_rule\_priority |  The priority value of the rule that matched the request\. If a rule matched, this is a value from 1 to 50,000\. If no rule matched and the default action was taken, the value is 0\. If an error occurred, the value is \-1\.  | 
+| request\_creation\_time |  The time when the load balancer received the request from the client, in ISO 8601 format\.  | 
+| actions\_executed |  The actions taken when processing the request\. This value is a comma\-separated list with the following possible values: `waf`, `authenticate`, and `forward`\. If no actions were taken, this value is set to `-`\.  | 
 
 ### Examples<a name="access-log-entry-examples"></a>
 
@@ -263,7 +258,7 @@ When you enable access logging for your load balancer, you must specify the name
 
    1. Choose **Enable access logs**\.
 
-   1. For **S3 location**, type the name of your S3 bucket, including any prefix \(for example, `my-loadbalancer-logs/my-app`\)\. You can specify the name of an existing bucket or a name for a new bucket\.
+   1. For **S3 location**, type the name of your S3 bucket, including any prefix \(for example, `my-loadbalancer-logs/my-app`\)\. You can specify the name of an existing bucket or a name for a new bucket\. If you specify an existing bucket, be sure that you own this bucket and that you configured the required bucket policy\.
 
    1. \(Optional\) If the bucket does not exist, choose **Create this location for me**\. You must specify a name that is unique across all existing bucket names in Amazon S3 and follows the DNS naming conventions\. For more information, see [Rules for Bucket Naming](http://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html#bucketnamingrules) in the *Amazon Simple Storage Service Developer Guide*\.
 
@@ -285,6 +280,9 @@ After access logging is enabled for your load balancer, Elastic Load Balancing v
    ```
    my-bucket/prefix/AWSLogs/123456789012/ELBAccessLogTestFile
    ```
+
+**To manage the S3 bucket for your access logs**  
+After you enable access logging, be sure to disable access logging before you delete the bucket with your access logs\. Otherwise, if there is a new bucket with the same name and the required bucket policy created in an AWS account that you don't own, Elastic Load Balancing could write the access logs for your load balancer to this new bucket\.
 
 ## Disable Access Logging<a name="disable-access-logging"></a>
 
@@ -312,11 +310,7 @@ Use the [modify\-load\-balancer\-attributes](http://docs.aws.amazon.com/cli/late
 The access log files are compressed\. If you open the files using the Amazon S3 console, they are uncompressed and the information is displayed\. If you download the files, you must uncompress them to view the information\.
 
 If there is a lot of demand on your website, your load balancer can generate log files with gigabytes of data\. You might not be able to process such a large amount of data using line\-by\-line processing\. Therefore, you might have to use analytical tools that provide parallel processing solutions\. For example, you can use the following analytical tools to analyze and process access logs:
-
 + Amazon Athena is an interactive query service that makes it easy to analyze data in Amazon S3 using standard SQL\. For more information, see [Querying Application Load Balancer Logs](http://docs.aws.amazon.com/athena/latest/ug/application-load-balancer-logs.html) in the *Amazon Athena User Guide*\.
-
 + [Loggly](https://www.loggly.com/docs/s3-ingestion-auto/)
-
 + [Splunk](http://apps.splunk.com/app/1731/)
-
 + [Sumo Logic](http://sumologic.com/applications/aws-elastic-load-balancing/)

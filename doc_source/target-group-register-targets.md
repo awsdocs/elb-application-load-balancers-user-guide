@@ -32,16 +32,15 @@ We also recommend that you allow inbound ICMP traffic to support Path MTU Discov
 
 When you create a target group, you specify whether you must register targets by instance ID or IP address\.
 
-
+**Topics**
 + [Register or Deregister Targets by Instance ID](#register-instances)
 + [Register or Deregister Targets by IP Address](#register-ip-addresses)
-+ [Register or Deregister Targets Using the AWS CLI](#register-cli)
 
 ### Register or Deregister Targets by Instance ID<a name="register-instances"></a>
 
 The instance must be in the virtual private cloud \(VPC\) that you specified for the target group\. The instance must also be in the `running` state when you register it\.
 
-**To register or deregister targets by instance ID**
+**To register or deregister targets by instance ID using the console**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -59,11 +58,14 @@ The instance must be in the virtual private cloud \(VPC\) that you specified for
 
 1. Choose **Save**\.
 
+**To register or deregister targets using the AWS CLI**  
+Use the [register\-targets](http://docs.aws.amazon.com/cli/latest/reference/elbv2/register-targets.html) command to add targets and the [deregister\-targets](http://docs.aws.amazon.com/cli/latest/reference/elbv2/deregister-targets.html) command to remove targets\.
+
 ### Register or Deregister Targets by IP Address<a name="register-ip-addresses"></a>
 
 The IP addresses that you register must be from the subnets of the VPC for the target group, the RFC 1918 range \(10\.0\.0\.0/8, 172\.16\.0\.0/12, and 192\.168\.0\.0/16\), and the RFC 6598 range \(100\.64\.0\.0/10\)\. You cannot register publicly routable IP addresses\.
 
-**To register or deregister targets by IP address**
+**To register or deregister targets by IP address using the console**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -73,7 +75,7 @@ The IP addresses that you register must be from the subnets of the VPC for the t
 
 1. On the **Targets** tab, choose **Edit**\.
 
-1. To register IP addresses, choose the **Register targets** icon \(the plus sign\) in the menu bar\. For each IP address, select the network, type the IP address, type the port, and choose **Add to list**\. When you are finished specifying addresses, choose **Register**\.  
+1. To register IP addresses, choose the **Register targets** icon \(the plus sign\) in the menu bar\. For each IP address, select the network, type the IP address and port, and choose **Add to list**\. When you are finished specifying addresses, choose **Register**\.  
 ![\[The Register targets screen.\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/register_ip_addresses.png)
 
 1. To deregister IP addresses, choose the **Deregister targets** icon \(the minus sign\) in the menu bar\. If you have many registered IP addresses, you might find it helpful to add a filter or change the sort order\. Select the IP addresses and then choose **Deregister**\.  
@@ -81,6 +83,5 @@ The IP addresses that you register must be from the subnets of the VPC for the t
 
 1. To leave this screen, choose the **Back to target group** icon \(the back button\) in the menu bar\.
 
-### Register or Deregister Targets Using the AWS CLI<a name="register-cli"></a>
-
+**To register or deregister targets using the AWS CLI**  
 Use the [register\-targets](http://docs.aws.amazon.com/cli/latest/reference/elbv2/register-targets.html) command to add targets and the [deregister\-targets](http://docs.aws.amazon.com/cli/latest/reference/elbv2/deregister-targets.html) command to remove targets\.

@@ -32,6 +32,7 @@ Amazon's trademarks and trade dress may not be used in
    + [HTTPS Listeners for Your Application Load Balancer](create-https-listener.md)
    + [Listener Rules for Your Application Load Balancer](listener-update-rules.md)
    + [Update Server Certificates](listener-update-certificates.md)
+   + [Authenticate Users Using an Application Load Balancer](listener-authenticate-users.md)
    + [Delete a Listener for Your Application Load Balancer](delete-listener.md)
 + [Target Groups for Your Application Load Balancers](load-balancer-target-groups.md)
    + [Create a Target Group](create-target-group.md)

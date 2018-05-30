@@ -8,9 +8,9 @@ You can delete a listener at any time\. When you delete a load balancer, all its
 
 1. On the navigation pane, under **LOAD BALANCING**, choose **Load Balancers**\.
 
-1. Select the load balancer and then choose **Listeners**\.
+1. Select the load balancer and choose **Listeners**\.
 
-1. Choose **Delete** for the listener\.
+1. Select the checkbox for the HTTPS listener and choose **Delete**\.
 
 1. When prompted for confirmation, choose **Yes, Delete**\.
 

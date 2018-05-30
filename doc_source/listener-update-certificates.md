@@ -1,16 +1,16 @@
 # Update Server Certificates<a name="listener-update-certificates"></a>
 
-When you create a secure listener, you specify a default certificate\. You can also create a certificate list for the listener by adding additional certificates\.
+When you create an HTTPS listener, you specify a default certificate\. You can also create a certificate list for the listener by adding additional certificates\.
 
 Each certificate comes with a validity period\. You must ensure that you renew or replace the certificate before its validity period ends\. Renewing or replacing a certificate does not affect in\-flight requests that were received by the load balancer node and are pending routing to a healthy target\. After a certificate is renewed, new requests use the renewed certificate\. After a certificate is replaced, new requests use the new certificate\.
 
 You can manage certificate renewal and replacement as follows:
-
 + Certificates provided by AWS Certificate Manager and deployed on your load balancer can be renewed automatically\. ACM attempts to renew certificates before they expire\. For more information, see [Managed Renewal](http://docs.aws.amazon.com/acm/latest/userguide/acm-renewal.html) in the *AWS Certificate Manager User Guide*\.
-
 + If you imported a certificate into ACM, you must monitor the expiration date of the certificate and renew it before it expires\. For more information, see [Importing Certificates](http://docs.aws.amazon.com/acm/latest/userguide/import-certificate.html) in the *AWS Certificate Manager User Guide*\.
-
 + If you imported a certificate into IAM, you must create a new certificate, import the new certificate to ACM or IAM, add the new certificate to your load balancer, and remove the expired certificate from your load balancer\.
+
+**Limitation**  
+ACM supports RSA certificates with a 4096 key length and EC certificates\. However, you cannot install these certificates on your load balancer through integration with ACM\. You must upload these certificates to IAM in order to use them with your load balancer\.
 
 ## Add Certificates<a name="add-certificates"></a>
 
@@ -24,11 +24,11 @@ You can add certificates to the certificate list for your listener using the fol
 
 1. Select the load balancer and choose **Listeners**\.
 
-1. For the secure listener to update, choose **View/edit certificates**, which displays the default certificate followed by any other certificates that you've added to the listener\.
+1. For the HTTPS listener to update, choose **View/edit certificates**, which displays the default certificate followed by any other certificates that you've added to the listener\.
 
 1. Choose the **Add certificates** icon \(the plus sign\) in the menu bar, which displays the default certificate followed by any other certificates managed by ACM and IAM\. If you've already added a certificate to the listener, its checkbox is selected and disabled\.
 
-1. To add certificates that are already managed by ACM or IAM, select the certificates and choose **Add**\.
+1. To add certificates that are already managed by ACM or IAM, select the checkboxes for the certificates and choose **Add**\.
 
 1. If you have a certificate that isn't managed by ACM or IAM, import it to ACM and add it to your listener as follows:
 
@@ -47,7 +47,7 @@ You can add certificates to the certificate list for your listener using the fol
 1. To leave this screen, choose the **Back to the load balancer** icon \(the back button\) in the menu bar\.
 
 **To add a certificate using the AWS CLI**  
-Use the [add\-listener\-certificate](http://docs.aws.amazon.com/cli/latest/reference/elbv2/add-listener-certificate.html) command\.
+Use the [add\-listener\-certificates](http://docs.aws.amazon.com/cli/latest/reference/elbv2/add-listener-certificates.html) command\.
 
 ## Replace the Default Certificate<a name="replace-default-certificate"></a>
 
@@ -61,13 +61,11 @@ You can replace the default certificate for your listener using the following pr
 
 1. Select the load balancer and choose **Listeners**\.
 
-1. Select the listener and choose **Actions**, **Edit**\.
+1. Select the checkbox for the listener and choose **Edit**\.
 
-1. For **Select default certificate**, do one of the following:
-
-   + If you created or imported a certificate using AWS Certificate Manager, select **Choose an existing certificate from AWS Certificate Manager \(ACM\)**, and then select the certificate from **Certificate name**\.
-
-   + If you uploaded a certificate using IAM, select **Choose an existing certificate from AWS Identity and Access Management \(IAM\)**, and then select the certificate from **Certificate name**\.
+1. For **Default SSL certificate**, do one of the following:
+   + If you created or imported a certificate using AWS Certificate Manager, choose **From ACM** and choose the certificate\.
+   + If you uploaded a certificate using IAM, choose **From IAM** and choose the certificate\.
 
 1. Choose **Save**\.
 
@@ -76,7 +74,7 @@ Use the [modify\-listener](http://docs.aws.amazon.com/cli/latest/reference/elbv2
 
 ## Remove Certificates<a name="remove-certificate"></a>
 
-You can remove the nondefault certificates for a secure listener at any time\. You cannot remove the default certificate for a secure listener using this procedure\.
+You can remove the nondefault certificates for an HTTPS listener at any time\. You cannot remove the default certificate for an HTTPS listener using this procedure\.
 
 **To remove certificates using the console**
 
@@ -86,13 +84,13 @@ You can remove the nondefault certificates for a secure listener at any time\. Y
 
 1. Select the load balancer and choose **Listeners**\.
 
-1. For the secure listener to update, choose **View/edit certificates**, which displays the default certificate followed by any other certificates that you've added to the listener\.
+1. For the listener to update, choose **View/edit certificates**, which displays the default certificate followed by any other certificates that you've added to the listener\.
 
 1. Choose the **Remove certificates** icon \(the minus sign\) in the menu bar\.
 
-1. Select the certificates and choose **Remove**\.
+1. Select the checkboxes for the certificates and choose **Remove**\.
 
 1. To leave this screen, choose the **Back to the load balancer** icon \(the back button\) in the menu bar\.
 
 **To remove a certificate using the AWS CLI**  
-Use the [remove\-listener\-certificate](http://docs.aws.amazon.com/cli/latest/reference/elbv2/remove-listener-certificate.html) command\.
+Use the [remove\-listener\-certificates](http://docs.aws.amazon.com/cli/latest/reference/elbv2/remove-listener-certificates.html) command\.

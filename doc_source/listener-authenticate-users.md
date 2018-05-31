@@ -13,8 +13,8 @@ Do the following if you are using an OIDC\-compliant IdP with your Application L
 + Create a new OIDC app in your IdP\. You must configure a client ID and a client secret\.
 + Get the following endpoints published by the IdP: authorization endpoint, token endpoint, and user info endpoint\. You can locate this information in the well\-known config\.
 + Whitelist one of the following redirect URLs in your IdP app, whichever your users will use, where DNS is the domain name of your load balancer and CNAME is the DNS alias for your application\.
-  + https://*DNS*/oauth2/idresponse
-  + https://*CNAME*/oauth2/idresponse
+  + https://*DNS*/oauth2/idpresponse
+  + https://*CNAME*/oauth2/idpresponse
 
 ## Prepare to Use Amazon Cognito<a name="cognito-requirements"></a>
 

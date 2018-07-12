@@ -81,25 +81,25 @@ The following table describes the fields of an access log entry, in order\. All 
 | timestamp | The time when the load balancer generated a response to the client, in ISO 8601 format\. For WebSockets, this is the time when the connection is closed\. | 
 | elb | The resource ID of the load balancer\. If you are parsing access log entries, note that resources IDs can contain forward slashes \(/\)\. | 
 | client:port | The IP address and port of the requesting client\. | 
-| target:port |  The IP address and port of the target that processed this request\. If the client didn't send a full request, the load balancer can't dispatch the request to a target, and this value is set to `-`\. If the request is blocked by AWS WAF, this value is set to `-` and the value of elb\_status\_code is set to 403\.  | 
-| request\_processing\_time |  The total time elapsed, in seconds, from the time the load balancer received the request until the time it sent it to a target\. This value is set to `-1` if the load balancer can't dispatch the request to a target\. This can happen if the target closes the connection before the idle timeout or if the client sends a malformed request\.  | 
-| target\_processing\_time |  The total time elapsed, in seconds, from the time the load balancer sent the request to a target until the target started to send the response headers\. This value is set to `-1` if the load balancer can't dispatch the request to a target\. This can happen if the target closes the connection before the idle timeout or if the client sends a malformed request\.  | 
-| response\_processing\_time |  The total time elapsed \(in seconds\) from the time the load balancer received the response header from the target until it started to send the response to the client\. This includes both the queuing time at the load balancer and the connection acquisition time from the load balancer to the client\. This value is set to `-1` if the load balancer can't send the request to a target\. This can happen if the target closes the connection before the idle timeout or if the client sends a malformed request\.  | 
+| target:port |  The IP address and port of the target that processed this request\. If the client didn't send a full request, the load balancer can't dispatch the request to a target, and this value is set to \-\. If the request is blocked by AWS WAF, this value is set to \- and the value of elb\_status\_code is set to 403\.  | 
+| request\_processing\_time |  The total time elapsed \(in seconds, with millisecond precision\) from the time the load balancer received the request until the time it sent it to a target\. This value is set to \-1 if the load balancer can't dispatch the request to a target\. This can happen if the target closes the connection before the idle timeout or if the client sends a malformed request\. This value can also be set to \-1 if the registered target does not respond before the idle timeout\.  | 
+| target\_processing\_time |  The total time elapsed \(in seconds, with millisecond precision\) from the time the load balancer sent the request to a target until the target started to send the response headers\. This value is set to \-1 if the load balancer can't dispatch the request to a target\. This can happen if the target closes the connection before the idle timeout or if the client sends a malformed request\. This value can also be set to \-1 if the registered target does not respond before the idle timeout\.  | 
+| response\_processing\_time |  The total time elapsed \(in seconds, with millisecond precision\) from the time the load balancer received the response header from the target until it started to send the response to the client\. This includes both the queuing time at the load balancer and the connection acquisition time from the load balancer to the client\. This value is set to \-1 if the load balancer can't send the request to a target\. This can happen if the target closes the connection before the idle timeout or if the client sends a malformed request\.  | 
 | elb\_status\_code | The status code of the response from the load balancer\. | 
-| target\_status\_code | The status code of the response from the target\. This value is recorded only if a connection was established to the target and the target sent a response\. Otherwise, the value is set to `-`\. | 
+| target\_status\_code | The status code of the response from the target\. This value is recorded only if a connection was established to the target and the target sent a response\. Otherwise, the value is set to \-\. | 
 | received\_bytes |  The size of the request, in bytes, received from the client \(requester\)\. For HTTP requests, this includes the headers\. For WebSockets, this is the total number of bytes received from the client on the connection\.  | 
 | sent\_bytes |  The size of the response, in bytes, sent to the client \(requester\)\. For HTTP requests, this includes the headers\. For WebSockets, this is the total number of bytes sent to the client on the connection\.  | 
-| request |  The request line from the client enclosed in double quotes and logged using the following format: HTTP method \+ protocol://host:port/uri \+ HTTP version\.  | 
-| user\_agent |  A User\-Agent string that identifies the client that originated the request\. The string consists of one or more product identifiers, product\[/version\]\. If the string is longer than 8 KB, it is truncated\.  | 
-| ssl\_cipher |  \[HTTPS listener\] The SSL cipher\. This value is recorded only if the incoming connection was established after a successful negotiation\. Otherwise, the value is set to `-`\.  | 
-| ssl\_protocol |  \[HTTPS listener\] The SSL protocol\. This value is recorded only if the incoming connection was established after a successful negotiation\. Otherwise, the value is set to `-`\.  | 
+| "request" |  The request line from the client, enclosed in double quotes and logged using the following format: HTTP method \+ protocol://host:port/uri \+ HTTP version\.  | 
+| "user\_agent" |  A User\-Agent string that identifies the client that originated the request, enclosed in double quotes\. The string consists of one or more product identifiers, product\[/version\]\. If the string is longer than 8 KB, it is truncated\.  | 
+| ssl\_cipher |  \[HTTPS listener\] The SSL cipher\. This value is recorded only if the incoming connection was established after a successful negotiation\. Otherwise, the value is set to \-\.  | 
+| ssl\_protocol |  \[HTTPS listener\] The SSL protocol\. This value is recorded only if the incoming connection was established after a successful negotiation\. Otherwise, the value is set to \-\.  | 
 | target\_group\_arn |  The Amazon Resource Name \(ARN\) of the target group\.  | 
-| trace\_id |  The contents of the **X\-Amzn\-Trace\-Id** header\.  | 
-| domain\_name |  \[HTTPS listener\] The SNI domain provided by the client during the TLS handshake\. This value is set to `-` if the client doesn't support SNI or the domain doesn't match a certificate and the default certificate is presented to the client\.  | 
-| chosen\_cert\_arn |  \[HTTPS listener\] The ARN of the certificate presented to the client\.  | 
+| "trace\_id" |  The contents of the **X\-Amzn\-Trace\-Id** header, enclosed in double quotes\.  | 
+| "domain\_name" |  \[HTTPS listener\] The SNI domain provided by the client during the TLS handshake, enclosed in double quotes\. This value is set to \- if the client doesn't support SNI or the domain doesn't match a certificate and the default certificate is presented to the client\.  | 
+| "chosen\_cert\_arn" |  \[HTTPS listener\] The ARN of the certificate presented to the client, enclosed in double quotes\. This value is set to `session-reused` if the session is reused\.  | 
 | matched\_rule\_priority |  The priority value of the rule that matched the request\. If a rule matched, this is a value from 1 to 50,000\. If no rule matched and the default action was taken, the value is 0\. If an error occurred, the value is \-1\.  | 
 | request\_creation\_time |  The time when the load balancer received the request from the client, in ISO 8601 format\.  | 
-| actions\_executed |  The actions taken when processing the request\. This value is a comma\-separated list with the following possible values: `waf`, `authenticate`, and `forward`\. If no actions were taken, this value is set to `-`\.  | 
+| "actions\_executed" |  The actions taken when processing the request, enclosed in double quotes\. This value is a comma\-separated list that can include the following possible values: `waf`, `authenticate`, and `forward`\. If no action was taken, such as for a malformed request, this value is set to \-\.  | 
 
 ### Examples<a name="access-log-entry-examples"></a>
 
@@ -109,55 +109,60 @@ The following are example log entries\. Note that the text appears on multiple l
 The following is an example log entry for an HTTP listener \(port 80 to port 80\):
 
 ```
-http 2016-08-10T22:08:42.945958Z app/my-loadbalancer/50dc6c495c0c9188 
+http 2018-07-02T22:23:00.186641Z app/my-loadbalancer/50dc6c495c0c9188 
 192.168.131.39:2817 10.0.0.1:80 0.000 0.001 0.000 200 200 34 366 
 "GET http://www.example.com:80/ HTTP/1.1" "curl/7.46.0" - - 
 arn:aws:elasticloadbalancing:us-east-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067
-"Root=1-58337262-36d228ad5d99923122bbe354" - -
+"Root=1-58337262-36d228ad5d99923122bbe354" "-" "-" 
+0 2018-07-02T22:22:48.364000Z "forward"
 ```
 
 **Example HTTPS Entry**  
 The following is an example log entry for an HTTPS listener \(port 443 to port 80\):
 
 ```
-https 2016-08-10T23:39:43.065466Z app/my-loadbalancer/50dc6c495c0c9188 
+https 2018-07-02T22:23:00.186641Z app/my-loadbalancer/50dc6c495c0c9188 
 192.168.131.39:2817 10.0.0.1:80 0.086 0.048 0.037 200 200 0 57 
 "GET https://www.example.com:443/ HTTP/1.1" "curl/7.46.0" ECDHE-RSA-AES128-GCM-SHA256 TLSv1.2 
 arn:aws:elasticloadbalancing:us-east-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067
-"Root=1-58337281-1d84f3d73c47ec4e58577259" www.example.com arn:aws:acm:us-east-2:123456789012:certificate/12345678-1234-1234-1234-123456789012
+"Root=1-58337281-1d84f3d73c47ec4e58577259" "www.example.com" "arn:aws:acm:us-east-2:123456789012:certificate/12345678-1234-1234-1234-123456789012"
+1 2018-07-02T22:22:48.364000Z "authenticate,forward"
 ```
 
 **Example HTTP/2 Entry**  
 The following is an example log entry for an HTTP/2 stream\.
 
 ```
-h2 2016-08-10T00:10:33.145057Z app/my-loadbalancer/50dc6c495c0c9188 
+h2 2018-07-02T22:23:00.186641Z app/my-loadbalancer/50dc6c495c0c9188 
 10.0.1.252:48160 10.0.0.66:9000 0.000 0.002 0.000 200 200 5 257 
 "GET https://10.0.2.105:773/ HTTP/2.0" "curl/7.46.0" ECDHE-RSA-AES128-GCM-SHA256 TLSv1.2
 arn:aws:elasticloadbalancing:us-east-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067
-"Root=1-58337327-72bd00b0343d75b906739c42" - -
+"Root=1-58337327-72bd00b0343d75b906739c42" "-" "-"
+1 2018-07-02T22:22:48.364000Z "forward"
 ```
 
 **Example WebSockets Entry**  
 The following is an example log entry for a WebSockets connection\.
 
 ```
-ws 2016-08-10T00:32:08.923954Z app/my-loadbalancer/50dc6c495c0c9188 
+ws 2018-07-02T22:23:00.186641Z app/my-loadbalancer/50dc6c495c0c9188 
 10.0.0.140:40914 10.0.1.192:8010 0.001 0.003 0.000 101 101 218 587 
 "GET http://10.0.0.30:80/ HTTP/1.1" "-" - - 
 arn:aws:elasticloadbalancing:us-east-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067
-"Root=1-58337364-23a8c76965a2ef7629b185e3" - -
+"Root=1-58337364-23a8c76965a2ef7629b185e3" "-" "-"
+1 2018-07-02T22:22:48.364000Z "forward"
 ```
 
 **Example Secured WebSockets Entry**  
 The following is an example log entry for a secured WebSockets connection\.
 
 ```
-wss 2016-08-10T00:42:46.423695Z app/my-loadbalancer/50dc6c495c0c9188 
+wss 2018-07-02T22:23:00.186641Z app/my-loadbalancer/50dc6c495c0c9188 
 10.0.0.140:44244 10.0.0.171:8010 0.000 0.001 0.000 101 101 218 786
 "GET https://10.0.0.30:443/ HTTP/1.1" "-" ECDHE-RSA-AES128-GCM-SHA256 TLSv1.2 
 arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067
-"Root=1-58337364-23a8c76965a2ef7629b185e3" - -
+"Root=1-58337364-23a8c76965a2ef7629b185e3" "-" "-"
+1 2018-07-02T22:22:48.364000Z "forward"
 ```
 
 ## Bucket Permissions<a name="access-logging-bucket-permissions"></a>

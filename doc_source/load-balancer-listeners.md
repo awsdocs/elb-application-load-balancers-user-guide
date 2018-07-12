@@ -22,9 +22,9 @@ Listeners support the following protocols and ports:
 
 You can use an HTTPS listener to offload the work of encryption and decryption to your load balancer so that your applications can focus on their business logic\. If the listener protocol is HTTPS, you must deploy exactly one SSL server certificate on the listener\. For more information, see [HTTPS Listeners for Your Application Load Balancer](create-https-listener.md)\.
 
-Application Load Balancers provide native support for Websockets\. You can use WebSockets with both HTTP and HTTPS listeners\.
+Application Load Balancers provide native support for WebSockets\. You can use WebSockets with both HTTP and HTTPS listeners\.
 
-Application Load Balancers provide native support for HTTP/2 with HTTPS listeners\. You can send up to 128 requests in parallel using one HTTP/2 connection\. The load balancer converts these to individual HTTP/1\.1 requests and distributes them across the healthy targets in the target group using the round robin routing algorithm\. Because HTTP/2 uses front\-end connections more efficiently, you might notice fewer connections between clients and the load balancer\. Note that you can't use the server\-push feature of HTTP/2\.
+Application Load Balancers provide native support for HTTP/2 with HTTPS listeners\. You can send up to 128 requests in parallel using one HTTP/2 connection\. The load balancer converts these to individual HTTP/1\.1 requests and distributes them across the healthy targets in the target group\. Because HTTP/2 uses front\-end connections more efficiently, you might notice fewer connections between clients and the load balancer\. You can't use the server\-push feature of HTTP/2\.
 
 ## Listener Rules<a name="listener-rules"></a>
 
@@ -67,7 +67,7 @@ You can use host conditions to define rules that forward requests to different t
 
 Each host condition has one hostname\. If the hostname in the host header matches the hostname in a listener rule exactly, the request is routed using that rule\.
 
-A hostname is case\-insensitive, can be up to 128 characters in length, and can contain any of the following characters\. Note that you can include up to three wildcard characters\.
+A hostname is case\-insensitive, can be up to 128 characters in length, and can contain any of the following characters\. You can include up to three wildcard characters\.
 + A–Z, a–z, 0–9
 + \- \.
 + \* \(matches 0 or more characters\)
@@ -78,7 +78,7 @@ A hostname is case\-insensitive, can be up to 128 characters in length, and can 
 + **test\.example\.com**
 + **\*\.example\.com**
 
-Note that **\*\.example\.com** will match **test\.example\.com** but won't match **example\.com**\.
+The rule **\*\.example\.com** matches **test\.example\.com** but doesn't match **example\.com**\.
 
 **Console Example**  
 The following is an example of a rule with a host condition as shown in the console\. If the hostname in the host header matches **\*\.example\.com**, the request is forwarded to the target group named **my\-web\-servers**\. For more information, see [Add a Rule](listener-update-rules.md#add-rule)\.
@@ -91,7 +91,7 @@ You can use path conditions to define rules that forward requests to different t
 
 Each path condition has one path pattern\. If the URL in a request matches the path pattern in a listener rule exactly, the request is routed using that rule\.
 
-A path pattern is case\-sensitive, can be up to 128 characters in length, and can contain any of the following characters\. Note that you can include up to three wildcard characters\.
+A path pattern is case\-sensitive, can be up to 128 characters in length, and can contain any of the following characters\. You can include up to three wildcard characters\.
 + A–Z, a–z, 0–9
 + \_ \- \. $ / \~ " ' @ : \+
 + & \(using &amp;\)
@@ -102,7 +102,7 @@ A path pattern is case\-sensitive, can be up to 128 characters in length, and ca
 + `/img/*`
 + `/js/*`
 
-Note that the path pattern is used to route requests but does not alter them\. For example, if a rule has a path pattern of `/img/*`, the rule would forward a request for `/img/picture.jpg` to the specified target group as a request for `/img/picture.jpg`\.
+The path pattern is used to route requests but does not alter them\. For example, if a rule has a path pattern of `/img/*`, the rule would forward a request for `/img/picture.jpg` to the specified target group as a request for `/img/picture.jpg`\.
 
 **Console Example**  
 The following is an example of a rule with a path condition as shown in the console\. If the URL in the request matches `/img/*`, the request is forwarded to the target group named **my\-targets**\. For more information, see [Add a Rule](listener-update-rules.md#add-rule)\.

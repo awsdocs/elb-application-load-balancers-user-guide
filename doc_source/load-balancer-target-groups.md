@@ -85,7 +85,9 @@ The type of stickiness\. The possible value is `lb_cookie`\.
 
 ## Deregistration Delay<a name="deregistration-delay"></a>
 
-Elastic Load Balancing stops sending requests to targets that are deregistering\. By default, Elastic Load Balancing waits 300 seconds before completing the deregistration process, which can help in\-flight requests to the target to complete\. To change the amount of time that Elastic Load Balancing waits, update the deregistration delay value\. You can specify a value of up to 1 hour, and that Elastic Load Balancing waits the full amount of time specified, regardless of whether there are in\-flight requests\.
+Elastic Load Balancing stops sending requests to targets that are deregistering\. By default, Elastic Load Balancing waits 300 seconds before completing the deregistration process, which can help in\-flight requests to the target to complete\. To change the amount of time that Elastic Load Balancing waits, update the deregistration delay value\.
+
+If a deregistering target has no in\-flight requests and no active connections, Elastic Load Balancing immediately completes the deregistration process, without waiting for the deregistration delay to elapse\.
 
 If a deregistering target terminates the connection before the deregistration delay elapses, the client receives a 500\-level error response\.
 

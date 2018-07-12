@@ -32,7 +32,7 @@ You define a default rule when you create a listener, and you can define additio
 
    1. Choose **Insert Rule**\.
 
-   1. \(Optional\) To configure host\-based routing, choose **Add condition**, **Host is** and type the hostname \(for example, **\*\.example\.com**\)\. To save the condition, choose the checkmark icon
+   1. \(Optional\) To configure host\-based routing, choose **Add condition**, **Host is** and type the hostname \(for example, **\*\.example\.com**\)\. To save the condition, choose the checkmark icon\.
 
    1. \(Optional\) To configure path\-based routing, choose **Add condition**, **Path is** and type the path pattern \(for example, `/img/*`\)\. To save the condition, choose the checkmark icon\.
 
@@ -99,7 +99,7 @@ The console displays a relative sequence number for each rule, not the rule prio
 1. Choose the **Reorder rules** icon \(the arrows\) in the menu bar\.  
 ![\[The Reorder rules icon on the menu bar.\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/menu_bar_reorder_rules.png)
 
-1. Select the check box next to a rule, and then use the arrows to give the rule a new priority\. Note that the default rule always has the last priority\.
+1. Select the check box next to a rule, and then use the arrows to give the rule a new priority\. The default rule always has the last priority\.
 
 1. When you have finished reordering rules, choose **Save**\.
 
@@ -124,7 +124,7 @@ You can delete the nondefault rules for a listener at any time\. You cannot dele
 
 1. Choose the **Delete rules** icon \(the minus sign\) in the menu bar\.
 
-1. Select the check box for the rule and choose **Delete**\. Note that you can't delete the default rule for the listener\.
+1. Select the check box for the rule and choose **Delete**\. You can't delete the default rule for the listener\.
 
 1. To leave this screen, choose the **Back to the load balancer** icon \(the back button\) in the menu bar\.
 

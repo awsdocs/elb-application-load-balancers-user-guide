@@ -11,8 +11,8 @@ The following use cases are supported:
 
 Do the following if you are using an OIDC\-compliant IdP with your Application Load Balancer:
 + Create a new OIDC app in your IdP\. You must configure a client ID and a client secret\.
-+ Get the following endpoints published by the IdP: authorization endpoint, token endpoint, and user info endpoint\. You can locate this information in the well\-known config\.
-+ Whitelist one of the following redirect URLs in your IdP app, whichever your users will use, where DNS is the domain name of your load balancer and CNAME is the DNS alias for your application\.
++ Get the following endpoints published by the IdP: authorization, token, and user info\. You can locate this information in the well\-known config\.
++ Whitelist one of the following redirect URLs in your IdP app, whichever your users will use, where DNS is the domain name of your load balancer and CNAME is the DNS alias for your application:
   + https://*DNS*/oauth2/idpresponse
   + https://*CNAME*/oauth2/idpresponse
 
@@ -23,7 +23,7 @@ Do the following if you are using Amazon Cognito user pools with your Applicatio
 + Create a user pool client\. You must configure the client to generate a client secret, use code grant flow, and support the same OAuth scopes that the load balancer uses\. For more information, see [Configuring a User Pool App Client](http://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-settings-client-apps.html) in the *Amazon Cognito Developer Guide*\.
 + Create a user pool domain\. For more information, see [Adding a Domain Name for Your User Pool](http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-domain.html) in the *Amazon Cognito Developer Guide*\.
 + To federate with a social or corporate IdP, enable the IdP in the federation section\. For more information, see [Add Social Sign\-in to a User Pool](http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-configuring-federation-with-social-idp.html) or [Add Sign\-in with a SAML IdP to a User Pool](http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-configuring-federation-with-saml-2-0-idp.html) in the *Amazon Cognito Developer Guide*\.
-+ Whitelist the following redirect URLs in the callback URL field for Amazon Cognito, where DNS is the domain name of your load balancer, and CNAME is the DNS alias for your application \(if you are using one\)\.
++ Whitelist the following redirect URLs in the callback URL field for Amazon Cognito, where DNS is the domain name of your load balancer, and CNAME is the DNS alias for your application \(if you are using one\):
   + https://*DNS*/oauth2/idpresponse
   + https://*CNAME*/oauth2/idpresponse
 + Whitelist your user pool domain on your IdP app's callback URL\. Use the format for your IdP\. For example:
@@ -31,6 +31,13 @@ Do the following if you are using Amazon Cognito user pools with your Applicatio
   + https://*user\-pool\-domain*/oauth2/idpresponse
 
 To enable an IAM user to configure a load balancer to use Amazon Cognito to authenticate users, you must grant the user permission to call the `cognito-idp:DescribeUserPoolClient` action\.
+
+## Prepare to Use Amazon CloudFront<a name="cloudfront-requirements"></a>
+
+Enable the following settings if you are using a CloudFront distribution in front of your Application Load Balancer:
++ Query string forwarding and caching \(all\)
++ Cookie forwarding \(all\)
++ Cache based on request headers \(all\)
 
 ## Configure User Authentication<a name="configure-user-authentication"></a>
 
@@ -117,7 +124,7 @@ Elastic Load Balancing uses the OIDC authorization code flow, which includes the
 
 1. When the conditions for a rule with an authenticate action are met, the load balancer checks for an authentication session cookie in the request headers\. If the cookie is not present, the load balancer redirects the user to the IdP authorization endpoint so that the IdP can authenticate the user\.
 
-1. After the user is authenticated, the IdP redirects the user back to the load balancer with a authorization grant code\. The load balancer presents the code to the IdP token endpoint to get the ID token and access token\.
+1. After the user is authenticated, the IdP redirects the user back to the load balancer with an authorization grant code\. The load balancer presents the code to the IdP token endpoint to get the ID token and access token\.
 
 1. After the load balancer validates the ID token, it exchanges the access token with the IdP user info endpoint to get the user claims\.
 
@@ -134,17 +141,17 @@ After your load balancer authenticates a user successfully, it sends the user cl
 The load balancer adds the following HTTP headers:
 
 `x-amzn-oidc-accesstoken`  
-The access token from the token endpoint, in clear text\.
+The access token from the token endpoint, in plain text\.
 
 `x-amzn-oidc-identity`  
-The subject field \(`sub`\) from the user info endpoint, in clear text\.
+The subject field \(`sub`\) from the user info endpoint, in plain text\.
 
 `x-amzn-oidc-data`  
 The user claims, in JSON web tokens \(JWT\) format\.
 
-Applications that require the full user claims can use any standard JWT library\. The JWT format includes a header, payload, and signature that are Base64 URL encoded\. The JWT signature is ECDSA \+ P\-256 \+ SHA256\.
+Applications that require the full user claims can use any standard JWT library\. The JWT format includes a header, payload, and signature that are base64 URL encoded\. The JWT signature is ECDSA \+ P\-256 \+ SHA256\.
 
-The JWT header is a JSON object with the following fields\.
+The JWT header is a JSON object with the following fields:
 
 ```
 {
@@ -180,7 +187,7 @@ For AWS GovCloud \(US\), the endpoint is as follows:
 https://s3-us-gov-west-1.amazonaws.com/aws-elb-public-keys-prod-us-gov-west-1/key-id
 ```
 
-The following example shows how to get the public key in Python\.
+The following example shows how to get the public key in Python:
 
 ```
 import jwt

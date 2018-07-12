@@ -4,7 +4,9 @@ You can create a listener that uses encrypted connections \(also known as *SSL o
 
 To use an HTTPS listener, you must deploy an SSL/TLS server certificate on your load balancer\. The load balancer uses this certificate to terminate the connection and then decrypt requests from clients before sending them to the targets\.
 
-Elastic Load Balancing uses a Secure Socket Layer \(SSL\) negotiation configuration, known as a security policy, to negotiate SSL connections between a client and the load balancer\. A security policy is a combination of protocols and ciphers\. The protocol establishes a secure connection between a client and a server and ensures that all data passed between the client and your load balancer is private\. A cipher is an encryption algorithm that uses encryption keys to create a coded message\. Protocols use several ciphers to encrypt data over the Internet\. During the connection negotiation process, the client and the load balancer present a list of ciphers and protocols that they each support, in order of preference\. By default, the first cipher on the server's list that matches any one of the client's ciphers is selected for the secure connection\.
+Elastic Load Balancing uses a Secure Socket Layer \(SSL\) negotiation configuration, known as a security policy, to negotiate SSL connections between a client and the load balancer\. A security policy is a combination of protocols and ciphers\. The protocol establishes a secure connection between a client and a server and ensures that all data passed between the client and your load balancer is private\. A cipher is an encryption algorithm that uses encryption keys to create a coded message\. Protocols use several ciphers to encrypt data over the internet\. During the connection negotiation process, the client and the load balancer present a list of ciphers and protocols that they each support, in order of preference\. By default, the first cipher on the server's list that matches any one of the client's ciphers is selected for the secure connection\.
+
+Application Load Balancers do not support SSL renegotiation for client or target connections\.
 
 ## SSL Certificates<a name="https-listener-certificates"></a>
 
@@ -19,9 +21,9 @@ Alternatively, you can use SSL/TLS tools to create a certificate signing request
 **Important**  
 You cannot install certificates with 4096\-bit RSA keys or EC keys on your load balancer through integration with ACM\. You must upload certificates with 4096\-bit RSA keys or EC keys to IAM in order to use them with your load balancer\.
 
-When you create an HTTPS listener, you specify a default certificate\. You can create an optional certificate list for the listener by adding more certificates\. This enables a load balancer to support multiple domains on the same port and provide a different certificate for each domain\. For more information, see [Update Server Certificates](listener-update-certificates.md)\.
+When you create an HTTPS listener, you specify a default certificate\. You can create an optional certificate list for the listener by adding more certificates\. This enables a load balancer to support multiple domains on the same port and provide a different certificate for each domain\. The default certificate for a listener is not added to the certificate list by default\. For more information, see [Update Server Certificates](listener-update-certificates.md)\.
 
-Clients can use the Server Name Identification \(SNI\) protocol extension to specify the hostname they are trying to reach\. If the hostname doesn't match a certificate, the load balancer selects the default certificate\. If the hostname matches a single certificate, the load balancer selects this certificate\. If a hostname provided by a client matches multiple certificates, the load balancer selects the best certificate that the client can support\. Certificate selection is based on the following criteria in the following order:
+Clients can use the Server Name Identification \(SNI\) protocol extension to specify the hostname they are trying to reach\. If the hostname doesn't match a certificate in the certificate list, the load balancer selects the default certificate\. If the hostname matches a single certificate in the certificate list, the load balancer selects this certificate\. If a hostname provided by a client matches multiple certificates in the certificate list, the load balancer selects the best certificate that the client can support\. Certificate selection is based on the following criteria in the following order:
 + Public key algorithm \(prefer ECDSA over RSA\)
 + Hashing algorithm \(prefer SHA over MD5\)
 + Key length \(prefer the largest\)
@@ -35,42 +37,44 @@ You can choose the security policy that is used for front\-end connections\. The
 
 Elastic Load Balancing provides the following security policies for Application Load Balancers:
 + `ELBSecurityPolicy-2016-08`
++ `ELBSecurityPolicy-FS-2018-06`
 + `ELBSecurityPolicy-TLS-1-2-2017-01`
++ `ELBSecurityPolicy-TLS-1-2-Ext-2018-06`
 + `ELBSecurityPolicy-TLS-1-1-2017-01`
 + `ELBSecurityPolicy-2015-05`
 + `ELBSecurityPolicy-TLS-1-0-2015-04`
 
-We recommend the `ELBSecurityPolicy-2016-08` policy for general use\. You can use one of the `ELBSecurityPolicy-TLS` policies to meet compliance and security standards that require disabling certain TLS protocol versions, or to support legacy clients that require deprecated ciphers\. Note that only a small percentage of Internet clients require TLS version 1\.0\. To view the TLS protocol version for requests to your load balancer, enable access logging for your load balancer and examine the access logs\. For more information, see [Access Logs](load-balancer-access-logs.md)\.
+We recommend the `ELBSecurityPolicy-2016-08` policy for general use\. You can use the `ELBSecurityPolicy-FS-2018-06` policy if you require Forward Secrecy \(FS\)\. You can use one of the `ELBSecurityPolicy-TLS` policies to meet compliance and security standards that require disabling certain TLS protocol versions, or to support legacy clients that require deprecated ciphers\. Only a small percentage of internet clients require TLS version 1\.0\. To view the TLS protocol version for requests to your load balancer, enable access logging for your load balancer and examine the access logs\. For more information, see [Access Logs](load-balancer-access-logs.md)\.
 
 The following table describes the security policies defined for Application Load Balancers\.
 
 
-| Security Policy | 2016\-08 \* | TLS\-1\-1\-2017\-01 | TLS\-1\-2\-2017\-01 | TLS\-1\-0\-2015\-04 † | 
-| --- | --- | --- | --- | --- | 
+| Security Policy | 2016\-08 \* | FS\-2018\-06 | TLS\-1\-2 | TLS\-1\-2\-Ext | TLS\-1\-1 | TLS\-1\-0 † | 
+| --- | --- | --- | --- | --- | --- | --- | 
 | TLS Protocols | 
-| Protocol\-TLSv1 | ♦ |  |  | ♦ | 
-| Protocol\-TLSv1\.1 | ♦ | ♦ |  | ♦ | 
-| Protocol\-TLSv1\.2 | ♦ | ♦ | ♦ | ♦ | 
+| Protocol\-TLSv1 | ♦ | ♦ |  |  |  | ♦ | 
+| Protocol\-TLSv1\.1 | ♦ | ♦ |  |  | ♦ | ♦ | 
+| Protocol\-TLSv1\.2 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
 | TLS Ciphers | 
-| ECDHE\-ECDSA\-AES128\-GCM\-SHA256 | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-RSA\-AES128\-GCM\-SHA256 | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-ECDSA\-AES128\-SHA256 | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-RSA\-AES128\-SHA256 | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-ECDSA\-AES128\-SHA | ♦ | ♦ |  | ♦ | 
-| ECDHE\-RSA\-AES128\-SHA | ♦ | ♦ |  | ♦ | 
-| ECDHE\-ECDSA\-AES256\-GCM\-SHA384 | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-RSA\-AES256\-GCM\-SHA384 | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-ECDSA\-AES256\-SHA384 | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-RSA\-AES256\-SHA384 | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-RSA\-AES256\-SHA | ♦ | ♦ |  | ♦ | 
-| ECDHE\-ECDSA\-AES256\-SHA | ♦ | ♦ |  | ♦ | 
-| AES128\-GCM\-SHA256 | ♦ | ♦ | ♦ | ♦ | 
-| AES128\-SHA256 | ♦ | ♦ | ♦ | ♦ | 
-| AES128\-SHA | ♦ | ♦ |  | ♦ | 
-| AES256\-GCM\-SHA384 | ♦ | ♦ | ♦ | ♦ | 
-| AES256\-SHA256 | ♦ | ♦ | ♦ | ♦ | 
-| AES256\-SHA | ♦ | ♦ |  | ♦ | 
-| DES\-CBC3\-SHA |  |  |  | ♦ | 
+| ECDHE\-ECDSA\-AES128\-GCM\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES128\-GCM\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-ECDSA\-AES128\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES128\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-ECDSA\-AES128\-SHA | ♦ | ♦ |  | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES128\-SHA | ♦ | ♦ |  | ♦ | ♦ | ♦ | 
+| ECDHE\-ECDSA\-AES256\-GCM\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES256\-GCM\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-ECDSA\-AES256\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES256\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES256\-SHA | ♦ | ♦ |  | ♦ | ♦ | ♦ | 
+| ECDHE\-ECDSA\-AES256\-SHA | ♦ | ♦ |  | ♦ | ♦ | ♦ | 
+| AES128\-GCM\-SHA256 | ♦ |  | ♦ | ♦ | ♦ | ♦ | 
+| AES128\-SHA256 | ♦ |  | ♦ | ♦ | ♦ | ♦ | 
+| AES128\-SHA | ♦ |  |  | ♦ | ♦ | ♦ | 
+| AES256\-GCM\-SHA384 | ♦ |  | ♦ | ♦ | ♦ | ♦ | 
+| AES256\-SHA256 | ♦ |  | ♦ | ♦ | ♦ | ♦ | 
+| AES256\-SHA | ♦ |  |  | ♦ | ♦ | ♦ | 
+| DES\-CBC3\-SHA |  |  |  |  |  | ♦ | 
 
 \* The `ELBSecurityPolicy-2016-08` and `ELBSecurityPolicy-2015-05` security policies for Application Load Balancers are identical\.
 
@@ -80,7 +84,7 @@ To view the configuration of a security policy for Application Load Balancers us
 
 ## Update the Security Policy<a name="update-security-policy"></a>
 
-When you create an HTTPS listener, you can select the security policy that meets your needs\. When a new security policy is added, you can update your HTTPS listener to use the new security policy\. Note that Application Load Balancers do not support custom security policies\.
+When you create an HTTPS listener, you can select the security policy that meets your needs\. When a new security policy is added, you can update your HTTPS listener to use the new security policy\. Application Load Balancers do not support custom security policies\.
 
 **To update the security policy using the console**
 
@@ -90,7 +94,7 @@ When you create an HTTPS listener, you can select the security policy that meets
 
 1. Select the load balancer and choose **Listeners**\.
 
-1. Select the checkbox for the HTTPS listener and choose **Edit**\.
+1. Select the check box for the HTTPS listener and choose **Edit**\.
 
 1. For **Security policy**, choose a security policy\.
 

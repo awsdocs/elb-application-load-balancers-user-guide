@@ -26,9 +26,9 @@ You can add certificates to the certificate list for your listener using the fol
 
 1. For the HTTPS listener to update, choose **View/edit certificates**, which displays the default certificate followed by any other certificates that you've added to the listener\.
 
-1. Choose the **Add certificates** icon \(the plus sign\) in the menu bar, which displays the default certificate followed by any other certificates managed by ACM and IAM\. If you've already added a certificate to the listener, its checkbox is selected and disabled\.
+1. Choose the **Add certificates** icon \(the plus sign\) in the menu bar, which displays the default certificate followed by any other certificates managed by ACM and IAM\. If you've already added a certificate to the listener, its check box is selected and disabled\.
 
-1. To add certificates that are already managed by ACM or IAM, select the checkboxes for the certificates and choose **Add**\.
+1. To add certificates that are already managed by ACM or IAM, select the check boxes for the certificates and choose **Add**\.
 
 1. If you have a certificate that isn't managed by ACM or IAM, import it to ACM and add it to your listener as follows:
 
@@ -61,7 +61,7 @@ You can replace the default certificate for your listener using the following pr
 
 1. Select the load balancer and choose **Listeners**\.
 
-1. Select the checkbox for the listener and choose **Edit**\.
+1. Select the check box for the listener and choose **Edit**\.
 
 1. For **Default SSL certificate**, do one of the following:
    + If you created or imported a certificate using AWS Certificate Manager, choose **From ACM** and choose the certificate\.
@@ -88,7 +88,7 @@ You can remove the nondefault certificates for an HTTPS listener at any time\. Y
 
 1. Choose the **Remove certificates** icon \(the minus sign\) in the menu bar\.
 
-1. Select the checkboxes for the certificates and choose **Remove**\.
+1. Select the check boxes for the certificates and choose **Remove**\.
 
 1. To leave this screen, choose the **Back to the load balancer** icon \(the back button\) in the menu bar\.
 

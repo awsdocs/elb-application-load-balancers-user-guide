@@ -6,6 +6,8 @@ The following table describes important additions to the documentation for Appli
 
 | Change | Description | Date | 
 | --- | --- | --- | 
+| Fixed\-response actions | This release adds support for the load balancer to return a custom HTTP response\. For more information, see [Fixed\-Response Actions](load-balancer-listeners.md#fixed-response-actions)\. | July 25, 2018 | 
+| Redirect actions | This release adds support for the load balancer to redirect requests to a different URL\. For more information, see [Redirect Actions](load-balancer-listeners.md#redirect-actions)\. | July 25, 2018 | 
 | Security policies for FS and TLS 1\.2 | This release adds security policies for Forward Secrecy \(FS\) and TLS 1\.2\. For more information, see [Security Policies](create-https-listener.md#describe-ssl-policies)\. | June 6, 2018 | 
 | Authentication support | This release adds support for the load balancer to authenticate users of your applications using their corporate or social identities before routing requests\. For more information, see [Authenticate Users Using an Application Load Balancer](listener-authenticate-users.md)\. | May 30, 2018 | 
 | Slow start mode | This release adds support for slow start mode, which gradually increases the share of requests the load balancer sends to a newly registered target while it warms up\. For more information, see [Slow Start Mode](load-balancer-target-groups.md#slow-start-mode)\. | March 24, 2018 | 

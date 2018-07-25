@@ -99,7 +99,8 @@ The following table describes the fields of an access log entry, in order\. All 
 | "chosen\_cert\_arn" |  \[HTTPS listener\] The ARN of the certificate presented to the client, enclosed in double quotes\. This value is set to `session-reused` if the session is reused\.  | 
 | matched\_rule\_priority |  The priority value of the rule that matched the request\. If a rule matched, this is a value from 1 to 50,000\. If no rule matched and the default action was taken, the value is 0\. If an error occurred, the value is \-1\.  | 
 | request\_creation\_time |  The time when the load balancer received the request from the client, in ISO 8601 format\.  | 
-| "actions\_executed" |  The actions taken when processing the request, enclosed in double quotes\. This value is a comma\-separated list that can include the following possible values: `waf`, `authenticate`, and `forward`\. If no action was taken, such as for a malformed request, this value is set to \-\.  | 
+| "actions\_executed" |  The actions taken when processing the request, enclosed in double quotes\. This value is a comma\-separated list that can include the following possible values: `waf`, `authenticate`, `redirect`, `fixed-response`, and `forward`\. If no action was taken, such as for a malformed request, this value is set to \-\.  | 
+| "redirect\_url" |  The URL of the redirect target for the location header of the HTTP response, enclosed in double quotes\. If no redirect actions were taken, the value is set to \-\.  | 
 
 ### Examples<a name="access-log-entry-examples"></a>
 
@@ -114,7 +115,7 @@ http 2018-07-02T22:23:00.186641Z app/my-loadbalancer/50dc6c495c0c9188
 "GET http://www.example.com:80/ HTTP/1.1" "curl/7.46.0" - - 
 arn:aws:elasticloadbalancing:us-east-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067
 "Root=1-58337262-36d228ad5d99923122bbe354" "-" "-" 
-0 2018-07-02T22:22:48.364000Z "forward"
+0 2018-07-02T22:22:48.364000Z "forward" "-"
 ```
 
 **Example HTTPS Entry**  
@@ -126,7 +127,7 @@ https 2018-07-02T22:23:00.186641Z app/my-loadbalancer/50dc6c495c0c9188
 "GET https://www.example.com:443/ HTTP/1.1" "curl/7.46.0" ECDHE-RSA-AES128-GCM-SHA256 TLSv1.2 
 arn:aws:elasticloadbalancing:us-east-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067
 "Root=1-58337281-1d84f3d73c47ec4e58577259" "www.example.com" "arn:aws:acm:us-east-2:123456789012:certificate/12345678-1234-1234-1234-123456789012"
-1 2018-07-02T22:22:48.364000Z "authenticate,forward"
+1 2018-07-02T22:22:48.364000Z "authenticate,forward" "-"
 ```
 
 **Example HTTP/2 Entry**  
@@ -138,7 +139,7 @@ h2 2018-07-02T22:23:00.186641Z app/my-loadbalancer/50dc6c495c0c9188
 "GET https://10.0.2.105:773/ HTTP/2.0" "curl/7.46.0" ECDHE-RSA-AES128-GCM-SHA256 TLSv1.2
 arn:aws:elasticloadbalancing:us-east-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067
 "Root=1-58337327-72bd00b0343d75b906739c42" "-" "-"
-1 2018-07-02T22:22:48.364000Z "forward"
+1 2018-07-02T22:22:48.364000Z "redirect" "https://example.com:80/"
 ```
 
 **Example WebSockets Entry**  
@@ -150,7 +151,7 @@ ws 2018-07-02T22:23:00.186641Z app/my-loadbalancer/50dc6c495c0c9188
 "GET http://10.0.0.30:80/ HTTP/1.1" "-" - - 
 arn:aws:elasticloadbalancing:us-east-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067
 "Root=1-58337364-23a8c76965a2ef7629b185e3" "-" "-"
-1 2018-07-02T22:22:48.364000Z "forward"
+1 2018-07-02T22:22:48.364000Z "forward" "-"
 ```
 
 **Example Secured WebSockets Entry**  
@@ -162,7 +163,7 @@ wss 2018-07-02T22:23:00.186641Z app/my-loadbalancer/50dc6c495c0c9188
 "GET https://10.0.0.30:443/ HTTP/1.1" "-" ECDHE-RSA-AES128-GCM-SHA256 TLSv1.2 
 arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067
 "Root=1-58337364-23a8c76965a2ef7629b185e3" "-" "-"
-1 2018-07-02T22:22:48.364000Z "forward"
+1 2018-07-02T22:22:48.364000Z "forward" "-"
 ```
 
 ## Bucket Permissions<a name="access-logging-bucket-permissions"></a>

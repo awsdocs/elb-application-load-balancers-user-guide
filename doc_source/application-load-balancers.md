@@ -113,11 +113,11 @@ Use the [modify\-load\-balancer\-attributes](http://docs.aws.amazon.com/cli/late
 
 ## Connection Idle Timeout<a name="connection-idle-timeout"></a>
 
-For each request that a client makes through a load balancer, the load balancer maintains two connections\. A front\-end connection is between a client and the load balancer, and a back\-end connection is between the load balancer and a target\. For each front\-end connection, the load balancer manages an idle timeout that is triggered when no data is sent over the connection for a specified time period\. If no data has been sent or received by the time that the idle timeout period elapses, the load balancer closes the front\-end connection\.
+For each request that a client makes through a load balancer, the load balancer maintains two connections\. A front\-end connection is between a client and the load balancer, and a back\-end connection is between the load balancer and a target\. The load balancer manages an idle timeout that is triggered when no data is sent over a connection for a specified time period\. If no data has been sent or received by the time that the idle timeout period elapses, the load balancer closes the connection\.
 
 By default, Elastic Load Balancing sets the idle timeout value to 60 seconds\. Therefore, if the target doesn't send some data at least every 60 seconds while the request is in flight, the load balancer can close the front\-end connection\. To ensure that lengthy operations such as file uploads have time to complete, send at least 1 byte of data before each idle timeout period elapses, and increase the length of the idle timeout period as needed\.
 
-For back\-end connections, we recommend that you enable the HTTP keep\-alive option for your EC2 instances\. You can enable HTTP keep\-alive in the web server settings for your EC2 instances\. If you enable HTTP keep\-alive, the load balancer can reuse back\-end connections until the keep\-alive timeout expires\.
+For back\-end connections, we recommend that you enable the HTTP keep\-alive option for your EC2 instances\. You can enable HTTP keep\-alive in the web server settings for your EC2 instances\. If you enable HTTP keep\-alive, the load balancer can reuse back\-end connections until the keep\-alive timeout expires\. We also recommend that you configure the idle timeout of your application to be larger than the idle timeout configured for the load balancer\.
 
 **To update the idle timeout value using the console**
 

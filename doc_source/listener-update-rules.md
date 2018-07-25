@@ -9,7 +9,7 @@ The console displays a relative sequence number for each rule, not the rule prio
 
 ## Prerequisites<a name="update-rule-prerequisites"></a>
 
-A rule routes requests to its target group\. Before you create a rule or update the target group for a rule, create the target group and add targets to it\. For more information, see [Create a Target Group](create-target-group.md)\.
+A forward action routes requests to its target group\. Before you create a rule with a forward action or update the target group for a rule with a forward action, create the target group and add targets to it\. For more information, see [Create a Target Group](create-target-group.md)\.
 
 ## Add a Rule<a name="add-rule"></a>
 
@@ -36,9 +36,14 @@ You define a default rule when you create a listener, and you can define additio
 
    1. \(Optional\) To configure path\-based routing, choose **Add condition**, **Path is** and type the path pattern \(for example, `/img/*`\)\. To save the condition, choose the checkmark icon\.
 
-   1. \(Optional, HTTPS listeners\) To authenticate users, choose **Add action**, **Authenticate** and provide the requested information\. For more information, see [Authenticate Users Using an Application Load Balancer](listener-authenticate-users.md)\.
+   1. \(Optional, HTTPS listener\) To authenticate users, choose **Add action**, **Authenticate** and provide the requested information\. For more information, see [Authenticate Users Using an Application Load Balancer](listener-authenticate-users.md)\.
 
-   1. To add a forward action, choose **Add action**, **Forward to** and choose a target group\. Each rule must have exactly one forward action\.
+   1. Do one of the following:
+      + To add a forward action, choose **Add action**, **Forward to** and choose a target group\.
+      + To add a redirect action, choose **Add action**, **Redirect to** and provide the URL for the redirect\. For more information, see [Redirect Actions](load-balancer-listeners.md#redirect-actions)\.
+      + To add a fixed\-response action, choose **Add action**, **Return fixed response** and provide a response code and optional response body\. For more information, see [Fixed\-Response Actions](load-balancer-listeners.md#fixed-response-actions)\.
+
+      To save the action, choose the checkmark icon\.
 
    1. \(Optional\) To change the order of the rule, use the arrows\. The default rule always has the **last** priority\.
 
@@ -69,7 +74,7 @@ You can edit the action and conditions for a rule at any time\.
 
 1. For the rule to edit, choose the **Edit rules** icon \(the pencil\)\.
 
-1. \(Optional\) Modify the conditions and actions as needed\. For example, you can edit a condition or action \(pencil icon\), add a path condition if you don't have one already, add a host condition if you don't have one already, add an authenticate action for a rule for an HTTPS listener, or delete a condition or action \(trash can icon\)\. You can't add conditions to the default rule\. Each rule must have exactly one forward action\.  
+1. \(Optional\) Modify the conditions and actions as needed\. For example, you can edit a condition or action \(pencil icon\), add a path condition if you don't have one already, add a host condition if you don't have one already, add an authenticate action for a rule for an HTTPS listener, or delete a condition or action \(trash can icon\)\. You can't add conditions to the default rule\.  
 ![\[The Edit Rule interface.\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/edit_rule.png)
 
 1. Choose **Update**\.

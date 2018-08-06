@@ -201,7 +201,7 @@ decoded_json = json.loads(decoded_jwt_headers)
 kid = decoded_json['kid']
 
 # Step 2: Get the public key from regional endpoint
-url = 'https://public-keys.auth.elb' + region + '.amazonaws.com/' + kid
+url = 'https://public-keys.auth.elb.' + region + '.amazonaws.com/' + kid
 req = requests.get(url)
 pub_key = req.text
 

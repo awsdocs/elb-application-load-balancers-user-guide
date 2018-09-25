@@ -28,6 +28,8 @@ Application Load Balancers provide native support for WebSockets\. You can use W
 
 Application Load Balancers provide native support for HTTP/2 with HTTPS listeners\. You can send up to 128 requests in parallel using one HTTP/2 connection\. The load balancer converts these to individual HTTP/1\.1 requests and distributes them across the healthy targets in the target group\. Because HTTP/2 uses front\-end connections more efficiently, you might notice fewer connections between clients and the load balancer\. You can't use the server\-push feature of HTTP/2\.
 
+For more information, see [Request Routing](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/how-elastic-load-balancing-works.html#request-routing) in the *Elastic Load Balancing User Guide*\.
+
 ## Listener Rules<a name="listener-rules"></a>
 
 Each listener has a default rule, and you can optionally define additional rules\. Each rule consists of a priority, one or more actions, an optional host condition, and an optional path condition\.
@@ -131,11 +133,13 @@ You can use host conditions to define rules that forward requests to different t
 
 Each host condition has one hostname\. If the hostname in the host header matches the hostname in a listener rule exactly, the request is routed using that rule\.
 
-A hostname is case\-insensitive, can be up to 128 characters in length, and can contain any of the following characters\. You can include up to three wildcard characters\.
+A hostname is case\-insensitive, can be up to 128 characters in length, and can contain any of the following characters:
 + A–Z, a–z, 0–9
 + \- \.
 + \* \(matches 0 or more characters\)
 + ? \(matches exactly 1 character\)
+
+You can include up to three wildcard characters\. You must include at least one "\." character\. You can include only alphabetical characters after the final "\." character\.
 
 **Example hostnames**
 + **example\.com**
@@ -153,7 +157,7 @@ The following is an example of a rule with a host condition as shown in the cons
 
 You can use path conditions to define rules that forward requests to different target groups based on the URL in the request \(also known as *path\-based routing*\)\.
 
-Each path condition has one path pattern\. If the URL in a request matches the path pattern in a listener rule exactly, the request is routed using that rule\.
+Each path condition has one path pattern\. If the URL in a request, including any query parameters, matches the path pattern in a listener rule exactly, the request is routed using that rule\.
 
 A path pattern is case\-sensitive, can be up to 128 characters in length, and can contain any of the following characters\. You can include up to three wildcard characters\.
 + A–Z, a–z, 0–9

@@ -15,4 +15,4 @@ You can delete a listener at any time\. When you delete a load balancer, all its
 1. When prompted for confirmation, choose **Yes, Delete**\.
 
 **To delete a listener using the AWS CLI**  
-Use the [delete\-listener](http://docs.aws.amazon.com/cli/latest/reference/elbv2/delete-listener.html) command\.
+Use the [delete\-listener](https://docs.aws.amazon.com/cli/latest/reference/elbv2/delete-listener.html) command\.

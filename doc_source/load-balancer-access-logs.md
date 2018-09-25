@@ -4,7 +4,7 @@ Elastic Load Balancing provides access logs that capture detailed information ab
 
 Access logging is an optional feature of Elastic Load Balancing that is disabled by default\. After you enable access logging for your load balancer, Elastic Load Balancing captures the logs and stores them in the Amazon S3 bucket that you specify as compressed files\. You can disable access logging at any time\.
 
-Elastic Load Balancing supports server\-side encryption for access logs for your Application Load Balancer\. This protects the log data stored in your S3 bucket and meets compliance requirements for data at rest\. Each access log file is automatically encrypted before it is stored in your S3 bucket and decrypted when you access it\. You do not need to take any action as there is no difference in the way you access encrypted or unencrypted log files\. Each log file is encrypted with a unique key employing strong multi\-factor encryption\. As an additional safeguard, the key itself encrypted with a master key that is regularly rotated\. For more information, see [Protecting Data Using Server\-Side Encryption with Amazon S3\-Managed Encryption Keys \(SSE\-S3\)](http://docs.aws.amazon.com/AmazonS3/latest/dev/UsingServerSideEncryption.html) in the *Amazon Simple Storage Service Developer Guide*\.
+Elastic Load Balancing supports server\-side encryption for access logs for your Application Load Balancer\. This protects the log data stored in your S3 bucket and meets compliance requirements for data at rest\. Each access log file is automatically encrypted before it is stored in your S3 bucket and decrypted when you access it\. You do not need to take any action as there is no difference in the way you access encrypted or unencrypted log files\. Each log file is encrypted with a unique key employing strong multi\-factor encryption\. As an additional safeguard, the key itself encrypted with a master key that is regularly rotated\. For more information, see [Protecting Data Using Server\-Side Encryption with Amazon S3\-Managed Encryption Keys \(SSE\-S3\)](https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingServerSideEncryption.html) in the *Amazon Simple Storage Service Developer Guide*\.
 
 There is no additional charge for access logs\. You are charged storage costs for Amazon S3, but not charged for the bandwidth used by Elastic Load Balancing to send log files to Amazon S3\. For more information about storage costs, see [Amazon S3 Pricing](https://aws.amazon.com/s3/pricing/)\.
 
@@ -59,7 +59,7 @@ The following is an example log file name:
 s3://my-bucket/prefix/AWSLogs/123456789012/elasticloadbalancing/us-east-2/2016/05/01/123456789012_elasticloadbalancing_us-east-2_my-loadbalancer_20140215T2340Z_172.160.001.192_20sg8hgm.log.gz
 ```
 
-You can store your log files in your bucket for as long as you want, but you can also define Amazon S3 lifecycle rules to archive or delete log files automatically\. For more information, see [Object Lifecycle Management](http://docs.aws.amazon.com/AmazonS3/latest/dev/object-lifecycle-mgmt.html) in the *Amazon Simple Storage Service Developer Guide*\.
+You can store your log files in your bucket for as long as you want, but you can also define Amazon S3 lifecycle rules to archive or delete log files automatically\. For more information, see [Object Lifecycle Management](https://docs.aws.amazon.com/AmazonS3/latest/dev/object-lifecycle-mgmt.html) in the *Amazon Simple Storage Service Developer Guide*\.
 
 ## Access Log Entries<a name="access-log-entry-format"></a>
 
@@ -86,21 +86,21 @@ The following table describes the fields of an access log entry, in order\. All 
 | target\_processing\_time |  The total time elapsed \(in seconds, with millisecond precision\) from the time the load balancer sent the request to a target until the target started to send the response headers\. This value is set to \-1 if the load balancer can't dispatch the request to a target\. This can happen if the target closes the connection before the idle timeout or if the client sends a malformed request\. This value can also be set to \-1 if the registered target does not respond before the idle timeout\.  | 
 | response\_processing\_time |  The total time elapsed \(in seconds, with millisecond precision\) from the time the load balancer received the response header from the target until it started to send the response to the client\. This includes both the queuing time at the load balancer and the connection acquisition time from the load balancer to the client\. This value is set to \-1 if the load balancer can't send the request to a target\. This can happen if the target closes the connection before the idle timeout or if the client sends a malformed request\.  | 
 | elb\_status\_code | The status code of the response from the load balancer\. | 
-| target\_status\_code | The status code of the response from the target\. This value is recorded only if a connection was established to the target and the target sent a response\. Otherwise, the value is set to \-\. | 
+| target\_status\_code | The status code of the response from the target\. This value is recorded only if a connection was established to the target and the target sent a response\. Otherwise, it is set to \-\. | 
 | received\_bytes |  The size of the request, in bytes, received from the client \(requester\)\. For HTTP requests, this includes the headers\. For WebSockets, this is the total number of bytes received from the client on the connection\.  | 
 | sent\_bytes |  The size of the response, in bytes, sent to the client \(requester\)\. For HTTP requests, this includes the headers\. For WebSockets, this is the total number of bytes sent to the client on the connection\.  | 
 | "request" |  The request line from the client, enclosed in double quotes and logged using the following format: HTTP method \+ protocol://host:port/uri \+ HTTP version\.  | 
 | "user\_agent" |  A User\-Agent string that identifies the client that originated the request, enclosed in double quotes\. The string consists of one or more product identifiers, product\[/version\]\. If the string is longer than 8 KB, it is truncated\.  | 
-| ssl\_cipher |  \[HTTPS listener\] The SSL cipher\. This value is recorded only if the incoming connection was established after a successful negotiation\. Otherwise, the value is set to \-\.  | 
-| ssl\_protocol |  \[HTTPS listener\] The SSL protocol\. This value is recorded only if the incoming connection was established after a successful negotiation\. Otherwise, the value is set to \-\.  | 
+| ssl\_cipher |  \[HTTPS listener\] The SSL cipher\. This value is recorded only if the incoming connection was established after a successful negotiation\. Otherwise, it is set to \-\.  | 
+| ssl\_protocol |  \[HTTPS listener\] The SSL protocol\. This value is recorded only if the incoming connection was established after a successful negotiation\. Otherwise, it is set to \-\.  | 
 | target\_group\_arn |  The Amazon Resource Name \(ARN\) of the target group\.  | 
 | "trace\_id" |  The contents of the **X\-Amzn\-Trace\-Id** header, enclosed in double quotes\.  | 
 | "domain\_name" |  \[HTTPS listener\] The SNI domain provided by the client during the TLS handshake, enclosed in double quotes\. This value is set to \- if the client doesn't support SNI or the domain doesn't match a certificate and the default certificate is presented to the client\.  | 
 | "chosen\_cert\_arn" |  \[HTTPS listener\] The ARN of the certificate presented to the client, enclosed in double quotes\. This value is set to `session-reused` if the session is reused\.  | 
-| matched\_rule\_priority |  The priority value of the rule that matched the request\. If a rule matched, this is a value from 1 to 50,000\. If no rule matched and the default action was taken, the value is 0\. If an error occurred, the value is \-1\.  | 
+| matched\_rule\_priority |  The priority value of the rule that matched the request\. If a rule matched, this is a value from 1 to 50,000\. If no rule matched and the default action was taken, this value is set to 0\. If an error occurs during rules evaluation, it is set to \-1\. For any other error, it is set to \-\.  | 
 | request\_creation\_time |  The time when the load balancer received the request from the client, in ISO 8601 format\.  | 
 | "actions\_executed" |  The actions taken when processing the request, enclosed in double quotes\. This value is a comma\-separated list that can include the following possible values: `waf`, `authenticate`, `redirect`, `fixed-response`, and `forward`\. If no action was taken, such as for a malformed request, this value is set to \-\.  | 
-| "redirect\_url" |  The URL of the redirect target for the location header of the HTTP response, enclosed in double quotes\. If no redirect actions were taken, the value is set to \-\.  | 
+| "redirect\_url" |  The URL of the redirect target for the location header of the HTTP response, enclosed in double quotes\. If no redirect actions were taken, this value is set to \-\.  | 
 
 ### Examples<a name="access-log-entry-examples"></a>
 
@@ -168,22 +168,29 @@ arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-targets/73e2d
 
 ## Bucket Permissions<a name="access-logging-bucket-permissions"></a>
 
-When you enable access logging, you must specify an S3 bucket for the access logs\. This bucket must be located in the same region as the load balancer, and must have a bucket policy that grants Elastic Load Balancing permission to write the access logs to your bucket\. Bucket policies are a collection of JSON statements written in the access policy language to define access permissions for your bucket\. Each statement includes information about a single permission and contains a series of elements\.
+When you enable access logging, you must specify an S3 bucket for the access logs\. The bucket must meet the following requirements\.
 
-**Important**  
-If you will use the console to enable access logging, you can skip to [Enable Access Logging](#enable-access-logging)\. If you will use the AWS CLI or an API to enable access logging, the bucket must exist and must have the required bucket policy\.
+**Requirements**
++ The bucket must be located in the same region as the load balancer\.
++ The bucket must have a bucket policy that grants Elastic Load Balancing permission to write the access logs to your bucket\. Bucket policies are a collection of JSON statements written in the access policy language to define access permissions for your bucket\. Each statement includes information about a single permission and contains a series of elements\.
++ The bucket cannot use encryption\.
 
-If you need to create a bucket for your access logs, use the following procedure to create the bucket and add the required bucket policy\. If you already have a bucket, start at step 4 to add or update the bucket policy for your bucket\.
+Use one of the following options to prepare an S3 bucket for the access logs\.
+
+**Options**
++ If you need to create a bucket and you plan to use the console to enable access logging, you can skip to [Enable Access Logging](#enable-access-logging) and select the option to have the console create the bucket and bucket policy for you\.
++ If you need to create a bucket for your access logs and you are using the AWS CLI or an API, use the following procedure to create the bucket and add the required bucket policy manually\.
++ If you already have a bucket for your access logs, open the Amazon S3 console per step 1 of the following procedure and then skip to step 4 to add or update the bucket policy\.
 
 **To create an Amazon S3 bucket with the required permissions**
 
 1. Open the Amazon S3 console at [https://console\.aws\.amazon\.com/s3/](https://console.aws.amazon.com/s3/)\.
 
-1. Choose **Create Bucket**\.
+1. \[Skip to use existing bucket\] Choose **Create Bucket**\.
 
-1. In the **Create a Bucket** dialog box, do the following:
+1. \[Skip to use existing bucket\] In the **Create a Bucket** dialog box, do the following:
 
-   1. For **Bucket Name**, enter a name for your bucket \(for example, `my-loadbalancer-logs`\)\. This name must be unique across all existing bucket names in Amazon S3\. In some regions, there might be additional restrictions on bucket names\. For more information, see [Bucket Restrictions and Limitations](http://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html) in the *Amazon Simple Storage Service Developer Guide*\.
+   1. For **Bucket Name**, enter a name for your bucket \(for example, `my-loadbalancer-logs`\)\. This name must be unique across all existing bucket names in Amazon S3\. In some regions, there might be additional restrictions on bucket names\. For more information, see [Bucket Restrictions and Limitations](https://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html) in the *Amazon Simple Storage Service Developer Guide*\.
 
    1. For **Region**, select the region where you created your load balancer\.
 
@@ -266,12 +273,12 @@ When you enable access logging for your load balancer, you must specify the name
 
    1. For **S3 location**, type the name of your S3 bucket, including any prefix \(for example, `my-loadbalancer-logs/my-app`\)\. You can specify the name of an existing bucket or a name for a new bucket\. If you specify an existing bucket, be sure that you own this bucket and that you configured the required bucket policy\.
 
-   1. \(Optional\) If the bucket does not exist, choose **Create this location for me**\. You must specify a name that is unique across all existing bucket names in Amazon S3 and follows the DNS naming conventions\. For more information, see [Rules for Bucket Naming](http://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html#bucketnamingrules) in the *Amazon Simple Storage Service Developer Guide*\.
+   1. \(Optional\) If the bucket does not exist, choose **Create this location for me**\. You must specify a name that is unique across all existing bucket names in Amazon S3 and follows the DNS naming conventions\. For more information, see [Rules for Bucket Naming](https://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html#bucketnamingrules) in the *Amazon Simple Storage Service Developer Guide*\.
 
    1. Choose **Save**\.
 
 **To enable access logging using the AWS CLI**  
-Use the [modify\-load\-balancer\-attributes](http://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-load-balancer-attributes.html) command\.
+Use the [modify\-load\-balancer\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-load-balancer-attributes.html) command\.
 
 **To verify that Elastic Load Balancing created a test file in your S3 bucket**
 
@@ -292,7 +299,7 @@ After you enable access logging, be sure to disable access logging before you de
 
 ## Disable Access Logging<a name="disable-access-logging"></a>
 
-You can disable access logging for your load balancer at any time\. After you disable access logging, your access logs remain in your S3 bucket until you delete the them\. For more information, see [Working with Buckets](http://docs.aws.amazon.com/AmazonS3/latest/user-guide/BucketOperations.html) in the *Amazon Simple Storage Service Console User Guide*\.
+You can disable access logging for your load balancer at any time\. After you disable access logging, your access logs remain in your S3 bucket until you delete the them\. For more information, see [Working with Buckets](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/BucketOperations.html) in the *Amazon Simple Storage Service Console User Guide*\.
 
 **To disable access logging using the console**
 
@@ -309,14 +316,14 @@ You can disable access logging for your load balancer at any time\. After you di
 1. Choose **Save**\.
 
 **To disable access logging using the AWS CLI**  
-Use the [modify\-load\-balancer\-attributes](http://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-load-balancer-attributes.html) command\.
+Use the [modify\-load\-balancer\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-load-balancer-attributes.html) command\.
 
 ## Processing Access Log Files<a name="log-processing-tools"></a>
 
 The access log files are compressed\. If you open the files using the Amazon S3 console, they are uncompressed and the information is displayed\. If you download the files, you must uncompress them to view the information\.
 
 If there is a lot of demand on your website, your load balancer can generate log files with gigabytes of data\. You might not be able to process such a large amount of data using line\-by\-line processing\. Therefore, you might have to use analytical tools that provide parallel processing solutions\. For example, you can use the following analytical tools to analyze and process access logs:
-+ Amazon Athena is an interactive query service that makes it easy to analyze data in Amazon S3 using standard SQL\. For more information, see [Querying Application Load Balancer Logs](http://docs.aws.amazon.com/athena/latest/ug/application-load-balancer-logs.html) in the *Amazon Athena User Guide*\.
++ Amazon Athena is an interactive query service that makes it easy to analyze data in Amazon S3 using standard SQL\. For more information, see [Querying Application Load Balancer Logs](https://docs.aws.amazon.com/athena/latest/ug/application-load-balancer-logs.html) in the *Amazon Athena User Guide*\.
 + [Loggly](https://www.loggly.com/docs/s3-ingestion-auto/)
 + [Splunk](http://apps.splunk.com/app/1731/)
 + [Sumo Logic](http://sumologic.com/applications/aws-elastic-load-balancing/)

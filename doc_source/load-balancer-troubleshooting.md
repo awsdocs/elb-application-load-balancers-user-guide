@@ -88,13 +88,16 @@ The load balancer received an X\-Forwarded\-For request header with more than 30
 
 Possible causes:
 + You configured an AWS WAF web access control list \(web ACL\) and there was an error executing the web ACL rules\.
++ You configured a listener rule to authenticate users, but the load balancer is unable to communicate with the IdP token endpoint or the IdP user info endpoint\. Verify that the security groups for your load balancer and the network ACLs for your VPC allow outbound access to these endpoints\. Verify that your VPC has internet access\. If you have an internal\-facing load balancer, use a NAT gateway to enable internet access\.
 + You configured a listener rule to authenticate users, but the size of the claims returned by the IdP exceeded the maximum size supported by the load balancer\.
 + You configured a listener rule to authenticate users, a client submitted an HTTP/1\.0 request without a host header, and the load balancer was unable to generate a redirect URL\.
++ You configured a listener rule to authenticate users, but the requested scope doesn't return an ID token\.
 
 ### HTTP 502: Bad Gateway<a name="http-502-issues"></a>
 
 Possible causes:
 + The load balancer received a TCP RST from the target when attempting to establish a connection\.
++ The load balancer received an unexpected response from the target, such as "ICMP Destination unreachable \(Host unreachable\)", when attempting to establish a connection\. Check whether traffic is allowed from the load balancer subnets to the targets on the target port\.
 + The target closed the connection with a TCP RST or a TCP FIN while the load balancer had an outstanding request to the target\. Check whether the keep\-alive duration of the target is shorter than the idle timeout value of the load balancer\.
 + The target response is malformed or contains HTTP headers that are not valid\.
 + A new target group was used but no targets have passed an initial health check yet\. A target must pass one health check to be considered healthy\.

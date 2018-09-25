@@ -32,7 +32,7 @@ The recommended rules depend on the type of load balancer \(Internet\-facing or 
 | *instance security group* | *instance listener* | Allow outbound traffic to instances on the instance listener port | 
 | *instance security group* | *health check* | Allow outbound traffic to instances on the health check port | 
 
-We also recommend that you allow inbound ICMP traffic to support Path MTU Discovery\. For more information, see [Path MTU Discovery](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/network_mtu.html#path_mtu_discovery) in the *Amazon EC2 User Guide for Linux Instances*\.
+We also recommend that you allow inbound ICMP traffic to support Path MTU Discovery\. For more information, see [Path MTU Discovery](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/network_mtu.html#path_mtu_discovery) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 ## Update the Associated Security Groups<a name="update-group"></a>
 
@@ -53,4 +53,4 @@ You can update the security groups associated with your load balancer at any tim
 1. Choose **Save**\.
 
 **To update security groups using the AWS CLI**  
-Use the [set\-security\-groups](http://docs.aws.amazon.com/cli/latest/reference/elbv2/set-security-groups.html) command\.
+Use the [set\-security\-groups](https://docs.aws.amazon.com/cli/latest/reference/elbv2/set-security-groups.html) command\.

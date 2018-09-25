@@ -1,6 +1,6 @@
 # What Is an Application Load Balancer?<a name="introduction"></a>
 
-Elastic Load Balancing supports three types of load balancers: Application Load Balancers, Network Load Balancers, and Classic Load Balancers\. This guide discusses Application Load Balancers\. For more information about Network Load Balancers, see the [User Guide for Network Load Balancers](http://docs.aws.amazon.com/elasticloadbalancing/latest/network/)\. For more information about Classic Load Balancers, see the [User Guide for Classic Load Balancers](http://docs.aws.amazon.com/elasticloadbalancing/latest/classic/)\.
+Elastic Load Balancing supports three types of load balancers: Application Load Balancers, Network Load Balancers, and Classic Load Balancers\. This guide discusses Application Load Balancers\. For more information about Network Load Balancers, see the [User Guide for Network Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/)\. For more information about Classic Load Balancers, see the [User Guide for Classic Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/)\.
 
 ## Application Load Balancer Components<a name="application-load-balancer-components"></a>
 
@@ -27,7 +27,7 @@ You can add and remove targets from your load balancer as your needs change, wit
 
 You can configure health checks, which are used to monitor the health of the registered targets so that the load balancer can send requests only to the healthy targets\.
 
-For more information, see [How Elastic Load Balancing Works](http://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/how-elastic-load-balancing-works.html) in the *Elastic Load Balancing User Guide*\.
+For more information, see [How Elastic Load Balancing Works](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/how-elastic-load-balancing-works.html) in the *Elastic Load Balancing User Guide*\.
 
 ## Benefits of Migrating from a Classic Load Balancer<a name="application-load-balancer-benefits"></a>
 
@@ -46,7 +46,7 @@ For more information about the features supported by each load balancer type, se
 ## How to Get Started<a name="application-load-balancer-getting-started"></a>
 
 To create an Application Load Balancer, try one of the following tutorials:
-+ [Getting Started with Elastic Load Balancing](http://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/load-balancer-getting-started.html) in the *Elastic Load Balancing User Guide*\.
++ [Getting Started with Elastic Load Balancing](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/load-balancer-getting-started.html) in the *Elastic Load Balancing User Guide*\.
 + [Tutorial: Use Path\-Based Routing with Your Application Load Balancer](tutorial-load-balancer-routing.md)
 + [Tutorial: Use Microservices as Targets with Your Application Load Balancer](tutorial-target-ecs-containers.md)
 

@@ -53,7 +53,7 @@ You define a default rule when you create a listener, and you can define additio
 1. To leave this screen, choose the **Back to the load balancer** icon \(the back button\) in the menu bar\.
 
 **To add a rule using the AWS CLI**  
-Use the [create\-rule](http://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) command to create the rule\. Use the [describe\-rules](http://docs.aws.amazon.com/cli/latest/reference/elbv2/describe-rules.html) command to view information about the rule\.
+Use the [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) command to create the rule\. Use the [describe\-rules](https://docs.aws.amazon.com/cli/latest/reference/elbv2/describe-rules.html) command to view information about the rule\.
 
 ## Edit a Rule<a name="edit-rule"></a>
 
@@ -82,7 +82,7 @@ You can edit the action and conditions for a rule at any time\.
 1. To leave this screen, choose the **Back to the load balancer** icon \(the back button\) in the menu bar\.
 
 **To edit a rule using the AWS CLI**  
-Use the [modify\-rule](http://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-rule.html) command\.
+Use the [modify\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-rule.html) command\.
 
 ## Reorder Rules<a name="update-rule-priority"></a>
 
@@ -111,7 +111,7 @@ The console displays a relative sequence number for each rule, not the rule prio
 1. To leave this screen, choose the **Back to the load balancer** icon \(the back button\) in the menu bar\.
 
 **To update rule priorities using the AWS CLI**  
-Use the [set\-rule\-priorities](http://docs.aws.amazon.com/cli/latest/reference/elbv2/set-rule-priorities.html) command\.
+Use the [set\-rule\-priorities](https://docs.aws.amazon.com/cli/latest/reference/elbv2/set-rule-priorities.html) command\.
 
 ## Delete a Rule<a name="delete-rule"></a>
 
@@ -134,4 +134,4 @@ You can delete the nondefault rules for a listener at any time\. You cannot dele
 1. To leave this screen, choose the **Back to the load balancer** icon \(the back button\) in the menu bar\.
 
 **To delete a rule using the AWS CLI**  
-Use the [delete\-rule](http://docs.aws.amazon.com/cli/latest/reference/elbv2/delete-rule.html) command\.
+Use the [delete\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/delete-rule.html) command\.

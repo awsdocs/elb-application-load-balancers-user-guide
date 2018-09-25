@@ -2,6 +2,8 @@
 
 A *load balancer* serves as the single point of contact for clients\. Clients send requests to the load balancer, and the load balancer sends them to targets, such as EC2 instances, in two or more Availability Zones\. To configure your load balancer, you create [target groups](load-balancer-target-groups.md), and then register targets with your target groups\. You also create [listeners](load-balancer-listeners.md) to check for connection requests from clients, and listener rules to route requests from clients to the targets in one or more target groups\.
 
+For more information, see [How Elastic Load Balancing Works](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/how-elastic-load-balancing-works.html) in the *Elastic Load Balancing User Guide*\.
+
 **Topics**
 + [Load Balancer Security Groups](#load-balancer-security-groups)
 + [Load Balancer State](#load-balancer-state)
@@ -109,7 +111,7 @@ If you enable deletion protection for your load balancer, you must disable it be
 1. Choose **Save**\.
 
 **To enable or disable deletion protection using the AWS CLI**  
-Use the [modify\-load\-balancer\-attributes](http://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-load-balancer-attributes.html) command with the `deletion_protection.enabled` attribute\.
+Use the [modify\-load\-balancer\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-load-balancer-attributes.html) command with the `deletion_protection.enabled` attribute\.
 
 ## Connection Idle Timeout<a name="connection-idle-timeout"></a>
 
@@ -134,8 +136,8 @@ For back\-end connections, we recommend that you enable the HTTP keep\-alive opt
 1. Choose **Save**\.
 
 **To update the idle timeout value using the AWS CLI**  
-Use the [modify\-load\-balancer\-attributes](http://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-load-balancer-attributes.html) command with the `idle_timeout.timeout_seconds` attribute\.
+Use the [modify\-load\-balancer\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-load-balancer-attributes.html) command with the `idle_timeout.timeout_seconds` attribute\.
 
 ## Application Load Balancers and AWS WAF<a name="load-balancer-waf"></a>
 
-You can use AWS WAF with your Application Load Balancer to allow or block requests based on the rules in a web access control list \(web ACL\)\. For more information, see [Working with Web ACLs](http://docs.aws.amazon.com/waf/latest/developerguide/web-acl-working-with.html) in the *AWS WAF Developer Guide*\.
+You can use AWS WAF with your Application Load Balancer to allow or block requests based on the rules in a web access control list \(web ACL\)\. For more information, see [Working with Web ACLs](https://docs.aws.amazon.com/waf/latest/developerguide/web-acl-working-with.html) in the *AWS WAF Developer Guide*\.

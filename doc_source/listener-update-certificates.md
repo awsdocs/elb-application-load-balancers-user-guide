@@ -5,8 +5,8 @@ When you create an HTTPS listener, you specify a default certificate\. You can a
 Each certificate comes with a validity period\. You must ensure that you renew or replace the certificate before its validity period ends\. Renewing or replacing a certificate does not affect in\-flight requests that were received by the load balancer node and are pending routing to a healthy target\. After a certificate is renewed, new requests use the renewed certificate\. After a certificate is replaced, new requests use the new certificate\.
 
 You can manage certificate renewal and replacement as follows:
-+ Certificates provided by AWS Certificate Manager and deployed on your load balancer can be renewed automatically\. ACM attempts to renew certificates before they expire\. For more information, see [Managed Renewal](http://docs.aws.amazon.com/acm/latest/userguide/acm-renewal.html) in the *AWS Certificate Manager User Guide*\.
-+ If you imported a certificate into ACM, you must monitor the expiration date of the certificate and renew it before it expires\. For more information, see [Importing Certificates](http://docs.aws.amazon.com/acm/latest/userguide/import-certificate.html) in the *AWS Certificate Manager User Guide*\.
++ Certificates provided by AWS Certificate Manager and deployed on your load balancer can be renewed automatically\. ACM attempts to renew certificates before they expire\. For more information, see [Managed Renewal](https://docs.aws.amazon.com/acm/latest/userguide/acm-renewal.html) in the *AWS Certificate Manager User Guide*\.
++ If you imported a certificate into ACM, you must monitor the expiration date of the certificate and renew it before it expires\. For more information, see [Importing Certificates](https://docs.aws.amazon.com/acm/latest/userguide/import-certificate.html) in the *AWS Certificate Manager User Guide*\.
 + If you imported a certificate into IAM, you must create a new certificate, import the new certificate to ACM or IAM, add the new certificate to your load balancer, and remove the expired certificate from your load balancer\.
 
 **Limitation**  
@@ -47,7 +47,7 @@ You can add certificates to the certificate list for your listener using the fol
 1. To leave this screen, choose the **Back to the load balancer** icon \(the back button\) in the menu bar\.
 
 **To add a certificate using the AWS CLI**  
-Use the [add\-listener\-certificates](http://docs.aws.amazon.com/cli/latest/reference/elbv2/add-listener-certificates.html) command\.
+Use the [add\-listener\-certificates](https://docs.aws.amazon.com/cli/latest/reference/elbv2/add-listener-certificates.html) command\.
 
 ## Replace the Default Certificate<a name="replace-default-certificate"></a>
 
@@ -70,7 +70,7 @@ You can replace the default certificate for your listener using the following pr
 1. Choose **Save**\.
 
 **To change the default certificate using the AWS CLI**  
-Use the [modify\-listener](http://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-listener.html) command\.
+Use the [modify\-listener](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-listener.html) command\.
 
 ## Remove Certificates<a name="remove-certificate"></a>
 
@@ -93,4 +93,4 @@ You can remove the nondefault certificates for an HTTPS listener at any time\. Y
 1. To leave this screen, choose the **Back to the load balancer** icon \(the back button\) in the menu bar\.
 
 **To remove a certificate using the AWS CLI**  
-Use the [remove\-listener\-certificates](http://docs.aws.amazon.com/cli/latest/reference/elbv2/remove-listener-certificates.html) command\.
+Use the [remove\-listener\-certificates](https://docs.aws.amazon.com/cli/latest/reference/elbv2/remove-listener-certificates.html) command\.

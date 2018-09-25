@@ -32,4 +32,4 @@ When you are finished with a tag, you can remove it from your load balancer\.
 1. When you have finished updating tags, choose **Save**\.
 
 **To update the tags for a load balancer using the AWS CLI**  
-Use the [add\-tags](http://docs.aws.amazon.com/cli/latest/reference/elbv2/add-tags.html) and [remove\-tags](http://docs.aws.amazon.com/cli/latest/reference/elbv2/remove-tags.html) commands\.
+Use the [add\-tags](https://docs.aws.amazon.com/cli/latest/reference/elbv2/add-tags.html) and [remove\-tags](https://docs.aws.amazon.com/cli/latest/reference/elbv2/remove-tags.html) commands\.

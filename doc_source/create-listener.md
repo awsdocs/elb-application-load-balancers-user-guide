@@ -40,4 +40,4 @@ You configure a listener with a protocol and a port for connections from clients
 1. \(Optional\) To define additional listener rules that forward requests based on a path pattern or a hostname, see [Add a Rule](listener-update-rules.md#add-rule)\.
 
 **To add a listener using the AWS CLI**  
-Use the [create\-listener](http://docs.aws.amazon.com/cli/latest/reference/elbv2/create-listener.html) command to create the listener and default rule, and the [create\-rule](http://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) command to define additional listener rules\.
+Use the [create\-listener](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-listener.html) command to create the listener and default rule, and the [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) command to define additional listener rules\.

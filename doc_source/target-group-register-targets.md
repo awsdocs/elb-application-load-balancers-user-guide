@@ -10,7 +10,7 @@ When you deregister a target, the load balancer waits until in\-flight requests 
 
 When you deregister a target that was registered by IP address, you must wait for the deregistration delay to complete before you can register the same IP address again\.
 
-If you are registering targets by instance ID, you can use your load balancer with an Auto Scaling group\. After you attach a target group to an Auto Scaling group and the group scales out, the instances launched by the Auto Scaling group are automatically registered with the target group\. If you detach the target group from the Auto Scaling group, the instances are automatically deregistered from the target group\. For more information, see [Attaching a Load Balancer to Your Auto Scaling Group](http://docs.aws.amazon.com/autoscaling/ec2/userguide/attach-load-balancer-asg.html) in the *Amazon EC2 Auto Scaling User Guide*\.
+If you are registering targets by instance ID, you can use your load balancer with an Auto Scaling group\. After you attach a target group to an Auto Scaling group and the group scales out, the instances launched by the Auto Scaling group are automatically registered with the target group\. If you detach the target group from the Auto Scaling group, the instances are automatically deregistered from the target group\. For more information, see [Attaching a Load Balancer to Your Auto Scaling Group](https://docs.aws.amazon.com/autoscaling/ec2/userguide/attach-load-balancer-asg.html) in the *Amazon EC2 Auto Scaling User Guide*\.
 
 ## Target Security Groups<a name="target-security-groups"></a>
 
@@ -26,7 +26,7 @@ When you register EC2 instances as targets, you must ensure that the security gr
 | *load balancer security group* | *instance listener* | Allow traffic from the load balancer on the instance listener port | 
 | *load balancer security group* | *health check* | Allow traffic from the load balancer on the health check port | 
 
-We also recommend that you allow inbound ICMP traffic to support Path MTU Discovery\. For more information, see [Path MTU Discovery](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/network_mtu.html#path_mtu_discovery) in the *Amazon EC2 User Guide for Linux Instances*\.
+We also recommend that you allow inbound ICMP traffic to support Path MTU Discovery\. For more information, see [Path MTU Discovery](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/network_mtu.html#path_mtu_discovery) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 ## Register or Deregister Targets<a name="register-deregister-targets"></a>
 
@@ -59,7 +59,7 @@ The instance must be in the virtual private cloud \(VPC\) that you specified for
 1. Choose **Save**\.
 
 **To register or deregister targets using the AWS CLI**  
-Use the [register\-targets](http://docs.aws.amazon.com/cli/latest/reference/elbv2/register-targets.html) command to add targets and the [deregister\-targets](http://docs.aws.amazon.com/cli/latest/reference/elbv2/deregister-targets.html) command to remove targets\.
+Use the [register\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/register-targets.html) command to add targets and the [deregister\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/deregister-targets.html) command to remove targets\.
 
 ### Register or Deregister Targets by IP Address<a name="register-ip-addresses"></a>
 
@@ -84,4 +84,4 @@ The IP addresses that you register must be from the subnets of the VPC for the t
 1. To leave this screen, choose the **Back to target group** icon \(the back button\) in the menu bar\.
 
 **To register or deregister targets using the AWS CLI**  
-Use the [register\-targets](http://docs.aws.amazon.com/cli/latest/reference/elbv2/register-targets.html) command to add targets and the [deregister\-targets](http://docs.aws.amazon.com/cli/latest/reference/elbv2/deregister-targets.html) command to remove targets\.
+Use the [register\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/register-targets.html) command to add targets and the [deregister\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/deregister-targets.html) command to remove targets\.

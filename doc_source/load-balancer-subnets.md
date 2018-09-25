@@ -23,4 +23,4 @@ After you disable an Availability Zone, the targets in that Availability Zone re
 1. Choose **Save**\.
 
 **To update Availability Zones using the AWS CLI**  
-Use the [set\-subnets](http://docs.aws.amazon.com/cli/latest/reference/elbv2/set-subnets.html) command\.
+Use the [set\-subnets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/set-subnets.html) command\.

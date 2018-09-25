@@ -62,7 +62,7 @@ If demand on your application increases, you can register additional targets wit
 
 If demand on your application decreases, or you need to service your targets, you can deregister targets from your target groups\. Deregistering a target removes it from your target group, but does not affect the target otherwise\. The load balancer stops routing requests to a target as soon as it is deregistered\. The target enters the `draining` state until in\-flight requests have completed\. You can register the target with the target group again when you are ready for it to resume receiving requests\.
 
-If you are registering targets by instance ID, you can use your load balancer with an Auto Scaling group\. After you attach a target group to an Auto Scaling group, Auto Scaling registers your targets with the target group for you when it launches them\. For more information, see [Attaching a Load Balancer to Your Auto Scaling Group](http://docs.aws.amazon.com/autoscaling/ec2/userguide/attach-load-balancer-asg.html) in the *Amazon EC2 Auto Scaling User Guide*\.
+If you are registering targets by instance ID, you can use your load balancer with an Auto Scaling group\. After you attach a target group to an Auto Scaling group, Auto Scaling registers your targets with the target group for you when it launches them\. For more information, see [Attaching a Load Balancer to Your Auto Scaling Group](https://docs.aws.amazon.com/autoscaling/ec2/userguide/attach-load-balancer-asg.html) in the *Amazon EC2 Auto Scaling User Guide*\.
 
 ## Target Group Attributes<a name="target-group-attributes"></a>
 
@@ -106,7 +106,7 @@ If a deregistering target terminates the connection before the deregistration de
 1. On the **Edit attributes** page, change the value of **Deregistration delay** as needed, and then choose **Save**\.
 
 **To update the deregistration delay value using the AWS CLI**  
-Use the [modify\-target\-group\-attributes](http://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-target-group-attributes.html) command with the `deregistration_delay.timeout_seconds` attribute\.
+Use the [modify\-target\-group\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-target-group-attributes.html) command with the `deregistration_delay.timeout_seconds` attribute\.
 
 ## Slow Start Mode<a name="slow-start-mode"></a>
 
@@ -131,7 +131,7 @@ By default, a target starts to receive its full share of requests as soon as it 
 1. On the **Edit attributes** page, change the value of **Slow start duration** as needed, and then choose **Save**\. To disable slow start mode, set the duration to 0\.
 
 **To update the slow start duration value using the AWS CLI**  
-Use the [modify\-target\-group\-attributes](http://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-target-group-attributes.html) command with the `slow_start.duration_seconds` attribute\.
+Use the [modify\-target\-group\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-target-group-attributes.html) command with the `slow_start.duration_seconds` attribute\.
 
 ## Sticky Sessions<a name="sticky-sessions"></a>
 
@@ -164,4 +164,4 @@ You enable sticky sessions at the target group level\. You can also set the dura
    1. Choose **Save**\.
 
 **To enable sticky sessions using the AWS CLI**  
-Use the [modify\-target\-group\-attributes](http://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-target-group-attributes.html) command with the `stickiness.enabled` and `stickiness.lb_cookie.duration_seconds` attributes\.
+Use the [modify\-target\-group\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-target-group-attributes.html) command with the `stickiness.enabled` and `stickiness.lb_cookie.duration_seconds` attributes\.

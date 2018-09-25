@@ -19,10 +19,11 @@ Do the following if you are using an OIDC\-compliant IdP with your Application L
 ## Prepare to Use Amazon Cognito<a name="cognito-requirements"></a>
 
 Do the following if you are using Amazon Cognito user pools with your Application Load Balancer:
-+ Create a user pool\. For more information, see [Amazon Cognito User Pools](http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools.html) in the *Amazon Cognito Developer Guide*\.
-+ Create a user pool client\. You must configure the client to generate a client secret, use code grant flow, and support the same OAuth scopes that the load balancer uses\. For more information, see [Configuring a User Pool App Client](http://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-settings-client-apps.html) in the *Amazon Cognito Developer Guide*\.
-+ Create a user pool domain\. For more information, see [Adding a Domain Name for Your User Pool](http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-domain.html) in the *Amazon Cognito Developer Guide*\.
-+ To federate with a social or corporate IdP, enable the IdP in the federation section\. For more information, see [Add Social Sign\-in to a User Pool](http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-configuring-federation-with-social-idp.html) or [Add Sign\-in with a SAML IdP to a User Pool](http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-configuring-federation-with-saml-2-0-idp.html) in the *Amazon Cognito Developer Guide*\.
++ Create a user pool\. For more information, see [Amazon Cognito User Pools](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools.html) in the *Amazon Cognito Developer Guide*\.
++ Create a user pool client\. You must configure the client to generate a client secret, use code grant flow, and support the same OAuth scopes that the load balancer uses\. For more information, see [Configuring a User Pool App Client](https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-settings-client-apps.html) in the *Amazon Cognito Developer Guide*\.
++ Create a user pool domain\. For more information, see [Adding a Domain Name for Your User Pool](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-domain.html) in the *Amazon Cognito Developer Guide*\.
++ Verify that the requested scope returns an ID token\. For example, the default scope, `openid` returns an ID token but the `aws.cognito.signin.user.admin` scope does not\.
++ To federate with a social or corporate IdP, enable the IdP in the federation section\. For more information, see [Add Social Sign\-in to a User Pool](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-configuring-federation-with-social-idp.html) or [Add Sign\-in with a SAML IdP to a User Pool](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-configuring-federation-with-saml-2-0-idp.html) in the *Amazon Cognito Developer Guide*\.
 + Whitelist the following redirect URLs in the callback URL field for Amazon Cognito, where DNS is the domain name of your load balancer, and CNAME is the DNS alias for your application \(if you are using one\):
   + https://*DNS*/oauth2/idpresponse
   + https://*CNAME*/oauth2/idpresponse
@@ -41,7 +42,7 @@ Enable the following settings if you are using a CloudFront distribution in fron
 
 ## Configure User Authentication<a name="configure-user-authentication"></a>
 
-You configure user authentication by creating an authenticate action for one or more listener rules\. The `authenticate-cognito` and `authenticate-oidc` action types are supported only with HTTPS listeners\. For descriptions of the corresponding fields, see [AuthenticateCognitoActionConfig](http://docs.aws.amazon.com/elasticloadbalancing/latest/APIReference/API_AuthenticateCognitoActionConfig.html) and [AuthenticateOidcActionConfig](http://docs.aws.amazon.com/elasticloadbalancing/latest/APIReference/API_AuthenticateOidcActionConfig.html) in the *Elastic Load Balancing API Reference version 2015\-12\-01*\.
+You configure user authentication by creating an authenticate action for one or more listener rules\. The `authenticate-cognito` and `authenticate-oidc` action types are supported only with HTTPS listeners\. For descriptions of the corresponding fields, see [AuthenticateCognitoActionConfig](https://docs.aws.amazon.com/elasticloadbalancing/latest/APIReference/API_AuthenticateCognitoActionConfig.html) and [AuthenticateOidcActionConfig](https://docs.aws.amazon.com/elasticloadbalancing/latest/APIReference/API_AuthenticateOidcActionConfig.html) in the *Elastic Load Balancing API Reference version 2015\-12\-01*\.
 
 By default, the `SessionTimeout` field is set to 7 days\. If you want shorter sessions, you can configure a session timeout as short as 1 second\. For more information, see [Authentication Logout and Session Timeout](#authentication-logout-timeout)\.
 
@@ -50,9 +51,9 @@ Set the `OnUnauthenticatedRequest` field as appropriate for your application\. F
 + **Applications that provide a personalized view to a user that is logged in or a general view to a user that is not logged in**—To support this type of application, use the `allow` option\. If the user is logged in, the load balancer provides the user claims and the application can provide a personalized view\. If the user is not logged in, the load balancer forwards the request without the user claims and the application can provide the general view\.
 + **Single\-page applications with JavaScript that loads every few seconds**—By default, after the authentication session cookie expires, the AJAX calls are redirected to the IdP and are blocked\. If you use the `deny` option, the load balancer returns an HTTP 401 Unauthorized error to these AJAX calls\.
 
-The load balancer must be able to communicate with the IdP token endpoint \(`TokenEndpoint`\) and the IdP user info endpoint \(`UserInfoEndpoint`\)\. Verify that the security groups for your load balancer and the network ACLs for your VPC allow outbound access to these endpoints\.
+The load balancer must be able to communicate with the IdP token endpoint \(`TokenEndpoint`\) and the IdP user info endpoint \(`UserInfoEndpoint`\)\. Verify that the security groups for your load balancer and the network ACLs for your VPC allow outbound access to these endpoints\. Verify that your VPC has internet access\. If you have an internal\-facing load balancer, use a NAT gateway to enable the load balancer to access these endpoints\.
 
-Use the following [create\-rule](http://docs.aws.amazon.com/cli/latest/reference/create-rule.html) command to configure user authentication\.
+Use the following [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/create-rule.html) command to configure user authentication\.
 
 ```
 aws elbv2 create-rule --listener-arn listener-arn --priority 10 \

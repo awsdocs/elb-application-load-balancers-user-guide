@@ -14,9 +14,9 @@ The load balancer uses an X\.509 certificate \(SSL/TLS server certificate\)\. Ce
 
 When you create a certificate for use with your load balancer, you must specify a domain name\.
 
-We recommend that you create certificates for your load balancer using [AWS Certificate Manager \(ACM\)](https://aws.amazon.com/certificate-manager/)\. ACM integrates with Elastic Load Balancing so that you can deploy the certificate on your load balancer\. For more information, see the [AWS Certificate Manager User Guide](http://docs.aws.amazon.com/acm/latest/userguide/)\.
+We recommend that you create certificates for your load balancer using [AWS Certificate Manager \(ACM\)](https://aws.amazon.com/certificate-manager/)\. ACM integrates with Elastic Load Balancing so that you can deploy the certificate on your load balancer\. For more information, see the [AWS Certificate Manager User Guide](https://docs.aws.amazon.com/acm/latest/userguide/)\.
 
-Alternatively, you can use SSL/TLS tools to create a certificate signing request \(CSR\), then get the CSR signed by a CA to produce a certificate, then import the certificate into ACM or upload the certificate to AWS Identity and Access Management \(IAM\)\. For more information about importing certificates into ACM, see [Importing Certificates](http://docs.aws.amazon.com/acm/latest/userguide/import-certificate.html) in the *AWS Certificate Manager User Guide*\. For more information about uploading certificates to IAM, see [Working with Server Certificates](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_server-certs.html) in the *IAM User Guide*\.
+Alternatively, you can use SSL/TLS tools to create a certificate signing request \(CSR\), then get the CSR signed by a CA to produce a certificate, then import the certificate into ACM or upload the certificate to AWS Identity and Access Management \(IAM\)\. For more information about importing certificates into ACM, see [Importing Certificates](https://docs.aws.amazon.com/acm/latest/userguide/import-certificate.html) in the *AWS Certificate Manager User Guide*\. For more information about uploading certificates to IAM, see [Working with Server Certificates](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_server-certs.html) in the *IAM User Guide*\.
 
 **Important**  
 You cannot install certificates with 4096\-bit RSA keys or EC keys on your load balancer through integration with ACM\. You must upload certificates with 4096\-bit RSA keys or EC keys to IAM in order to use them with your load balancer\.
@@ -80,7 +80,7 @@ The following table describes the security policies defined for Application Load
 
 † Do not use this security policy unless you must support a legacy client that requires the DES\-CBC3\-SHA cipher, which is a weak cipher\.
 
-To view the configuration of a security policy for Application Load Balancers using the AWS CLI, use the [describe\-ssl\-policies](http://docs.aws.amazon.com/cli/latest/reference/elbv2/describe-ssl-policies.html) command\.
+To view the configuration of a security policy for Application Load Balancers using the AWS CLI, use the [describe\-ssl\-policies](https://docs.aws.amazon.com/cli/latest/reference/elbv2/describe-ssl-policies.html) command\.
 
 ## Update the Security Policy<a name="update-security-policy"></a>
 
@@ -101,4 +101,4 @@ When you create an HTTPS listener, you can select the security policy that meets
 1. Choose **Update**\.
 
 **To update the security policy using the AWS CLI**  
-Use the [modify\-listener](http://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-listener.html) command\.
+Use the [modify\-listener](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-listener.html) command\.

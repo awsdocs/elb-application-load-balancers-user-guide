@@ -13,4 +13,4 @@ If a target group is not referenced by any actions, you can delete it\. Deleting
 1. When prompted for confirmation, choose **Yes**\.
 
 **To delete a target group using the AWS CLI**  
-Use the [delete\-target\-group](http://docs.aws.amazon.com/cli/latest/reference/elbv2/delete-target-group.html) command\.
+Use the [delete\-target\-group](https://docs.aws.amazon.com/cli/latest/reference/elbv2/delete-target-group.html) command\.

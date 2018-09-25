@@ -19,4 +19,4 @@ Note that deleting a load balancer does not affect its registered targets\. For 
 1. When prompted for confirmation, choose **Yes, Delete**\.
 
 **To delete a load balancer using the AWS CLI**  
-Use the [delete\-load\-balancer](http://docs.aws.amazon.com/cli/latest/reference/elbv2/delete-load-balancer.html) command\.
+Use the [delete\-load\-balancer](https://docs.aws.amazon.com/cli/latest/reference/elbv2/delete-load-balancer.html) command\.

@@ -12,7 +12,7 @@ This tutorial provides a hands\-on introduction to Application Load Balancers th
 + [Step 6: Create and Test Your Load Balancer](#test-load-balancer)
 + [Step 7: Delete Your Load Balancer \(Optional\)](#delete-load-balancer)
 
-Alternatively, to create a Network Load Balancer, see [Getting Started with Network Load Balancers](http://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancer-getting-started.html) in the *User Guide for Network Load Balancers*\. To create a Classic Load Balancer, see [Create a Classic Load Balancer](http://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-getting-started.html) in the *User Guide for Classic Load Balancers*\.
+Alternatively, to create a Network Load Balancer, see [Getting Started with Network Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancer-getting-started.html) in the *User Guide for Network Load Balancers*\. To create a Classic Load Balancer, see [Create a Classic Load Balancer](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-getting-started.html) in the *User Guide for Classic Load Balancers*\.
 
 ## Before You Begin<a name="prerequisites"></a>
 + Decide which two Availability Zones you will use for your EC2 instances\. Configure your virtual private cloud \(VPC\) with at least one public subnet in each of these Availability Zones\. These public subnets are used to configure the load balancer\. You can launch your EC2 instances in other subnets of these Availability Zones instead\.

@@ -44,7 +44,7 @@ Amazon's trademarks and trade dress may not be used in
    + [CloudWatch Metrics for Your Application Load Balancer](load-balancer-cloudwatch-metrics.md)
    + [Access Logs for Your Application Load Balancer](load-balancer-access-logs.md)
    + [Request Tracing for Your Application Load Balancer](load-balancer-request-tracing.md)
-   + [AWS CloudTrail Logging for Your Application Load Balancer](load-balancer-cloudtrail-logs.md)
+   + [Logging API Calls for Your Application Load Balancer Using AWS CloudTrail](load-balancer-cloudtrail-logs.md)
 + [Troubleshoot Your Application Load Balancers](load-balancer-troubleshooting.md)
 + [Limits for Your Application Load Balancers](load-balancer-limits.md)
 + [Document History for Application Load Balancers](doc-history.md)

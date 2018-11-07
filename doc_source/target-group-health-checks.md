@@ -10,7 +10,7 @@ Health checks do not support WebSockets\.
 
 ## Health Check Settings<a name="health-check-settings"></a>
 
-You configure health checks for the targets in a target group using the following settings\. The load balancer sends a health check request to each registered target every **HealthCheckIntervalSeconds** seconds, using the specified port, protocol, and ping path\. Each health check request is independent and lasts the entire interval\. The time it takes for the target to respond does not affect the interval for the next health check request\. If the health checks exceed **UnhealthyThresholdCount** consecutive failures, the load balancer takes the target out of service\. When the health checks exceed **HealthyThresholdCount** consecutive successes, the load balancer puts the target back in service\.
+You configure health checks for the targets in a target group using the following settings\. The load balancer sends a health check request to each registered target every **HealthCheckIntervalSeconds** seconds, using the specified port, protocol, and ping path\. Each health check request is independent and the result lasts the entire interval\. The time it takes for the target to respond does not affect the interval for the next health check request\. If the health checks exceed **UnhealthyThresholdCount** consecutive failures, the load balancer takes the target out of service\. When the health checks exceed **HealthyThresholdCount** consecutive successes, the load balancer puts the target back in service\.
 
 
 | Setting | Description | 

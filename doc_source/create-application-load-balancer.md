@@ -34,6 +34,8 @@ First, provide some basic configuration information for your load balancer, such
 
 1. For **Scheme**, an Internet\-facing load balancer routes requests from clients over the Internet to targets\. An internal load balancer routes requests to targets using private IP addresses\.
 
+1. For **IP address type**, choose **ipv4** if your subnets use IPv4 addresses or **dualstack** if your subnets use both IPv4 and IPv6 addresses\.
+
 1. For **Listeners**, the default is a listener that accepts HTTP traffic on port 80\. You can keep the default listener settings, modify the protocol, or modify the port\. Choose **Add** to add another listener \(for example, an HTTPS listener\)\.
 
 1. For **Availability Zones**, select at least two Availability Zones from your VPC\. If there is one subnet for an Availability Zone, it is selected\. If there is more than one subnet for an Availability Zone, select one of the subnets\. Note that you can select only one subnet per Availability Zone\.
@@ -78,9 +80,11 @@ You register targets with a target group\. The target group that you configure i
 
 1. For **Name**, type a name for the target group\.
 
-1. Set **Protocol** and **Port** as needed\.
+1. For **Target type**, select **Instance** to register targets by instance ID, **IP** to register IP addresses, and **Lambda function** to register a Lambda function\.
 
-1. For **Target type**, choose `instance` to specify targets by instance ID or `ip` to specify targets by IP address\.
+1. \(Optional\) If the target type is **Instance** or **IP**, modify the port and protocol as needed\.
+
+1. \(Optional\) If the target type is **Lambda function**, enable health checks as needed\.
 
 1. For **Health checks**, keep the default health check settings\.
 
@@ -88,7 +92,7 @@ You register targets with a target group\. The target group that you configure i
 
 ## Step 5: Configure Targets for the Target Group<a name="select-targets"></a>
 
-With an Application Load Balancer, you will register targets by instance ID or by IP address, depending on the target type that you chose for your target group\.
+With an Application Load Balancer, the target type of your target group determines how you register targets with the target group\.
 
 **To register targets by instance ID**
 
@@ -98,7 +102,7 @@ With an Application Load Balancer, you will register targets by instance ID or b
 
 1. When you have finished registering instances, choose **Next: Review**\.
 
-**To register targets by IP address**
+**To register IP addresses**
 
 1. For each IP address to register, do the following:
 
@@ -111,6 +115,15 @@ With an Application Load Balancer, you will register targets by instance ID or b
    1. Choose **Add to list**\.
 
 1. When you have finished adding IP addresses to the list, choose **Next: Review**\.
+
+**To register a Lambda function**
+
+1. For **Lambda function**, do one of the following:
+   + Select the Lambda function
+   + Create a new Lambda function and select it
+   + Register the Lambda function after you create the target group
+
+1. Choose **Next: Review**\.
 
 ## Step 6: Create the Load Balancer<a name="create-load-balancer"></a>
 

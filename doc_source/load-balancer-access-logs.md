@@ -81,7 +81,7 @@ The following table describes the fields of an access log entry, in order\. All 
 | timestamp | The time when the load balancer generated a response to the client, in ISO 8601 format\. For WebSockets, this is the time when the connection is closed\. | 
 | elb | The resource ID of the load balancer\. If you are parsing access log entries, note that resources IDs can contain forward slashes \(/\)\. | 
 | client:port | The IP address and port of the requesting client\. | 
-| target:port |  The IP address and port of the target that processed this request\. If the client didn't send a full request, the load balancer can't dispatch the request to a target, and this value is set to \-\. If the request is blocked by AWS WAF, this value is set to \- and the value of elb\_status\_code is set to 403\.  | 
+| target:port |  The IP address and port of the target that processed this request\. If the client didn't send a full request, the load balancer can't dispatch the request to a target, and this value is set to \-\. If the target is a Lambda function, this value is set to \-\. If the request is blocked by AWS WAF, this value is set to \- and the value of elb\_status\_code is set to 403\.  | 
 | request\_processing\_time |  The total time elapsed \(in seconds, with millisecond precision\) from the time the load balancer received the request until the time it sent it to a target\. This value is set to \-1 if the load balancer can't dispatch the request to a target\. This can happen if the target closes the connection before the idle timeout or if the client sends a malformed request\. This value can also be set to \-1 if the registered target does not respond before the idle timeout\.  | 
 | target\_processing\_time |  The total time elapsed \(in seconds, with millisecond precision\) from the time the load balancer sent the request to a target until the target started to send the response headers\. This value is set to \-1 if the load balancer can't dispatch the request to a target\. This can happen if the target closes the connection before the idle timeout or if the client sends a malformed request\. This value can also be set to \-1 if the registered target does not respond before the idle timeout\.  | 
 | response\_processing\_time |  The total time elapsed \(in seconds, with millisecond precision\) from the time the load balancer received the response header from the target until it started to send the response to the client\. This includes both the queuing time at the load balancer and the connection acquisition time from the load balancer to the client\. This value is set to \-1 if the load balancer can't send the request to a target\. This can happen if the target closes the connection before the idle timeout or if the client sends a malformed request\.  | 
@@ -99,8 +99,39 @@ The following table describes the fields of an access log entry, in order\. All 
 | "chosen\_cert\_arn" |  \[HTTPS listener\] The ARN of the certificate presented to the client, enclosed in double quotes\. This value is set to `session-reused` if the session is reused\.  | 
 | matched\_rule\_priority |  The priority value of the rule that matched the request\. If a rule matched, this is a value from 1 to 50,000\. If no rule matched and the default action was taken, this value is set to 0\. If an error occurs during rules evaluation, it is set to \-1\. For any other error, it is set to \-\.  | 
 | request\_creation\_time |  The time when the load balancer received the request from the client, in ISO 8601 format\.  | 
-| "actions\_executed" |  The actions taken when processing the request, enclosed in double quotes\. This value is a comma\-separated list that can include the following possible values: `waf`, `authenticate`, `redirect`, `fixed-response`, and `forward`\. If no action was taken, such as for a malformed request, this value is set to \-\.  | 
+| "actions\_executed" |  The actions taken when processing the request, enclosed in double quotes\. This value is a comma\-separated list that can include the following possible values: `waf`, `waf-failed`, `authenticate`, `redirect`, `fixed-response`, and `forward`\. If no action was taken, such as for a malformed request, this value is set to \-\.  | 
 | "redirect\_url" |  The URL of the redirect target for the location header of the HTTP response, enclosed in double quotes\. If no redirect actions were taken, this value is set to \-\.  | 
+| "error\_reason" |  The reason code, enclosed in double quotes\. If the request to the Lambda function succeeded, this value is set to \-\. If the request failed, this is one of the error codes described in [Error Reason Codes](#error-reason-codes)\. If the target is not a Lambda function, this value is set to \-\.  | 
+
+### Error Reason Codes<a name="error-reason-codes"></a>
+
+If a request to a Lambda function fails, the load balancer stores one of the following reason codes in the error\_reason field of the access log\. The load balancer also increments the corresponding CloudWatch metric\. For more information, see the Lambda [Invoke](https://docs.aws.amazon.com/lambda/latest/dg/API_Invoke.html) action\.
+
+
+| Code | Description | Metric | 
+| --- | --- | --- | 
+| `LambdaAccessDenied` | The load balancer did not have permission to invoke the Lambda function\. | `LambdaUserError` | 
+| `LambdaConnectionTimeout` | An attempt to connect to Lambda timed out\. | `LambdaInternalError` | 
+| `LambdaEC2AccessDeniedException` | Amazon EC2 denied access to Lambda during function initialization\. | `LambdaUserError` | 
+| `LambdaEC2ThrottledException` | Amazon EC2 throttled Lambda during function initialization\. | `LambdaUserError` | 
+| `LambdaEC2UnexpectedException` | Amazon EC2 encountered an unexpected exception during function initialization\. | `LambdaUserError` | 
+| `LambdaENILimitReachedException` | Lambda couldn't create a network interface in the VPC specified in the configuration of the Lambda function because the limit for network interfaces was exceeded\. | `LambdaUserError` | 
+| `LambdaInvalidResponse` | The response from the Lambda function is malformed or is missing required fields\. | `LambdaUserError` | 
+| `LambdaInvalidRuntimeException` | The specified version of the Lambda runtime is not supported\. | `LambdaUserError` | 
+| `LambdaInvalidSecurityGroupIDException` | The security group ID specified in the configuration of the Lambda function is not valid\. | `LambdaUserError` | 
+| `LambdaInvalidSubnetIDException` | The subnet ID specified in the configuration of the Lambda function is not valid\. | `LambdaUserError` | 
+| `LambdaInvalidZipFileException` | Lambda could not unzip the specified function zip file\. | `LambdaUserError` | 
+| `LambdaKMSAccessDeniedException` | Lambda could not decrypt environment variables because access to the KMS key was denied\. Check the KMS permissions of the Lambda function\. | `LambdaUserError` | 
+| `LambdaKMSDisabledException` | Lambda could not decrypt environment variables because the specified KMS key is disabled\. Check the KMS key settings of the Lambda function\. | `LambdaUserError` | 
+| `LambdaKMSInvalidStateException` | Lambda could not decrypt environment variables because the state of the KMS key is not valid\. Check the KMS key settings of the Lambda function\. | `LambdaUserError` | 
+| `LambdaKMSNotFoundException` | Lambda could not decrypt environment variables because the KMS key was not found\. Check the KMS key settings of the Lambda function\. | `LambdaUserError` | 
+| `LambdaRequestTooLarge` | The size of the request body exceeded 1 MB\. | `LambdaUserError` | 
+| `LambdaResourceNotFound` | The Lambda function could not be found\. | `LambdaUserError` | 
+| `LambdaResponseTooLarge` | The size of the response exceeded 1 MB\. | `LambdaUserError` | 
+| `LambdaServiceException` | Lambda encountered an internal error\. | `LambdaInternalError` | 
+| `LambdaSubnetIPAddressLimitReachedException` | Lambda could not set up VPC access for the Lambda function because one or more subnets have no available IP addresses\. | `LambdaUserError` | 
+| `LambdaThrottling` | The Lambda function was throttled because there were too many requests\. | `LambdaUserError` | 
+| `LambdaUnhandled` | The Lambda function encountered an unhandled exception\. | `LambdaUserError` | 
 
 ### Examples<a name="access-log-entry-examples"></a>
 
@@ -115,7 +146,7 @@ http 2018-07-02T22:23:00.186641Z app/my-loadbalancer/50dc6c495c0c9188
 "GET http://www.example.com:80/ HTTP/1.1" "curl/7.46.0" - - 
 arn:aws:elasticloadbalancing:us-east-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067
 "Root=1-58337262-36d228ad5d99923122bbe354" "-" "-" 
-0 2018-07-02T22:22:48.364000Z "forward" "-"
+0 2018-07-02T22:22:48.364000Z "forward" "-" "-"
 ```
 
 **Example HTTPS Entry**  
@@ -127,7 +158,7 @@ https 2018-07-02T22:23:00.186641Z app/my-loadbalancer/50dc6c495c0c9188
 "GET https://www.example.com:443/ HTTP/1.1" "curl/7.46.0" ECDHE-RSA-AES128-GCM-SHA256 TLSv1.2 
 arn:aws:elasticloadbalancing:us-east-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067
 "Root=1-58337281-1d84f3d73c47ec4e58577259" "www.example.com" "arn:aws:acm:us-east-2:123456789012:certificate/12345678-1234-1234-1234-123456789012"
-1 2018-07-02T22:22:48.364000Z "authenticate,forward" "-"
+1 2018-07-02T22:22:48.364000Z "authenticate,forward" "-" "-"
 ```
 
 **Example HTTP/2 Entry**  
@@ -139,7 +170,7 @@ h2 2018-07-02T22:23:00.186641Z app/my-loadbalancer/50dc6c495c0c9188
 "GET https://10.0.2.105:773/ HTTP/2.0" "curl/7.46.0" ECDHE-RSA-AES128-GCM-SHA256 TLSv1.2
 arn:aws:elasticloadbalancing:us-east-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067
 "Root=1-58337327-72bd00b0343d75b906739c42" "-" "-"
-1 2018-07-02T22:22:48.364000Z "redirect" "https://example.com:80/"
+1 2018-07-02T22:22:48.364000Z "redirect" "https://example.com:80/" "-"
 ```
 
 **Example WebSockets Entry**  
@@ -151,7 +182,7 @@ ws 2018-07-02T22:23:00.186641Z app/my-loadbalancer/50dc6c495c0c9188
 "GET http://10.0.0.30:80/ HTTP/1.1" "-" - - 
 arn:aws:elasticloadbalancing:us-east-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067
 "Root=1-58337364-23a8c76965a2ef7629b185e3" "-" "-"
-1 2018-07-02T22:22:48.364000Z "forward" "-"
+1 2018-07-02T22:22:48.364000Z "forward" "-" "-"
 ```
 
 **Example Secured WebSockets Entry**  
@@ -163,7 +194,30 @@ wss 2018-07-02T22:23:00.186641Z app/my-loadbalancer/50dc6c495c0c9188
 "GET https://10.0.0.30:443/ HTTP/1.1" "-" ECDHE-RSA-AES128-GCM-SHA256 TLSv1.2 
 arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067
 "Root=1-58337364-23a8c76965a2ef7629b185e3" "-" "-"
-1 2018-07-02T22:22:48.364000Z "forward" "-"
+1 2018-07-02T22:22:48.364000Z "forward" "-" "-"
+```
+
+**Example Entries for Lambda Functions**  
+The following is an example log entry for a request to a Lambda function that succeeded:
+
+```
+http 2018-11-30T22:23:00.186641Z app/my-loadbalancer/50dc6c495c0c9188
+192.168.131.39:2817 - 0.000 0.001 0.000 200 200 34 366
+"GET http://www.example.com:80/ HTTP/1.1" "curl/7.46.0" - -
+arn:aws:elasticloadbalancing:us-east-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067
+"Root=1-58337364-23a8c76965a2ef7629b185e3" "-" "-"
+0 2018-11-30T22:22:48.364000Z "forward" "-" "-"
+```
+
+The following is an example log entry for a request to a Lambda function that failed:
+
+```
+http 2018-11-30T22:23:00.186641Z app/my-loadbalancer/50dc6c495c0c9188
+192.168.131.39:2817 - 0.000 0.001 0.000 502 - 34 366
+"GET http://www.example.com:80/ HTTP/1.1" "curl/7.46.0" - -
+arn:aws:elasticloadbalancing:us-east-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067
+"Root=1-58337364-23a8c76965a2ef7629b185e3" "-" "-"
+0 2018-11-30T22:22:48.364000Z "forward" "-" "LambdaInvalidResponse"
 ```
 
 ## Bucket Permissions<a name="access-logging-bucket-permissions"></a>
@@ -209,7 +263,7 @@ Use one of the following options to prepare an S3 bucket for the access logs\.
    1. For **Principal**, specify one of the following AWS account IDs to grant Elastic Load Balancing access to the S3 bucket\. Use the account ID that corresponds to the region for your load balancer and bucket\.    
 [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html)
 
-      \* These regions requires a separate account\. For more information, see [AWS GovCloud \(US\)](https://aws.amazon.com/govcloud-us/) and [China \(Beijing\)](http://www.amazonaws.cn/en/)\.
+      \* These regions requires a separate account\. For more information, see [AWS GovCloud \(US\-West\)](https://aws.amazon.com/govcloud-us/) and [China \(Beijing\)](http://www.amazonaws.cn/en/)\.
 
    1. For **Actions**, choose `PutObject` to allow Elastic Load Balancing to store objects in the S3 bucket\.
 

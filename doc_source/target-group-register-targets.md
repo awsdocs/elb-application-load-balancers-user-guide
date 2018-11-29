@@ -1,6 +1,6 @@
 # Register Targets with Your Target Group<a name="target-group-register-targets"></a>
 
-You register your targets with a target group\. You can register targets by instance ID or by IP address\. For more information, see [Target Groups for Your Application Load Balancers](load-balancer-target-groups.md)\.
+You register your targets with a target group\. When you create a target group, you specify its target type, which determines how you register its targets\. For example, you can register instance IDs, IP addresses, or Lambda functions\. For more information, see [Target Groups for Your Application Load Balancers](load-balancer-target-groups.md)\.
 
 If demand on your currently registered targets increases, you can register additional targets in order to handle the demand\. When your target is ready to handle requests, register it with your target group\. The load balancer starts routing requests to the target as soon as the registration process completes and the target passes the initial health checks\.
 
@@ -30,11 +30,12 @@ We also recommend that you allow inbound ICMP traffic to support Path MTU Discov
 
 ## Register or Deregister Targets<a name="register-deregister-targets"></a>
 
-When you create a target group, you specify whether you must register targets by instance ID or IP address\.
+The target type of your target group determines how you register targets with that target group\.
 
 **Topics**
 + [Register or Deregister Targets by Instance ID](#register-instances)
 + [Register or Deregister Targets by IP Address](#register-ip-addresses)
++ [Register or Deregister a Lambda Function](#register-lambda-function)
 
 ### Register or Deregister Targets by Instance ID<a name="register-instances"></a>
 
@@ -85,3 +86,19 @@ The IP addresses that you register must be from the subnets of the VPC for the t
 
 **To register or deregister targets using the AWS CLI**  
 Use the [register\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/register-targets.html) command to add targets and the [deregister\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/deregister-targets.html) command to remove targets\.
+
+### Register or Deregister a Lambda Function<a name="register-lambda-function"></a>
+
+You can register a single Lambda function with each target group\. Elastic Load Balancing must have permissions to invoke the Lambda function\. If you no longer need to send traffic to your Lambda function, you can deregister it\. After you deregister a Lambda function, in\-flight requests fail with HTTP 5XX errors\. To replace a Lambda function, it is better to create a new target group instead\. For more information, see [Lambda Functions as Targets](lambda-functions.md)\.
+
+**To register or deregister a Lambda function**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. On the navigation pane, under **LOAD BALANCING**, choose **Target Groups**\.
+
+1. Select your target group and choose the **Targets** tab\.
+
+1. If there is no Lambda function registered, choose **Register**\. Select the Lambda function and choose **Register**\.
+
+1. To deregister a Lambda function, choose **Deregister**\. When prompted for confirmation, choose **Deregister**\.

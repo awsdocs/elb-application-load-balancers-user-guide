@@ -15,6 +15,7 @@ You define health check settings for your load balancer on a per target group ba
 + [Create a Target Group](create-target-group.md)
 + [Health Checks for Your Target Groups](target-group-health-checks.md)
 + [Register Targets with Your Target Group](target-group-register-targets.md)
++ [Lambda Functions as Targets](lambda-functions.md)
 + [Tags for Your Target Group](target-group-tags.md)
 + [Delete a Target Group](delete-target-group.md)
 
@@ -30,7 +31,7 @@ If a target group is configured with the HTTPS protocol or uses HTTPS health che
 
 ## Target Type<a name="target-type"></a>
 
-When you create a target group, you specify its target type, which determines how you specify its targets\. After you create a target group, you cannot change its target type\.
+When you create a target group, you specify its target type, which determines the type of target you specify when registering targets with this target group\. After you create a target group, you cannot change its target type\.
 
 The following are the possible target types:
 
@@ -38,7 +39,10 @@ The following are the possible target types:
 The targets are specified by instance ID\.
 
 `ip`  
-The targets are specified by IP address\.
+The targets are IP addresses\.
+
+`lambda`  
+The target is a Lambda function\.
 
 When the target type is `ip`, you can specify IP addresses from one of the following CIDR blocks:
 + The subnets of the VPC for the target group
@@ -54,6 +58,8 @@ You can't specify publicly routable IP addresses\.
 
 If you specify targets using an instance ID, traffic is routed to instances using the primary private IP address specified in the primary network interface for the instance\. If you specify targets using IP addresses, you can route traffic to an instance using any private IP address from one or more network interfaces\. This enables multiple applications on an instance to use the same port\. Each network interface can have its own security group\.
 
+If the target type of your target group is `lambda`, you can register a single Lambda function\. When the load balancer receives a request for the Lambda function, it invokes the Lambda function\. For more information, see [Lambda Functions as Targets](lambda-functions.md)\.
+
 ## Registered Targets<a name="registered-targets"></a>
 
 Your load balancer serves as a single point of contact for clients and distributes incoming traffic across its healthy registered targets\. You can register each target with one or more target groups\. You can register each EC2 instance or IP address with the same target group multiple times using different ports, which enables the load balancer to route requests to microservices\.
@@ -66,7 +72,7 @@ If you are registering targets by instance ID, you can use your load balancer wi
 
 ## Target Group Attributes<a name="target-group-attributes"></a>
 
-The following are the target group attributes:
+The following target group attributes are supported if the target group type is `instance` or `ip`:
 
 `deregistration_delay.timeout_seconds`  
 The amount of time for Elastic Load Balancing to wait before deregistering a target\. The range is 0–3600 seconds\. The default value is 300 seconds\.
@@ -82,6 +88,11 @@ The cookie expiration period, in seconds\. After this period, the cookie is cons
 
 `stickiness.type`  
 The type of stickiness\. The possible value is `lb_cookie`\.
+
+The following target group attribute is supported if the target group type is `lambda`:
+
+`lambda.multi_value_headers.enabled`  
+Indicates whether the request and response headers exchanged between the load balancer and the Lambda function include arrays of values or strings\. The possible values are `true` or `false`\. The default value is `false`\. For more information, see [Multi\-Value Headers](lambda-functions.md#multi-value-headers)\.
 
 ## Deregistration Delay<a name="deregistration-delay"></a>
 

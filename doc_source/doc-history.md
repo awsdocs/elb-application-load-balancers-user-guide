@@ -5,6 +5,7 @@ The following table describes the releases for Application Load Balancers\.
 
 | Feature | Description | Date | 
 | --- | --- | --- | 
+| Lambda functions as a target | This release add support to register your Lambda functions as a target\. For more information, see [Lambda Functions as Targets](lambda-functions.md)\. | November 29, 2018 | 
 | Fixed\-response actions | This release adds support for the load balancer to return a custom HTTP response\. For more information, see [Fixed\-Response Actions](load-balancer-listeners.md#fixed-response-actions)\. | July 25, 2018 | 
 | Redirect actions | This release adds support for the load balancer to redirect requests to a different URL\. For more information, see [Redirect Actions](load-balancer-listeners.md#redirect-actions)\. | July 25, 2018 | 
 | Security policies for FS and TLS 1\.2 | This release adds security policies for Forward Secrecy \(FS\) and TLS 1\.2\. For more information, see [Security Policies](create-https-listener.md#describe-ssl-policies)\. | June 6, 2018 | 

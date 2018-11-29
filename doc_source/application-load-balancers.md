@@ -5,6 +5,7 @@ A *load balancer* serves as the single point of contact for clients\. Clients se
 For more information, see [How Elastic Load Balancing Works](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/how-elastic-load-balancing-works.html) in the *Elastic Load Balancing User Guide*\.
 
 **Topics**
++ [Subnets for Your Load Balancer](#subnets-load-balancer)
 + [Load Balancer Security Groups](#load-balancer-security-groups)
 + [Load Balancer State](#load-balancer-state)
 + [Load Balancer Attributes](#load-balancer-attributes)
@@ -18,6 +19,12 @@ For more information, see [How Elastic Load Balancing Works](https://docs.aws.am
 + [Update the Address Type](load-balancer-ip-address-type.md)
 + [Update Tags](load-balancer-tags.md)
 + [Delete a Load Balancer](load-balancer-delete.md)
+
+## Subnets for Your Load Balancer<a name="subnets-load-balancer"></a>
+
+When you create a load balancer, you must specify one public subnet from at least two Availability Zones\. You can specify only one public subnet per Availability Zone\.
+
+To ensure that your load balancer can scale properly, verify that each subnet for your load balancer has a CIDR block with at least a `/27` bitmask \(for example, `10.0.0.0/27`\) and has at least 8 free IP addresses\. Your load balancer uses these IP addresses to establish connections with the instances\.
 
 ## Load Balancer Security Groups<a name="load-balancer-security-groups"></a>
 

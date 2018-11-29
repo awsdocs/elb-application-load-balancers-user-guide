@@ -18,12 +18,24 @@ You can add or remove targets from your target group at any time\. For more info
 
 1. For **Target group name**, type a name for the target group\.
 
-1. \(Optional\) For **Protocol** and **Port**, modify the default values as needed\.
+1. For **Target type**, select **Instance** to register targets by instance ID, **IP** to register IP addresses, and **Lambda function** to register a Lambda function\.
 
-1. For **Target type**, select `instance` to specify targets by instance ID or `ip` to specify targets by IP address\.
+1. If the target type is **Instance** or **IP**, do the following:
 
-1. For **VPC**, select a virtual private cloud \(VPC\)\.  
-![\[The Create target group dialog box.\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/create_target_group.png)
+   1. \(Optional\) For **Protocol** and **Port**, modify the default values as needed\.
+
+   1. For **VPC**, select a virtual private cloud \(VPC\)\.  
+![\[The Create target group dialog box if the target type is Instance or IP.\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/create_target_group.png)
+
+1. If the target type is **Lambda function**, do the following:
+
+   1. For **Lambda function**, do one of the following:
+      + Select the Lambda function
+      + Create a new Lambda function and select it
+      + Register the Lambda function after you create the target group
+
+   1. \(Optional\) To enable health checks, choose **Health check**, **Enable**\.  
+![\[The Create target group dialog box if the target type is Lambda.\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/create_target_group_lambda.png)
 
 1. \(Optional\) For **Health check settings** and **Advanced health check settings**, modify the default settings as needed\.
 

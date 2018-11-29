@@ -19,7 +19,8 @@ Your AWS account has the following limits related to Application Load Balancers\
 
 **Target Group Limits**
 + Load balancers per target group: 1
-+ Targets per target group: 1000
++ Targets per target group \(instances or IP addresses\): 1000
++ Targets per target group \(Lambda functions\): 1
 
 **Rule Limits**
 + Conditions per rule: 2 \(one host condition, one path condition\)

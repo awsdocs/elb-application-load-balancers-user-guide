@@ -22,7 +22,7 @@ Listeners support the following protocols and ports:
 + **Protocols**: HTTP, HTTPS
 + **Ports**: 1\-65535
 
-You can use an HTTPS listener to offload the work of encryption and decryption to your load balancer so that your applications can focus on their business logic\. If the listener protocol is HTTPS, you must deploy exactly one SSL server certificate on the listener\. For more information, see [HTTPS Listeners for Your Application Load Balancer](create-https-listener.md)\.
+You can use an HTTPS listener to offload the work of encryption and decryption to your load balancer so that your applications can focus on their business logic\. If the listener protocol is HTTPS, you must deploy at least one SSL server certificate on the listener\. For more information, see [HTTPS Listeners for Your Application Load Balancer](create-https-listener.md)\.
 
 Application Load Balancers provide native support for WebSockets\. You can use WebSockets with both HTTP and HTTPS listeners\.
 
@@ -157,7 +157,7 @@ The following is an example of a rule with a host condition as shown in the cons
 
 You can use path conditions to define rules that forward requests to different target groups based on the URL in the request \(also known as *path\-based routing*\)\.
 
-Each path condition has one path pattern\. If the URL in a request, including any query parameters, matches the path pattern in a listener rule exactly, the request is routed using that rule\.
+Each path condition has one path pattern\. If the path of the URL in a request matches the path pattern in a listener rule, the request is routed using that rule\. The path pattern is applied only to the path of the URL, not to its query parameters\.
 
 A path pattern is case\-sensitive, can be up to 128 characters in length, and can contain any of the following characters\. You can include up to three wildcard characters\.
 + A–Z, a–z, 0–9

@@ -182,10 +182,16 @@ Because the load balancer does not encrypt the user claims, we recommend that yo
 https://public-keys.auth.elb.region.amazonaws.com/key-id
 ```
 
-For AWS GovCloud \(US\), the endpoint is as follows:
+For AWS GovCloud \(US\-West\), the endpoint is as follows:
 
 ```
 https://s3-us-gov-west-1.amazonaws.com/aws-elb-public-keys-prod-us-gov-west-1/key-id
+```
+
+For AWS GovCloud \(US\-East\), the endpoint is as follows:
+
+```
+https://s3-us-gov-east-1.amazonaws.com/aws-elb-public-keys-prod-us-gov-east-1/key-id
 ```
 
 The following example shows how to get the public key in Python:
@@ -193,6 +199,8 @@ The following example shows how to get the public key in Python:
 ```
 import jwt
 import requests
+import base64
+import json
 
 # Step 1: Get the key id from JWT headers (the kid field)
 encoded_jwt = headers.dict['x-amzn-oidc-data']

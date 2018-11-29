@@ -78,9 +78,9 @@ Create a target group, which is used in request routing\. The default rule for y
 
 1. For **Name**, type a name for the new target group\.
 
-1. Keep **Protocol** as HTTP, **Port** as 80, and **Target type** as instance\.
+1. Keep the default target type \(**Instance**\), protocol \(**HTTP**\), and port \(**80**\)\.
 
-1. For **Health checks**, keep the default protocol and ping path\.
+1. For **Health checks**, keep the default settings\.
 
 1. Choose **Next: Register Targets**\.
 
@@ -88,11 +88,11 @@ Create a target group, which is used in request routing\. The default rule for y
 
 On the **Register Targets** page, complete the following procedure\.
 
-**To register targets with the target group**
+**To register your instances with the target group**
 
 1. For **Instances**, select one or more instances\.
 
-1. Keep the default port, 80, and choose **Add to registered**\.
+1. Keep the default port \(**80**\) and choose **Add to registered**\.
 
 1. When you have finished selecting instances, choose **Next: Review**\.
 

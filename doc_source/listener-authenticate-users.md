@@ -129,7 +129,7 @@ Elastic Load Balancing uses the OIDC authorization code flow, which includes the
 
 1. After the load balancer validates the ID token, it exchanges the access token with the IdP user info endpoint to get the user claims\.
 
-1. The load balancer creates the authentication session cookie and sends it to the client so that the client's user agent can send the cookie to the load balancer when making requests\. Because most browsers limit a cookie to 4K in size, the load balancer shards a cookie that is greater than 4K in size into multiple cookies\. If the total size of the user claims and access token received from the IdP is greater than 11K in size, the load balancer returns an error\.
+1. The load balancer creates the authentication session cookie and sends it to the client so that the client's user agent can send the cookie to the load balancer when making requests\. Because most browsers limit a cookie to 4K in size, the load balancer shards a cookie that is greater than 4K in size into multiple cookies\. If the total size of the user claims and access token received from the IdP is greater than 11K bytes in size, the load balancer returns an HTTP 500 error to the client and increments the `ELBAuthUserClaimsSizeExceeded` metric\.
 
 1. The load balancer sends the user claims to the target in HTTP headers\. For more information, see [User Claims Encoding and Signature Verification](#user-claims-encoding)\.
 

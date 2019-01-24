@@ -30,7 +30,7 @@ We also recommend that you allow inbound ICMP traffic to support Path MTU Discov
 
 ## Register or Deregister Targets<a name="register-deregister-targets"></a>
 
-The target type of your target group determines how you register targets with that target group\.
+The target type of your target group determines how you register targets with that target group\. For more information, see [Target Type](load-balancer-target-groups.md#target-type)\.
 
 **Topics**
 + [Register or Deregister Targets by Instance ID](#register-instances)
@@ -59,7 +59,7 @@ The instance must be in the virtual private cloud \(VPC\) that you specified for
 
 1. Choose **Save**\.
 
-**To register or deregister targets using the AWS CLI**  
+**To register or deregister targets by instance ID using the AWS CLI**  
 Use the [register\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/register-targets.html) command to add targets and the [deregister\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/deregister-targets.html) command to remove targets\.
 
 ### Register or Deregister Targets by IP Address<a name="register-ip-addresses"></a>
@@ -84,7 +84,7 @@ The IP addresses that you register must be from the subnets of the VPC for the t
 
 1. To leave this screen, choose the **Back to target group** icon \(the back button\) in the menu bar\.
 
-**To register or deregister targets using the AWS CLI**  
+**To register or deregister targets by IP address using the AWS CLI**  
 Use the [register\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/register-targets.html) command to add targets and the [deregister\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/deregister-targets.html) command to remove targets\.
 
 ### Register or Deregister a Lambda Function<a name="register-lambda-function"></a>
@@ -102,3 +102,6 @@ You can register a single Lambda function with each target group\. Elastic Load 
 1. If there is no Lambda function registered, choose **Register**\. Select the Lambda function and choose **Register**\.
 
 1. To deregister a Lambda function, choose **Deregister**\. When prompted for confirmation, choose **Deregister**\.
+
+**To register or deregister Lambda functions using the AWS CLI**  
+Use the [register\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/register-targets.html) command to add targets and the [deregister\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/deregister-targets.html) command to remove targets\.

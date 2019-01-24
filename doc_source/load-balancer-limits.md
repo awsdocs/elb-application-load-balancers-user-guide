@@ -24,7 +24,7 @@ Your AWS account has the following limits related to Application Load Balancers\
 
 **Rule Limits**
 + Conditions per rule: 2 \(one host condition, one path condition\)
-+ Actions per rule: 1
++ Actions per rule: 2 \(one optional authentication action, one required action\)
 + Target groups per action: 1
 
 **\*** This limit includes both your Application Load Balancers and your Classic Load Balancers\.

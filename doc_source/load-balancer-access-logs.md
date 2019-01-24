@@ -4,7 +4,7 @@ Elastic Load Balancing provides access logs that capture detailed information ab
 
 Access logging is an optional feature of Elastic Load Balancing that is disabled by default\. After you enable access logging for your load balancer, Elastic Load Balancing captures the logs and stores them in the Amazon S3 bucket that you specify as compressed files\. You can disable access logging at any time\.
 
-Elastic Load Balancing supports server\-side encryption for access logs for your Application Load Balancer\. This protects the log data stored in your S3 bucket and meets compliance requirements for data at rest\. Each access log file is automatically encrypted before it is stored in your S3 bucket and decrypted when you access it\. You do not need to take any action as there is no difference in the way you access encrypted or unencrypted log files\. Each log file is encrypted with a unique key employing strong multi\-factor encryption\. As an additional safeguard, the key itself encrypted with a master key that is regularly rotated\. For more information, see [Protecting Data Using Server\-Side Encryption with Amazon S3\-Managed Encryption Keys \(SSE\-S3\)](https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingServerSideEncryption.html) in the *Amazon Simple Storage Service Developer Guide*\.
+If you enable server\-side encryption with Amazon S3\-managed encryption keys \(SSE\-S3\) for your S3 bucket, each access log file is automatically encrypted before it is stored in your S3 bucket and decrypted when you access it\. You do not need to take any action as there is no difference in the way you access encrypted or unencrypted log files\. Each log file is encrypted with a unique key employing strong multi\-factor encryption\. As an additional safeguard, the key itself is encrypted with a master key that is regularly rotated\. This protects the log data stored in your S3 bucket and meets compliance requirements for data at rest\. For more information, see [Protecting Data Using Server\-Side Encryption with Amazon S3\-Managed Encryption Keys \(SSE\-S3\)](https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingServerSideEncryption.html) in the *Amazon Simple Storage Service Developer Guide*\.
 
 There is no additional charge for access logs\. You are charged storage costs for Amazon S3, but not charged for the bandwidth used by Elastic Load Balancing to send log files to Amazon S3\. For more information about storage costs, see [Amazon S3 Pricing](https://aws.amazon.com/s3/pricing/)\.
 
@@ -227,7 +227,6 @@ When you enable access logging, you must specify an S3 bucket for the access log
 **Requirements**
 + The bucket must be located in the same region as the load balancer\.
 + The bucket must have a bucket policy that grants Elastic Load Balancing permission to write the access logs to your bucket\. Bucket policies are a collection of JSON statements written in the access policy language to define access permissions for your bucket\. Each statement includes information about a single permission and contains a series of elements\.
-+ The bucket cannot use encryption\.
 
 Use one of the following options to prepare an S3 bucket for the access logs\.
 
@@ -267,7 +266,7 @@ Use one of the following options to prepare an S3 bucket for the access logs\.
 
    1. For **Actions**, choose `PutObject` to allow Elastic Load Balancing to store objects in the S3 bucket\.
 
-   1. For **Amazon Resource Name \(ARN\)**, enter the ARN of your S3 bucket in the following format\. For *aws\-account\-id*, specify the ID of the AWS account that owns the load balancer \(for example, *123456789012*\)\.
+   1. For **Amazon Resource Name \(ARN\)**, type the ARN of your S3 bucket in the following format\. For *aws\-account\-id*, specify the ID of the AWS account that owns the load balancer \(for example, *123456789012*\)\. Do not specify a wildcard for the account ID, as this would allow any other account to write access logs to your bucket\. To use a single bucket to store access logs from load balancers in multiple accounts, specify one ARN per account in the bucket policy, using the corresponding AWS account ID in each ARN\.
 
       ```
       arn:aws:s3:::bucket/prefix/AWSLogs/aws-account-id/*

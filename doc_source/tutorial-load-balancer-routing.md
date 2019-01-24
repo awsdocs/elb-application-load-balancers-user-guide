@@ -100,10 +100,12 @@ You can create a listener with rules to forward requests based on the URL path\.
 
 1. Select the newly created load balancer\.
 
-1. On the **Listeners** tab, use the arrow to view the rules for the listener, and then choose **Add rule**\. Specify the rule as follows:
+1. On the **Listeners** tab, choose **View/edit rules**, and then choose the **Add rules** icon \(the plus sign\)\. Specify the rule as follows:
 
-   1. For **Target group name**, choose the second target group that you created\.
+   1. Choose **Insert Rule**\.
 
-   1. For **Path pattern** specify the exact pattern to be used for path\-based routing \(for example, `/img/*`\)\. For more information, see [Listener Rules](load-balancer-listeners.md#listener-rules)\.
+   1. Choose **Add condition**, **Path is** and type the exact pattern to be used for path\-based routing \(for example, `/img/*`\)\. To save the condition, choose the checkmark icon\. For more information, see [Listener Rules](load-balancer-listeners.md#listener-rules)\.
 
-   1. Choose **Save**\.
+   1. Choose **Add action**, **Forward to** and then choose the second target group that you created\. To save the action, choose the checkmark icon\.
+
+   1. To save the rule, choose **Save**\.

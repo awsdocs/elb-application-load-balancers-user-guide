@@ -19,7 +19,7 @@ You can register your Lambda functions as targets and configure a listener rule 
 ## Prepare the Lambda Function<a name="prepare-lambda-function"></a>
 
 **Permissions to Invoke the Lambda Function**  
-Use the following [add\-permission](https://docs.aws.amazon.com/cli/latest/reference/lambda/add-permission.html) command to grant Elastic Load Balancing permission to invoke your Lambda function\. We recommend that you include the `--source-arn` parameter to restrict function invocation to the specified target group\.
+If you create the target group and register the Lambda function using the AWS Management Console, the console adds the required permissions to your Lambda function policy on your behalf\. Otherwise, after you create the target group and register the function using the AWS CLI, you must use the [add\-permission](https://docs.aws.amazon.com/cli/latest/reference/lambda/add-permission.html) command to grant Elastic Load Balancing permission to invoke your Lambda function\. We recommend that you include the `--source-arn` parameter to restrict function invocation to the specified target group\.
 
 ```
 aws lambda add-permission \
@@ -60,6 +60,9 @@ Create a target group, which is used in request routing\. If the request content
 1. \(Optional\) To enable health checks, choose **Health check**, **Enable**\.
 
 1. Choose **Create**\.
+
+**To create a target group and deregister the Lambda function using the AWS CLI**  
+Use the [create\-target\-group](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-target-group.html) and [register\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/register-targets.html) commands\.
 
 ## Receive Events From the Load Balancer<a name="receive-event-from-load-balancer"></a>
 
@@ -115,9 +118,15 @@ The following is an example response from a Lambda function\.
         "Set-cookie": "cookies",
         "Content-Type": "application/json"
     },
-    "body": "Hello from Lambda"
+    "body": "Hello from Lambda (optional)"
 }
 ```
+
+For Lambda function templates that work with Application Load Balancers, see [application\-load\-balancer\-serverless\-app](https://github.com/aws/elastic-load-balancing-tools/tree/master/application-load-balancer-serverless-app) on github\. Alternatively, open the [Lambda console](https://console.aws.amazon.com/lambda), create a function, and select one of the following from the AWS Serverless Application Repository:
++ ALB\-Lambda\-Target\-HelloWorld
++ ALB\-Lambda\-Target\-UploadFiletoS3
++ ALB\-Lambda\-Target\-BinaryResponse
++ ALB\-Lambda\-Target\-WhatisMyIP
 
 ## Multi\-Value Headers<a name="multi-value-headers"></a>
 
@@ -258,6 +267,9 @@ The following is the format of the health check event sent to your Lambda functi
 
 1. Choose **Save**\.
 
+**To enable health checks for a target group using the AWS CLI**  
+Use the [modify\-target\-group](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-target-group.html) command with the `--health-check-enabled` option\.
+
 ## Deregister the Lambda Function<a name="deregister-lambda-function"></a>
 
 If you no longer need to send traffic to your Lambda function, you can deregister it\. After you deregister a Lambda function, in\-flight requests fail with HTTP 5XX errors\.
@@ -275,3 +287,6 @@ To replace a Lambda function, we recommend that you create a new target group, r
 1. On the **Targets** tab, choose **Deregister**\.
 
 1. Choose **Deregister**\.
+
+**To deregister the Lambda function using the AWS CLI**  
+Use the [deregister\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/deregister-targets.html) command\.

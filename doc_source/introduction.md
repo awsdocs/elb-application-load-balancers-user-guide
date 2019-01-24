@@ -54,6 +54,19 @@ To create an Application Load Balancer, try one of the following tutorials:
 + [Tutorial: Use Path\-Based Routing with Your Application Load Balancer](tutorial-load-balancer-routing.md)
 + [Tutorial: Use Microservices as Targets with Your Application Load Balancer](tutorial-target-ecs-containers.md)
 
+## Related Services<a name="application-load-balancer-related-services"></a>
+
+Elastic Load Balancing works with the following services to improve the availability and scalability of your applications\.
++ **Amazon EC2** — Virtual servers that run your applications in the cloud\. You can configure your load balancer to route traffic to your EC2 instances\.
++ **Amazon EC2 Auto Scaling** — Ensures that you are running your desired number of instances, even if an instance fails, and enables you to automatically increase or decrease the number of instances as the demand on your instances changes\. If you enable Auto Scaling with Elastic Load Balancing, instances that are launched by Auto Scaling are automatically registered with the load balancer, and instances that are terminated by Auto Scaling are automatically de\-registered from the load balancer\.
++ **AWS Certificate Manager** — When you create an HTTPS listener, you can specify certificates provided by ACM\. The load balancer uses certificates to terminate connections and decrypt requests from clients\. For more information, see [SSL Certificates](create-https-listener.md#https-listener-certificates)\.
++ **Amazon CloudWatch** — Enables you to monitor your load balancer and take action as needed\. For more information, see [CloudWatch Metrics for Your Application Load Balancer](load-balancer-cloudwatch-metrics.md)\.
++ **Amazon ECS** — Enables you to run, stop, and manage Docker containers on a cluster of EC2 instances\. You can configure your load balancer to route traffic to your containers\. For more information, see [Service Load Balancing](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-load-balancing.html) in the *Amazon Elastic Container Service Developer Guide*\.
++ **Route 53** — Provides a reliable and cost\-effective way to route visitors to websites by translating domain names \(such as `www.example.com`\) into the numeric IP addresses \(such as `192.0.2.1`\) that computers use to connect to each other\. AWS assigns URLs to your resources, such as load balancers\. However, you might want a URL that is easy for users to remember\. For example, you can map your domain name to a load balancer\.
++ **AWS WAF** — You can use AWS WAF with your Application Load Balancer to allow or block requests based on the rules in a web access control list \(web ACL\)\. For more information, see [Application Load Balancers and AWS WAF](application-load-balancers.md#load-balancer-waf)\.
+
+To view information about services that are integrated with your load balancer, select your load balancer in the AWS Management Console and choose the **Integrated services** tab\.
+
 ## Pricing<a name="application-load-balancer-pricing"></a>
 
 With your load balancer, you pay only for what you use\. For more information, see [Elastic Load Balancing Pricing](https://aws.amazon.com/elasticloadbalancing/pricing/)\.

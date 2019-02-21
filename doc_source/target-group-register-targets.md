@@ -36,12 +36,13 @@ The target type of your target group determines how you register targets with th
 + [Register or Deregister Targets by Instance ID](#register-instances)
 + [Register or Deregister Targets by IP Address](#register-ip-addresses)
 + [Register or Deregister a Lambda Function](#register-lambda-function)
++ [Register or Deregister Targets Using the AWS CLI](#register-cli)
 
 ### Register or Deregister Targets by Instance ID<a name="register-instances"></a>
 
 The instance must be in the virtual private cloud \(VPC\) that you specified for the target group\. The instance must also be in the `running` state when you register it\.
 
-**To register or deregister targets by instance ID using the console**
+**To register or deregister targets by instance ID**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -59,14 +60,19 @@ The instance must be in the virtual private cloud \(VPC\) that you specified for
 
 1. Choose **Save**\.
 
-**To register or deregister targets by instance ID using the AWS CLI**  
-Use the [register\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/register-targets.html) command to add targets and the [deregister\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/deregister-targets.html) command to remove targets\.
-
 ### Register or Deregister Targets by IP Address<a name="register-ip-addresses"></a>
 
-The IP addresses that you register must be from the subnets of the VPC for the target group, the RFC 1918 range \(10\.0\.0\.0/8, 172\.16\.0\.0/12, and 192\.168\.0\.0/16\), and the RFC 6598 range \(100\.64\.0\.0/10\)\. You cannot register publicly routable IP addresses\.
+The IP addresses that you register must be from one of the following CIDR blocks:
++ The subnets of the VPC for the target group
++ 10\.0\.0\.0/8 \(RFC 1918\)
++ 100\.64\.0\.0/10 \(RFC 6598\)
++ 172\.16\.0\.0/12 \(RFC 1918\)
++ 192\.168\.0\.0/16 \(RFC 1918\)
 
-**To register or deregister targets by IP address using the console**
+**Limits**
++ You cannot register the IP addresses of another Application Load Balancer in the same VPC\. If the other Application Load Balancer is in a peered VPC, you can register its IP addresses\.
+
+**To register or deregister targets by IP address**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -84,9 +90,6 @@ The IP addresses that you register must be from the subnets of the VPC for the t
 
 1. To leave this screen, choose the **Back to target group** icon \(the back button\) in the menu bar\.
 
-**To register or deregister targets by IP address using the AWS CLI**  
-Use the [register\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/register-targets.html) command to add targets and the [deregister\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/deregister-targets.html) command to remove targets\.
-
 ### Register or Deregister a Lambda Function<a name="register-lambda-function"></a>
 
 You can register a single Lambda function with each target group\. Elastic Load Balancing must have permissions to invoke the Lambda function\. If you no longer need to send traffic to your Lambda function, you can deregister it\. After you deregister a Lambda function, in\-flight requests fail with HTTP 5XX errors\. To replace a Lambda function, it is better to create a new target group instead\. For more information, see [Lambda Functions as Targets](lambda-functions.md)\.
@@ -103,5 +106,6 @@ You can register a single Lambda function with each target group\. Elastic Load 
 
 1. To deregister a Lambda function, choose **Deregister**\. When prompted for confirmation, choose **Deregister**\.
 
-**To register or deregister Lambda functions using the AWS CLI**  
+### Register or Deregister Targets Using the AWS CLI<a name="register-cli"></a>
+
 Use the [register\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/register-targets.html) command to add targets and the [deregister\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/deregister-targets.html) command to remove targets\.

@@ -70,6 +70,9 @@ If demand on your application decreases, or you need to service your targets, yo
 
 If you are registering targets by instance ID, you can use your load balancer with an Auto Scaling group\. After you attach a target group to an Auto Scaling group, Auto Scaling registers your targets with the target group for you when it launches them\. For more information, see [Attaching a Load Balancer to Your Auto Scaling Group](https://docs.aws.amazon.com/autoscaling/ec2/userguide/attach-load-balancer-asg.html) in the *Amazon EC2 Auto Scaling User Guide*\.
 
+**Limits**
++ You cannot register the IP addresses of another Application Load Balancer in the same VPC\. If the other Application Load Balancer is in a peered VPC, you can register its IP addresses\.
+
 ## Target Group Attributes<a name="target-group-attributes"></a>
 
 The following target group attributes are supported if the target group type is `instance` or `ip`:
@@ -154,7 +157,7 @@ Application Load Balancers support load balancer\-generated cookies only\. The n
 
 WebSockets connections are inherently sticky\. If the client requests a connection upgrade to WebSockets, the target that returns an HTTP 101 status code to accept the connection upgrade is the target used in the WebSockets connection\. After the WebSockets upgrade is complete, cookie\-based stickiness is not used\.
 
-You enable sticky sessions at the target group level\. You can also set the duration for the stickiness of the load balancer\-generated cookie, in seconds\. The duration is set with each request\. Therefore, if the client sends a request before each duration period expires, the sticky session continues\. If you enable sticky sessions on multiple target groups, we recommend that you configure the same duration for all target groups\.
+You enable sticky sessions at the target group level\. You can also set the duration for the stickiness of the load balancer\-generated cookie, in seconds\. The duration is set with each request\. Therefore, if the client sends a request before each duration period expires, the sticky session continues\.
 
 **To enable sticky sessions using the console**
 

@@ -9,10 +9,10 @@ Before you start using your Application Load Balancer, you must add one or more 
 + [Fixed\-Response Actions](#fixed-response-actions)
 + [Host Conditions](#host-conditions)
 + [Path Conditions](#path-conditions)
-+ [Create a Listener](create-listener.md)
-+ [Configure HTTPS Listeners](create-https-listener.md)
++ [Create an HTTP Listener](create-listener.md)
++ [Create an HTTPS Listener](create-https-listener.md)
 + [Update Listener Rules](listener-update-rules.md)
-+ [Update Server Certificates](listener-update-certificates.md)
++ [Update an HTTPS Listener](listener-update-certificates.md)
 + [Authenticate Users](listener-authenticate-users.md)
 + [Delete a Listener](delete-listener.md)
 
@@ -22,7 +22,7 @@ Listeners support the following protocols and ports:
 + **Protocols**: HTTP, HTTPS
 + **Ports**: 1\-65535
 
-You can use an HTTPS listener to offload the work of encryption and decryption to your load balancer so that your applications can focus on their business logic\. If the listener protocol is HTTPS, you must deploy at least one SSL server certificate on the listener\. For more information, see [HTTPS Listeners for Your Application Load Balancer](create-https-listener.md)\.
+You can use an HTTPS listener to offload the work of encryption and decryption to your load balancer so that your applications can focus on their business logic\. If the listener protocol is HTTPS, you must deploy at least one SSL server certificate on the listener\. For more information, see [Create an HTTPS Listener for Your Application Load Balancer](create-https-listener.md)\.
 
 Application Load Balancers provide native support for WebSockets\. You can use WebSockets with both HTTP and HTTPS listeners\.
 

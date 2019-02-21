@@ -36,9 +36,9 @@ To enable an IAM user to configure a load balancer to use Amazon Cognito to auth
 ## Prepare to Use Amazon CloudFront<a name="cloudfront-requirements"></a>
 
 Enable the following settings if you are using a CloudFront distribution in front of your Application Load Balancer:
-+ Query string forwarding and caching \(all\)
-+ Cookie forwarding \(all\)
-+ Cache based on request headers \(all\)
++ Forward request headers \(all\) — Ensures that CloudFront does not cache responses for authenticated requests\. This prevents them from being served from the cache after the authentication session expires\. To reduce this risk, owners of a CloudFront distribution can set the time\-to\-live \(TTL\) value to expire before the authentication cookie expires\.
++ Query string forwarding and caching \(all\) — Ensures that the load balancer has access to the query string parameters required to authenticate the user with the IdP\.
++ Cookie forwarding \(all\) — Ensures that CloudFront forwards all authentication cookies to the load balancer\.
 
 ## Configure User Authentication<a name="configure-user-authentication"></a>
 

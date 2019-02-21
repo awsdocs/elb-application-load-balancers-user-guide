@@ -24,7 +24,7 @@ For more information, see [How Elastic Load Balancing Works](https://docs.aws.am
 
 When you create a load balancer, you must specify one public subnet from at least two Availability Zones\. You can specify only one public subnet per Availability Zone\.
 
-To ensure that your load balancer can scale properly, verify that each subnet for your load balancer has a CIDR block with at least a `/27` bitmask \(for example, `10.0.0.0/27`\) and has at least 8 free IP addresses\. Your load balancer uses these IP addresses to establish connections with the instances\.
+To ensure that your load balancer can scale properly, verify that each subnet for your load balancer has a CIDR block with at least a `/27` bitmask \(for example, `10.0.0.0/27`\) and has at least 8 free IP addresses\. Your load balancer uses these IP addresses to establish connections with the targets\.
 
 ## Load Balancer Security Groups<a name="load-balancer-security-groups"></a>
 
@@ -122,7 +122,7 @@ Use the [modify\-load\-balancer\-attributes](https://docs.aws.amazon.com/cli/lat
 
 ## Connection Idle Timeout<a name="connection-idle-timeout"></a>
 
-For each request that a client makes through a load balancer, the load balancer maintains two connections\. A front\-end connection is between a client and the load balancer, and a back\-end connection is between the load balancer and a target\. The load balancer manages an idle timeout that is triggered when no data is sent over a connection for a specified time period\. If no data has been sent or received by the time that the idle timeout period elapses, the load balancer closes the connection\.
+For each request that a client makes through a load balancer, the load balancer maintains two connections\. A front\-end connection is between a client and the load balancer, and a back\-end connection is between the load balancer and a target\. The load balancer manages an idle timeout that is triggered when no data is sent over a front\-end connection for a specified time period\. If no data has been sent or received by the time that the idle timeout period elapses, the load balancer closes the connection\.
 
 By default, Elastic Load Balancing sets the idle timeout value to 60 seconds\. Therefore, if the target doesn't send some data at least every 60 seconds while the request is in flight, the load balancer can close the front\-end connection\. To ensure that lengthy operations such as file uploads have time to complete, send at least 1 byte of data before each idle timeout period elapses, and increase the length of the idle timeout period as needed\.
 

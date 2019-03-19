@@ -27,7 +27,7 @@ Target groups support the following protocols and ports:
 + **Protocols**: HTTP, HTTPS
 + **Ports**: 1\-65535
 
-If a target group is configured with the HTTPS protocol or uses HTTPS health checks, SSL connections to the targets use the security settings from the `ELBSecurityPolicy2016-08` policy\.
+If a target group is configured with the HTTPS protocol or uses HTTPS health checks, SSL/TLS connections to the targets use the security settings from the `ELBSecurityPolicy2016-08` policy\.
 
 ## Target Type<a name="target-type"></a>
 

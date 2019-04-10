@@ -153,11 +153,13 @@ Sticky sessions are a mechanism to route requests to the same target in a target
 
 When a load balancer first receives a request from a client, it routes the request to a target and generates a cookie to include in the response to the client\. The next request from that client contains the cookie\. If sticky sessions are enabled for the target group and the request goes to the same target group, the load balancer detects the cookie and routes the request to the same target\.
 
-Application Load Balancers support load balancer\-generated cookies only\. The name of the cookie is AWSALB\. The contents of these cookies are encrypted using a rotating key\. You cannot decrypt or modify load balancer\-generated cookies\.
+Application Load Balancers support load balancer\-generated cookies only\. The name of the cookie is AWSALB\. The contents of these cookies are encrypted using a rotating key and it is expected that every response sets an updated cookie\. You cannot decrypt or modify load balancer\-generated cookies\.
 
 WebSockets connections are inherently sticky\. If the client requests a connection upgrade to WebSockets, the target that returns an HTTP 101 status code to accept the connection upgrade is the target used in the WebSockets connection\. After the WebSockets upgrade is complete, cookie\-based stickiness is not used\.
 
 You enable sticky sessions at the target group level\. You can also set the duration for the stickiness of the load balancer\-generated cookie, in seconds\. The duration is set with each request\. Therefore, if the client sends a request before each duration period expires, the sticky session continues\.
+
+If a target is deregistered or is unhealthy, a new target will be selected and the cookie will be updated to include the new routing information. and the subsequent requests using the cookie will be routed accordingly.
 
 **To enable sticky sessions using the console**
 

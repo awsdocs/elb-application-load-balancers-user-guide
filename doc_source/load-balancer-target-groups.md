@@ -159,7 +159,7 @@ WebSockets connections are inherently sticky\. If the client requests a connecti
 
 You enable sticky sessions at the target group level\. You can also set the duration for the stickiness of the load balancer\-generated cookie, in seconds\. The duration is set with each request\. Therefore, if the client sends a request before each duration period expires, the sticky session continues\.
 
-If a target is deregistered or is unhealthy, a new target will be selected and the cookie will be updated to include the new routing information. and the subsequent requests using the cookie will be routed accordingly.
+If a target is deregistered or is unhealthy, a new target will be selected and the cookie will be updated to include the new routing information, subsequent requests using the cookie will be routed accordingly.
 
 **To enable sticky sessions using the console**
 

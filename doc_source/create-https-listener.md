@@ -76,7 +76,7 @@ Elastic Load Balancing provides the following security policies for Application 
 + `ELBSecurityPolicy-2015-05`
 + `ELBSecurityPolicy-TLS-1-0-2015-04`
 
-We recommend the `ELBSecurityPolicy-2016-08` policy for general use\. You can use the `ELBSecurityPolicy-FS-2018-06` policy if you require Forward Secrecy \(FS\)\. You can use one of the `ELBSecurityPolicy-TLS` policies to meet compliance and security standards that require disabling certain TLS protocol versions, or to support legacy clients that require deprecated ciphers\. Only a small percentage of internet clients require TLS version 1\.0\. To view the TLS protocol version for requests to your load balancer, enable access logging for your load balancer and examine the access logs\. For more information, see [Access Logs](load-balancer-access-logs.md)\.
+We recommend the `ELBSecurityPolicy-2016-08` policy for general use\. You can use either the `ELBSecurityPolicy-FS-2018-06`  policy or the `ELBSecurityPolicy-TLS-1-2-Ext-2018-06` policy if you require Forward Secrecy \(FS\)\. You can use one of the `ELBSecurityPolicy-TLS` policies to meet compliance and security standards that require disabling certain TLS protocol versions, or to support legacy clients that require deprecated ciphers\. Only a small percentage of internet clients require TLS version 1\.0\. To view the TLS protocol version for requests to your load balancer, enable access logging for your load balancer and examine the access logs\. For more information, see [Access Logs](load-balancer-access-logs.md)\.
 
 The following table describes the security policies defined for Application Load Balancers\.
 

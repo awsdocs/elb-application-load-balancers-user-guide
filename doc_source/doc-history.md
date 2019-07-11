@@ -5,6 +5,7 @@ The following table describes the releases for Application Load Balancers\.
 
 | Feature | Description | Date | 
 | --- | --- | --- | 
+| Advanced request routing | This release extends the existing support for host header and path\-based routing by adding conditions for your listener rules based on standard and custom HTTP headers and methods, query parameters, and source IP addresses\. For more information, see [Rule Condition Types](load-balancer-listeners.md#rule-condition-types)\. | March 27, 2019 | 
 | Lambda functions as a target | This release add support to register your Lambda functions as a target\. For more information, see [Lambda Functions as Targets](lambda-functions.md)\. | November 29, 2018 | 
 | Fixed\-response actions | This release adds support for the load balancer to return a custom HTTP response\. For more information, see [Fixed\-Response Actions](load-balancer-listeners.md#fixed-response-actions)\. | July 25, 2018 | 
 | Redirect actions | This release adds support for the load balancer to redirect requests to a different URL\. For more information, see [Redirect Actions](load-balancer-listeners.md#redirect-actions)\. | July 25, 2018 | 

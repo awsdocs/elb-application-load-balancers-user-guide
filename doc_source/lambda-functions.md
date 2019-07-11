@@ -3,6 +3,7 @@
 You can register your Lambda functions as targets and configure a listener rule to forward requests to the target group for your Lambda function\. When the load balancer forwards the request to a target group with a Lambda function as a target, it invokes your Lambda function and passes the content of the request to the Lambda function, in JSON format\.
 
 **Limits**
++ The Lambda function and target group must be in the same account\.
 + The maximum size of the request body that you can send to a Lambda function is 1 MB\. For related size limits, see [HTTP Header Limits](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/how-elastic-load-balancing-works.html#http-header-limits)\.
 + The maximum size of the response JSON that the Lambda function can send is 1 MB\.
 + WebSockets are not supported\. Upgrade requests are rejected with an HTTP 400 code\.
@@ -17,6 +18,8 @@ You can register your Lambda functions as targets and configure a listener rule 
 + [Deregister the Lambda Function](#deregister-lambda-function)
 
 ## Prepare the Lambda Function<a name="prepare-lambda-function"></a>
+
+The following recommendations apply if you are using your Lambda function with an Application Load Balancer\.
 
 **Permissions to Invoke the Lambda Function**  
 If you create the target group and register the Lambda function using the AWS Management Console, the console adds the required permissions to your Lambda function policy on your behalf\. Otherwise, after you create the target group and register the function using the AWS CLI, you must use the [add\-permission](https://docs.aws.amazon.com/cli/latest/reference/lambda/add-permission.html) command to grant Elastic Load Balancing permission to invoke your Lambda function\. We recommend that you include the `--source-arn` parameter to restrict function invocation to the specified target group\.
@@ -139,19 +142,21 @@ If requests from a client or responses from a Lambda function contain headers wi
 
 ### Requests with Multi\-Value Headers<a name="multi-value-headers-request"></a>
 
+The names of the fields used for headers and query string parameters differ depending on whether you enable multi\-value headers for the target group\.
+
 The following example request has two query parameters with the same key:
 
 ```
 http://www.example.com?&myKey=val1&myKey=val2
 ```
 
-With the default format, the load balancer uses the last value sent by the client and sends you an event that includes the following:
+With the default format, the load balancer uses the last value sent by the client and sends you an event that includes query string parameters using `queryStringParameters`\. For example:
 
 ```
 "queryStringParameters": { "myKey": "val2"},
 ```
 
-With multi\-value headers, the load balancer uses both key values sent by the client and sends you an event that includes the following:
+If you enable multi\-value headers, the load balancer uses both key values sent by the client and sends you an event that includes query string parameters using `multiValueQueryStringParameters`\. For example:
 
 ```
 "multiValueQueryStringParameters": { "myKey": ["val1", "val2"] },
@@ -164,7 +169,7 @@ Similarly, suppose that the client sends a request with two cookies in the heade
 "cookie": "name2=value2",
 ```
 
-With the default format, the load balancer uses the last cookie sent by the client and sends you an event that includes the following:
+With the default format, the load balancer uses the last cookie sent by the client and sends you an event that includes headers using `headers`\. For example:
 
 ```
 "headers": {
@@ -173,7 +178,7 @@ With the default format, the load balancer uses the last cookie sent by the clie
 },
 ```
 
-With multi\-value headers, the load balancer uses both cookies sent by the client and sends you an event that includes the following:
+If you enable multi\-value headers, the load balancer uses both cookies sent by the client and sends you an event that includes headers using `multiValueHeaders`\. For example:
 
 ```
 "multiValueHeaders": {
@@ -183,6 +188,8 @@ With multi\-value headers, the load balancer uses both cookies sent by the clien
 ```
 
 ### Responses with Multi\-Value Headers<a name="multi-value-headers-response"></a>
+
+The names of the fields used for headers differ depending on whether you enable multi\-value headers for the target group\. You must use `multiValueHeaders` if you have enabled multi\-value headers and `headers` otherwise\.
 
 With the default format, you can specify a single cookie:
 
@@ -195,7 +202,7 @@ With the default format, you can specify a single cookie:
 }
 ```
 
-With multi\-value headers, you can specify multiple cookies as follows:
+If you enable multi\-value headers, you can specify multiple cookies as follows:
 
 ```
 {
@@ -220,7 +227,7 @@ You can enable or disable multi\-value headers for a target group with the targe
 
 1. On the **Description** tab, choose **Edit attributes**\.
 
-1. Select **Enable**\.
+1. For **Multi value headers**, select **Enable**\.
 
 1. Choose **Save**\.
 
@@ -263,7 +270,7 @@ The following is the format of the health check event sent to your Lambda functi
 
 1. On the **Health checks** tab, choose **Edit health check**\.
 
-1. Select **Enable**\.
+1. For **Health check**, select **Enable**\.
 
 1. Choose **Save**\.
 

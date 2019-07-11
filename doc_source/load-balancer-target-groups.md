@@ -159,6 +159,8 @@ WebSockets connections are inherently sticky\. If the client requests a connecti
 
 You enable sticky sessions at the target group level\. You can also set the duration for the stickiness of the load balancer\-generated cookie, in seconds\. The duration is set with each request\. Therefore, if the client sends a request before each duration period expires, the sticky session continues\.
 
+Application Load Balancers use the Expires attribute in the cookie header instead of the Max\-Age header\.
+
 **To enable sticky sessions using the console**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.

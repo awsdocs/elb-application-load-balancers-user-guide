@@ -5,7 +5,7 @@ To view the current limits for your Application Load Balancers, use the **Limits
 Your AWS account has the following limits related to Application Load Balancers\.
 
 **Regional Limits**
-+ Load balancers per region: 20 **\***
++ Load balancers per region: 20
 + Target groups per region: 3000
 
 **Load Balancer Limits**
@@ -23,8 +23,6 @@ Your AWS account has the following limits related to Application Load Balancers\
 + Targets per target group \(Lambda functions\): 1
 
 **Rule Limits**
-+ Conditions per rule: 2 \(one host condition, one path condition\)
++ Match evaluations per rule: 5
++ Wildcards per rule: 5
 + Actions per rule: 2 \(one optional authentication action, one required action\)
-+ Target groups per action: 1
-
-**\*** This limit includes both your Application Load Balancers and your Classic Load Balancers\.

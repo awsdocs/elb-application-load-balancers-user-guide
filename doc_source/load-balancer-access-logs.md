@@ -4,7 +4,7 @@ Elastic Load Balancing provides access logs that capture detailed information ab
 
 Access logging is an optional feature of Elastic Load Balancing that is disabled by default\. After you enable access logging for your load balancer, Elastic Load Balancing captures the logs and stores them in the Amazon S3 bucket that you specify as compressed files\. You can disable access logging at any time\.
 
-If you enable server\-side encryption with Amazon S3\-managed encryption keys \(SSE\-S3\) for your S3 bucket, each access log file is automatically encrypted before it is stored in your S3 bucket and decrypted when you access it\. You do not need to take any action as there is no difference in the way you access encrypted or unencrypted log files\. Each log file is encrypted with a unique key, which is itself encrypted with a master key that is regularly rotated\. For more information, see [Protecting Data Using Server\-Side Encryption with Amazon S3\-Managed Encryption Keys \(SSE\-S3\)](https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingServerSideEncryption.html) in the *Amazon Simple Storage Service Developer Guide*\.
+Each access log file is automatically encrypted before it is stored in your S3 bucket and decrypted when you access it\. You do not need to take any action; the encryption and decryption is performed transparently\. Each log file is encrypted with a unique key, which is itself encrypted with a master key that is regularly rotated\. For more information, see [Protecting Data Using Server\-Side Encryption with Amazon S3\-Managed Encryption Keys \(SSE\-S3\)](https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingServerSideEncryption.html) in the *Amazon Simple Storage Service Developer Guide*\.
 
 There is no additional charge for access logs\. You are charged storage costs for Amazon S3, but not charged for the bandwidth used by Elastic Load Balancing to send log files to Amazon S3\. For more information about storage costs, see [Amazon S3 Pricing](https://aws.amazon.com/s3/pricing/)\.
 
@@ -89,7 +89,7 @@ The following table describes the fields of an access log entry, in order\. All 
 | target\_status\_code | The status code of the response from the target\. This value is recorded only if a connection was established to the target and the target sent a response\. Otherwise, it is set to \-\. | 
 | received\_bytes |  The size of the request, in bytes, received from the client \(requester\)\. For HTTP requests, this includes the headers\. For WebSockets, this is the total number of bytes received from the client on the connection\.  | 
 | sent\_bytes |  The size of the response, in bytes, sent to the client \(requester\)\. For HTTP requests, this includes the headers\. For WebSockets, this is the total number of bytes sent to the client on the connection\.  | 
-| "request" |  The request line from the client, enclosed in double quotes and logged using the following format: HTTP method \+ protocol://host:port/uri \+ HTTP version\.  | 
+| "request" |  The request line from the client, enclosed in double quotes and logged using the following format: HTTP method \+ protocol://host:port/uri \+ HTTP version\. The load balancer preserves the URL sent by the client, as is, when recording the request URI\. It does not set the content type for the access log file\. When you process this field, consider how the client sent the URL\.  | 
 | "user\_agent" |  A User\-Agent string that identifies the client that originated the request, enclosed in double quotes\. The string consists of one or more product identifiers, product\[/version\]\. If the string is longer than 8 KB, it is truncated\.  | 
 | ssl\_cipher |  \[HTTPS listener\] The SSL cipher\. This value is set to \- if the listener is not an HTTPS listener\.  | 
 | ssl\_protocol |  \[HTTPS listener\] The SSL protocol\. This value is set to \- if the listener is not an HTTPS listener\.  | 
@@ -101,9 +101,30 @@ The following table describes the fields of an access log entry, in order\. All 
 | request\_creation\_time |  The time when the load balancer received the request from the client, in ISO 8601 format\.  | 
 | "actions\_executed" |  The actions taken when processing the request, enclosed in double quotes\. This value is a comma\-separated list that can include the following possible values: `waf`, `waf-failed`, `authenticate`, `redirect`, `fixed-response`, and `forward`\. If no action was taken, such as for a malformed request, this value is set to \-\.  | 
 | "redirect\_url" |  The URL of the redirect target for the location header of the HTTP response, enclosed in double quotes\. If no redirect actions were taken, this value is set to \-\.  | 
-| "error\_reason" |  The reason code, enclosed in double quotes\. If the request to the Lambda function succeeded, this value is set to \-\. If the request failed, this is one of the error codes described in [Error Reason Codes](#error-reason-codes)\. If the target is not a Lambda function, this value is set to \-\.  | 
+| "error\_reason" |  The error reason code, enclosed in double quotes\. If the request failed, this is one of the error codes described in [Error Reason Codes](#error-reason-codes)\. If the actions taken do not include an authenticate action or the target is not a Lambda function, this value is set to \-\.  | 
 
 ### Error Reason Codes<a name="error-reason-codes"></a>
+
+If the load balancer cannot complete an authenticate action, the load balancer stores one of the following reason codes in the error\_reason field of the access log\. The load balancer also increments the corresponding CloudWatch metric\. For more information, see [Authenticate Users Using an Application Load Balancer](listener-authenticate-users.md)\.
+
+
+| Code | Description | Metric | 
+| --- | --- | --- | 
+| `AuthInvalidCookie` | The authentication cookie is not valid\. | `ELBAuthFailure` | 
+| `AuthInvalidGrantError` | The authorization grant code from the token endpoint is not valid\. | `ELBAuthFailure` | 
+| `AuthInvalidIdToken` | The ID token is not valid\. | `ELBAuthFailure` | 
+| `AuthInvalidStateParam` | The state parameter is not valid\. | `ELBAuthFailure` | 
+| `AuthInvalidTokenResponse` | The response from the token endpoint is not valid\. | `ELBAuthFailure` | 
+| `AuthInvalidUserinfoResponse` | The response from the user info endpoint is not valid\. | `ELBAuthFailure` | 
+| `AuthMissingCodeParam` | The authentication response from the authorization endpoint is missing a query parameter named 'code'\. | `ELBAuthFailure` | 
+| `AuthMissingHostHeader` | The authentication response from the authorization endpoint is missing a host header field\. | `ELBAuthError` | 
+| `AuthMissingStateParam` | The authentication response from the authorization endpoint is missing a query parameter named 'state'\. | `ELBAuthFailure` | 
+| `AuthTokenEpRequestFailed` | There is an error response \(non\-2XX\) from the token endpoint\. | `ELBAuthError` | 
+| `AuthTokenEpRequestTimeout` | The load balancer is unable to communicate with the token endpoint\. | `ELBAuthError` | 
+| `AuthUnhandledException` | The load balancer encountered an unhandled exception\. | `ELBAuthError` | 
+| `AuthUserinfoEpRequestFailed` | There is an error response \(non\-2XX\) from the IdP user info endpoint\. | `ELBAuthError` | 
+| `AuthUserinfoEpRequestTimeout` | The load balancer is unable to communicate with the IdP user info endpoint\. | `ELBAuthError` | 
+| `AuthUserinfoResponseSizeExceeded` | The size of the claims returned by the IdP exceeded 11K bytes\. | `ELBAuthUserClaimsSizeExceeded` | 
 
 If a request to a Lambda function fails, the load balancer stores one of the following reason codes in the error\_reason field of the access log\. The load balancer also increments the corresponding CloudWatch metric\. For more information, see the Lambda [Invoke](https://docs.aws.amazon.com/lambda/latest/dg/API_Invoke.html) action\.
 
@@ -132,6 +153,7 @@ If a request to a Lambda function fails, the load balancer stores one of the fol
 | `LambdaSubnetIPAddressLimitReachedException` | Lambda could not set up VPC access for the Lambda function because one or more subnets have no available IP addresses\. | `LambdaUserError` | 
 | `LambdaThrottling` | The Lambda function was throttled because there were too many requests\. | `LambdaUserError` | 
 | `LambdaUnhandled` | The Lambda function encountered an unhandled exception\. | `LambdaUserError` | 
+| `LambdaUnhandledException` | The load balancer encountered an unhandled exception\. | `LambdaInternalError` | 
 
 ### Examples<a name="access-log-entry-examples"></a>
 
@@ -378,5 +400,5 @@ The access log files are compressed\. If you open the files using the Amazon S3 
 If there is a lot of demand on your website, your load balancer can generate log files with gigabytes of data\. You might not be able to process such a large amount of data using line\-by\-line processing\. Therefore, you might have to use analytical tools that provide parallel processing solutions\. For example, you can use the following analytical tools to analyze and process access logs:
 + Amazon Athena is an interactive query service that makes it easy to analyze data in Amazon S3 using standard SQL\. For more information, see [Querying Application Load Balancer Logs](https://docs.aws.amazon.com/athena/latest/ug/application-load-balancer-logs.html) in the *Amazon Athena User Guide*\.
 + [Loggly](https://www.loggly.com/docs/s3-ingestion-auto/)
-+ [Splunk](http://apps.splunk.com/app/1731/)
-+ [Sumo Logic](http://sumologic.com/applications/aws-elastic-load-balancing/)
++ [Splunk](https://splunkbase.splunk.com/app/1274/)
++ [Sumo Logic](https://www.sumologic.com/application/elb/)

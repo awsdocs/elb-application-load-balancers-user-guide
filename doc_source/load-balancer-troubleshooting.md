@@ -85,7 +85,7 @@ The client did not send data before the idle timeout period expired\. Sending a 
 
 ### HTTP 413: Payload Too Large<a name="http-413-issues"></a>
 
-The target is a Lambda function and the response body exceeds 1 MB\.
+The target is a Lambda function and the request body exceeds 1 MB\.
 
 ### HTTP 414: URI Too Long<a name="http-414-issues"></a>
 
@@ -125,6 +125,7 @@ Possible causes:
 + The target response is malformed or contains HTTP headers that are not valid\.
 + The load balancer encountered an SSL handshake error or SSL handshake timeout \(10 seconds\) when connecting to a target\.
 + The deregistration delay period elapsed for a request being handled by a target that was deregistered\. Increase the delay period so that lengthy operations can complete\.
++ The target is a Lambda function and the response body exceeds 1 MB\.
 + The target is a Lambda function that did not respond before its configured timeout was reached\.
 
 ### HTTP 503: Service Unavailable<a name="http-503-issues"></a>

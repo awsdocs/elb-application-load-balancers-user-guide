@@ -70,6 +70,12 @@ Each log entry contains the details of a single request \(or connection in the c
 **Important**  
 Elastic Load Balancing logs requests on a best\-effort basis\. We recommend that you use access logs to understand the nature of the requests, not as a complete accounting of all requests\.
 
+**Topics**
++ [Syntax](#access-log-entry-syntax)
++ [Actions Taken](#actions-taken)
++ [Error Reason Codes](#error-reason-codes)
++ [Examples](#access-log-entry-examples)
+
 ### Syntax<a name="access-log-entry-syntax"></a>
 
 The following table describes the fields of an access log entry, in order\. All fields are delimited by spaces\. When new fields are introduced, they are added to the end of the log entry\. You should ignore any fields at the end of the log entry that you were not expecting\.
@@ -99,9 +105,19 @@ The following table describes the fields of an access log entry, in order\. All 
 | "chosen\_cert\_arn" |  \[HTTPS listener\] The ARN of the certificate presented to the client, enclosed in double quotes\. This value is set to `session-reused` if the session is reused\. This value is set to \- if the listener is not an HTTPS listener\.  | 
 | matched\_rule\_priority |  The priority value of the rule that matched the request\. If a rule matched, this is a value from 1 to 50,000\. If no rule matched and the default action was taken, this value is set to 0\. If an error occurs during rules evaluation, it is set to \-1\. For any other error, it is set to \-\.  | 
 | request\_creation\_time |  The time when the load balancer received the request from the client, in ISO 8601 format\.  | 
-| "actions\_executed" |  The actions taken when processing the request, enclosed in double quotes\. This value is a comma\-separated list that can include the following possible values: `waf`, `waf-failed`, `authenticate`, `redirect`, `fixed-response`, and `forward`\. If no action was taken, such as for a malformed request, this value is set to \-\.  | 
+| "actions\_executed" |  The actions taken when processing the request, enclosed in double quotes\. This value is a comma\-separated list that can include the values described in [Actions Taken](#actions-taken)\. If no action was taken, such as for a malformed request, this value is set to \-\.  | 
 | "redirect\_url" |  The URL of the redirect target for the location header of the HTTP response, enclosed in double quotes\. If no redirect actions were taken, this value is set to \-\.  | 
 | "error\_reason" |  The error reason code, enclosed in double quotes\. If the request failed, this is one of the error codes described in [Error Reason Codes](#error-reason-codes)\. If the actions taken do not include an authenticate action or the target is not a Lambda function, this value is set to \-\.  | 
+
+### Actions Taken<a name="actions-taken"></a>
+
+The load balancer stores the actions that it takes in the actions\_executed field of the access log\.
++ `authenticate` — The load balancer validated the session, authenticated the user, and added the user information to the request headers, as specified by the rule configuration\.
++ `fixed-response` — The load balancer issued a fixed response, as specified by the rule configuration\.
++ `forward` — The load balancer forwarded the request to a target, as specified by the rule configuration\.
++ `redirect` — The load balancer redirected the request to another URL, as specified by the rule configuration\.
++ `waf` — The load balancer forwarded the request to AWS WAF to determine whether the request should be forwarded to the target\. If this is the final action, AWS WAF determined that the request should be rejected\.
++ `waf-failed` — The load balancer attempted to forward the request to AWS WAF, but this process failed\.
 
 ### Error Reason Codes<a name="error-reason-codes"></a>
 

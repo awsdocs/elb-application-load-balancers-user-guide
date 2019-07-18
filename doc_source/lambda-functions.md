@@ -133,7 +133,7 @@ For Lambda function templates that work with Application Load Balancers, see [ap
 
 ## Multi\-Value Headers<a name="multi-value-headers"></a>
 
-If requests from a client or responses from a Lambda function contain headers with multiple values or contains the same header multiple times, you can enable support for multi\-value header syntax\. After you enable multi\-value headers, the request and response headers exchanged between the load balancer and the Lambda function use arrays\. Otherwise, the load balancer uses the last value it receives\.
+If requests from a client or responses from a Lambda function contain headers with multiple values or contains the same header multiple times, or query parameters with multiple values for the same key, you can enable support for multi\-value header syntax\. After you enable multi\-value headers, the headers and query parameters exchanged between the load balancer and the Lambda function use arrays instead of strings\. If you do not enable multi\-value header syntax and a header or query parameter has multiple values, the load balancer uses the last value that it receives\.
 
 **Topics**
 + [Requests with Multi\-Value Headers](#multi-value-headers-request)
@@ -186,6 +186,8 @@ If you enable multi\-value headers, the load balancer uses both cookies sent by 
     ...
 },
 ```
+
+If the query parameters are URL\-encoded, the load balancer does not decode them\. You must decode them in your Lambda function\.
 
 ### Responses with Multi\-Value Headers<a name="multi-value-headers-response"></a>
 

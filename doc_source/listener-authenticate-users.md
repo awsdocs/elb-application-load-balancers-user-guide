@@ -36,7 +36,7 @@ To enable an IAM user to configure a load balancer to use Amazon Cognito to auth
 ## Prepare to Use Amazon CloudFront<a name="cloudfront-requirements"></a>
 
 Enable the following settings if you are using a CloudFront distribution in front of your Application Load Balancer:
-+ Forward request headers \(all\) — Ensures that CloudFront does not cache responses for authenticated requests\. This prevents them from being served from the cache after the authentication session expires\. To reduce this risk, owners of a CloudFront distribution can set the time\-to\-live \(TTL\) value to expire before the authentication cookie expires\.
++ Forward request headers \(all\) — Ensures that CloudFront does not cache responses for authenticated requests\. This prevents them from being served from the cache after the authentication session expires\. Alternatively, to reduce this risk while caching is enabled, owners of a CloudFront distribution can set the time\-to\-live \(TTL\) value to expire before the authentication cookie expires\.
 + Query string forwarding and caching \(all\) — Ensures that the load balancer has access to the query string parameters required to authenticate the user with the IdP\.
 + Cookie forwarding \(all\) — Ensures that CloudFront forwards all authentication cookies to the load balancer\.
 
@@ -150,7 +150,7 @@ The subject field \(`sub`\) from the user info endpoint, in plain text\.
 `x-amzn-oidc-data`  
 The user claims, in JSON web tokens \(JWT\) format\.
 
-Applications that require the full user claims can use any standard JWT library\. The JWT format includes a header, payload, and signature that are base64 URL encoded\. The JWT signature is ECDSA \+ P\-256 \+ SHA256\.
+Applications that require the full user claims can use any standard JWT library to verify the JWT tokens\. These tokens follow the JWT format but are not ID tokens\. The JWT format includes a header, payload, and signature that are base64 URL encoded and includes padding characters at the end\. The JWT signature is ECDSA \+ P\-256 \+ SHA256\.
 
 The JWT header is a JSON object with the following fields:
 
@@ -194,7 +194,32 @@ For AWS GovCloud \(US\-East\), the endpoint is as follows:
 https://s3-us-gov-east-1.amazonaws.com/aws-elb-public-keys-prod-us-gov-east-1/key-id
 ```
 
-The following example shows how to get the public key in Python:
+The following example shows how to get the public key in Python 3\.x:
+
+```
+import jwt
+import requests
+import base64
+import json
+
+# Step 1: Get the key id from JWT headers (the kid field)
+encoded_jwt = headers.dict['x-amzn-oidc-data']
+jwt_headers = encoded_jwt.split('.')[0]
+decoded_jwt_headers = base64.b64decode(jwt_headers)
+decoded_jwt_headers = decoded_jwt_headers.decode("utf-8")
+decoded_json = json.loads(decoded_jwt_headers)
+kid = decoded_json['kid']
+
+# Step 2: Get the public key from regional endpoint
+url = 'https://public-keys.auth.elb.' + region + '.amazonaws.com/' + kid
+req = requests.get(url)
+pub_key = req.text
+
+# Step 3: Get the payload
+payload = jwt.decode(encoded_jwt, pub_key, algorithms=['ES256'])
+```
+
+The following example shows how to get the public key in Python 2\.7:
 
 ```
 import jwt

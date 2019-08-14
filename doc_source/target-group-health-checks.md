@@ -10,7 +10,7 @@ Health checks do not support WebSockets\.
 
 ## Health Check Settings<a name="health-check-settings"></a>
 
-You configure health checks for the targets in a target group using the following settings\. The load balancer sends a health check request to each registered target every **HealthCheckIntervalSeconds** seconds, using the specified port, protocol, and ping path\. Each health check request is independent and lasts the entire interval\. The time it takes for the target to respond does not affect the interval for the next health check request\. If the health checks exceed **UnhealthyThresholdCount** consecutive failures, the load balancer takes the target out of service\. When the health checks exceed **HealthyThresholdCount** consecutive successes, the load balancer puts the target back in service\.
+You configure health checks for the targets in a target group using the following settings\. The load balancer sends a health check request to each registered target every **HealthCheckIntervalSeconds** seconds, using the specified port, protocol, and ping path\. Each health check request is independent and the result lasts for the entire interval\. The time that it takes for the target to respond does not affect the interval for the next health check request\. If the health checks exceed **UnhealthyThresholdCount** consecutive failures, the load balancer takes the target out of service\. When the health checks exceed **HealthyThresholdCount** consecutive successes, the load balancer puts the target back in service\.
 
 
 | Setting | Description | 
@@ -18,8 +18,8 @@ You configure health checks for the targets in a target group using the followin
 | **HealthCheckProtocol** |  The protocol the load balancer uses when performing health checks on targets\. The possible protocols are HTTP and HTTPS\. The default is the HTTP protocol\.  | 
 | **HealthCheckPort** |  The port the load balancer uses when performing health checks on targets\. The default is to use the port on which each target receives traffic from the load balancer\.  | 
 | **HealthCheckPath** |  The ping path that is the destination on the targets for health checks\. Specify a valid URI \(/*path*?*query*\)\. The default is /\.  | 
-| **HealthCheckTimeoutSeconds** |  The amount of time, in seconds, during which no response from a target means a failed health check\. The range is 2–60 seconds\. The default is 5 seconds\.  | 
-| **HealthCheckIntervalSeconds** |  The approximate amount of time, in seconds, between health checks of an individual target\. The range is 5–300 seconds\. The default is 30 seconds\.   | 
+| **HealthCheckTimeoutSeconds** |  The amount of time, in seconds, during which no response from a target means a failed health check\. The range is 2–120 seconds\. The default is 5 seconds if the target type is `instance` or `ip` and 30 seconds if the target type is `lambda`\.  | 
+| **HealthCheckIntervalSeconds** |  The approximate amount of time, in seconds, between health checks of an individual target\. The range is 5–300 seconds\. The default is 30 seconds if the target type is `instance` or `ip` and 35 seconds if the target type is `lambda`\.  | 
 | **HealthyThresholdCount** |  The number of consecutive successful health checks required before considering an unhealthy target healthy\. The range is 2–10\. The default is 5\.  | 
 | **UnhealthyThresholdCount** |  The number of consecutive failed health checks required before considering a target unhealthy\. The range is 2–10\. The default is 2\.  | 
 | **Matcher** |  The HTTP codes to use when checking for a successful response from a target\. You can specify values or ranges of values between 200 and 499\. The default value is 200\.  | 

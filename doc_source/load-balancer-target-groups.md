@@ -27,7 +27,7 @@ Target groups support the following protocols and ports:
 + **Protocols**: HTTP, HTTPS
 + **Ports**: 1\-65535
 
-If a target group is configured with the HTTPS protocol or uses HTTPS health checks, SSL connections to the targets use the security settings from the `ELBSecurityPolicy2016-08` policy\.
+If a target group is configured with the HTTPS protocol or uses HTTPS health checks, SSL/TLS connections to the targets use the security settings from the `ELBSecurityPolicy2016-08` policy\.
 
 ## Target Type<a name="target-type"></a>
 
@@ -158,6 +158,8 @@ Application Load Balancers support load balancer\-generated cookies only\. The n
 WebSockets connections are inherently sticky\. If the client requests a connection upgrade to WebSockets, the target that returns an HTTP 101 status code to accept the connection upgrade is the target used in the WebSockets connection\. After the WebSockets upgrade is complete, cookie\-based stickiness is not used\.
 
 You enable sticky sessions at the target group level\. You can also set the duration for the stickiness of the load balancer\-generated cookie, in seconds\. The duration is set with each request\. Therefore, if the client sends a request before each duration period expires, the sticky session continues\.
+
+Application Load Balancers use the Expires attribute in the cookie header instead of the Max\-Age header\.
 
 **To enable sticky sessions using the console**
 

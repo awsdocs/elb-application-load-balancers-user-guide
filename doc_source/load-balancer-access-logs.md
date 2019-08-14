@@ -23,7 +23,7 @@ Elastic Load Balancing publishes a log file for each load balancer node every 5 
 The file names of the access logs use the following format:
 
 ```
-bucket[/prefix]/AWSLogs/aws-account-id/elasticloadbalancing/region/yyyy/mm/dd/aws-account-id_elasticloadbalancing_region_app.load-balancer-id.random-id_end-time_ip-address_random-string.log.gz
+bucket[/prefix]/AWSLogs/aws-account-id/elasticloadbalancing/region/yyyy/mm/dd/aws-account-id_elasticloadbalancing_region_load-balancer-id_end-time_ip-address_random-string.log.gz
 ```
 
 *bucket*  

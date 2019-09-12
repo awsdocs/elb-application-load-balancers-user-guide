@@ -70,7 +70,7 @@ The IP addresses that you register must be from one of the following CIDR blocks
 + 192\.168\.0\.0/16 \(RFC 1918\)
 
 **Limits**
-+ You cannot register the IP addresses of another Application Load Balancer in the same VPC\. If the other Application Load Balancer is in a peered VPC, you can register its IP addresses\.
++ You cannot register the IP addresses of another Application Load Balancer in the same VPC\. If the other Application Load Balancer is in a VPC that is peered to the load balancer VPC, you can register its IP addresses\.
 
 **To register or deregister targets by IP address**
 

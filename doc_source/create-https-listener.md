@@ -17,7 +17,7 @@ The information on this page helps you create an HTTPS listener for your load ba
 
 ## SSL Certificates<a name="https-listener-certificates"></a>
 
-To use an HTTPS listener, you must deploy at least one SSL/TLS server certificate on your load balancer\. The load balancer uses this certificate to terminate the connection and then decrypt requests from clients before sending them to the targets\.
+To use an HTTPS listener, you must deploy at least one SSL/TLS server certificate on your load balancer\. The load balancer uses a server certificate to terminate the front\-end connection and then decrypt requests from clients before sending them to the targets\.
 
 The load balancer requires X\.509 certificates \(SSL/TLS server certificates\)\. Certificates are a digital form of identification issued by a certificate authority \(CA\)\. A certificate contains identification information, a validity period, a public key, a serial number, and the digital signature of the issuer\.
 
@@ -32,7 +32,7 @@ Alternatively, you can use SSL/TLS tools to create a certificate signing request
 
 ### Default Certificate<a name="default-certificate"></a>
 
-When you create an HTTPS listener, you must specify exactly one certificate\. This certificate is known as the *default certificate*\.
+When you create an HTTPS listener, you must specify exactly one certificate\. This certificate is known as the *default certificate*\. You can replace the default certificate after you create the HTTPS listener\. For more information, see [Replace the Default Certificate](listener-update-certificates.md#replace-default-certificate)\.
 
 If you specify additional certificates in a [certificate list](#sni-certificate-list), the default certificate is used only if a client connects without using the Server Name Indication \(SNI\) protocol to specify a hostname or if there are no matching certificates in the certificate list\.
 
@@ -40,7 +40,7 @@ If you do not specify additional certificates but need to host multiple secure a
 
 ### Certificate List<a name="sni-certificate-list"></a>
 
-After you create an HTTPS listener, it has a default certificate and an empty certificate list\. You can optionally add certificates to the certificate list for the listener\. Using a certificate list enables the load balancer to support multiple domains on the same port and provide a different certificate for each domain\.
+After you create an HTTPS listener, it has a default certificate and an empty certificate list\. You can optionally add certificates to the certificate list for the listener\. Using a certificate list enables the load balancer to support multiple domains on the same port and provide a different certificate for each domain\. For more information, see [Add Certificates to the Certificate List](listener-update-certificates.md#add-certificates)\.
 
 The load balancer uses a smart certificate selection algorithm with support for SNI\. If the hostname provided by a client matches a single certificate in the certificate list, the load balancer selects this certificate\. If a hostname provided by a client matches multiple certificates in the certificate list, the load balancer selects the best certificate that the client can support\. Certificate selection is based on the following criteria in the following order:
 + Public key algorithm \(prefer ECDSA over RSA\)
@@ -64,6 +64,8 @@ You can manage certificate renewal and replacement as follows:
 Elastic Load Balancing uses a Secure Socket Layer \(SSL\) negotiation configuration, known as a security policy, to negotiate SSL connections between a client and the load balancer\. A security policy is a combination of protocols and ciphers\. The protocol establishes a secure connection between a client and a server and ensures that all data passed between the client and your load balancer is private\. A cipher is an encryption algorithm that uses encryption keys to create a coded message\. Protocols use several ciphers to encrypt data over the internet\. During the connection negotiation process, the client and the load balancer present a list of ciphers and protocols that they each support, in order of preference\. By default, the first cipher on the server's list that matches any one of the client's ciphers is selected for the secure connection\.
 
 Application Load Balancers do not support SSL renegotiation for client or target connections\.
+
+When you create a TLS listener, you must select a security policy\. You can update the security policy as needed\. For more information, see [Update the Security Policy](listener-update-certificates.md#update-security-policy)\.
 
 You can choose the security policy that is used for front\-end connections\. The `ELBSecurityPolicy-2016-08` security policy is always used for backend connections\. Application Load Balancers do not support custom security policies\.
 

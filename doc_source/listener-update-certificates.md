@@ -29,7 +29,7 @@ You can replace the default certificate for your listener using the following pr
    + If you created or imported a certificate using AWS Certificate Manager, choose **From ACM** and choose the certificate\.
    + If you uploaded a certificate using IAM, choose **From IAM** and choose the certificate\.
 
-1. Choose **Save**\.
+1. Choose **Update**\.
 
 **To change the default certificate using the AWS CLI**  
 Use the [modify\-listener](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-listener.html) command\.

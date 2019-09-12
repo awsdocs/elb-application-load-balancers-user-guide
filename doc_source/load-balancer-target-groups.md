@@ -51,7 +51,7 @@ When the target type is `ip`, you can specify IP addresses from one of the follo
 + 172\.16\.0\.0/12 \(RFC 1918\)
 + 192\.168\.0\.0/16 \(RFC 1918\)
 
-These supported CIDR blocks enable you to register the following with a target group: ClassicLink instances, instances in a peered VPC, AWS resources that are addressable by IP address and port \(for example, databases\), and on\-premises resources linked to AWS through AWS Direct Connect or a VPN connection\.
+These supported CIDR blocks enable you to register the following with a target group: ClassicLink instances, instances in a VPC that is peered to the load balancer VPC, AWS resources that are addressable by IP address and port \(for example, databases\), and on\-premises resources linked to AWS through AWS Direct Connect or a VPN connection\.
 
 **Important**  
 You can't specify publicly routable IP addresses\.
@@ -71,7 +71,7 @@ If demand on your application decreases, or you need to service your targets, yo
 If you are registering targets by instance ID, you can use your load balancer with an Auto Scaling group\. After you attach a target group to an Auto Scaling group, Auto Scaling registers your targets with the target group for you when it launches them\. For more information, see [Attaching a Load Balancer to Your Auto Scaling Group](https://docs.aws.amazon.com/autoscaling/ec2/userguide/attach-load-balancer-asg.html) in the *Amazon EC2 Auto Scaling User Guide*\.
 
 **Limits**
-+ You cannot register the IP addresses of another Application Load Balancer in the same VPC\. If the other Application Load Balancer is in a peered VPC, you can register its IP addresses\.
++ You cannot register the IP addresses of another Application Load Balancer in the same VPC\. If the other Application Load Balancer is in a VPC that is peered to the load balancer VPC, you can register its IP addresses\.
 
 ## Target Group Attributes<a name="target-group-attributes"></a>
 
@@ -151,9 +151,9 @@ Use the [modify\-target\-group\-attributes](https://docs.aws.amazon.com/cli/late
 
 Sticky sessions are a mechanism to route requests to the same target in a target group\. This is useful for servers that maintain state information in order to provide a continuous experience to clients\. To use sticky sessions, the clients must support cookies\.
 
-When a load balancer first receives a request from a client, it routes the request to a target, generates a cookie named AWSALB\ that encodes information about the selected target, encrypts the cookie, and includes the cookie in the response to the client\. The client should include the cookie that it receives in subsequent requests to the load balancer\. When the load balancer receives a request from a client that contains the cookie, if sticky sessions are enabled for the target group and the request goes to the same target group, the load balancer detects the cookie and routes the request to the same target\. If the cookie is present but cannot be decoded, or if it refers to a target that was deregistered or is unhealthy, the load balancer selects a new target and updates the cookie with information about the new target\.
+When a load balancer first receives a request from a client, it routes the request to a target, generates a cookie named AWSALB that encodes information about the selected target, encrypts the cookie, and includes the cookie in the response to the client\. The client should include the cookie that it receives in subsequent requests to the load balancer\. When the load balancer receives a request from a client that contains the cookie, if sticky sessions are enabled for the target group and the request goes to the same target group, the load balancer detects the cookie and routes the request to the same target\. If the cookie is present but cannot be decoded, or if it refers to a target that was deregistered or is unhealthy, the load balancer selects a new target and updates the cookie with information about the new target\.
 
-Application Load Balancers support load balancer\-generated cookies only\. The contents of these cookies are encrypted using a rotating key and it is expected that every response sets an updated cookie\. You cannot decrypt or modify load balancer\-generated cookies\.
+Application Load Balancers support load balancer\-generated cookies only\. The contents of these cookies are encrypted using a rotating key\. You cannot decrypt or modify load balancer\-generated cookies\.
 
 WebSockets connections are inherently sticky\. If the client requests a connection upgrade to WebSockets, the target that returns an HTTP 101 status code to accept the connection upgrade is the target used in the WebSockets connection\. After the WebSockets upgrade is complete, cookie\-based stickiness is not used\.
 

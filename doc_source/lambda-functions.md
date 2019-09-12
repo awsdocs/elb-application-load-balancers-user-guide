@@ -3,7 +3,7 @@
 You can register your Lambda functions as targets and configure a listener rule to forward requests to the target group for your Lambda function\. When the load balancer forwards the request to a target group with a Lambda function as a target, it invokes your Lambda function and passes the content of the request to the Lambda function, in JSON format\.
 
 **Limits**
-+ The Lambda function and target group must be in the same account\.
++ The Lambda function and target group must be in the same account and in the same Region\.
 + The maximum size of the request body that you can send to a Lambda function is 1 MB\. For related size limits, see [HTTP Header Limits](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/how-elastic-load-balancing-works.html#http-header-limits)\.
 + The maximum size of the response JSON that the Lambda function can send is 1 MB\.
 + WebSockets are not supported\. Upgrade requests are rejected with an HTTP 400 code\.

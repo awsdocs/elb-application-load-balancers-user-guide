@@ -17,6 +17,8 @@ You can register your Lambda functions as targets and configure a listener rule 
 + [Enable Health Checks](#enable-health-checks-lambda)
 + [Deregister the Lambda Function](#deregister-lambda-function)
 
+For a demo, see [Lambda Target on Application Load Balancer](https://exampleloadbalancer.com/lambda_demo.html)\.
+
 ## Prepare the Lambda Function<a name="prepare-lambda-function"></a>
 
 The following recommendations apply if you are using your Lambda function with an Application Load Balancer\.

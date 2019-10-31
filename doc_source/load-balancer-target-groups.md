@@ -124,13 +124,15 @@ Use the [modify\-target\-group\-attributes](https://docs.aws.amazon.com/cli/late
 
 ## Slow Start Mode<a name="slow-start-mode"></a>
 
-By default, a target starts to receive its full share of requests as soon as it is registered with a target group and passes an initial health check\. Using slow start mode gives targets time to warm up before the load balancer sends them a full share of requests\. After you enable slow start for a target group, targets enter slow start mode when they are registered with the target group and exit slow start mode when the configured slow start duration period elapses\. The load balancer linearly increases the number of requests that it can send to a target in slow start mode\. After a target exits slow start mode, the load balancer can send it a full share of requests\.
+By default, a target starts to receive its full share of requests as soon as it is registered with a target group and passes an initial health check\. Using slow start mode gives targets time to warm up before the load balancer sends them a full share of requests\.
+
+After you enable slow start for a target group, its targets enter slow start mode when they are considered healthy by the target group\. A target in slow start mode exits slow start mode when the configured slow start duration period elapses or the target becomes unhealthy\. The load balancer linearly increases the number of requests that it can send to a target in slow start mode\. After a healthy target exits slow start mode, the load balancer can send it a a full share of requests\.
 
 **Considerations**
-+ When you enable slow start for a target group, the targets already registered with the target group do not enter slow start mode\.
-+ When you enable slow start for an empty target group and then register one or more targets using a single registration operation, these targets do not enter slow start mode\. Newly registered targets enter slow start mode only when there is at least one registered target that is not in slow start mode\.
-+ If you deregister a target in slow start mode, the target exits slow start mode\. If you register the same target again, it enters slow start mode again\.
-+ If a target in slow start mode becomes unhealthy and then healthy again before the duration period elapses, the target remains in slow start mode and exits slow start mode when the remainder of the duration period elapses\. If a target that is not in slow start mode changes from unhealthy to healthy, it does not enter slow start mode\.
++ When you enable slow start for a target group, the healthy targets registered with the target group do not enter slow start mode\.
++ When you enable slow start for an empty target group and then register targets using a single registration operation, these targets do not enter slow start mode\. Newly registered targets enter slow start mode only when there is at least one healthy target that is not in slow start mode\.
++ If you deregister a target in slow start mode, the target exits slow start mode\. If you register the same target again, it enters slow start mode when it is considered healthy by the target group\.
++ If a target in slow start mode becomes unhealthy, the target exits slow start mode\. When the target becomes healthy, it enters slow start mode again\.
 
 **To update the slow start duration value using the console**
 

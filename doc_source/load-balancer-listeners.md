@@ -1,6 +1,6 @@
 # Listeners for Your Application Load Balancers<a name="load-balancer-listeners"></a>
 
-Before you start using your Application Load Balancer, you must add one or more *listeners*\. A listener is a process that checks for connection requests, using the protocol and port that you configure\. The rules that you define for a listener determine how the load balancer routes requests to the targets in one or more target groups\.
+Before you start using your Application Load Balancer, you must add one or more *listeners*\. A listener is a process that checks for connection requests, using the protocol and port that you configure\. The rules that you define for a listener determine how the load balancer routes requests to its registered targets\.
 
 **Topics**
 + [Listener Configuration](#listener-configuration)
@@ -203,6 +203,8 @@ You can specify up to three match evaluations per condition\. For example, for e
 You can specify up to five match evaluations per rule\. For example, you can create a rule with five conditions where each condition has one match evaluation\.
 
 You can include wildcard characters in the match evaluations for the `http-header`, `host-header`, `path-pattern`, and `query-string` conditions\. There is a limit of five wildcard characters per rule\.
+
+For demos, see [Advanced Request Routing](https://exampleloadbalancer.com/advanced_request_routing_demo.html)\.
 
 ### HTTP Header Conditions<a name="http-header-conditions"></a>
 

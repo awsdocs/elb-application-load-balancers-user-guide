@@ -22,7 +22,7 @@ For more information, see [How Elastic Load Balancing Works](https://docs.aws.am
 
 ## Subnets for Your Load Balancer<a name="subnets-load-balancer"></a>
 
-When you create a load balancer, you must specify one public subnet from at least two Availability Zones\. You can specify only one public subnet per Availability Zone\.
+When you create an Application Load Balancer, you must enable at least two Availability Zones\. To enable an Availability Zone, you specify one subnet from that Availability Zone\.
 
 To ensure that your load balancer can scale properly, verify that each subnet for your load balancer has a CIDR block with at least a `/27` bitmask \(for example, `10.0.0.0/27`\) and has at least 8 free IP addresses\. Your load balancer uses these IP addresses to establish connections with the targets\.
 

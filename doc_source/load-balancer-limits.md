@@ -5,7 +5,7 @@ To view the current limits for your Application Load Balancers, use the **Limits
 Your AWS account has the following limits related to Application Load Balancers\.
 
 **Regional Limits**
-+ Load balancers per region: 20
++ Load balancers per region: 50
 + Target groups per region: 3000 **\***
 
 **Load Balancer Limits**

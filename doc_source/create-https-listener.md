@@ -70,49 +70,79 @@ When you create a TLS listener, you must select a security policy\. You can upda
 You can choose the security policy that is used for front\-end connections\. The `ELBSecurityPolicy-2016-08` security policy is always used for backend connections\. Application Load Balancers do not support custom security policies\.
 
 Elastic Load Balancing provides the following security policies for Application Load Balancers:
-+ `ELBSecurityPolicy-2016-08`
-+ `ELBSecurityPolicy-FS-2018-06`
++ `ELBSecurityPolicy-2016-08` \(default\)
++ `ELBSecurityPolicy-TLS-1-0-2015-04`
++ `ELBSecurityPolicy-TLS-1-1-2017-01`
 + `ELBSecurityPolicy-TLS-1-2-2017-01`
 + `ELBSecurityPolicy-TLS-1-2-Ext-2018-06`
-+ `ELBSecurityPolicy-TLS-1-1-2017-01`
-+ `ELBSecurityPolicy-2015-05`
-+ `ELBSecurityPolicy-TLS-1-0-2015-04`
++ `ELBSecurityPolicy-FS-2018-06`
++ `ELBSecurityPolicy-FS-1-1-2019-08`
++ `ELBSecurityPolicy-FS-1-2-2019-08`
++ `ELBSecurityPolicy-FS-1-2-Res-2019-08`
++ `ELBSecurityPolicy-2015-05` \(identical to `ELBSecurityPolicy-2016-08`\)
 
-We recommend the `ELBSecurityPolicy-2016-08` policy for general use\. You can use the `ELBSecurityPolicy-FS-2018-06` policy if you require Forward Secrecy \(FS\)\. You can use one of the `ELBSecurityPolicy-TLS` policies to meet compliance and security standards that require disabling certain TLS protocol versions, or to support legacy clients that require deprecated ciphers\. Only a small percentage of internet clients require TLS version 1\.0\. To view the TLS protocol version for requests to your load balancer, enable access logging for your load balancer and examine the access logs\. For more information, see [Access Logs](load-balancer-access-logs.md)\.
+We recommend the `ELBSecurityPolicy-2016-08` policy for general use\. You can use one of the `ELBSecurityPolicy-FS` policies if you require Forward Secrecy \(FS\)\. You can use one of the `ELBSecurityPolicy-TLS` policies to meet compliance and security standards that require disabling certain TLS protocol versions, or to support legacy clients that require deprecated ciphers\. Only a small percentage of internet clients require TLS version 1\.0\. To view the TLS protocol version for requests to your load balancer, enable access logging for your load balancer and examine the access logs\. For more information, see [Access Logs](load-balancer-access-logs.md)\.
 
-The following table describes the security policies defined for Application Load Balancers\.
+The following table describes the default policy and the `ELBSecurityPolicy-TLS` polices\.
 
 
-| Security Policy | 2016\-08 \* | FS\-2018\-06 | TLS\-1\-2 | TLS\-1\-2\-Ext | TLS\-1\-1 | TLS\-1\-0 † | 
-| --- | --- | --- | --- | --- | --- | --- | 
+| Security Policy | Default | TLS 1\.0 † | TLS 1\.1 | TLS 1\.2 | TLS 1\.2 Ext | 
+| --- | --- | --- | --- | --- | --- | 
 | TLS Protocols | 
-| Protocol\-TLSv1 | ♦ | ♦ |  |  |  | ♦ | 
-| Protocol\-TLSv1\.1 | ♦ | ♦ |  |  | ♦ | ♦ | 
-| Protocol\-TLSv1\.2 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| Protocol\-TLSv1 | ♦ | ♦ |  |  |  | 
+| Protocol\-TLSv1\.1 | ♦ | ♦ | ♦ |  |  | 
+| Protocol\-TLSv1\.2 | ♦ | ♦ | ♦ | ♦ | ♦ | 
 | TLS Ciphers | 
-| ECDHE\-ECDSA\-AES128\-GCM\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-RSA\-AES128\-GCM\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-ECDSA\-AES128\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-RSA\-AES128\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-ECDSA\-AES128\-SHA | ♦ | ♦ |  | ♦ | ♦ | ♦ | 
-| ECDHE\-RSA\-AES128\-SHA | ♦ | ♦ |  | ♦ | ♦ | ♦ | 
-| ECDHE\-ECDSA\-AES256\-GCM\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-RSA\-AES256\-GCM\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-ECDSA\-AES256\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-RSA\-AES256\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-RSA\-AES256\-SHA | ♦ | ♦ |  | ♦ | ♦ | ♦ | 
-| ECDHE\-ECDSA\-AES256\-SHA | ♦ | ♦ |  | ♦ | ♦ | ♦ | 
-| AES128\-GCM\-SHA256 | ♦ |  | ♦ | ♦ | ♦ | ♦ | 
-| AES128\-SHA256 | ♦ |  | ♦ | ♦ | ♦ | ♦ | 
-| AES128\-SHA | ♦ |  |  | ♦ | ♦ | ♦ | 
-| AES256\-GCM\-SHA384 | ♦ |  | ♦ | ♦ | ♦ | ♦ | 
-| AES256\-SHA256 | ♦ |  | ♦ | ♦ | ♦ | ♦ | 
-| AES256\-SHA | ♦ |  |  | ♦ | ♦ | ♦ | 
-| DES\-CBC3\-SHA |  |  |  |  |  | ♦ | 
+| ECDHE\-ECDSA\-AES128\-GCM\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES128\-GCM\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-ECDSA\-AES128\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES128\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-ECDSA\-AES128\-SHA | ♦ | ♦ | ♦ |  | ♦ | 
+| ECDHE\-RSA\-AES128\-SHA | ♦ | ♦ | ♦ |  | ♦ | 
+| ECDHE\-ECDSA\-AES256\-GCM\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES256\-GCM\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-ECDSA\-AES256\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES256\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES256\-SHA | ♦ | ♦ | ♦ |  | ♦ | 
+| ECDHE\-ECDSA\-AES256\-SHA | ♦ | ♦ | ♦ |  | ♦ | 
+| AES128\-GCM\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| AES128\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| AES128\-SHA | ♦ | ♦ | ♦ |  | ♦ | 
+| AES256\-GCM\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| AES256\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| AES256\-SHA | ♦ | ♦ | ♦ |  | ♦ | 
+| DES\-CBC3\-SHA |  | ♦ |  |  |  | 
 
-\* The `ELBSecurityPolicy-2016-08` and `ELBSecurityPolicy-2015-05` security policies for Application Load Balancers are identical\.
+† Do not use this policy unless you must support a legacy client that requires the DES\-CBC3\-SHA cipher, which is a weak cipher\.
 
-† Do not use this security policy unless you must support a legacy client that requires the DES\-CBC3\-SHA cipher, which is a weak cipher\.
+The following table describes the default policy and the `ELBSecurityPolicy-FS` policies\.
+
+
+| Security Policy | Default | FS | FS 1\.1 | FS 1\.2 | FS 1\.2 Res | 
+| --- | --- | --- | --- | --- | --- | 
+| TLS Protocols | 
+| Protocol\-TLSv1 | ♦ | ♦ |  |  |  | 
+| Protocol\-TLSv1\.1 | ♦ | ♦ | ♦ |  |  | 
+| Protocol\-TLSv1\.2 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| TLS Ciphers | 
+| ECDHE\-ECDSA\-AES128\-GCM\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES128\-GCM\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-ECDSA\-AES128\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES128\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-ECDSA\-AES128\-SHA | ♦ | ♦ | ♦ | ♦ |  | 
+| ECDHE\-RSA\-AES128\-SHA | ♦ | ♦ | ♦ | ♦ |  | 
+| ECDHE\-ECDSA\-AES256\-GCM\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES256\-GCM\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-ECDSA\-AES256\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES256\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES256\-SHA | ♦ | ♦ | ♦ | ♦ |  | 
+| ECDHE\-ECDSA\-AES256\-SHA | ♦ | ♦ | ♦ | ♦ |  | 
+| AES128\-GCM\-SHA256 | ♦ |  |  |  |  | 
+| AES128\-SHA256 | ♦ |  |  |  |  | 
+| AES128\-SHA | ♦ |  |  |  |  | 
+| AES256\-GCM\-SHA384 | ♦ |  |  |  |  | 
+| AES256\-SHA256 | ♦ |  |  |  |  | 
+| AES256\-SHA | ♦ |  |  |  |  | 
 
 To view the configuration of a security policy for Application Load Balancers using the AWS CLI, use the [describe\-ssl\-policies](https://docs.aws.amazon.com/cli/latest/reference/elbv2/describe-ssl-policies.html) command\.
 

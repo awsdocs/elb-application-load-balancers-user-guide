@@ -108,6 +108,8 @@ The following table describes the fields of an access log entry, in order\. All 
 | "actions\_executed" |  The actions taken when processing the request, enclosed in double quotes\. This value is a comma\-separated list that can include the values described in [Actions Taken](#actions-taken)\. If no action was taken, such as for a malformed request, this value is set to \-\.  | 
 | "redirect\_url" |  The URL of the redirect target for the location header of the HTTP response, enclosed in double quotes\. If no redirect actions were taken, this value is set to \-\.  | 
 | "error\_reason" |  The error reason code, enclosed in double quotes\. If the request failed, this is one of the error codes described in [Error Reason Codes](#error-reason-codes)\. If the actions taken do not include an authenticate action or the target is not a Lambda function, this value is set to \-\.  | 
+| "target:port\_list" |  A space\-delimited list of IP addresses and ports for the targets that processed this request, enclosed in double quotes\. Currently, this list can contain one item and it matches the target:port field\. If the client didn't send a full request, the load balancer can't dispatch the request to a target, and this value is set to \-\. If the target is a Lambda function, this value is set to \-\. If the request is blocked by AWS WAF, this value is set to \- and the value of elb\_status\_code is set to 403\.  | 
+| "target\_status\_code\_list" |  A space\-delimited list of status codes from the responses of the targets, enclosed in double quotes\. Currently, this list can contain one item and it matches the target\_status\_code field\. This value is recorded only if a connection was established to the target and the target sent a response\. Otherwise, it is set to \-\. | 
 
 ### Actions Taken<a name="actions-taken"></a>
 
@@ -148,6 +150,7 @@ If a request to a Lambda function fails, the load balancer stores one of the fol
 | Code | Description | Metric | 
 | --- | --- | --- | 
 | `LambdaAccessDenied` | The load balancer did not have permission to invoke the Lambda function\. | `LambdaUserError` | 
+| `LambdaBadRequest` | Lambda invocation failed because the client request headers or body did not contain only UTF\-8 characters\. | `LambdaUserError` | 
 | `LambdaConnectionTimeout` | An attempt to connect to Lambda timed out\. | `LambdaInternalError` | 
 | `LambdaEC2AccessDeniedException` | Amazon EC2 denied access to Lambda during function initialization\. | `LambdaUserError` | 
 | `LambdaEC2ThrottledException` | Amazon EC2 throttled Lambda during function initialization\. | `LambdaUserError` | 
@@ -170,6 +173,17 @@ If a request to a Lambda function fails, the load balancer stores one of the fol
 | `LambdaThrottling` | The Lambda function was throttled because there were too many requests\. | `LambdaUserError` | 
 | `LambdaUnhandled` | The Lambda function encountered an unhandled exception\. | `LambdaUserError` | 
 | `LambdaUnhandledException` | The load balancer encountered an unhandled exception\. | `LambdaInternalError` | 
+
+If the load balancer encounters an error when forwarding requests to AWS WAF, it stores one of the following error codes in the error\_reason field of the access log\.
+
+
+| Code | Description | 
+| --- | --- | 
+| `WAFConnectionError` | The load balancer cannot connect to AWS WAF\. | 
+| `WAFConnectionTimeout` | The connection to AWS WAF timed out\. | 
+| `WAFResponseReadTimeout` | A request to AWS WAF timed out\. | 
+| `WAFServiceError` | AWS WAF returned a 5XX error\. | 
+| `WAFUnhandledException` | The load balancer encountered an unhandled exception\. | 
 
 ### Examples<a name="access-log-entry-examples"></a>
 

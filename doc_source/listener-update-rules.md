@@ -77,7 +77,7 @@ Use the [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/cr
 
 ## Edit a Rule<a name="edit-rule"></a>
 
-You can edit the action and conditions for a rule at any time\.
+You can edit the action and conditions for a rule at any time\. Rule updates do not take effect immediately, so requests could be routed using the previous rule configuration for a short time after you update a rule\. Any in\-flight requests are completed\.
 
 **To edit a rule using the console**
 

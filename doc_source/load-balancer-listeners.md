@@ -66,7 +66,7 @@ The following are the supported action types for a rule:
 Return a custom HTTP response\. For more information, see [Fixed\-Response Actions](#fixed-response-actions)\.
 
 `forward`  
-Forward requests to the specified target group\.
+Forward requests to the specified target groups\.
 
 `redirect`  
 Redirect requests from one URL to another\. For more information, see [Redirect Actions](#redirect-actions)\.
@@ -80,7 +80,7 @@ You can use `fixed-response` actions to drop client requests and return a custom
 When a `fixed-response` action is taken, the action and the URL of the redirect target are recorded in the access logs\. For more information, see [Access Log Entries](load-balancer-access-logs.md#access-log-entry-format)\. The count of successful `fixed-response` actions is reported in the `HTTP_Fixed_Response_Count` metric\. For more information, see [Application Load Balancer Metrics](load-balancer-cloudwatch-metrics.md#load-balancer-metrics-alb)\.
 
 **Example Example Fixed Response Action for the AWS CLI**  
-You can specify an action when you create or modify a rule\. For more information, see the [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) and [modify\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify_rule.html) commands\. The following action sends a fixed response with the specified status code and message body\.  
+You can specify an action when you create or modify a rule\. For more information, see the [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) and [modify\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-rule.html) commands\. The following action sends a fixed response with the specified status code and message body\.  
 
 ```
 [
@@ -97,16 +97,75 @@ You can specify an action when you create or modify a rule\. For more informatio
 
 ### Forward Actions<a name="forward-actions"></a>
 
-You can use `forward` actions route requests to the specified target group\.
+You can use `forward` actions to route requests to one or more target groups\. If you specify multiple target groups for a `forward` action, you must specify a weight for each target group\. Each target group weight is a value from 0 to 999\. Requests that match a listener rule with weighted target groups are distributed to these target groups based on their weights\. For example, if you specify two target groups, each with a weight of 10, each target group receives half the requests\. If you specify two target groups, one with a weight of 10 and the other with a weight of 20, the target group with a weight of 20 receives twice as many requests as the other target group\.
 
-**Example Example Forward Action for the AWS CLI**  
-You can specify an action when you create or modify a rule\. For more information, see the [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) and [modify\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify_rule.html) commands\. The following action forwards the request to the specified target group\.  
+By default, configuring a rule to distribute traffic between weighted target groups does not guarantee that sticky sessions are honored\. To ensure that sticky sessions are honored, enable target group stickiness for the rule\. When the load balancer first routes a request to a weighted target group, it generates a cookie named AWSALBTG that encodes information about the selected target group, encrypts the cookie, and includes the cookie in the response to the client\. The client should include the cookie that it receives in subsequent requests to the load balancer\. When the load balancer receives a request that matches a rule with target group stickiness enabled and contains the cookie, the request is routed to the target group specified in the cookie\.
+
+**Example Example Forward Action with One Target Group**  
+You can specify an action when you create or modify a rule\. For more information, see the [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) and [modify\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-rule.html) commands\. The following action forwards requests to the specified target group\.  
 
 ```
 [
   {
       "Type": "forward",
-      "TargetGroupArn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a06"
+      "ForwardConfig": {
+          "TargetGroups": [
+              {
+                  "TargetGroupArn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067"
+              }
+          ]
+      }
+  }
+]
+```
+
+**Example Example Forward Action with Two Weighted Target Groups**  
+The following action forwards requests to the two specified target groups, based on the weight of each target group\.  
+
+```
+[
+  {
+      "Type": "forward",
+      "ForwardConfig": {
+          "TargetGroups": [
+              {
+                  "TargetGroupArn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/blue-targets/73e2d6bc24d8a067",
+                  "Weight": 10
+              },
+              {
+                  "TargetGroupArn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/green-targets/09966783158cda59",
+                  "Weight": 20
+              }
+          ]
+      }
+  }
+]
+```
+
+**Example Example Forward Action with Stickiness Enabled**  
+If you have a forward rule with multiple target groups and one or more of the target groups has [sticky sessions](load-balancer-target-groups.md#sticky-sessions) enabled, you must enable target group stickiness\.  
+The following action forwards requests to the two specified target groups, with target group stickiness enabled\. Requests that do not contain the AWSALBTG cookie are routed based on the weight of each target group\.  
+
+```
+[
+  {
+      "Type": "forward",
+      "ForwardConfig": {
+          "TargetGroups": [
+              {
+                  "TargetGroupArn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/blue-targets/73e2d6bc24d8a067",
+                  "Weight": 10
+              },
+              {
+                  "TargetGroupArn": "arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/green-targets/09966783158cda59",
+                  "Weight": 20
+              }
+          ],
+          "TargetGroupStickinessConfig": {
+              "Enabled": "true",
+              "DurationSeconds": 1000
+          }
+      }
   }
 ]
 ```
@@ -127,7 +186,7 @@ You must modify at least one of the following components to avoid a redirect loo
 The protocol \(HTTP or HTTPS\)\. You can redirect HTTP to HTTP, HTTP to HTTPS, and HTTPS to HTTPS\. You cannot redirect HTTPS to HTTP\.
 
 *hostname*  
-The hostname\. A hostname is case\-insensitive, can be up to 128 characters in length, and consists of alpha\-numeric characters, wildcards \(\* and ?\), and hyphens \(\-\)\.
+The hostname\. A hostname is not case\-sensitive, can be up to 128 characters in length, and consists of alpha\-numeric characters, wildcards \(\* and ?\), and hyphens \(\-\)\.
 
 *port*  
 The port \(1 to 65535\)\.
@@ -139,11 +198,11 @@ The absolute path, starting with the leading "/"\. A path is case\-sensitive, ca
 The query parameters\.
 
 You can reuse URI components of the original URL in the target URL using the following reserved keywords:
-+ `#{protocol}` \- Retains the protocol\. Use in the protocol and query components
-+ `#{host}` \- Retains the domain\. Use in the hostname, path, and query components
-+ `#{port}` \- Retains the port\. Use in the port, path, and query components
-+ `#{path}` \- Retains the path\. Use in the path and query components
-+ `#{query}` \- Retains the query parameters\. Use in the query component
++ `#{protocol}` \- Retains the protocol\. Use in the protocol and query components\.
++ `#{host}` \- Retains the domain\. Use in the hostname, path, and query components\.
++ `#{port}` \- Retains the port\. Use in the port, path, and query components\.
++ `#{path}` \- Retains the path\. Use in the path and query components\.
++ `#{query}` \- Retains the query parameters\. Use in the query component\.
 
 When a `redirect` action is taken, the action is recorded in the access logs\. For more information, see [Access Log Entries](load-balancer-access-logs.md#access-log-entry-format)\. The count of successful `redirect` actions is reported in the `HTTP_Redirect_Count` metric\. For more information, see [Application Load Balancer Metrics](load-balancer-cloudwatch-metrics.md#load-balancer-metrics-alb)\.
 
@@ -156,7 +215,7 @@ The following rule sets up a permanent redirect to a URL that retains the origin
 ![\[A rule that redirects the request to a URL that retains the original protocol, port, hostname, and query parameters, and uses the #{path} keyword to create a modified path.\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/redirect_path.png)
 
 **Example Example Redirect Action for the AWS CLI**  
-You can specify an action when you create or modify a rule\. For more information, see the [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) and [modify\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify_rule.html) commands\. The following action redirects an HTTP request to an HTTPS request on port 443, with the same host name, path, and query string as the HTTP request\.  
+You can specify an action when you create or modify a rule\. For more information, see the [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) and [modify\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-rule.html) commands\. The following action redirects an HTTP request to an HTTPS request on port 443, with the same host name, path, and query string as the HTTP request\.  
 
 ```
 [
@@ -196,7 +255,7 @@ Route based on key/value pairs or values in the query strings\. For more informa
 `source-ip`  
 Route based on the source IP address of each request\. For more information, see [Source IP Address Conditions](#source-ip-conditions)\.
 
-Each rule can include zero or one of the following conditions: `host-header`, `http-request-method`, `path-pattern`, and `source-ip`, and zero or more of the following conditions: `http-header` and `query-string`\.
+Each rule can optionally include up to one of each of the following conditions: `host-header`, `http-request-method`, `path-pattern`, and `source-ip`\. Each rule can also optionally include one or more of each of the following conditions: `http-header` and `query-string`\.
 
 You can specify up to three match evaluations per condition\. For example, for each `http-header` condition, you can specify up to three strings to be compared to the value of the HTTP header in the request\. The condition is satisfied if one of the strings matches the value of the HTTP header\. To require that all of the strings are a match, create one condition per match evaluation\.
 
@@ -208,7 +267,7 @@ For demos, see [Advanced Request Routing](https://exampleloadbalancer.com/advanc
 
 ### HTTP Header Conditions<a name="http-header-conditions"></a>
 
-You can use HTTP header conditions to configure rules that route requests based on the HTTP headers for the request\. You can specify the names of standard or custom HTTP header fields\. The header name and the match evaluation are case\-insensitive\. The following wildcard characters are supported in the comparison strings: \* \(matches 0 or more characters\) and ? \(matches exactly 1 character\)\. Wildcard characters are not supported in the header name\.
+You can use HTTP header conditions to configure rules that route requests based on the HTTP headers for the request\. You can specify the names of standard or custom HTTP header fields\. The header name and the match evaluation are not case\-sensitive\. The following wildcard characters are supported in the comparison strings: \* \(matches 0 or more characters\) and ? \(matches exactly 1 character\)\. Wildcard characters are not supported in the header name\.
 
 **Example Example HTTP Header Condition for the AWS CLI**  
 You can specify conditions when you create or modify a rule\. For more information, see the [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) and [modify\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify_rule.html) commands\. The following condition is satisfied by requests with a User\-Agent header that matches one of the specified strings\.  
@@ -249,7 +308,7 @@ You can specify conditions when you create or modify a rule\. For more informati
 
 You can use host conditions to define rules that route requests based on the host name in the host header \(also known as *host\-based routing*\)\. This enables you to support multiple domains using a single load balancer\.
 
-A hostname is case\-insensitive, can be up to 128 characters in length, and can contain any of the following characters:
+A hostname is not case\-sensitive, can be up to 128 characters in length, and can contain any of the following characters:
 + A–Z, a–z, 0–9
 + \- \.
 + \* \(matches 0 or more characters\)
@@ -313,7 +372,7 @@ You can specify conditions when you create or modify a rule\. For more informati
 
 ### Query String Conditions<a name="query-string-conditions"></a>
 
-You can use query string conditions to configure rules that route requests based on key/value pairs or values in the query string\. The match evaluation is case\-insensitive\. The following wildcard characters are supported: \* \(matches 0 or more characters\) and ? \(matches exactly 1 character\)\.
+You can use query string conditions to configure rules that route requests based on key/value pairs or values in the query string\. The match evaluation is not case\-sensitive\. The following wildcard characters are supported: \* \(matches 0 or more characters\) and ? \(matches exactly 1 character\)\.
 
 **Example Example Query String Condition for the AWS CLI**  
 You can specify conditions when you create or modify a rule\. For more information, see the [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) and [modify\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify_rule.html) commands\. The following condition is satisfied by requests with a query string that includes either a key/value pair of "version=v1" or any key set to "example"\.  
@@ -341,7 +400,7 @@ You can specify conditions when you create or modify a rule\. For more informati
 
 You can use source IP address conditions to configure rules that route requests based on the source IP address of the request\. The IP address must be specified in CIDR format\. You can use both IPv4 and IPv6 addresses\. Wildcard characters are not supported\.
 
-If a client is behind a proxy, this is the IP address of the proxy not the IP address of the client\.
+If a client is behind a proxy, this is the IP address of the proxy, not the IP address of the client\.
 
 This condition is not satisfied by the addresses in the X\-Forwarded\-For header\. To search for addresses in the X\-Forwarded\-For header, use an `http-header` condition\.
 

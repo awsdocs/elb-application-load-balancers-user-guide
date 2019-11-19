@@ -36,7 +36,7 @@ You define a default rule when you create a listener, and you can define additio
 
    1. To add a host header condition, choose **Add condition**, **Host header** and type the hostname \(for example, **\*\.example\.com**\)\. To save the condition, choose the checkmark icon\.
 
-      The maximum size of each string is 128 characters\. The comparison is case\-insensitive\. The following wildcard characters are supported: \* and ?\.
+      The maximum size of each string is 128 characters\. The comparison is not case\-sensitive\. The following wildcard characters are supported: \* and ?\.
 
    1. To add a path condition, choose **Add condition**, **Path** and type the path pattern \(for example, `/img/*`\)\. To save the condition, choose the checkmark icon\.
 
@@ -44,7 +44,7 @@ You define a default rule when you create a listener, and you can define additio
 
    1. To add an HTTP header condition, choose **Add condition**, **Http header**\. Type the name of the header and add one or more comparison strings\. To save the condition, choose the checkmark icon\.
 
-      The maximum size of each header name is 40 characters, the header name is case\-insensitive, and wildcards are not supported\. The maximum size of each comparison string is 128 characters and the following wildcard characters are supported: \* and ?\. The comparison is case\-insensitive\.
+      The maximum size of each header name is 40 characters, the header name is not case\-sensitive, and wildcards are not supported\. The maximum size of each comparison string is 128 characters and the following wildcard characters are supported: \* and ?\. The comparison is not case\-sensitive\.
 
    1. To add an HTTP request method condition, choose **Add condition**, **Http request method** and add one or more method names\. To save the condition, choose the checkmark icon\.
 
@@ -52,7 +52,7 @@ You define a default rule when you create a listener, and you can define additio
 
    1. To add a query string condition, choose **Add condition**, **Query string** and add one or more key/value pairs\. For each key/value pair, you can omit the key and specify only the value\. To save the condition, choose the checkmark icon\.
 
-      The maximum size of each string is 128 characters\. The comparison is case\-insensitive\. The following wildcard characters are supported: \* and ?\.
+      The maximum size of each string is 128 characters\. The comparison is not case\-sensitive\. The following wildcard characters are supported: \* and ?\.
 
    1. To add a source IP condition, choose **Add condition**, **Source IP** and add one or more CIDR blocks\. To save the condition, choose the checkmark icon\.
 
@@ -61,7 +61,7 @@ You define a default rule when you create a listener, and you can define additio
 1. \(Optional, HTTPS listener\) To authenticate users, choose **Add action**, **Authenticate** and provide the requested information\. To save the action, choose the checkmark icon\. For more information, see [Authenticate Users Using an Application Load Balancer](listener-authenticate-users.md)\.
 
 1. Add one of the following actions:
-   + To add a forward action, choose **Add action**, **Forward to** and choose a target group\. To save the action, choose the checkmark icon\.
+   + To add a forward action, choose **Add action**, **Forward to** and choose one or more target groups\. If you use more than one target group, select a weight for each target group and optionally enable target group stickiness\. If you enable target group stickiness and there is more than one target group, you must also enable sticky sessions on the target groups\. To save the action, choose the checkmark icon\. For more information, see [Forward Actions](load-balancer-listeners.md#forward-actions)\.
    + To add a redirect action, choose **Add action**, **Redirect to** and provide the URL for the redirect\. To save the action, choose the checkmark icon\. For more information, see [Redirect Actions](load-balancer-listeners.md#redirect-actions)\.
    + To add a fixed\-response action, choose **Add action**, **Return fixed response** and provide a response code and optional response body\. To save the action, choose the checkmark icon\. For more information, see [Fixed\-Response Actions](load-balancer-listeners.md#fixed-response-actions)\.  
 ![\[The Insert Rule interface.\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/add_rule.png)

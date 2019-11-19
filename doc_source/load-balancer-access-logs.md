@@ -144,6 +144,14 @@ If the load balancer cannot complete an authenticate action, the load balancer s
 | `AuthUserinfoEpRequestTimeout` | The load balancer is unable to communicate with the IdP user info endpoint\. | `ELBAuthError` | 
 | `AuthUserinfoResponseSizeExceeded` | The size of the claims returned by the IdP exceeded 11K bytes\. | `ELBAuthUserClaimsSizeExceeded` | 
 
+If a request to a weighted target group fails, the load balancer stores one of the following error codes in the error\_reason field of the access log\.
+
+
+| Code | Description | 
+| --- | --- | 
+| `AWSALBTGCookieInvalid` | The authentication cookie is not valid\. | 
+| `WeightedTargetGroupsUnhandledException` | The load balancer encountered an unhandled exception\. | 
+
 If a request to a Lambda function fails, the load balancer stores one of the following reason codes in the error\_reason field of the access log\. The load balancer also increments the corresponding CloudWatch metric\. For more information, see the Lambda [Invoke](https://docs.aws.amazon.com/lambda/latest/dg/API_Invoke.html) action\.
 
 

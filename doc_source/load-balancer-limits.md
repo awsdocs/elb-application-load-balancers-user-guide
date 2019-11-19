@@ -11,6 +11,7 @@ Your AWS account has the following limits related to Application Load Balancers\
 **Load Balancer Limits**
 + Listeners per load balancer: 50 †
 + Targets per load balancer: 1000 †
++ Target groups per load balancer: 100 †
 + Subnets per Availability Zone per load balancer: 1 †
 + Security groups per load balancer: 5
 + Rules per load balancer \(not counting default rules\): 100 †
@@ -23,6 +24,7 @@ Your AWS account has the following limits related to Application Load Balancers\
 + Targets per target group \(Lambda functions\): 1 †
 
 **Rule Limits †**
++ Target groups per action: 5
 + Match evaluations per rule: 5
 + Wildcards per rule: 5
 + Actions per rule: 2 \(one optional authentication action, one required action\)

@@ -9,6 +9,7 @@ You define health check settings for your load balancer on a per target group ba
 + [Target Type](#target-type)
 + [Registered Targets](#registered-targets)
 + [Target Group Attributes](#target-group-attributes)
++ [Routing Algorithm](#modify-routing-algorithm)
 + [Deregistration Delay](#deregistration-delay)
 + [Slow Start Mode](#slow-start-mode)
 + [Sticky Sessions](#sticky-sessions)
@@ -80,6 +81,9 @@ The following target group attributes are supported if the target group type is 
 `deregistration_delay.timeout_seconds`  
 The amount of time for Elastic Load Balancing to wait before deregistering a target\. The range is 0–3600 seconds\. The default value is 300 seconds\.
 
+`load_balancing.algorithm.type`  
+The load balancing algorithm determines how the load balancer selects targets when routing requests\. The value is `round_robin` or `least_outstanding_requests`\. The default is `round_robin`\.
+
 `slow_start.duration_seconds`  
 The time period, in seconds, during which the load balancer sends a newly registered target a linearly increasing share of the traffic to the target group\. The range is 30–900 seconds \(15 minutes\)\. The default is 0 seconds \(disabled\)\.
 
@@ -96,6 +100,33 @@ The following target group attribute is supported if the target group type is `l
 
 `lambda.multi_value_headers.enabled`  
 Indicates whether the request and response headers exchanged between the load balancer and the Lambda function include arrays of values or strings\. The possible values are `true` or `false`\. The default value is `false`\. For more information, see [Multi\-Value Headers](lambda-functions.md#multi-value-headers)\.
+
+## Routing Algorithm<a name="modify-routing-algorithm"></a>
+
+By default, the round robin routing algorithm is used to route requests at the target group level\. You can specify the least outstanding requests routing algorithm instead\.
+
+Consider using least outstanding requests when the requests for your application vary in complexity or your targets vary in processing capability\. Round robin is a good choice when the requests and targets are similar, or if you need to distribute requests equally among targets\. You can compare the effect of round robin versus least outstanding requests using the following CloudWatch metrics: **RequestCount**, **TargetConnectionErrorCount**, and **TargetResponseTime**\.
+
+**Considerations**
++ You cannot enable both least outstanding requests and slow start mode\.
++ If you enable sticky sessions, this overrides the routing algorithm of the target group after the initial target selection\.
++ With HTTP/2, the load balancer converts the request to multiple HTTP/1\.1 requests, so least outstanding request treats each HTTP/2 request as multiple requests\.
++ You cannot use least outstanding requests with WebSockets\.
+
+**To modify the routing algorithm using the console**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. On the navigation pane, under **LOAD BALANCING**, choose **Target Groups**\.
+
+1. Select the target group\.
+
+1. On the **Description** tab, choose **Edit attributes**\.
+
+1. On the **Edit attributes** page, for **Load balancing algorithm**, choose **Round robin** or **Least outstanding requests**, and then choose **Save**\.
+
+**To modify the routing algorithm using the AWS CLI**  
+Use the [modify\-target\-group\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-target-group-attributes.html) command with the `load_balancing.algorithm.type` attribute\.
 
 ## Deregistration Delay<a name="deregistration-delay"></a>
 
@@ -133,6 +164,7 @@ After you enable slow start for a target group, its targets enter slow start mod
 + When you enable slow start for an empty target group and then register targets using a single registration operation, these targets do not enter slow start mode\. Newly registered targets enter slow start mode only when there is at least one healthy target that is not in slow start mode\.
 + If you deregister a target in slow start mode, the target exits slow start mode\. If you register the same target again, it enters slow start mode when it is considered healthy by the target group\.
 + If a target in slow start mode becomes unhealthy, the target exits slow start mode\. When the target becomes healthy, it enters slow start mode again\.
++ You cannot enable both slow start mode and least outstanding requests\.
 
 **To update the slow start duration value using the console**
 

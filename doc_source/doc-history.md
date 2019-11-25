@@ -5,6 +5,7 @@ The following table describes the releases for Application Load Balancers\.
 
 | Feature | Description | Date | 
 | --- | --- | --- | 
+| Least outstanding requests | This release adds support for the least outstanding requests algorithm\. For more information, see [Routing Algorithm](load-balancer-target-groups.md#modify-routing-algorithm)\. | November 25, 2019 | 
 | Weighted target groups | This release adds support for forward actions with multiple target groups\. Requests are distributed to these target groups based on the weight you specify for each target group\. For more information, see [Forward Actions](load-balancer-listeners.md#forward-actions)\. | November 19, 2019 | 
 | New attribute | This release adds support for the routing\.http\.drop\_invalid\_header\_fields\.enabled attribute\. For more information, see [Load Balancer Attributes](application-load-balancers.md#load-balancer-attributes)\. | November 11, 2019 | 
 | Advanced request routing | This release extends the existing support for host header and path\-based routing by adding conditions for your listener rules based on standard and custom HTTP headers and methods, query parameters, and source IP addresses\. For more information, see [Rule Condition Types](load-balancer-listeners.md#rule-condition-types)\. | March 27, 2019 | 

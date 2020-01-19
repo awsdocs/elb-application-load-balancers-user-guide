@@ -1,10 +1,16 @@
 # IP Address Types for Your Application Load Balancer<a name="load-balancer-ip-address-type"></a>
 
-You can configure your Application Load Balancer to route IPv4 traffic only or to route both IPv4 and IPv6 traffic\. For more information, see [IP Address Type](application-load-balancers.md#ip-address-type)\.
+You can configure your Application Load Balancer so that clients can communicate with the load balancer using IPv4 addresses only, or using both IPv4 and IPv6 addresses\. The load balancer communicates with targets using IPv4 addresses, regardless of how the client communicates with the load balancer\. For more information, see [IP Address Type](application-load-balancers.md#ip-address-type)\.
 
 **IPv6 Requirements**
-+ An Internet\-facing load balancer\.
-+ Your virtual private cloud \(VPC\) has subnets with associated IPv6 CIDR blocks\. For more information, see [IPv6 Addresses](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#ipv6-addressing) in the *Amazon EC2 User Guide*\.
++ An Internet\-facing load balancer with the `dualstack` IP address type\. You can set the IP address type when you create the load balancer and update it at any time\.
++ The virtual private cloud \(VPC\) and subnets that you specify for the load balancer must have associated IPv6 CIDR blocks\. For more information, see [IPv6 Addresses](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#ipv6-addressing) in the *Amazon EC2 User Guide*\.
++ The route tables for the load balancer subnets must route IPv6 traffic\.
++ The security groups for the load balancer must allow IPv6 traffic\.
++ The network ACLs for the load balancer subnets must allow IPv6 traffic\.
+
+**To set the IP address type at creation**  
+Configure settings as described in [Create a Load Balancer](create-application-load-balancer.md#configure-load-balancer)\.
 
 **To update the IP address type using the console**
 

@@ -187,13 +187,14 @@ Sticky sessions are a mechanism to route requests to the same target in a target
 
 When a load balancer first receives a request from a client, it routes the request to a target, generates a cookie named AWSALB that encodes information about the selected target, encrypts the cookie, and includes the cookie in the response to the client\. The client should include the cookie that it receives in subsequent requests to the load balancer\. When the load balancer receives a request from a client that contains the cookie, if sticky sessions are enabled for the target group and the request goes to the same target group, the load balancer detects the cookie and routes the request to the same target\. If the cookie is present but cannot be decoded, or if it refers to a target that was deregistered or is unhealthy, the load balancer selects a new target and updates the cookie with information about the new target\.
 
-Application Load Balancers support load balancer\-generated cookies only\. The contents of these cookies are encrypted using a rotating key\. You cannot decrypt or modify load balancer\-generated cookies\.
-
-WebSockets connections are inherently sticky\. If the client requests a connection upgrade to WebSockets, the target that returns an HTTP 101 status code to accept the connection upgrade is the target used in the WebSockets connection\. After the WebSockets upgrade is complete, cookie\-based stickiness is not used\.
-
 You enable sticky sessions at the target group level\. You can also set the duration for the stickiness of the load balancer\-generated cookie, in seconds\. The duration is set with each request\. Therefore, if the client sends a request before each duration period expires, the sticky session continues\.
 
-Application Load Balancers use the Expires attribute in the cookie header instead of the Max\-Age header\.
+Application Load Balancers support load balancer\-generated cookies only\. The contents of these cookies are encrypted using a rotating key\. You cannot decrypt or modify load balancer\-generated cookies\.
+
+**Considerations**
++ If you are using multiple layers of Application Load Balancers, you can enable sticky sessions on one layer only, because the load balancers would use the same cookie name\.
++ WebSockets connections are inherently sticky\. If the client requests a connection upgrade to WebSockets, the target that returns an HTTP 101 status code to accept the connection upgrade is the target used in the WebSockets connection\. After the WebSockets upgrade is complete, cookie\-based stickiness is not used\.
++ Application Load Balancers use the Expires attribute in the cookie header instead of the Max\-Age header\.
 
 **To enable sticky sessions using the console**
 

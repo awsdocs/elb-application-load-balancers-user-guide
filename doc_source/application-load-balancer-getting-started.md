@@ -5,7 +5,7 @@ This tutorial provides a hands\-on introduction to Application Load Balancers th
 **Topics**
 + [Before You Begin](#prerequisites)
 + [Step 1: Select a Load Balancer Type](#select-load-balancer-type)
-+ [Step 2: Configure Your Load Balancer and Listener](#configure-load-balancer)
++ [Step 2: Configure Your Load Balancer and Listener](#configure-load-balancer-listener)
 + [Step 3: Configure a Security Group for Your Load Balancer](#configure-security-groups)
 + [Step 4: Configure Your Target Group](#configure-target-group)
 + [Step 5: Register Targets with Your Target Group](#add-targets)
@@ -36,7 +36,7 @@ Elastic Load Balancing supports three types of load balancers\. For this tutoria
 
 1. For **Application Load Balancer**, choose **Create**\.
 
-## Step 2: Configure Your Load Balancer and Listener<a name="configure-load-balancer"></a>
+## Step 2: Configure Your Load Balancer and Listener<a name="configure-load-balancer-listener"></a>
 
 On the **Configure Load Balancer** page, complete the following procedure\.
 

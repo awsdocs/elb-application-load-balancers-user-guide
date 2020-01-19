@@ -143,7 +143,7 @@ Possible causes:
 + The load balancer established a connection to the target but the target did not respond before the idle timeout period elapsed\.
 + The network ACL for the subnet did not allow traffic from the targets to the load balancer nodes on the ephemeral ports \(1024\-65535\)\.
 + The target returns a content\-length header that is larger than the entity body\. The load balancer timed out waiting for the missing bytes\.
-+ The target is a Lambda function that did not respond before its possible maximum configured timeout was reached\.
++ The target is a Lambda function and the Lambda service did not respond before the connection timeout expired\.
 
 ### HTTP 561: Unauthorized<a name="http-561-issues"></a>
 

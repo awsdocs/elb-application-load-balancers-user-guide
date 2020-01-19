@@ -66,7 +66,7 @@ The following are the supported action types for a rule:
 Return a custom HTTP response\. For more information, see [Fixed\-Response Actions](#fixed-response-actions)\.
 
 `forward`  
-Forward requests to the specified target groups\.
+Forward requests to the specified target groups\. For more information, see [Forward Actions](#forward-actions)\.
 
 `redirect`  
 Redirect requests from one URL to another\. For more information, see [Redirect Actions](#redirect-actions)\.
@@ -352,7 +352,7 @@ A path pattern is case\-sensitive, can be up to 128 characters in length, and ca
 
 **Example path patterns**
 + `/img/*`
-+ `/js/*`
++ `/img/*/pics`
 
 The path pattern is used to route requests but does not alter them\. For example, if a rule has a path pattern of `/img/*`, the rule would forward a request for `/img/picture.jpg` to the specified target group as a request for `/img/picture.jpg`\.
 

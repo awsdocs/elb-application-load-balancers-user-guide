@@ -1,6 +1,6 @@
 # Application Load Balancers<a name="application-load-balancers"></a>
 
-A *load balancer* serves as the single point of contact for clients\. Clients send requests to the load balancer, and the load balancer sends them to targets, such as EC2 instances, in two or more Availability Zones\. To configure your load balancer, you create [target groups](load-balancer-target-groups.md), and then register targets with your target groups\. You also create [listeners](load-balancer-listeners.md) to check for connection requests from clients, and listener rules to route requests from clients to the targets in one or more target groups\.
+A *load balancer* serves as the single point of contact for clients\. Clients send requests to the load balancer, and the load balancer sends them to targets, such as EC2 instances\. To configure your load balancer, you create [target groups](load-balancer-target-groups.md), and then register targets with your target groups\. You also create [listeners](load-balancer-listeners.md) to check for connection requests from clients, and listener rules to route requests from clients to the targets in one or more target groups\.
 
 For more information, see [How Elastic Load Balancing Works](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/how-elastic-load-balancing-works.html) in the *Elastic Load Balancing User Guide*\.
 
@@ -24,7 +24,12 @@ For more information, see [How Elastic Load Balancing Works](https://docs.aws.am
 
 When you create an Application Load Balancer, you must enable at least two Availability Zones\. To enable an Availability Zone, you specify one subnet from that Availability Zone\.
 
-To ensure that your load balancer can scale properly, verify that each subnet for your load balancer has a CIDR block with at least a `/27` bitmask \(for example, `10.0.0.0/27`\) and has at least 8 free IP addresses\. Your load balancer uses these IP addresses to establish connections with the targets\.
+To ensure that your load balancer can scale properly, verify that each Availability Zone subnet for your load balancer has a CIDR block with at least a `/27` bitmask \(for example, `10.0.0.0/27`\) and has at least 8 free IP addresses\. Your load balancer uses these IP addresses to establish connections with the targets\.
+
+Alternatively, you can specify a Local Zone subnet for your load balancer instead of specifying two Availability Zone subnets\. If you do so, the following restrictions apply:
++ If you enable a Local Zone subnet, you cannot also enable an Availability Zone subnet\.
++ You cannot use AWS WAF with the load balancer\.
++ You cannot use a Lambda function as a target\.
 
 ## Load Balancer Security Groups<a name="load-balancer-security-groups"></a>
 
@@ -65,24 +70,26 @@ Indicates whether deletion protection is enabled\. The default is `false`\.
 The idle timeout value, in seconds\. The default is 60 seconds\.
 
 `routing.http.drop_invalid_header_fields.enabled`  
-Indicates whether HTTP headers with invalid header fields are removed by the load balancer \(`true`\) or routed to targets \(`false`\)\. The default is `false`\.
+Indicates whether HTTP headers with header fields that are not valid are removed by the load balancer \(`true`\) or routed to targets \(`false`\)\. The default is `false`\. Elastic Load Balancing requires that message header names contain only alphanumeric characters and hyphens\.
 
 `routing.http2.enabled`  
 Indicates whether HTTP/2 is enabled\. The default is `true`\.
 
 ## IP Address Type<a name="ip-address-type"></a>
 
-You can set the IP address type of your Internet\-facing load balancer when you create it or after it is active\. Note that internal load balancers must use IPv4 addresses\.
+You can set the types of IP addresses that clients can use with your Internet\-facing load balancer\. Clients must use IPv4 addresses with internal load balancers\.
 
-The following are the load balancer IP address types:
+The following are the IP address types:
 
 `ipv4`  
-The load balancer supports only IPv4 addresses \(for example, 192\.0\.2\.1\)
+Clients must connect to the load balancer using IPv4 addresses \(for example, 192\.0\.2\.1\)
 
 `dualstack`  
-The load balancer supports both IPv4 and IPv6 addresses \(for example, 2001:0db8:85a3:0:0:8a2e:0370:7334\)\.
+Clients can connect to the load balancer using both IPv4 addresses \(for example, 192\.0\.2\.1\) and IPv6 addresses \(for example, 2001:0db8:85a3:0:0:8a2e:0370:7334\)\.
 
-Clients that communicate with the load balancer using IPv4 addresses resolve the A record and clients that communicate with the load balancer using IPv6 addresses resolve the AAAA record\. However, the load balancer communicates with its targets using IPv4 addresses, regardless of how the client communicates with the load balancer\.
+When you enable dual\-stack mode for the load balancer, Elastic Load Balancing provides an AAAA DNS record for the load balancer\. Clients that communicate with the load balancer using IPv4 addresses resolve the A DNS record\. Clients that communicate with the load balancer using IPv6 addresses resolve the AAAA DNS record\.
+
+The load balancer communicates with targets using IPv4 addresses, regardless of how the client communicates with the load balancer\. Therefore, the targets do not need IPv6 addresses\.
 
 For more information, see [IP Address Types for Your Application Load Balancer](load-balancer-ip-address-type.md)\.
 
@@ -141,7 +148,7 @@ For back\-end connections, we recommend that you enable the HTTP keep\-alive opt
 
 1. On the **Description** tab, choose **Edit attributes**\.
 
-1. On the **Edit load balancer attributes** page, type a value for **Idle timeout**, in seconds\. The valid range is 1\-4000\. The default is 60 seconds\.
+1. On the **Edit load balancer attributes** page, enter a value for **Idle timeout**, in seconds\. The valid range is 1\-4000\. The default is 60 seconds\.
 
 1. Choose **Save**\.
 

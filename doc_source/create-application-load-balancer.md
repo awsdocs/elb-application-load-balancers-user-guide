@@ -34,11 +34,11 @@ First, provide some basic configuration information for your load balancer, such
 
 1. For **Scheme**, an Internet\-facing load balancer routes requests from clients over the Internet to targets\. An internal load balancer routes requests to targets using private IP addresses\.
 
-1. For **IP address type**, choose **ipv4** if your subnets use IPv4 addresses or **dualstack** if your subnets use both IPv4 and IPv6 addresses\.
+1. For **IP address type**, choose **ipv4** if your clients use IPv4 addresses to communicate with the load balancer or **dualstack** if your clients use both IPv4 and IPv6 addresses to communicate with the load balancer\. If the load balancer is an internal load balancer, you must choose **ipv4**\.
 
 1. For **Listeners**, the default is a listener that accepts HTTP traffic on port 80\. You can keep the default listener settings, modify the protocol, or modify the port\. Choose **Add** to add another listener \(for example, an HTTPS listener\)\.
 
-1. For **Availability Zones**, select at least two Availability Zones from your VPC\. If there is one subnet for an Availability Zone, it is selected\. If there is more than one subnet for an Availability Zone, select one of the subnets\. Note that you can select only one subnet per Availability Zone\.
+1. For **Availability Zones**, select at least two Availability Zones from your VPC\. If there is one subnet for an Availability Zone, it is selected\. If there is more than one subnet for an Availability Zone, select one of the subnets\. You can select only one subnet per Availability Zone\. If you enabled dual\-stack mode for the load balancer, select subnets with associated IPv6 CIDR blocks\.
 
 1. Choose **Next: Configure Security Settings**\.
 

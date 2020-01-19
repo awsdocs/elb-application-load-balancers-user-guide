@@ -33,11 +33,12 @@ The following table describes the possible values for the health status of a reg
 
 | Value | Description | 
 | --- | --- | 
-| `initial` |  The load balancer is in the process of registering the target or performing the initial health checks on the target\.  | 
-| `healthy` |  The target is healthy\.  | 
-| `unhealthy` |  The target did not respond to a health check or failed the health check\.  | 
-| `unused` |  The target is not registered with a target group, the target group is not used in a listener rule for the load balancer, or the target is in an Availability Zone that is not enabled for the load balancer\.  | 
-| `draining` |  The target is deregistering and connection draining is in process\.  | 
+| `initial` |  The load balancer is in the process of registering the target or performing the initial health checks on the target\. Related reason codes: `Elb.RegistrationInProgress` \| `Elb.InitialHealthChecking`  | 
+| `healthy` |  The target is healthy\. Related reason codes: None  | 
+| `unhealthy` |  The target did not respond to a health check or failed the health check\. Related reason codes: `Target.ResponseCodeMismatch` \| `Target.Timeout` \| `Target.FailedHealthChecks` \| `Elb.InternalError`  | 
+| `unused` |  The target is not registered with a target group, the target group is not used in a listener rule, the target is in an Availability Zone that is not enabled, or the target is in the stopped or terminated state\. Related reason codes: `Target.NotRegistered` \| `Target.NotInUse` \| `Target.InvalidState` \| `Target.IpUnusable`  | 
+| `draining` |  The target is deregistering and connection draining is in process\. Related reason code: `Target.DeregistrationInProgress`  | 
+| `unavailable` |  Health checks are disabled for the target group\. Related reason code: `Target.HealthCheckDisabled`  | 
 
 ## Health Check Reason Codes<a name="target-health-reason-codes"></a>
 
@@ -51,8 +52,9 @@ If the status of a target is any value other than `Healthy`, the API returns a r
 | `Elb.RegistrationInProgress` |  Target registration is in progress  | 
 | `Target.DeregistrationInProgress` |  Target deregistration is in progress  | 
 | `Target.FailedHealthChecks` |  Health checks failed  | 
+| `Target.HealthCheckDisabled` |  Health checks are disabled  | 
 | `Target.InvalidState` |  Target is in the stopped state Target is in the terminated state Target is in the terminated or stopped state Target is in an invalid state  | 
-| `Target.IpUnusable` |  The IP address cannot be used as a target, as it is in use by a load balancer\.  | 
+| `Target.IpUnusable` |  The IP address cannot be used as a target, as it is in use by a load balancer  | 
 | `Target.NotInUse` |  Target group is not configured to receive traffic from the load balancer Target is in an Availability Zone that is not enabled for the load balancer  | 
 | `Target.NotRegistered` |  Target is not registered to the target group  | 
 | `Target.ResponseCodeMismatch` |  Health checks failed with these codes: \[*code*\]  | 

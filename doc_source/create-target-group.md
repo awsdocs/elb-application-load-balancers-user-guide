@@ -16,7 +16,7 @@ You can add or remove targets from your target group at any time\. For more info
 
 1. Choose **Create target group**\.
 
-1. For **Target group name**, type a name for the target group\.
+1. For **Target group name**, type a name for the target group\. This name must be unique per region per account, can have a maximum of 32 characters, must contain only alphanumeric characters or hyphens, and must not begin or end with a hyphen\.
 
 1. For **Target type**, select **Instance** to register targets by instance ID, **IP** to register IP addresses, and **Lambda function** to register a Lambda function\.
 

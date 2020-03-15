@@ -106,7 +106,7 @@ The following is an example event\.
 
 ## Respond to the Load Balancer<a name="respond-to-load-balancer"></a>
 
-The response from your Lambda function must include the Base64 encoding status, status code, status description, and headers\. You can omit the body\. The `statusDescription` header must contain the status code and reason phrase, separated by a single space\.
+The response from your Lambda function must include the Base64 encoding status, status code, and headers\. You can omit the body\.
 
 To include a binary content in the body of the response, you must Base64 encode the content and set `isBase64Encoded` to `true`\. The load balancer decodes the content to retrieve the binary content and sends it to the client in the body of the HTTP response\.
 

@@ -79,6 +79,9 @@ You can check the health status of the targets registered with your target group
 **To check the health of your targets using the AWS CLI**  
 Use the [describe\-target\-health](https://docs.aws.amazon.com/cli/latest/reference/elbv2/describe-target-health.html) command\. The output of this command contains the target health state\. If the status is any value other than `Healthy`, the output also includes a reason code\.
 
+**To receive email notifications about unhealthy targets**  
+Use CloudWatch alarms to trigger a Lambda function to send details about unhealthy targets\. For step\-by\-step instructions, see the following blog post: [Identifying unhealthy targets of your load balancer](http://aws.amazon.com/blogs/networking-and-content-delivery/identifying-unhealthy-targets-of-elastic-load-balancer/)\.
+
 ## Modify the Health Check Settings of a Target Group<a name="modify-health-check-settings"></a>
 
 You can modify the health check settings for your target group at any time\.

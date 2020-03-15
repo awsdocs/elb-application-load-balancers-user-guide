@@ -6,6 +6,7 @@ The following information can help you troubleshoot issues with your Application
 + [A registered target is not in service](#target-not-inservice)
 + [Clients cannot connect to an Internet\-facing load balancer](#client-cannot-connect)
 + [The load balancer sends requests to unhealthy targets](#no-healthy-targets)
++ [The load balancer sends a response code of 000](#response-code-000)
 + [The load balancer generates an HTTP error](#load-balancer-http-error-codes)
 + [A target generates an HTTP error](#target-http-errors)
 
@@ -43,6 +44,10 @@ The security group for the load balancer and any network ACLs for the load balan
 ## The load balancer sends requests to unhealthy targets<a name="no-healthy-targets"></a>
 
 If there is at least one healthy target in a target group, the load balancer routes requests only to the healthy targets\. If a target group contains only unhealthy targets, the load balancer routes requests to the unhealthy targets\.
+
+## The load balancer sends a response code of 000<a name="response-code-000"></a>
+
+With HTTP/2 connections, if the compressed length of any of the headers exceeds 8K, the load balancer sends a GOAWAY frame and closes the connection with a TCP FIN\.
 
 ## The load balancer generates an HTTP error<a name="load-balancer-http-error-codes"></a>
 

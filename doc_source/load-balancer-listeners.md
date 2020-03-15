@@ -101,6 +101,10 @@ You can use `forward` actions to route requests to one or more target groups\. I
 
 By default, configuring a rule to distribute traffic between weighted target groups does not guarantee that sticky sessions are honored\. To ensure that sticky sessions are honored, enable target group stickiness for the rule\. When the load balancer first routes a request to a weighted target group, it generates a cookie named AWSALBTG that encodes information about the selected target group, encrypts the cookie, and includes the cookie in the response to the client\. The client should include the cookie that it receives in subsequent requests to the load balancer\. When the load balancer receives a request that matches a rule with target group stickiness enabled and contains the cookie, the request is routed to the target group specified in the cookie\.
 
+Application Load Balancers do not support cookie values that are URL encoded\.
+
+With CORS \(cross\-origin resource sharing\) requests, some browsers require `SameSite=None; Secure` to enable stickiness\. In this case, Elastic Load Balancing generates a second cookie, AWSALBTGCORS, which includes the same information as the original stickiness cookie plus this `SameSite` attribute\. Clients receive both cookies\.
+
 **Example Example Forward Action with One Target Group**  
 You can specify an action when you create or modify a rule\. For more information, see the [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) and [modify\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-rule.html) commands\. The following action forwards requests to the specified target group\.  
 
@@ -144,7 +148,7 @@ The following action forwards requests to the two specified target groups, based
 
 **Example Example Forward Action with Stickiness Enabled**  
 If you have a forward rule with multiple target groups and one or more of the target groups has [sticky sessions](load-balancer-target-groups.md#sticky-sessions) enabled, you must enable target group stickiness\.  
-The following action forwards requests to the two specified target groups, with target group stickiness enabled\. Requests that do not contain the AWSALBTG cookie are routed based on the weight of each target group\.  
+The following action forwards requests to the two specified target groups, with target group stickiness enabled\. Requests that do not contain the stickiness cookies are routed based on the weight of each target group\.  
 
 ```
 [
@@ -162,7 +166,7 @@ The following action forwards requests to the two specified target groups, with 
               }
           ],
           "TargetGroupStickinessConfig": {
-              "Enabled": "true",
+              "Enabled": true,
               "DurationSeconds": 1000
           }
       }
@@ -388,7 +392,7 @@ You can specify conditions when you create or modify a rule\. For more informati
                 "Value": "v1"
             },
             {
-                "Value": "example"
+                "Value": "*example*"
             }
           ]
       }

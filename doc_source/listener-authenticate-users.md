@@ -44,6 +44,10 @@ Enable the following settings if you are using a CloudFront distribution in fron
 
 You configure user authentication by creating an authenticate action for one or more listener rules\. The `authenticate-cognito` and `authenticate-oidc` action types are supported only with HTTPS listeners\. For descriptions of the corresponding fields, see [AuthenticateCognitoActionConfig](https://docs.aws.amazon.com/elasticloadbalancing/latest/APIReference/API_AuthenticateCognitoActionConfig.html) and [AuthenticateOidcActionConfig](https://docs.aws.amazon.com/elasticloadbalancing/latest/APIReference/API_AuthenticateOidcActionConfig.html) in the *Elastic Load Balancing API Reference version 2015\-12\-01*\.
 
+The load balancer sends a session cookie to the client to maintain authentication status\. This cookie always contains the `secure` attribute, because user authentication requires an HTTPS listener\. This cookie contains the `SameSite=None` attribute with CORS \(cross\-origin resource sharing\) requests\.
+
+Application Load Balancers do not support cookie values that are URL encoded\.
+
 By default, the `SessionTimeout` field is set to 7 days\. If you want shorter sessions, you can configure a session timeout as short as 1 second\. For more information, see [Authentication Logout and Session Timeout](#authentication-logout-timeout)\.
 
 Set the `OnUnauthenticatedRequest` field as appropriate for your application\. For example:

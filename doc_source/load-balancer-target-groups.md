@@ -111,7 +111,7 @@ Consider using least outstanding requests when the requests for your application
 + You cannot enable both least outstanding requests and slow start mode\.
 + If you enable sticky sessions, this overrides the routing algorithm of the target group after the initial target selection\.
 + With HTTP/2, the load balancer converts the request to multiple HTTP/1\.1 requests, so least outstanding request treats each HTTP/2 request as multiple requests\.
-+ You cannot use least outstanding requests with WebSockets\.
++ When you use least outstanding requests with WebSockets, the target is selected using least outstanding requests\. The load balancer creates a connection to this target and sends all messages over this connection\.
 
 **To modify the routing algorithm using the console**
 
@@ -189,12 +189,15 @@ When a load balancer first receives a request from a client, it routes the reque
 
 You enable sticky sessions at the target group level\. You can also set the duration for the stickiness of the load balancer\-generated cookie, in seconds\. The duration is set with each request\. Therefore, if the client sends a request before each duration period expires, the sticky session continues\.
 
+With CORS \(cross\-origin resource sharing\) requests, some browsers require `SameSite=None; Secure` to enable stickiness\. In this case, Elastic Load Balancing generates a second stickiness cookie, AWSALBCORS, which includes the same information as the original stickiness cookie plus this `SameSite` attribute\. Clients receive both cookies\.
+
 Application Load Balancers support load balancer\-generated cookies only\. The contents of these cookies are encrypted using a rotating key\. You cannot decrypt or modify load balancer\-generated cookies\.
 
 **Considerations**
 + If you are using multiple layers of Application Load Balancers, you can enable sticky sessions on one layer only, because the load balancers would use the same cookie name\.
 + WebSockets connections are inherently sticky\. If the client requests a connection upgrade to WebSockets, the target that returns an HTTP 101 status code to accept the connection upgrade is the target used in the WebSockets connection\. After the WebSockets upgrade is complete, cookie\-based stickiness is not used\.
 + Application Load Balancers use the Expires attribute in the cookie header instead of the Max\-Age header\.
++ Application Load Balancers do not support cookie values that are URL encoded\.
 
 **To enable sticky sessions using the console**
 

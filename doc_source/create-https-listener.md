@@ -81,12 +81,12 @@ Elastic Load Balancing provides the following security policies for Application 
 + `ELBSecurityPolicy-FS-1-2-Res-2019-08`
 + `ELBSecurityPolicy-2015-05` \(identical to `ELBSecurityPolicy-2016-08`\)
 
-We recommend the `ELBSecurityPolicy-2016-08` policy for general use\. You can use one of the `ELBSecurityPolicy-FS` policies if you require Forward Secrecy \(FS\)\. You can use one of the `ELBSecurityPolicy-TLS` policies to meet compliance and security standards that require disabling certain TLS protocol versions, or to support legacy clients that require deprecated ciphers\. Only a small percentage of internet clients require TLS version 1\.0\. To view the TLS protocol version for requests to your load balancer, enable access logging for your load balancer and examine the access logs\. For more information, see [Access Logs](load-balancer-access-logs.md)\.
+We recommend the `ELBSecurityPolicy-2016-08` policy for compatibility\. You can use one of the `ELBSecurityPolicy-FS` policies if you require Forward Secrecy \(FS\)\. You can use one of the `ELBSecurityPolicy-TLS` policies to meet compliance and security standards that require disabling certain TLS protocol versions, or to support legacy clients that require deprecated ciphers\. Only a small percentage of internet clients require TLS version 1\.0\. To view the TLS protocol version for requests to your load balancer, enable access logging for your load balancer and examine the access logs\. For more information, see [Access Logs](load-balancer-access-logs.md)\.
 
-The following table describes the default policy and the `ELBSecurityPolicy-TLS` polices\.
+The following table describes the default policy, `ELBSecurityPolicy-2016-08`, and the `ELBSecurityPolicy-TLS` polices\. The `ELBSecurityPolicy-` has been removed from policy names in the heading row so that they fit\.
 
 
-| Security Policy | Default | TLS 1\.0 † | TLS 1\.1 | TLS 1\.2 | TLS 1\.2 Ext | 
+| Security Policy | 2016\-08 | TLS\-1\-0\-2015\-04 † | TLS\-1\-1\-2017\-01 | TLS\-1\-2\-2017\-01 | TLS\-1\-2\-Ext\-2018\-06 | 
 | --- | --- | --- | --- | --- | --- | 
 | TLS Protocols | 
 | Protocol\-TLSv1 | ♦ | ♦ |  |  |  | 
@@ -115,10 +115,10 @@ The following table describes the default policy and the `ELBSecurityPolicy-TLS`
 
 † Do not use this policy unless you must support a legacy client that requires the DES\-CBC3\-SHA cipher, which is a weak cipher\.
 
-The following table describes the default policy and the `ELBSecurityPolicy-FS` policies\.
+The following table describes the default policy, `ELBSecurityPolicy-2016-08`, and the `ELBSecurityPolicy-FS` policies\. The `ELBSecurityPolicy-` has been removed from policy names in the heading row so that they fit\.
 
 
-| Security Policy | Default | FS | FS 1\.1 | FS 1\.2 | FS 1\.2 Res | 
+| Security Policy | 2016\-08 | FS\-2018\-06 | FS\-1\-1\-2019\-08 | FS\-1\-2\-2019\-08 | FS\-1\-2\-Res\-2019\-08 | 
 | --- | --- | --- | --- | --- | --- | 
 | TLS Protocols | 
 | Protocol\-TLSv1 | ♦ | ♦ |  |  |  | 

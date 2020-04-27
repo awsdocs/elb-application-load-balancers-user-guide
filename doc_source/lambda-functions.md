@@ -206,7 +206,7 @@ With the default format, you can specify a single cookie:
 }
 ```
 
-If you enable multi\-value headers, you can specify multiple cookies as follows:
+If you enable multi\-value headers, you must specify multiple cookies as follows:
 
 ```
 {

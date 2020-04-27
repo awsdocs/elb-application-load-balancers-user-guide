@@ -312,7 +312,7 @@ Use one of the following options to prepare an S3 bucket for access logging\.
 
 1. Select the bucket\. Choose **Permissions** and then choose **Bucket Policy**\.
 
-1. If you are creating a new bucket policy, copy this entire policy document to the policy editor, then replace the placeholders with the bucket name and prefix for your bucket, the ID of the AWS account that corresponds to the Region for your load balancer, and the ID of your own AWS account\. If you are editing an existing bucket policy, copy only the new statement from the policy document \(the text between the \[ and \] of the `Statement` element\)\.
+1. If you are creating a new bucket policy, copy this entire policy document to the policy editor, then replace the placeholders with the bucket name and prefix for your bucket, the ID of the AWS account for Elastic Load Balancing \(based on the Region for your load balancer\), and the ID of your own AWS account\. If you are editing an existing bucket policy, copy only the new statement from the policy document \(the text between the \[ and \] of the `Statement` element\)\.
 
    ```
    {
@@ -321,10 +321,10 @@ Use one of the following options to prepare an S3 bucket for access logging\.
        {
          "Effect": "Allow",
          "Principal": {
-           "AWS": "arn:aws:iam::aws-account-id:root"
+           "AWS": "arn:aws:iam::elb-account-id:root"
          },
          "Action": "s3:PutObject",
-         "Resource": "arn:aws:s3:::bucket-name/prefix/AWSLogs/123456789012/*"
+         "Resource": "arn:aws:s3:::bucket-name/prefix/AWSLogs/your-aws-account-id/*"
        },
        {
          "Effect": "Allow",
@@ -332,7 +332,7 @@ Use one of the following options to prepare an S3 bucket for access logging\.
            "Service": "delivery.logs.amazonaws.com"
          },
          "Action": "s3:PutObject",
-         "Resource": "arn:aws:s3:::bucket-name/prefix/AWSLogs/123456789012/*",
+         "Resource": "arn:aws:s3:::bucket-name/prefix/AWSLogs/your-aws-account-id/*",
          "Condition": {
            "StringEquals": {
              "s3:x-amz-acl": "bucket-owner-full-control"
@@ -351,7 +351,7 @@ Use one of the following options to prepare an S3 bucket for access logging\.
    }
    ```
 
-   The following table contains the account IDs to use in place of *aws\-account\-id* in your bucket policy\.    
+   The following table contains the account IDs to use in place of *elb\-account\-id* in your bucket policy\.    
 [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html)
 
    \* These Regions requires a separate account\. For more information, see [AWS GovCloud \(US\-West\)](https://aws.amazon.com/govcloud-us/) and [China \(Beijing\)](http://www.amazonaws.cn/en/)\.

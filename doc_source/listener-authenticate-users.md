@@ -57,7 +57,7 @@ Set the `OnUnauthenticatedRequest` field as appropriate for your application\. F
 
 The load balancer must be able to communicate with the IdP token endpoint \(`TokenEndpoint`\) and the IdP user info endpoint \(`UserInfoEndpoint`\)\. Verify that the security groups for your load balancer and the network ACLs for your VPC allow outbound access to these endpoints\. Verify that your VPC has internet access\. If you have an internal\-facing load balancer, use a NAT gateway to enable the load balancer to access these endpoints\.
 
-Use the following [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/create-rule.html) command to configure user authentication\.
+Use the following [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) command to configure user authentication\.
 
 ```
 aws elbv2 create-rule --listener-arn listener-arn --priority 10 \

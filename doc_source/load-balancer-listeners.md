@@ -310,7 +310,7 @@ You can specify conditions when you create or modify a rule\. For more informati
 
 ### Host Conditions<a name="host-conditions"></a>
 
-You can use host conditions to define rules that route requests based on the host name in the host header \(also known as *host\-based routing*\)\. This enables you to support multiple domains using a single load balancer\.
+You can use host conditions to define rules that route requests based on the host name in the host header \(also known as *host\-based routing*\)\. This enables you to support multiple subdomains and different top-level domains using a single load balancer\.
 
 A hostname is not case\-sensitive, can be up to 128 characters in length, and can contain any of the following characters:
 + A–Z, a–z, 0–9

@@ -1,4 +1,4 @@
-# Delete a Listener for Your Application Load Balancer<a name="delete-listener"></a>
+# Delete a listener for your Application Load Balancer<a name="delete-listener"></a>
 
 You can delete a listener at any time\. When you delete a load balancer, all its listeners are deleted\.
 

@@ -1,8 +1,8 @@
-# Listener Rules for Your Application Load Balancer<a name="listener-update-rules"></a>
+# Listener rules for your Application Load Balancer<a name="listener-update-rules"></a>
 
 The rules that you define for your listener determine how the load balancer routes requests to the targets in one or more target groups\.
 
-Each rule consists of a priority, one or more actions, and one or more conditions\. For more information, see [Listener Rules](load-balancer-listeners.md#listener-rules)\.
+Each rule consists of a priority, one or more actions, and one or more conditions\. For more information, see [Listener rules](load-balancer-listeners.md#listener-rules)\.
 
 **Note**  
 The console displays a relative sequence number for each rule, not the rule priority\. You can get the priority of a rule by describing it using the AWS CLI or the Elastic Load Balancing API\.
@@ -11,9 +11,9 @@ The console displays a relative sequence number for each rule, not the rule prio
 + Each rule must include exactly one of the following actions: `forward`, `redirect`, or `fixed-response`, and it must be the last action to be performed\.
 + Each rule can include zero or one of the following conditions: `host-header`, `http-request-method`, `path-pattern`, and `source-ip`, and zero or more of the following conditions: `http-header` and `query-string`\.
 + You can specify up to three comparison strings per condition and up to five per rule\.
-+ A `forward` action routes requests to its target group\. Before you add a `forward` action, create the target group and add targets to it\. For more information, see [Create a Target Group](create-target-group.md)\.
++ A `forward` action routes requests to its target group\. Before you add a `forward` action, create the target group and add targets to it\. For more information, see [Create a target group](create-target-group.md)\.
 
-## Add a Rule<a name="add-rule"></a>
+## Add a rule<a name="add-rule"></a>
 
 You define a default rule when you create a listener, and you can define additional nondefault rules at any time\.
 
@@ -58,12 +58,12 @@ You define a default rule when you create a listener, and you can define additio
 
       You can use both IPv4 and IPv6 addresses\. Wildcards are not supported\.
 
-1. \(Optional, HTTPS listener\) To authenticate users, choose **Add action**, **Authenticate** and provide the requested information\. To save the action, choose the checkmark icon\. For more information, see [Authenticate Users Using an Application Load Balancer](listener-authenticate-users.md)\.
+1. \(Optional, HTTPS listener\) To authenticate users, choose **Add action**, **Authenticate** and provide the requested information\. To save the action, choose the checkmark icon\. For more information, see [Authenticate users using an Application Load Balancer](listener-authenticate-users.md)\.
 
 1. Add one of the following actions:
-   + To add a forward action, choose **Add action**, **Forward to** and choose one or more target groups\. If you use more than one target group, select a weight for each target group and optionally enable target group stickiness\. If you enable target group stickiness and there is more than one target group, you must also enable sticky sessions on the target groups\. To save the action, choose the checkmark icon\. For more information, see [Forward Actions](load-balancer-listeners.md#forward-actions)\.
-   + To add a redirect action, choose **Add action**, **Redirect to** and provide the URL for the redirect\. To save the action, choose the checkmark icon\. For more information, see [Redirect Actions](load-balancer-listeners.md#redirect-actions)\.
-   + To add a fixed\-response action, choose **Add action**, **Return fixed response** and provide a response code and optional response body\. To save the action, choose the checkmark icon\. For more information, see [Fixed\-Response Actions](load-balancer-listeners.md#fixed-response-actions)\.  
+   + To add a forward action, choose **Add action**, **Forward to** and choose one or more target groups\. If you use more than one target group, select a weight for each target group and optionally enable target group stickiness\. If you enable target group stickiness and there is more than one target group, you must also enable sticky sessions on the target groups\. To save the action, choose the checkmark icon\. For more information, see [Forward actions](load-balancer-listeners.md#forward-actions)\.
+   + To add a redirect action, choose **Add action**, **Redirect to** and provide the URL for the redirect\. To save the action, choose the checkmark icon\. For more information, see [Redirect actions](load-balancer-listeners.md#redirect-actions)\.
+   + To add a fixed\-response action, choose **Add action**, **Return fixed response** and provide a response code and optional response body\. To save the action, choose the checkmark icon\. For more information, see [Fixed\-response actions](load-balancer-listeners.md#fixed-response-actions)\.  
 ![\[The Insert Rule interface.\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/add_rule.png)
 
 1. Choose **Save**\.
@@ -75,7 +75,7 @@ You define a default rule when you create a listener, and you can define additio
 **To add a rule using the AWS CLI**  
 Use the [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) command to create the rule\. Use the [describe\-rules](https://docs.aws.amazon.com/cli/latest/reference/elbv2/describe-rules.html) command to view information about the rule\.
 
-## Edit a Rule<a name="edit-rule"></a>
+## Edit a rule<a name="edit-rule"></a>
 
 You can edit the action and conditions for a rule at any time\. Rule updates do not take effect immediately, so requests could be routed using the previous rule configuration for a short time after you update a rule\. Any in\-flight requests are completed\.
 
@@ -104,7 +104,7 @@ You can edit the action and conditions for a rule at any time\. Rule updates do 
 **To edit a rule using the AWS CLI**  
 Use the [modify\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-rule.html) command\.
 
-## Reorder Rules<a name="update-rule-priority"></a>
+## Reorder rules<a name="update-rule-priority"></a>
 
 Rules are evaluated in priority order, from the lowest value to the highest value\. The default rule is evaluated last\. You can change the priority of a nondefault rule at any time\. You cannot change the priority of the default rule\.
 
@@ -133,7 +133,7 @@ The console displays a relative sequence number for each rule, not the rule prio
 **To update rule priorities using the AWS CLI**  
 Use the [set\-rule\-priorities](https://docs.aws.amazon.com/cli/latest/reference/elbv2/set-rule-priorities.html) command\.
 
-## Delete a Rule<a name="delete-rule"></a>
+## Delete a rule<a name="delete-rule"></a>
 
 You can delete the nondefault rules for a listener at any time\. You cannot delete the default rule for a listener\. When you delete a listener, all its rules are deleted\.
 

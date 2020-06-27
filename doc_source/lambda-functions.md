@@ -1,25 +1,25 @@
-# Lambda Functions as Targets<a name="lambda-functions"></a>
+# Lambda functions as targets<a name="lambda-functions"></a>
 
 You can register your Lambda functions as targets and configure a listener rule to forward requests to the target group for your Lambda function\. When the load balancer forwards the request to a target group with a Lambda function as a target, it invokes your Lambda function and passes the content of the request to the Lambda function, in JSON format\.
 
 **Limits**
 + The Lambda function and target group must be in the same account and in the same Region\.
-+ The maximum size of the request body that you can send to a Lambda function is 1 MB\. For related size limits, see [HTTP Header Limits](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/how-elastic-load-balancing-works.html#http-header-limits)\.
++ The maximum size of the request body that you can send to a Lambda function is 1 MB\. For related size limits, see [HTTP header limits](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/how-elastic-load-balancing-works.html#http-header-limits)\.
 + The maximum size of the response JSON that the Lambda function can send is 1 MB\.
 + WebSockets are not supported\. Upgrade requests are rejected with an HTTP 400 code\.
 
 **Topics**
-+ [Prepare the Lambda Function](#prepare-lambda-function)
-+ [Create a Target Group for the Lambda Function](#register-lambda-function)
-+ [Receive Events From the Load Balancer](#receive-event-from-load-balancer)
-+ [Respond to the Load Balancer](#respond-to-load-balancer)
-+ [Multi\-Value Headers](#multi-value-headers)
-+ [Enable Health Checks](#enable-health-checks-lambda)
-+ [Deregister the Lambda Function](#deregister-lambda-function)
++ [Prepare the Lambda function](#prepare-lambda-function)
++ [Create a target group for the Lambda function](#register-lambda-function)
++ [Receive events from the load balancer](#receive-event-from-load-balancer)
++ [Respond to the load balancer](#respond-to-load-balancer)
++ [Multi\-value headers](#multi-value-headers)
++ [Enable health checks](#enable-health-checks-lambda)
++ [Deregister the Lambda function](#deregister-lambda-function)
 
-For a demo, see [Lambda Target on Application Load Balancer](https://exampleloadbalancer.com/lambda_demo.html)\.
+For a demo, see [Lambda target on Application Load Balancer](https://exampleloadbalancer.com/lambda_demo.html)\.
 
-## Prepare the Lambda Function<a name="prepare-lambda-function"></a>
+## Prepare the Lambda function<a name="prepare-lambda-function"></a>
 
 The following recommendations apply if you are using your Lambda function with an Application Load Balancer\.
 
@@ -36,12 +36,12 @@ aws lambda add-permission \
 ```
 
 **Lambda Function Versioning**  
-You can register one Lambda function per target group\. To ensure that you can change your Lambda function and that the load balancer always invokes the current version of the Lambda function, create a function alias and include the alias in the function ARN when you register the Lambda function with the load balancer\. For more information, see [AWS Lambda Function Versioning and Aliases](https://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases.html) and [Traffic Shifting Using Aliases](https://docs.aws.amazon.com/lambda/latest/dg/lambda-traffic-shifting-using-aliases.html) in the *AWS Lambda Developer Guide*\.
+You can register one Lambda function per target group\. To ensure that you can change your Lambda function and that the load balancer always invokes the current version of the Lambda function, create a function alias and include the alias in the function ARN when you register the Lambda function with the load balancer\. For more information, see [AWS Lambda function versioning and aliases](https://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases.html) and [Traffic shifting using aliases](https://docs.aws.amazon.com/lambda/latest/dg/lambda-traffic-shifting-using-aliases.html) in the *AWS Lambda Developer Guide*\.
 
 **Function Timeout**  
-The load balancer waits until your Lambda function responds or times out\. We recommend that you configure the timeout of the Lambda function based on your expected run time\. For information about the default timeout value and how to change it, see [Basic AWS Lambda Function Configuration](https://docs.aws.amazon.com/lambda/latest/dg/resource-model.html)\. For information about the maximum timeout value you can configure, see [AWS Lambda Limits](https://docs.aws.amazon.com/lambda/latest/dg/limits.html)\.
+The load balancer waits until your Lambda function responds or times out\. We recommend that you configure the timeout of the Lambda function based on your expected run time\. For information about the default timeout value and how to change it, see [Basic AWS Lambda function configuration](https://docs.aws.amazon.com/lambda/latest/dg/resource-model.html)\. For information about the maximum timeout value you can configure, see [AWS Lambda limits](https://docs.aws.amazon.com/lambda/latest/dg/limits.html)\.
 
-## Create a Target Group for the Lambda Function<a name="register-lambda-function"></a>
+## Create a target group for the Lambda function<a name="register-lambda-function"></a>
 
 Create a target group, which is used in request routing\. If the request content matches a listener rule with an action to forward it to this target group, the load balancer invokes the registered Lambda function\.
 
@@ -69,7 +69,7 @@ Create a target group, which is used in request routing\. If the request content
 **To create a target group and deregister the Lambda function using the AWS CLI**  
 Use the [create\-target\-group](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-target-group.html) and [register\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/register-targets.html) commands\.
 
-## Receive Events From the Load Balancer<a name="receive-event-from-load-balancer"></a>
+## Receive events from the load balancer<a name="receive-event-from-load-balancer"></a>
 
 The load balancer supports Lambda invocation for requests over both HTTP and HTTPS\. The load balancer sends an event in JSON format\. The load balancer adds the following headers to every request: `X-Amzn-Trace-Id`, `X-Forwarded-For`, `X-Forwarded-Port`, and `X-Forwarded-Proto`\.
 
@@ -104,7 +104,7 @@ The following is an example event\.
 }
 ```
 
-## Respond to the Load Balancer<a name="respond-to-load-balancer"></a>
+## Respond to the load balancer<a name="respond-to-load-balancer"></a>
 
 The response from your Lambda function must include the Base64 encoding status, status code, and headers\. You can omit the body\.
 
@@ -133,16 +133,16 @@ For Lambda function templates that work with Application Load Balancers, see [ap
 + ALB\-Lambda\-Target\-BinaryResponse
 + ALB\-Lambda\-Target\-WhatisMyIP
 
-## Multi\-Value Headers<a name="multi-value-headers"></a>
+## Multi\-value headers<a name="multi-value-headers"></a>
 
 If requests from a client or responses from a Lambda function contain headers with multiple values or contains the same header multiple times, or query parameters with multiple values for the same key, you can enable support for multi\-value header syntax\. After you enable multi\-value headers, the headers and query parameters exchanged between the load balancer and the Lambda function use arrays instead of strings\. If you do not enable multi\-value header syntax and a header or query parameter has multiple values, the load balancer uses the last value that it receives\.
 
 **Topics**
-+ [Requests with Multi\-Value Headers](#multi-value-headers-request)
-+ [Responses with Multi\-Value Headers](#multi-value-headers-response)
-+ [Enable Multi\-Value Headers](#enable-multi-value-headers)
++ [Requests with multi\-value headers](#multi-value-headers-request)
++ [Responses with multi\-value headers](#multi-value-headers-response)
++ [Enable multi\-value headers](#enable-multi-value-headers)
 
-### Requests with Multi\-Value Headers<a name="multi-value-headers-request"></a>
+### Requests with multi\-value headers<a name="multi-value-headers-request"></a>
 
 The names of the fields used for headers and query string parameters differ depending on whether you enable multi\-value headers for the target group\.
 
@@ -191,7 +191,7 @@ If you enable multi\-value headers, the load balancer uses both cookies sent by 
 
 If the query parameters are URL\-encoded, the load balancer does not decode them\. You must decode them in your Lambda function\.
 
-### Responses with Multi\-Value Headers<a name="multi-value-headers-response"></a>
+### Responses with multi\-value headers<a name="multi-value-headers-response"></a>
 
 The names of the fields used for headers differ depending on whether you enable multi\-value headers for the target group\. You must use `multiValueHeaders` if you have enabled multi\-value headers and `headers` otherwise\.
 
@@ -217,7 +217,7 @@ If you enable multi\-value headers, you must specify multiple cookies as follows
 }
 ```
 
-### Enable Multi\-Value Headers<a name="enable-multi-value-headers"></a>
+### Enable multi\-value headers<a name="enable-multi-value-headers"></a>
 
 You can enable or disable multi\-value headers for a target group with the target type `lambda`\.
 
@@ -238,7 +238,7 @@ You can enable or disable multi\-value headers for a target group with the targe
 **To enable multi\-value headers using the AWS CLI**  
 Use the [modify\-target\-group\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-target-group-attributes.html) command with the `lambda.multi_value_headers.enabled` attribute\.
 
-## Enable Health Checks<a name="enable-health-checks-lambda"></a>
+## Enable health checks<a name="enable-health-checks-lambda"></a>
 
 By default, health checks are disabled for target groups of type `lambda`\. You can enable health checks in order to implement DNS failover with Amazon Route 53\. The Lambda function can check the health of a downstream service before responding to the health check request\. If the response from the Lambda function indicates a health check failure, the health check failure is passed to Route 53\. You can configure Route 53 to fail over to a backup application stack\.
 
@@ -281,7 +281,7 @@ The following is the format of the health check event sent to your Lambda functi
 **To enable health checks for a target group using the AWS CLI**  
 Use the [modify\-target\-group](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-target-group.html) command with the `--health-check-enabled` option\.
 
-## Deregister the Lambda Function<a name="deregister-lambda-function"></a>
+## Deregister the Lambda function<a name="deregister-lambda-function"></a>
 
 If you no longer need to send traffic to your Lambda function, you can deregister it\. After you deregister a Lambda function, in\-flight requests fail with HTTP 5XX errors\.
 

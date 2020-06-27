@@ -4,21 +4,21 @@ A load balancer takes requests from clients and distributes them across targets 
 
 Before you begin, ensure that you have a virtual private cloud \(VPC\) with at least one public subnet in each of the Availability Zones used by your targets\.
 
-To create a load balancer using the AWS CLI, see [Tutorial: Create an Application Load Balancer Using the AWS CLI](tutorial-application-load-balancer-cli.md)\.
+To create a load balancer using the AWS CLI, see [Tutorial: Create an Application Load Balancer using the AWS CLI](tutorial-application-load-balancer-cli.md)\.
 
 To create a load balancer using the AWS Management Console, complete the following tasks\.
 
 **Topics**
-+ [Step 1: Configure a Load Balancer and a Listener](#configure-load-balancer)
-+ [Step 2: Configure Security Settings for an HTTPS Listener](#configure-security-settings)
-+ [Step 3: Configure a Security Group](#configure-security-group)
-+ [Step 4: Configure a Target Group](#configure-target-group)
-+ [Step 5: Configure Targets for the Target Group](#select-targets)
-+ [Step 6: Create the Load Balancer](#create-load-balancer)
++ [Step 1: Configure a load balancer and a listener](#configure-load-balancer)
++ [Step 2: Configure security settings for an HTTPS listener](#configure-security-settings)
++ [Step 3: Configure a security group](#configure-security-group)
++ [Step 4: Configure a target group](#configure-target-group)
++ [Step 5: Configure targets for the target group](#select-targets)
++ [Step 6: Create the load balancer](#create-load-balancer)
 
-## Step 1: Configure a Load Balancer and a Listener<a name="configure-load-balancer"></a>
+## Step 1: Configure a load balancer and a listener<a name="configure-load-balancer"></a>
 
-First, provide some basic configuration information for your load balancer, such as a name, a network, and one or more listeners\. A listener is a process that checks for connection requests\. It is configured with a protocol and a port for connections from clients to the load balancer\. For more information about supported protocols and ports, see [Listener Configuration](load-balancer-listeners.md#listener-configuration)\.
+First, provide some basic configuration information for your load balancer, such as a name, a network, and one or more listeners\. A listener is a process that checks for connection requests\. It is configured with a protocol and a port for connections from clients to the load balancer\. For more information about supported protocols and ports, see [Listener configuration](load-balancer-listeners.md#listener-configuration)\.
 
 **To configure your load balancer and listener**
 
@@ -42,11 +42,11 @@ First, provide some basic configuration information for your load balancer, such
 
 1. Choose **Next: Configure Security Settings**\.
 
-## Step 2: Configure Security Settings for an HTTPS Listener<a name="configure-security-settings"></a>
+## Step 2: Configure security settings for an HTTPS listener<a name="configure-security-settings"></a>
 
 If you created an HTTPS listener in the previous step, configure the required security settings\. Otherwise, go to the next page in the wizard\.
 
-When you use HTTPS for your load balancer listener, you must deploy an SSL certificate on your load balancer\. The load balancer uses this certificate to terminate the connection and decrypt requests from clients before sending them to the targets\. For more information, see [SSL Certificates](create-https-listener.md#https-listener-certificates)\. You must also specify the security policy that the load balancer uses to negotiate SSL connections with the clients\. For more information, see [Security Policies](create-https-listener.md#describe-ssl-policies)\.
+When you use HTTPS for your load balancer listener, you must deploy an SSL certificate on your load balancer\. The load balancer uses this certificate to terminate the connection and decrypt requests from clients before sending them to the targets\. For more information, see [SSL certificates](create-https-listener.md#https-listener-certificates)\. You must also specify the security policy that the load balancer uses to negotiate SSL connections with the clients\. For more information, see [Security policies](create-https-listener.md#describe-ssl-policies)\.
 
 **To configure a certificate and security policy**
 
@@ -58,9 +58,9 @@ When you use HTTPS for your load balancer listener, you must deploy an SSL certi
 
 1. Choose **Next: Configure Security Groups**\.
 
-## Step 3: Configure a Security Group<a name="configure-security-group"></a>
+## Step 3: Configure a security group<a name="configure-security-group"></a>
 
-The security group for your load balancer must allow it to communicate with registered targets on both the listener port and the health check port\. The console can create a security group for your load balancer on your behalf with rules that allow this communication\. If you prefer, you can create a security group and select it instead\. For more information, see [Recommended Rules](load-balancer-update-security-groups.md#security-group-recommended-rules)\.
+The security group for your load balancer must allow it to communicate with registered targets on both the listener port and the health check port\. The console can create a security group for your load balancer on your behalf with rules that allow this communication\. If you prefer, you can create a security group and select it instead\. For more information, see [Recommended rules](load-balancer-update-security-groups.md#security-group-recommended-rules)\.
 
 **To configure a security group for your load balancer**
 
@@ -70,9 +70,9 @@ The security group for your load balancer must allow it to communicate with regi
 
 1. Choose **Next: Configure Routing**\.
 
-## Step 4: Configure a Target Group<a name="configure-target-group"></a>
+## Step 4: Configure a target group<a name="configure-target-group"></a>
 
-You register targets with a target group\. The target group that you configure in this step is used as the target group in the default listener rule, which forwards requests to the target group\. For more information, see [Target Groups for Your Application Load Balancers](load-balancer-target-groups.md)\.
+You register targets with a target group\. The target group that you configure in this step is used as the target group in the default listener rule, which forwards requests to the target group\. For more information, see [Target groups for your Application Load Balancers](load-balancer-target-groups.md)\.
 
 **To configure your target group**
 
@@ -90,7 +90,7 @@ You register targets with a target group\. The target group that you configure i
 
 1. Choose **Next: Register Targets**\.
 
-## Step 5: Configure Targets for the Target Group<a name="select-targets"></a>
+## Step 5: Configure targets for the target group<a name="select-targets"></a>
 
 With an Application Load Balancer, the target type of your target group determines how you register targets with the target group\.
 
@@ -125,7 +125,7 @@ With an Application Load Balancer, the target type of your target group determin
 
 1. Choose **Next: Review**\.
 
-## Step 6: Create the Load Balancer<a name="create-load-balancer"></a>
+## Step 6: Create the load balancer<a name="create-load-balancer"></a>
 
 After creating your load balancer, you can verify that your targets have passed the initial health check and then test that the load balancer is sending traffic to your targets\. When you are finished with your load balancer, you can delete it\. For more information, see [Delete an Application Load Balancer](load-balancer-delete.md)\.
 
@@ -135,4 +135,4 @@ After creating your load balancer, you can verify that your targets have passed 
 
 1. After the load balancer is created, choose **Close**\.
 
-1. \(Optional\) To define additional listener rules that forward requests based on a path pattern or a hostname, see [Add a Rule](listener-update-rules.md#add-rule)\.
+1. \(Optional\) To define additional listener rules that forward requests based on a path pattern or a hostname, see [Add a rule](listener-update-rules.md#add-rule)\.

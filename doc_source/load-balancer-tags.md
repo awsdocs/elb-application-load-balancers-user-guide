@@ -1,4 +1,4 @@
-# Tags for Your Application Load Balancer<a name="load-balancer-tags"></a>
+# Tags for your Application Load Balancer<a name="load-balancer-tags"></a>
 
 Tags help you to categorize your load balancers in different ways, for example, by purpose, owner, or environment\.
 

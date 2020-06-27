@@ -1,26 +1,26 @@
-# Target Groups for Your Application Load Balancers<a name="load-balancer-target-groups"></a>
+# Target groups for your Application Load Balancers<a name="load-balancer-target-groups"></a>
 
-Each *target group* is used to route requests to one or more registered targets\. When you create each listener rule, you specify a target group and conditions\. When a rule condition is met, traffic is forwarded to the corresponding target group\. You can create different target groups for different types of requests\. For example, create one target group for general requests and other target groups for requests to the microservices for your application\. For more information, see [Application Load Balancer Components](introduction.md#application-load-balancer-components)\.
+Each *target group* is used to route requests to one or more registered targets\. When you create each listener rule, you specify a target group and conditions\. When a rule condition is met, traffic is forwarded to the corresponding target group\. You can create different target groups for different types of requests\. For example, create one target group for general requests and other target groups for requests to the microservices for your application\. For more information, see [Application Load Balancer components](introduction.md#application-load-balancer-components)\.
 
 You define health check settings for your load balancer on a per target group basis\. Each target group uses the default health check settings, unless you override them when you create the target group or modify them later on\. After you specify a target group in a rule for a listener, the load balancer continually monitors the health of all targets registered with the target group that are in an Availability Zone enabled for the load balancer\. The load balancer routes requests to the registered targets that are healthy\.
 
 **Topics**
-+ [Routing Configuration](#target-group-routing-configuration)
-+ [Target Type](#target-type)
-+ [Registered Targets](#registered-targets)
-+ [Target Group Attributes](#target-group-attributes)
-+ [Routing Algorithm](#modify-routing-algorithm)
-+ [Deregistration Delay](#deregistration-delay)
-+ [Slow Start Mode](#slow-start-mode)
-+ [Sticky Sessions](#sticky-sessions)
-+ [Create a Target Group](create-target-group.md)
-+ [Health Checks for Your Target Groups](target-group-health-checks.md)
-+ [Register Targets with Your Target Group](target-group-register-targets.md)
-+ [Lambda Functions as Targets](lambda-functions.md)
-+ [Tags for Your Target Group](target-group-tags.md)
-+ [Delete a Target Group](delete-target-group.md)
++ [Routing configuration](#target-group-routing-configuration)
++ [Target type](#target-type)
++ [Registered targets](#registered-targets)
++ [Target group attributes](#target-group-attributes)
++ [Routing algorithm](#modify-routing-algorithm)
++ [Deregistration delay](#deregistration-delay)
++ [Slow start mode](#slow-start-mode)
++ [Sticky sessions](#sticky-sessions)
++ [Create a target group](create-target-group.md)
++ [Health checks for your target groups](target-group-health-checks.md)
++ [Register targets with your target group](target-group-register-targets.md)
++ [Lambda functions as targets](lambda-functions.md)
++ [Tags for your target group](target-group-tags.md)
++ [Delete a target group](delete-target-group.md)
 
-## Routing Configuration<a name="target-group-routing-configuration"></a>
+## Routing configuration<a name="target-group-routing-configuration"></a>
 
 By default, a load balancer routes requests to its targets using the protocol and port number that you specified when you created the target group\. Alternatively, you can override the port used for routing traffic to a target when you register it with the target group\.
 
@@ -28,9 +28,9 @@ Target groups support the following protocols and ports:
 + **Protocols**: HTTP, HTTPS
 + **Ports**: 1\-65535
 
-If a target group is configured with the HTTPS protocol or uses HTTPS health checks, SSL/TLS connections to the targets use the security settings from the `ELBSecurityPolicy2016-08` policy\.
+If a target group is configured with the HTTPS protocol or uses HTTPS health checks, the TLS connections to the targets use the security settings from the `ELBSecurityPolicy2016-08` policy\. The load balancer establishes TLS connections with the targets using certificates that you install on the targets\. The load balancer does not validate these certificates\. Therefore, you can use self\-signed certificates or certificates that have expired\. Because the load balancer is in a virtual private cloud \(VPC\), traffic between the load balancer and the targets is authenticated at the packet level, so it is not at risk of man\-in\-the\-middle attacks or spoofing even if the certificates on the targets are not valid\.
 
-## Target Type<a name="target-type"></a>
+## Target type<a name="target-type"></a>
 
 When you create a target group, you specify its target type, which determines the type of target you specify when registering targets with this target group\. After you create a target group, you cannot change its target type\.
 
@@ -59,9 +59,9 @@ You can't specify publicly routable IP addresses\.
 
 If you specify targets using an instance ID, traffic is routed to instances using the primary private IP address specified in the primary network interface for the instance\. If you specify targets using IP addresses, you can route traffic to an instance using any private IP address from one or more network interfaces\. This enables multiple applications on an instance to use the same port\. Each network interface can have its own security group\.
 
-If the target type of your target group is `lambda`, you can register a single Lambda function\. When the load balancer receives a request for the Lambda function, it invokes the Lambda function\. For more information, see [Lambda Functions as Targets](lambda-functions.md)\.
+If the target type of your target group is `lambda`, you can register a single Lambda function\. When the load balancer receives a request for the Lambda function, it invokes the Lambda function\. For more information, see [Lambda functions as targets](lambda-functions.md)\.
 
-## Registered Targets<a name="registered-targets"></a>
+## Registered targets<a name="registered-targets"></a>
 
 Your load balancer serves as a single point of contact for clients and distributes incoming traffic across its healthy registered targets\. You can register each target with one or more target groups\. You can register each EC2 instance or IP address with the same target group multiple times using different ports, which enables the load balancer to route requests to microservices\.
 
@@ -69,12 +69,12 @@ If demand on your application increases, you can register additional targets wit
 
 If demand on your application decreases, or you need to service your targets, you can deregister targets from your target groups\. Deregistering a target removes it from your target group, but does not affect the target otherwise\. The load balancer stops routing requests to a target as soon as it is deregistered\. The target enters the `draining` state until in\-flight requests have completed\. You can register the target with the target group again when you are ready for it to resume receiving requests\.
 
-If you are registering targets by instance ID, you can use your load balancer with an Auto Scaling group\. After you attach a target group to an Auto Scaling group, Auto Scaling registers your targets with the target group for you when it launches them\. For more information, see [Attaching a Load Balancer to Your Auto Scaling Group](https://docs.aws.amazon.com/autoscaling/ec2/userguide/attach-load-balancer-asg.html) in the *Amazon EC2 Auto Scaling User Guide*\.
+If you are registering targets by instance ID, you can use your load balancer with an Auto Scaling group\. After you attach a target group to an Auto Scaling group, Auto Scaling registers your targets with the target group for you when it launches them\. For more information, see [Attaching a load balancer to your Auto Scaling group](https://docs.aws.amazon.com/autoscaling/ec2/userguide/attach-load-balancer-asg.html) in the *Amazon EC2 Auto Scaling User Guide*\.
 
 **Limits**
 + You cannot register the IP addresses of another Application Load Balancer in the same VPC\. If the other Application Load Balancer is in a VPC that is peered to the load balancer VPC, you can register its IP addresses\.
 
-## Target Group Attributes<a name="target-group-attributes"></a>
+## Target group attributes<a name="target-group-attributes"></a>
 
 The following target group attributes are supported if the target group type is `instance` or `ip`:
 
@@ -99,9 +99,9 @@ The type of stickiness\. The possible value is `lb_cookie`\.
 The following target group attribute is supported if the target group type is `lambda`:
 
 `lambda.multi_value_headers.enabled`  
-Indicates whether the request and response headers exchanged between the load balancer and the Lambda function include arrays of values or strings\. The possible values are `true` or `false`\. The default value is `false`\. For more information, see [Multi\-Value Headers](lambda-functions.md#multi-value-headers)\.
+Indicates whether the request and response headers exchanged between the load balancer and the Lambda function include arrays of values or strings\. The possible values are `true` or `false`\. The default value is `false`\. For more information, see [Multi\-value headers](lambda-functions.md#multi-value-headers)\.
 
-## Routing Algorithm<a name="modify-routing-algorithm"></a>
+## Routing algorithm<a name="modify-routing-algorithm"></a>
 
 By default, the round robin routing algorithm is used to route requests at the target group level\. You can specify the least outstanding requests routing algorithm instead\.
 
@@ -128,7 +128,7 @@ Consider using least outstanding requests when the requests for your application
 **To modify the routing algorithm using the AWS CLI**  
 Use the [modify\-target\-group\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-target-group-attributes.html) command with the `load_balancing.algorithm.type` attribute\.
 
-## Deregistration Delay<a name="deregistration-delay"></a>
+## Deregistration delay<a name="deregistration-delay"></a>
 
 Elastic Load Balancing stops sending requests to targets that are deregistering\. By default, Elastic Load Balancing waits 300 seconds before completing the deregistration process, which can help in\-flight requests to the target to complete\. To change the amount of time that Elastic Load Balancing waits, update the deregistration delay value\.
 
@@ -153,7 +153,7 @@ If a deregistering target terminates the connection before the deregistration de
 **To update the deregistration delay value using the AWS CLI**  
 Use the [modify\-target\-group\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-target-group-attributes.html) command with the `deregistration_delay.timeout_seconds` attribute\.
 
-## Slow Start Mode<a name="slow-start-mode"></a>
+## Slow start mode<a name="slow-start-mode"></a>
 
 By default, a target starts to receive its full share of requests as soon as it is registered with a target group and passes an initial health check\. Using slow start mode gives targets time to warm up before the load balancer sends them a full share of requests\.
 
@@ -181,7 +181,7 @@ After you enable slow start for a target group, its targets enter slow start mod
 **To update the slow start duration value using the AWS CLI**  
 Use the [modify\-target\-group\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-target-group-attributes.html) command with the `slow_start.duration_seconds` attribute\.
 
-## Sticky Sessions<a name="sticky-sessions"></a>
+## Sticky sessions<a name="sticky-sessions"></a>
 
 Sticky sessions are a mechanism to route requests to the same target in a target group\. This is useful for servers that maintain state information in order to provide a continuous experience to clients\. To use sticky sessions, the clients must support cookies\.
 

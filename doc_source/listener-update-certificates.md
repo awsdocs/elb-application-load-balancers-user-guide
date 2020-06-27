@@ -1,4 +1,4 @@
-# Update an HTTPS Listener for Your Application Load Balancer<a name="listener-update-certificates"></a>
+# Update an HTTPS listener for your Application Load Balancer<a name="listener-update-certificates"></a>
 
 After you create an HTTPS listener, you can replace the default certificate, update the certificate list, or replace the security policy\.
 
@@ -6,14 +6,14 @@ After you create an HTTPS listener, you can replace the default certificate, upd
 ACM supports RSA certificates with a 4096 key length and EC certificates\. However, you cannot install these certificates on your load balancer through integration with ACM\. You must upload these certificates to IAM in order to use them with your load balancer\.
 
 **Topics**
-+ [Replace the Default Certificate](#replace-default-certificate)
-+ [Add Certificates to the Certificate List](#add-certificates)
-+ [Remove Certificates from the Certificate List](#remove-certificates)
-+ [Update the Security Policy](#update-security-policy)
++ [Replace the default certificate](#replace-default-certificate)
++ [Add certificates to the certificate list](#add-certificates)
++ [Remove certificates from the certificate list](#remove-certificates)
++ [Update the security policy](#update-security-policy)
 
-## Replace the Default Certificate<a name="replace-default-certificate"></a>
+## Replace the default certificate<a name="replace-default-certificate"></a>
 
-You can replace the default certificate for your listener using the following procedure\. For more information, see [SSL Certificates](create-https-listener.md#https-listener-certificates)\.
+You can replace the default certificate for your listener using the following procedure\. For more information, see [SSL certificates](create-https-listener.md#https-listener-certificates)\.
 
 **To change the default certificate using the console**
 
@@ -34,9 +34,9 @@ You can replace the default certificate for your listener using the following pr
 **To change the default certificate using the AWS CLI**  
 Use the [modify\-listener](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-listener.html) command\.
 
-## Add Certificates to the Certificate List<a name="add-certificates"></a>
+## Add certificates to the certificate list<a name="add-certificates"></a>
 
-You can add certificates to the certificate list for your listener using the following procedure\. When you first create an HTTPS listener, the certificate list is empty\. You can add one or more certificates\. You can optionally add the default certificate to ensure that this certificate is used with the SNI protocol even if it is replaced as the default certificate\. For more information, see [SSL Certificates](create-https-listener.md#https-listener-certificates)\.
+You can add certificates to the certificate list for your listener using the following procedure\. When you first create an HTTPS listener, the certificate list is empty\. You can add one or more certificates\. You can optionally add the default certificate to ensure that this certificate is used with the SNI protocol even if it is replaced as the default certificate\. For more information, see [SSL certificates](create-https-listener.md#https-listener-certificates)\.
 
 **To add certificates to the certificate list using the console**
 
@@ -71,9 +71,9 @@ You can add certificates to the certificate list for your listener using the fol
 **To add a certificate to the certificate list using the AWS CLI**  
 Use the [add\-listener\-certificates](https://docs.aws.amazon.com/cli/latest/reference/elbv2/add-listener-certificates.html) command\.
 
-## Remove Certificates from the Certificate List<a name="remove-certificates"></a>
+## Remove certificates from the certificate list<a name="remove-certificates"></a>
 
-You can remove certificates from the certificate list for an HTTPS listener using the following procedure\. To remove the default certificate for an HTTPS listener, see [Replace the Default Certificate](#replace-default-certificate)\.
+You can remove certificates from the certificate list for an HTTPS listener using the following procedure\. To remove the default certificate for an HTTPS listener, see [Replace the default certificate](#replace-default-certificate)\.
 
 **To remove certificates from the certificate list using the console**
 
@@ -94,9 +94,9 @@ You can remove certificates from the certificate list for an HTTPS listener usin
 **To remove a certificate from the certificate list using the AWS CLI**  
 Use the [remove\-listener\-certificates](https://docs.aws.amazon.com/cli/latest/reference/elbv2/remove-listener-certificates.html) command\.
 
-## Update the Security Policy<a name="update-security-policy"></a>
+## Update the security policy<a name="update-security-policy"></a>
 
-When you create an HTTPS listener, you can select the security policy that meets your needs\. When a new security policy is added, you can update your HTTPS listener to use the new security policy\. Application Load Balancers do not support custom security policies\. For more information, see [Security Policies](create-https-listener.md#describe-ssl-policies)\.
+When you create an HTTPS listener, you can select the security policy that meets your needs\. When a new security policy is added, you can update your HTTPS listener to use the new security policy\. Application Load Balancers do not support custom security policies\. For more information, see [Security policies](create-https-listener.md#describe-ssl-policies)\.
 
 **To update the security policy using the console**
 

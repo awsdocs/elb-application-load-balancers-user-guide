@@ -1,4 +1,4 @@
-# Availability Zones for Your Application Load Balancer<a name="load-balancer-subnets"></a>
+# Availability Zones for your Application Load Balancer<a name="load-balancer-subnets"></a>
 
 You can enable or disable the Availability Zones for your load balancer at any time\. After you enable an Availability Zone, the load balancer starts routing requests to the registered targets in that Availability Zone\. Your load balancer is most effective if you ensure that each enabled Availability Zone has at least one registered target\.
 

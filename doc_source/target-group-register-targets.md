@@ -1,6 +1,6 @@
-# Register Targets with Your Target Group<a name="target-group-register-targets"></a>
+# Register targets with your target group<a name="target-group-register-targets"></a>
 
-You register your targets with a target group\. When you create a target group, you specify its target type, which determines how you register its targets\. For example, you can register instance IDs, IP addresses, or Lambda functions\. For more information, see [Target Groups for Your Application Load Balancers](load-balancer-target-groups.md)\.
+You register your targets with a target group\. When you create a target group, you specify its target type, which determines how you register its targets\. For example, you can register instance IDs, IP addresses, or Lambda functions\. For more information, see [Target groups for your Application Load Balancers](load-balancer-target-groups.md)\.
 
 If demand on your currently registered targets increases, you can register additional targets in order to handle the demand\. When your target is ready to handle requests, register it with your target group\. The load balancer starts routing requests to the target as soon as the registration process completes and the target passes the initial health checks\.
 
@@ -10,35 +10,36 @@ When you deregister a target, the load balancer waits until in\-flight requests 
 
 When you deregister a target that was registered by IP address, you must wait for the deregistration delay to complete before you can register the same IP address again\.
 
-If you are registering targets by instance ID, you can use your load balancer with an Auto Scaling group\. After you attach a target group to an Auto Scaling group and the group scales out, the instances launched by the Auto Scaling group are automatically registered with the target group\. If you detach the target group from the Auto Scaling group, the instances are automatically deregistered from the target group\. For more information, see [Attaching a Load Balancer to Your Auto Scaling Group](https://docs.aws.amazon.com/autoscaling/ec2/userguide/attach-load-balancer-asg.html) in the *Amazon EC2 Auto Scaling User Guide*\.
+If you are registering targets by instance ID, you can use your load balancer with an Auto Scaling group\. After you attach a target group to an Auto Scaling group and the group scales out, the instances launched by the Auto Scaling group are automatically registered with the target group\. If you detach the target group from the Auto Scaling group, the instances are automatically deregistered from the target group\. For more information, see [Attaching a load balancer to your Auto Scaling group](https://docs.aws.amazon.com/autoscaling/ec2/userguide/attach-load-balancer-asg.html) in the *Amazon EC2 Auto Scaling User Guide*\.
 
-## Target Security Groups<a name="target-security-groups"></a>
+## Target security groups<a name="target-security-groups"></a>
 
 When you register EC2 instances as targets, you must ensure that the security groups for your instances allow the load balancer to communicate with your instances on both the listener port and the health check port\.
 
 
-**Recommended Rules**  
+**Recommended rules**  
 
-|  | 
-| --- |
+| 
+| 
 | Inbound | 
+| --- |
 |  Source  |  Port Range  |  Comment  | 
 | *load balancer security group* | *instance listener* | Allow traffic from the load balancer on the instance listener port | 
 | *load balancer security group* | *health check* | Allow traffic from the load balancer on the health check port | 
 
 We also recommend that you allow inbound ICMP traffic to support Path MTU Discovery\. For more information, see [Path MTU Discovery](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/network_mtu.html#path_mtu_discovery) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-## Register or Deregister Targets<a name="register-deregister-targets"></a>
+## Register or deregister targets<a name="register-deregister-targets"></a>
 
-The target type of your target group determines how you register targets with that target group\. For more information, see [Target Type](load-balancer-target-groups.md#target-type)\.
+The target type of your target group determines how you register targets with that target group\. For more information, see [Target type](load-balancer-target-groups.md#target-type)\.
 
 **Topics**
-+ [Register or Deregister Targets by Instance ID](#register-instances)
-+ [Register or Deregister Targets by IP Address](#register-ip-addresses)
-+ [Register or Deregister a Lambda Function](#register-lambda-function)
-+ [Register or Deregister Targets Using the AWS CLI](#register-cli)
++ [Register or deregister targets by instance ID](#register-instances)
++ [Register or deregister targets by IP address](#register-ip-addresses)
++ [Register or deregister a Lambda function](#register-lambda-function)
++ [Register or deregister targets using the AWS CLI](#register-cli)
 
-### Register or Deregister Targets by Instance ID<a name="register-instances"></a>
+### Register or deregister targets by instance ID<a name="register-instances"></a>
 
 The instance must be in the virtual private cloud \(VPC\) that you specified for the target group\. The instance must also be in the `running` state when you register it\.
 
@@ -60,7 +61,7 @@ The instance must be in the virtual private cloud \(VPC\) that you specified for
 
 1. Choose **Save**\.
 
-### Register or Deregister Targets by IP Address<a name="register-ip-addresses"></a>
+### Register or deregister targets by IP address<a name="register-ip-addresses"></a>
 
 The IP addresses that you register must be from one of the following CIDR blocks:
 + The subnets of the VPC for the target group
@@ -90,9 +91,9 @@ The IP addresses that you register must be from one of the following CIDR blocks
 
 1. To leave this screen, choose the **Back to target group** icon \(the back button\) in the menu bar\.
 
-### Register or Deregister a Lambda Function<a name="register-lambda-function"></a>
+### Register or deregister a Lambda function<a name="register-lambda-function"></a>
 
-You can register a single Lambda function with each target group\. Elastic Load Balancing must have permissions to invoke the Lambda function\. If you no longer need to send traffic to your Lambda function, you can deregister it\. After you deregister a Lambda function, in\-flight requests fail with HTTP 5XX errors\. To replace a Lambda function, it is better to create a new target group instead\. For more information, see [Lambda Functions as Targets](lambda-functions.md)\.
+You can register a single Lambda function with each target group\. Elastic Load Balancing must have permissions to invoke the Lambda function\. If you no longer need to send traffic to your Lambda function, you can deregister it\. After you deregister a Lambda function, in\-flight requests fail with HTTP 5XX errors\. To replace a Lambda function, it is better to create a new target group instead\. For more information, see [Lambda functions as targets](lambda-functions.md)\.
 
 **To register or deregister a Lambda function**
 
@@ -106,6 +107,6 @@ You can register a single Lambda function with each target group\. Elastic Load 
 
 1. To deregister a Lambda function, choose **Deregister**\. When prompted for confirmation, choose **Deregister**\.
 
-### Register or Deregister Targets Using the AWS CLI<a name="register-cli"></a>
+### Register or deregister targets using the AWS CLI<a name="register-cli"></a>
 
 Use the [register\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/register-targets.html) command to add targets and the [deregister\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/deregister-targets.html) command to remove targets\.

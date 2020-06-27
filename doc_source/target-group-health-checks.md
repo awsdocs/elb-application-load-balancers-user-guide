@@ -1,4 +1,4 @@
-# Health Checks for Your Target Groups<a name="target-group-health-checks"></a>
+# Health checks for your target groups<a name="target-group-health-checks"></a>
 
 Your Application Load Balancer periodically sends requests to its registered targets to test their status\. These tests are called *health checks*\.
 
@@ -8,7 +8,7 @@ If a target group contains only unhealthy registered targets, the load balancer 
 
 Health checks do not support WebSockets\.
 
-## Health Check Settings<a name="health-check-settings"></a>
+## Health check settings<a name="health-check-settings"></a>
 
 You configure health checks for the targets in a target group using the following settings\. The load balancer sends a health check request to each registered target every **HealthCheckIntervalSeconds** seconds, using the specified port, protocol, and ping path\. Each health check request is independent and the result lasts for the entire interval\. The time that it takes for the target to respond does not affect the interval for the next health check request\. If the health checks exceed **UnhealthyThresholdCount** consecutive failures, the load balancer takes the target out of service\. When the health checks exceed **HealthyThresholdCount** consecutive successes, the load balancer puts the target back in service\.
 
@@ -24,7 +24,7 @@ You configure health checks for the targets in a target group using the followin
 | **UnhealthyThresholdCount** |  The number of consecutive failed health checks required before considering a target unhealthy\. The range is 2–10\. The default is 2\.  | 
 | **Matcher** |  The HTTP codes to use when checking for a successful response from a target\. You can specify values or ranges of values between 200 and 499\. The default value is 200\.  | 
 
-## Target Health Status<a name="target-health-states"></a>
+## Target health status<a name="target-health-states"></a>
 
 Before the load balancer sends a health check request to a target, you must register it with a target group, specify its target group in a listener rule, and ensure that the Availability Zone of the target is enabled for the load balancer\. Before a target can receive requests from the load balancer, it must pass the initial health checks\. After a target passes the initial health checks, its status is `Healthy`\.
 
@@ -40,7 +40,7 @@ The following table describes the possible values for the health status of a reg
 | `draining` |  The target is deregistering and connection draining is in process\. Related reason code: `Target.DeregistrationInProgress`  | 
 | `unavailable` |  Health checks are disabled for the target group\. Related reason code: `Target.HealthCheckDisabled`  | 
 
-## Health Check Reason Codes<a name="target-health-reason-codes"></a>
+## Health check reason codes<a name="target-health-reason-codes"></a>
 
 If the status of a target is any value other than `Healthy`, the API returns a reason code and a description of the issue, and the console displays the same description in a tooltip\. Reason codes that begin with `Elb` originate on the load balancer side and reason codes that begin with `Target` originate on the target side\.
 
@@ -60,7 +60,7 @@ If the status of a target is any value other than `Healthy`, the API returns a r
 | `Target.ResponseCodeMismatch` |  Health checks failed with these codes: \[*code*\]  | 
 | `Target.Timeout` |  Request timed out  | 
 
-## Check the Health of Your Targets<a name="check-target-health"></a>
+## Check the health of your targets<a name="check-target-health"></a>
 
 You can check the health status of the targets registered with your target groups\.
 
@@ -82,7 +82,7 @@ Use the [describe\-target\-health](https://docs.aws.amazon.com/cli/latest/refere
 **To receive email notifications about unhealthy targets**  
 Use CloudWatch alarms to trigger a Lambda function to send details about unhealthy targets\. For step\-by\-step instructions, see the following blog post: [Identifying unhealthy targets of your load balancer](http://aws.amazon.com/blogs/networking-and-content-delivery/identifying-unhealthy-targets-of-elastic-load-balancer/)\.
 
-## Modify the Health Check Settings of a Target Group<a name="modify-health-check-settings"></a>
+## Modify the health check settings of a target group<a name="modify-health-check-settings"></a>
 
 You can modify the health check settings for your target group at any time\.
 

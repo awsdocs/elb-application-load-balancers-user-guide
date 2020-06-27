@@ -1,8 +1,8 @@
-# What Is an Application Load Balancer?<a name="introduction"></a>
+# What is an Application Load Balancer?<a name="introduction"></a>
 
 Elastic Load Balancing supports three types of load balancers: Application Load Balancers, Network Load Balancers, and Classic Load Balancers\. This guide discusses Application Load Balancers\. For more information about Network Load Balancers, see the [User Guide for Network Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/)\. For more information about Classic Load Balancers, see the [User Guide for Classic Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/)\.
 
-## Application Load Balancer Components<a name="application-load-balancer-components"></a>
+## Application Load Balancer components<a name="application-load-balancer-components"></a>
 
 A *load balancer* serves as the single point of contact for clients\. The load balancer distributes incoming application traffic across multiple targets, such as EC2 instances, in multiple Availability Zones\. This increases the availability of your application\. You add one or more listeners to your load balancer\.
 
@@ -19,7 +19,7 @@ For more information, see the following documentation:
 + [Listeners](load-balancer-listeners.md)
 + [Target Groups](load-balancer-target-groups.md)
 
-## Application Load Balancer Overview<a name="application-load-balancer-overview"></a>
+## Application Load Balancer overview<a name="application-load-balancer-overview"></a>
 
 An Application Load Balancer functions at the application layer, the seventh layer of the Open Systems Interconnection \(OSI\) model\. After the load balancer receives a request, it evaluates the listener rules in priority order to determine which rule to apply, and then selects a target from the target group for the rule action\. You can configure listener rules to route requests to different target groups based on the content of the application traffic\. Routing is performed independently for each target group, even when a target is registered with multiple target groups\. You can configure the routing algorithm used at the target group level\. The default routing algorithm is round robin; alternatively, you can specify the least outstanding requests routing algorithm\.
 
@@ -27,9 +27,9 @@ You can add and remove targets from your load balancer as your needs change, wit
 
 You can configure health checks, which are used to monitor the health of the registered targets so that the load balancer can send requests only to the healthy targets\.
 
-For more information, see [How Elastic Load Balancing Works](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/how-elastic-load-balancing-works.html) in the *Elastic Load Balancing User Guide*\.
+For more information, see [How Elastic Load Balancing works](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/how-elastic-load-balancing-works.html) in the *Elastic Load Balancing User Guide*\.
 
-## Benefits of Migrating from a Classic Load Balancer<a name="application-load-balancer-benefits"></a>
+## Benefits of migrating from a Classic Load Balancer<a name="application-load-balancer-benefits"></a>
 
 Using an Application Load Balancer instead of a Classic Load Balancer has the following benefits:
 + Support for path\-based routing\. You can configure rules for your listener that forward requests based on the URL in the request\. This enables you to structure your application as smaller services, and route requests to the correct service based on the content of the URL\.
@@ -46,23 +46,23 @@ Using an Application Load Balancer instead of a Classic Load Balancer has the fo
 + Access logs contain additional information and are stored in compressed format\.
 + Improved load balancer performance\.
 
-For more information about the features supported by each load balancer type, see [Comparison of Elastic Load Balancing Products](https://aws.amazon.com/elasticloadbalancing/details/#compare)\.
+For more information about the features supported by each load balancer type, see [Comparison of Elastic Load Balancing products](https://aws.amazon.com/elasticloadbalancing/details/#compare)\.
 
-## How to Get Started<a name="application-load-balancer-getting-started"></a>
+## How to get started<a name="application-load-balancer-getting-started"></a>
 
 To create an Application Load Balancer, try one of the following tutorials:
-+ [Getting Started with Elastic Load Balancing](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/load-balancer-getting-started.html) in the *Elastic Load Balancing User Guide*\.
-+ [Tutorial: Use Path\-Based Routing with Your Application Load Balancer](tutorial-load-balancer-routing.md)
-+ [Tutorial: Use Microservices as Targets with Your Application Load Balancer](tutorial-target-ecs-containers.md)
++ [Getting started with Elastic Load Balancing](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/load-balancer-getting-started.html) in the *Elastic Load Balancing User Guide*\.
++ [Tutorial: Use path\-based routing with your Application Load Balancer](tutorial-load-balancer-routing.md)
++ [Tutorial: Use microservices as targets with your Application Load Balancer](tutorial-target-ecs-containers.md)
 
-## Related Services<a name="application-load-balancer-related-services"></a>
+## Related services<a name="application-load-balancer-related-services"></a>
 
 Elastic Load Balancing works with the following services to improve the availability and scalability of your applications\.
 + **Amazon EC2** — Virtual servers that run your applications in the cloud\. You can configure your load balancer to route traffic to your EC2 instances\.
 + **Amazon EC2 Auto Scaling** — Ensures that you are running your desired number of instances, even if an instance fails, and enables you to automatically increase or decrease the number of instances as the demand on your instances changes\. If you enable Auto Scaling with Elastic Load Balancing, instances that are launched by Auto Scaling are automatically registered with the load balancer, and instances that are terminated by Auto Scaling are automatically de\-registered from the load balancer\.
-+ **AWS Certificate Manager** — When you create an HTTPS listener, you can specify certificates provided by ACM\. The load balancer uses certificates to terminate connections and decrypt requests from clients\. For more information, see [SSL Certificates](create-https-listener.md#https-listener-certificates)\.
-+ **Amazon CloudWatch** — Enables you to monitor your load balancer and take action as needed\. For more information, see [CloudWatch Metrics for Your Application Load Balancer](load-balancer-cloudwatch-metrics.md)\.
-+ **Amazon ECS** — Enables you to run, stop, and manage Docker containers on a cluster of EC2 instances\. You can configure your load balancer to route traffic to your containers\. For more information, see [Service Load Balancing](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-load-balancing.html) in the *Amazon Elastic Container Service Developer Guide*\.
++ **AWS Certificate Manager** — When you create an HTTPS listener, you can specify certificates provided by ACM\. The load balancer uses certificates to terminate connections and decrypt requests from clients\. For more information, see [SSL certificates](create-https-listener.md#https-listener-certificates)\.
++ **Amazon CloudWatch** — Enables you to monitor your load balancer and take action as needed\. For more information, see [CloudWatch metrics for your Application Load Balancer](load-balancer-cloudwatch-metrics.md)\.
++ **Amazon ECS** — Enables you to run, stop, and manage Docker containers on a cluster of EC2 instances\. You can configure your load balancer to route traffic to your containers\. For more information, see [Service load balancing](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-load-balancing.html) in the *Amazon Elastic Container Service Developer Guide*\.
 + **AWS Global Accelerator** — Improves the availability and performance of your application\. Use an accelerator to distribute traffic across multiple load balancers in one or more AWS Regions\. For more information, see the [AWS Global Accelerator Developer Guide](https://docs.aws.amazon.com/global-accelerator/latest/dg/)\.
 + **Route 53** — Provides a reliable and cost\-effective way to route visitors to websites by translating domain names \(such as `www.example.com`\) into the numeric IP addresses \(such as `192.0.2.1`\) that computers use to connect to each other\. AWS assigns URLs to your resources, such as load balancers\. However, you might want a URL that is easy for users to remember\. For example, you can map your domain name to a load balancer\.
 + **AWS WAF** — You can use AWS WAF with your Application Load Balancer to allow or block requests based on the rules in a web access control list \(web ACL\)\. For more information, see [Application Load Balancers and AWS WAF](application-load-balancers.md#load-balancer-waf)\.
@@ -71,4 +71,4 @@ To view information about services that are integrated with your load balancer, 
 
 ## Pricing<a name="application-load-balancer-pricing"></a>
 
-With your load balancer, you pay only for what you use\. For more information, see [Elastic Load Balancing Pricing](https://aws.amazon.com/elasticloadbalancing/pricing/)\.
+With your load balancer, you pay only for what you use\. For more information, see [Elastic Load Balancing pricing](https://aws.amazon.com/elasticloadbalancing/pricing/)\.

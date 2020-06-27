@@ -1,4 +1,4 @@
-# Delete a Target Group<a name="delete-target-group"></a>
+# Delete a target group<a name="delete-target-group"></a>
 
 If a target group is not referenced by any actions, you can delete it\. Deleting a target group does not affect the targets registered with the target group\. If you no longer need a registered EC2 instance, you can stop or terminate it\.
 

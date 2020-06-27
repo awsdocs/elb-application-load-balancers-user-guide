@@ -1,12 +1,12 @@
-# Create a Target Group<a name="create-target-group"></a>
+# Create a target group<a name="create-target-group"></a>
 
 You register your targets with a target group\. By default, the load balancer sends requests to registered targets using the port and protocol that you specified for the target group\. You can override this port when you register each target with the target group\.
 
 After you create a target group, you can add tags\.
 
-To route traffic to the targets in a target group, specify the target group in an action when you create a listener or create a rule for your listener\. For more information, see [Listener Rules](load-balancer-listeners.md#listener-rules)\.
+To route traffic to the targets in a target group, specify the target group in an action when you create a listener or create a rule for your listener\. For more information, see [Listener rules](load-balancer-listeners.md#listener-rules)\.
 
-You can add or remove targets from your target group at any time\. For more information, see [Register Targets with Your Target Group](target-group-register-targets.md)\. You can also modify the health check settings for your target group\. For more information, see [Modify the Health Check Settings of a Target Group](target-group-health-checks.md#modify-health-check-settings)\.
+You can add or remove targets from your target group at any time\. For more information, see [Register targets with your target group](target-group-register-targets.md)\. You can also modify the health check settings for your target group\. For more information, see [Modify the health check settings of a target group](target-group-health-checks.md#modify-health-check-settings)\.
 
 **To create a target group using the console**
 
@@ -49,7 +49,7 @@ You can add or remove targets from your target group at any time\. For more info
 
    1. On the **Add/Edit Tags** page, for each tag you add, choose **Create Tag** and then specify the tag key and tag value\. When you have finished adding tags, choose **Save**\.
 
-1. \(Optional\) To add targets to the target group, see [Register Targets with Your Target Group](target-group-register-targets.md)\.
+1. \(Optional\) To add targets to the target group, see [Register targets with your target group](target-group-register-targets.md)\.
 
 1. \(Optional\) You can specify the target group in a listener rule\. For more information, see [Listener Rules](listener-update-rules.md)\.
 

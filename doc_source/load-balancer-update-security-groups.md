@@ -1,40 +1,44 @@
-# Security Groups for Your Application Load Balancer<a name="load-balancer-update-security-groups"></a>
+# Security groups for your Application Load Balancer<a name="load-balancer-update-security-groups"></a>
 
 You must ensure that your load balancer can communicate with registered targets on both the listener port and the health check port\. Whenever you add a listener to your load balancer or update the health check port for a target group used by the load balancer to route requests, you must verify that the security groups associated with the load balancer allow traffic on the new port in both directions\. If they do not, you can edit the rules for the currently associated security groups or associate different security groups with the load balancer\.
 
-## Recommended Rules<a name="security-group-recommended-rules"></a>
+## Recommended rules<a name="security-group-recommended-rules"></a>
 
 The recommended rules depend on the type of load balancer \(Internet\-facing or internal\)\.
 
 
-**Internet\-facing Load Balancer**  
+**Internet\-facing load balancer**  
 
-|  | 
-| --- |
+| 
+| 
 | Inbound | 
+| --- |
 |  Source  |  Port Range  |  Comment  | 
 | 0\.0\.0\.0/0 | *listener* | Allow all inbound traffic on the load balancer listener port | 
 |   Outbound   | 
+| --- |
 |  Destination  |  Port Range  |  Comment  | 
 | *instance security group* | *instance listener* | Allow outbound traffic to instances on the instance listener port | 
 | *instance security group* | *health check* | Allow outbound traffic to instances on the health check port | 
 
 
-**Internal Load Balancer**  
+**Internal load balancer**  
 
-|  | 
-| --- |
+| 
+| 
 | Inbound | 
+| --- |
 |  Source  |  Port Range  |  Comment  | 
 | *VPC CIDR* | *listener* | Allow inbound traffic from the VPC CIDR on the load balancer listener port | 
 |   Outbound   | 
+| --- |
 |  Destination  |  Port Range  |  Comment  | 
 | *instance security group* | *instance listener* | Allow outbound traffic to instances on the instance listener port | 
 | *instance security group* | *health check* | Allow outbound traffic to instances on the health check port | 
 
-We also recommend that you allow inbound ICMP traffic to support Path MTU Discovery\. For more information, see [Path MTU Discovery](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/network_mtu.html#path_mtu_discovery) in the *Amazon EC2 User Guide for Linux Instances*\.
+We also recommend that you allow inbound ICMP traffic to support Path MTU Discovery\. For more information, see [Path MTU discovery](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/network_mtu.html#path_mtu_discovery) in the *Amazon EC2 User Guide for Linux Instances*\.
 
-## Update the Associated Security Groups<a name="update-group"></a>
+## Update the associated security groups<a name="update-group"></a>
 
 You can update the security groups associated with your load balancer at any time\.
 

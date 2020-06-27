@@ -1,8 +1,8 @@
-# Tutorial: Create an Application Load Balancer Using the AWS CLI<a name="tutorial-application-load-balancer-cli"></a>
+# Tutorial: Create an Application Load Balancer using the AWS CLI<a name="tutorial-application-load-balancer-cli"></a>
 
 This tutorial provides a hands\-on introduction to Application Load Balancers through the AWS CLI\.
 
-## Before You Begin<a name="prerequisites-aws-cli"></a>
+## Before you begin<a name="prerequisites-aws-cli"></a>
 + Use the following command to verify that you are running a version of the AWS CLI that supports Application Load Balancers\.
 
   ```
@@ -10,9 +10,9 @@ This tutorial provides a hands\-on introduction to Application Load Balancers th
   ```
 
   If you get an error message that elbv2 is not a valid choice, update your AWS CLI\. For more information, see [Installing the AWS Command Line Interface](https://docs.aws.amazon.com/cli/latest/userguide/installing.html) in the *AWS Command Line Interface User Guide*\.
-+ Launch your EC2 instances in a virtual private cloud \(VPC\)\. Ensure that the security groups for these instances allow access on the listener port and the health check port\. For more information, see [Target Security Groups](target-group-register-targets.md#target-security-groups)\.
++ Launch your EC2 instances in a virtual private cloud \(VPC\)\. Ensure that the security groups for these instances allow access on the listener port and the health check port\. For more information, see [Target security groups](target-group-register-targets.md#target-security-groups)\.
 
-## Create Your Load Balancer<a name="create-load-balancer-aws-cli"></a>
+## Create your load balancer<a name="create-load-balancer-aws-cli"></a>
 
 To create your first load balancer, complete the following steps\.
 
@@ -71,15 +71,15 @@ To create your first load balancer, complete the following steps\.
    aws elbv2 describe-target-health --target-group-arn targetgroup-arn
    ```
 
-## Add an HTTPS Listener<a name="https-listener-aws-cli"></a>
+## Add an HTTPS listener<a name="https-listener-aws-cli"></a>
 
 If you have a load balancer with an HTTP listener, you can add an HTTPS listener as follows\.
 
 **To add an HTTPS listener to your load balancer**
 
 1. Create an SSL certificate for use with your load balancer using one of the following methods:
-   + Create or import the certificate using AWS Certificate Manager \(ACM\)\. For more information, see [Request a Certificate](https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-request.html) or [Importing Certificates](https://docs.aws.amazon.com/acm/latest/userguide/import-certificate.html) in the *AWS Certificate Manager User Guide*\.
-   + Upload the certificate using AWS Identity and Access Management \(IAM\)\. For more information, see [Working with Server Certificates](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_server-certs.html) in the *IAM User Guide*\.
+   + Create or import the certificate using AWS Certificate Manager \(ACM\)\. For more information, see [Request a certificate](https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-request.html) or [Importing certificates](https://docs.aws.amazon.com/acm/latest/userguide/import-certificate.html) in the *AWS Certificate Manager User Guide*\.
+   + Upload the certificate using AWS Identity and Access Management \(IAM\)\. For more information, see [Working with server certificates](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_server-certs.html) in the *IAM User Guide*\.
 
 1. Use the [create\-listener](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-listener.html) command to create the listener with a default rule that forwards requests to your target group\. You must specify an SSL certificate when you create an HTTPS listener\. Note that you can specify an SSL policy other than the default using the `--ssl-policy` option\.
 
@@ -90,7 +90,7 @@ If you have a load balancer with an HTTP listener, you can add an HTTPS listener
    --default-actions Type=forward,TargetGroupArn=targetgroup-arn
    ```
 
-## Add Targets Using Port Overrides<a name="port-overrides-aws-cli"></a>
+## Add targets using port overrides<a name="port-overrides-aws-cli"></a>
 
 If you have multiple ECS containers on a single instance, each container accepts connections on a different port\. You can register the instance with the target group multiple times, each time with a different port\.
 
@@ -117,7 +117,7 @@ If you have multiple ECS containers on a single instance, each container accepts
    --actions Type=forward,TargetGroupArn=targetgroup-arn
    ```
 
-## Add Path\-Based Routing<a name="path-based-routing-aws-cli"></a>
+## Add path\-based routing<a name="path-based-routing-aws-cli"></a>
 
 If you have a listener with a default rule that forwards requests to one target group, you can add a rule that forwards requests to another target group based on URL\. For example, you can route general requests to one target group and requests to display images to another target group\.
 
@@ -145,7 +145,7 @@ If you have a listener with a default rule that forwards requests to one target 
    --actions Type=forward,TargetGroupArn=targetgroup-arn
    ```
 
-## Delete Your Load Balancer<a name="delete-aws-cli"></a>
+## Delete your load balancer<a name="delete-aws-cli"></a>
 
 When you no longer need your load balancer and target group, you can delete them as follows:
 

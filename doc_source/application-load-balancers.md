@@ -2,25 +2,25 @@
 
 A *load balancer* serves as the single point of contact for clients\. Clients send requests to the load balancer, and the load balancer sends them to targets, such as EC2 instances\. To configure your load balancer, you create [target groups](load-balancer-target-groups.md), and then register targets with your target groups\. You also create [listeners](load-balancer-listeners.md) to check for connection requests from clients, and listener rules to route requests from clients to the targets in one or more target groups\.
 
-For more information, see [How Elastic Load Balancing Works](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/how-elastic-load-balancing-works.html) in the *Elastic Load Balancing User Guide*\.
+For more information, see [How Elastic Load Balancing works](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/how-elastic-load-balancing-works.html) in the *Elastic Load Balancing User Guide*\.
 
 **Topics**
-+ [Subnets for Your Load Balancer](#subnets-load-balancer)
-+ [Load Balancer Security Groups](#load-balancer-security-groups)
-+ [Load Balancer State](#load-balancer-state)
-+ [Load Balancer Attributes](#load-balancer-attributes)
-+ [IP Address Type](#ip-address-type)
-+ [Deletion Protection](#deletion-protection)
-+ [Connection Idle Timeout](#connection-idle-timeout)
++ [Subnets for your load balancer](#subnets-load-balancer)
++ [Load balancer security groups](#load-balancer-security-groups)
++ [Load balancer state](#load-balancer-state)
++ [Load balancer attributes](#load-balancer-attributes)
++ [IP address type](#ip-address-type)
++ [Deletion protection](#deletion-protection)
++ [Connection idle timeout](#connection-idle-timeout)
 + [Application Load Balancers and AWS WAF](#load-balancer-waf)
-+ [Create a Load Balancer](create-application-load-balancer.md)
++ [Create a load balancer](create-application-load-balancer.md)
 + [Update Availability Zones](load-balancer-subnets.md)
-+ [Update Security Groups](load-balancer-update-security-groups.md)
-+ [Update the Address Type](load-balancer-ip-address-type.md)
-+ [Update Tags](load-balancer-tags.md)
-+ [Delete a Load Balancer](load-balancer-delete.md)
++ [Update security groups](load-balancer-update-security-groups.md)
++ [Update the address type](load-balancer-ip-address-type.md)
++ [Update tags](load-balancer-tags.md)
++ [Delete a load balancer](load-balancer-delete.md)
 
-## Subnets for Your Load Balancer<a name="subnets-load-balancer"></a>
+## Subnets for your load balancer<a name="subnets-load-balancer"></a>
 
 When you create an Application Load Balancer, you must enable at least two Availability Zones\. To enable an Availability Zone, you specify one subnet from that Availability Zone\.
 
@@ -31,13 +31,13 @@ Alternatively, you can specify a Local Zone subnet for your load balancer instea
 + You cannot use AWS WAF with the load balancer\.
 + You cannot use a Lambda function as a target\.
 
-## Load Balancer Security Groups<a name="load-balancer-security-groups"></a>
+## Load balancer security groups<a name="load-balancer-security-groups"></a>
 
 A *security group* acts as a firewall that controls the traffic allowed to and from your load balancer\. You can choose the ports and protocols to allow for both inbound and outbound traffic\.
 
-The rules for the security groups associated with your load balancer security group must allow traffic in both directions on both the listener and the health check ports\. Whenever you add a listener to a load balancer or update the health check port for a target group, you must review your security group rules to ensure that they allow traffic on the new port in both directions\. For more information, see [Recommended Rules](load-balancer-update-security-groups.md#security-group-recommended-rules)\.
+The rules for the security groups associated with your load balancer security group must allow traffic in both directions on both the listener and the health check ports\. Whenever you add a listener to a load balancer or update the health check port for a target group, you must review your security group rules to ensure that they allow traffic on the new port in both directions\. For more information, see [Recommended rules](load-balancer-update-security-groups.md#security-group-recommended-rules)\.
 
-## Load Balancer State<a name="load-balancer-state"></a>
+## Load balancer state<a name="load-balancer-state"></a>
 
 A load balancer can be in one of the following states:
 
@@ -50,7 +50,7 @@ The load balancer is fully set up and ready to route traffic\.
 `failed`  
 The load balancer could not be set up\.
 
-## Load Balancer Attributes<a name="load-balancer-attributes"></a>
+## Load balancer attributes<a name="load-balancer-attributes"></a>
 
 The following are the load balancer attributes:
 
@@ -58,7 +58,7 @@ The following are the load balancer attributes:
 Indicates whether access logs stored in Amazon S3 are enabled\. The default is `false`\.
 
 `access_logs.s3.bucket`  
-The name of the S3 bucket for the access logs\. This attribute is required if access logs are enabled\. For more information, see [Bucket Permissions](load-balancer-access-logs.md#access-logging-bucket-permissions)\.
+The name of the S3 bucket for the access logs\. This attribute is required if access logs are enabled\. For more information, see [Bucket permissions](load-balancer-access-logs.md#access-logging-bucket-permissions)\.
 
 `access_logs.s3.prefix`  
 The prefix for the location in the S3 bucket\.
@@ -75,7 +75,7 @@ Indicates whether HTTP headers with header fields that are not valid are removed
 `routing.http2.enabled`  
 Indicates whether HTTP/2 is enabled\. The default is `true`\.
 
-## IP Address Type<a name="ip-address-type"></a>
+## IP address type<a name="ip-address-type"></a>
 
 You can set the types of IP addresses that clients can use with your Internet\-facing load balancer\. Clients must use IPv4 addresses with internal load balancers\.
 
@@ -91,9 +91,9 @@ When you enable dual\-stack mode for the load balancer, Elastic Load Balancing p
 
 The load balancer communicates with targets using IPv4 addresses, regardless of how the client communicates with the load balancer\. Therefore, the targets do not need IPv6 addresses\.
 
-For more information, see [IP Address Types for Your Application Load Balancer](load-balancer-ip-address-type.md)\.
+For more information, see [IP address types for your Application Load Balancer](load-balancer-ip-address-type.md)\.
 
-## Deletion Protection<a name="deletion-protection"></a>
+## Deletion protection<a name="deletion-protection"></a>
 
 To prevent your load balancer from being deleted accidentally, you can enable deletion protection\. By default, deletion protection is disabled for your load balancer\.
 
@@ -130,7 +130,7 @@ If you enable deletion protection for your load balancer, you must disable it be
 **To enable or disable deletion protection using the AWS CLI**  
 Use the [modify\-load\-balancer\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-load-balancer-attributes.html) command with the `deletion_protection.enabled` attribute\.
 
-## Connection Idle Timeout<a name="connection-idle-timeout"></a>
+## Connection idle timeout<a name="connection-idle-timeout"></a>
 
 For each request that a client makes through a load balancer, the load balancer maintains two connections\. The front\-end connection is between a client and the load balancer\. The back\-end connection is between the load balancer and a target\. The load balancer has a configured idle timeout period that applies to its connections\. If no data has been sent or received by the time that the idle timeout period elapses, the load balancer closes the connection\. To ensure that lengthy operations such as file uploads have time to complete, send at least 1 byte of data before each idle timeout period elapses, and increase the length of the idle timeout period as needed\.
 
@@ -157,6 +157,6 @@ Use the [modify\-load\-balancer\-attributes](https://docs.aws.amazon.com/cli/lat
 
 ## Application Load Balancers and AWS WAF<a name="load-balancer-waf"></a>
 
-You can use AWS WAF with your Application Load Balancer to allow or block requests based on the rules in a web access control list \(web ACL\)\. For more information, see [Working with Web ACLs](https://docs.aws.amazon.com/waf/latest/developerguide/web-acl-working-with.html) in the *AWS WAF Developer Guide*\.
+You can use AWS WAF with your Application Load Balancer to allow or block requests based on the rules in a web access control list \(web ACL\)\. For more information, see [Working with web ACLs](https://docs.aws.amazon.com/waf/latest/developerguide/web-acl-working-with.html) in the *AWS WAF Developer Guide*\.
 
 To check whether your load balancer integrates with AWS WAF, select your load balancer in the AWS Management Console and choose the **Integrated services** tab\.

@@ -1,4 +1,4 @@
-# Authenticate Users Using an Application Load Balancer<a name="listener-authenticate-users"></a>
+# Authenticate users using an Application Load Balancer<a name="listener-authenticate-users"></a>
 
 You can configure an Application Load Balancer to securely authenticate users as they access your applications\. This enables you to offload the work of authenticating users to your load balancer so that your applications can focus on their business logic\.
 
@@ -7,7 +7,7 @@ The following use cases are supported:
 + Authenticate users through well\-known social IdPs, such as Amazon, Facebook, or Google, through the user pools supported by Amazon Cognito\.
 + Authenticate users through corporate identities, using SAML, LDAP, or Microsoft AD, through the user pools supported by Amazon Cognito\.
 
-## Prepare to Use an OIDC\-Compliant IdP<a name="oidc-requirements"></a>
+## Prepare to use an OIDC\-compliant IdP<a name="oidc-requirements"></a>
 
 Do the following if you are using an OIDC\-compliant IdP with your Application Load Balancer:
 + Create a new OIDC app in your IdP\. You must configure a client ID and a client secret\.
@@ -16,14 +16,14 @@ Do the following if you are using an OIDC\-compliant IdP with your Application L
   + https://*DNS*/oauth2/idpresponse
   + https://*CNAME*/oauth2/idpresponse
 
-## Prepare to Use Amazon Cognito<a name="cognito-requirements"></a>
+## Prepare to use Amazon Cognito<a name="cognito-requirements"></a>
 
 Do the following if you are using Amazon Cognito user pools with your Application Load Balancer:
-+ Create a user pool\. For more information, see [Amazon Cognito User Pools](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools.html) in the *Amazon Cognito Developer Guide*\.
-+ Create a user pool client\. You must configure the client to generate a client secret, use code grant flow, and support the same OAuth scopes that the load balancer uses\. For more information, see [Configuring a User Pool App Client](https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-settings-client-apps.html) in the *Amazon Cognito Developer Guide*\.
-+ Create a user pool domain\. For more information, see [Adding a Domain Name for Your User Pool](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-domain.html) in the *Amazon Cognito Developer Guide*\.
++ Create a user pool\. For more information, see [Amazon Cognito user pools](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools.html) in the *Amazon Cognito Developer Guide*\.
++ Create a user pool client\. You must configure the client to generate a client secret, use code grant flow, and support the same OAuth scopes that the load balancer uses\. For more information, see [Configuring a user pool app client](https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-settings-client-apps.html) in the *Amazon Cognito Developer Guide*\.
++ Create a user pool domain\. For more information, see [Adding a Domain name for your user pool](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-domain.html) in the *Amazon Cognito Developer Guide*\.
 + Verify that the requested scope returns an ID token\. For example, the default scope, `openid` returns an ID token but the `aws.cognito.signin.user.admin` scope does not\.
-+ To federate with a social or corporate IdP, enable the IdP in the federation section\. For more information, see [Add Social Sign\-in to a User Pool](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-configuring-federation-with-social-idp.html) or [Add Sign\-in with a SAML IdP to a User Pool](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-configuring-federation-with-saml-2-0-idp.html) in the *Amazon Cognito Developer Guide*\.
++ To federate with a social or corporate IdP, enable the IdP in the federation section\. For more information, see [Add social sign\-in to a user pool](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-configuring-federation-with-social-idp.html) or [Add sign\-in with a SAML IdP to a user pool](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-configuring-federation-with-saml-2-0-idp.html) in the *Amazon Cognito Developer Guide*\.
 + Whitelist the following redirect URLs in the callback URL field for Amazon Cognito, where DNS is the domain name of your load balancer, and CNAME is the DNS alias for your application \(if you are using one\):
   + https://*DNS*/oauth2/idpresponse
   + https://*CNAME*/oauth2/idpresponse
@@ -33,14 +33,14 @@ Do the following if you are using Amazon Cognito user pools with your Applicatio
 
 To enable an IAM user to configure a load balancer to use Amazon Cognito to authenticate users, you must grant the user permission to call the `cognito-idp:DescribeUserPoolClient` action\.
 
-## Prepare to Use Amazon CloudFront<a name="cloudfront-requirements"></a>
+## Prepare to use Amazon CloudFront<a name="cloudfront-requirements"></a>
 
 Enable the following settings if you are using a CloudFront distribution in front of your Application Load Balancer:
 + Forward request headers \(all\) — Ensures that CloudFront does not cache responses for authenticated requests\. This prevents them from being served from the cache after the authentication session expires\. Alternatively, to reduce this risk while caching is enabled, owners of a CloudFront distribution can set the time\-to\-live \(TTL\) value to expire before the authentication cookie expires\.
 + Query string forwarding and caching \(all\) — Ensures that the load balancer has access to the query string parameters required to authenticate the user with the IdP\.
 + Cookie forwarding \(all\) — Ensures that CloudFront forwards all authentication cookies to the load balancer\.
 
-## Configure User Authentication<a name="configure-user-authentication"></a>
+## Configure user authentication<a name="configure-user-authentication"></a>
 
 You configure user authentication by creating an authenticate action for one or more listener rules\. The `authenticate-cognito` and `authenticate-oidc` action types are supported only with HTTPS listeners\. For descriptions of the corresponding fields, see [AuthenticateCognitoActionConfig](https://docs.aws.amazon.com/elasticloadbalancing/latest/APIReference/API_AuthenticateCognitoActionConfig.html) and [AuthenticateOidcActionConfig](https://docs.aws.amazon.com/elasticloadbalancing/latest/APIReference/API_AuthenticateOidcActionConfig.html) in the *Elastic Load Balancing API Reference version 2015\-12\-01*\.
 
@@ -48,7 +48,7 @@ The load balancer sends a session cookie to the client to maintain authenticatio
 
 Application Load Balancers do not support cookie values that are URL encoded\.
 
-By default, the `SessionTimeout` field is set to 7 days\. If you want shorter sessions, you can configure a session timeout as short as 1 second\. For more information, see [Authentication Logout and Session Timeout](#authentication-logout-timeout)\.
+By default, the `SessionTimeout` field is set to 7 days\. If you want shorter sessions, you can configure a session timeout as short as 1 second\. For more information, see [Authentication logout and session timeout](#authentication-logout-timeout)\.
 
 Set the `OnUnauthenticatedRequest` field as appropriate for your application\. For example:
 + **Applications that require the user to log in using a social or corporate identity**—This is supported by the default option, `authenticate`\. If the user is not logged in, the load balancer redirects the request to the IdP authorization endpoint and the IdP prompts the user to log in using its user interface\.
@@ -121,9 +121,9 @@ The following is an example of the `actions.json` file that specifies an `authen
 }]
 ```
 
-For more information, see [Listener Rules](load-balancer-listeners.md#listener-rules)\.
+For more information, see [Listener rules](load-balancer-listeners.md#listener-rules)\.
 
-## Authentication Flow<a name="authentication-flow"></a>
+## Authentication flow<a name="authentication-flow"></a>
 
 Elastic Load Balancing uses the OIDC authorization code flow, which includes the following steps\.
 
@@ -135,11 +135,11 @@ Elastic Load Balancing uses the OIDC authorization code flow, which includes the
 
 1. The load balancer creates the authentication session cookie and sends it to the client so that the client's user agent can send the cookie to the load balancer when making requests\. Because most browsers limit a cookie to 4K in size, the load balancer shards a cookie that is greater than 4K in size into multiple cookies\. If the total size of the user claims and access token received from the IdP is greater than 11K bytes in size, the load balancer returns an HTTP 500 error to the client and increments the `ELBAuthUserClaimsSizeExceeded` metric\.
 
-1. The load balancer sends the user claims to the target in HTTP headers\. For more information, see [User Claims Encoding and Signature Verification](#user-claims-encoding)\.
+1. The load balancer sends the user claims to the target in HTTP headers\. For more information, see [User claims encoding and signature verification](#user-claims-encoding)\.
 
-1. If the IdP provides a valid refresh token in the ID token, the load balancer saves the refresh token and uses it to refresh the user claims each time the access token expires, until the session times out or the IdP refresh fails\. If the user logs out, the refresh fails and the load balancer redirects the user to the IdP authorization endpoint\. This enables the load balancer to drop sessions after the user logs out\. For more information, see [Authentication Logout and Session Timeout](#authentication-logout-timeout)\.
+1. If the IdP provides a valid refresh token in the ID token, the load balancer saves the refresh token and uses it to refresh the user claims each time the access token expires, until the session times out or the IdP refresh fails\. If the user logs out, the refresh fails and the load balancer redirects the user to the IdP authorization endpoint\. This enables the load balancer to drop sessions after the user logs out\. For more information, see [Authentication logout and session timeout](#authentication-logout-timeout)\.
 
-## User Claims Encoding and Signature Verification<a name="user-claims-encoding"></a>
+## User claims encoding and signature verification<a name="user-claims-encoding"></a>
 
 After your load balancer authenticates a user successfully, it sends the user claims received from the IdP to the target\. The load balancer signs the user claim so that applications can verify the signature and verify that the claims were sent by the load balancer\.
 
@@ -247,7 +247,7 @@ pub_key = req.text
 payload = jwt.decode(encoded_jwt, pub_key, algorithms=['ES256'])
 ```
 
-## Authentication Logout and Session Timeout<a name="authentication-logout-timeout"></a>
+## Authentication logout and session timeout<a name="authentication-logout-timeout"></a>
 
 When an application needs to log out an authenticated user, it should set the expiration time of the authentication session cookie to \-1 and redirect the client to the IdP logout endpoint \(if the IdP supports one\)\. To prevent users from reusing a deleted cookie, we recommend that you configure as short an expiration time for the access token as is reasonable\. If a client provides a load balancer with an authorization session cookie that has an expired access token with a non\-NULL refresh token, the load balancer contacts the IdP to determine whether the user is still logged in\.
 

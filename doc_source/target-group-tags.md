@@ -1,4 +1,4 @@
-# Tags for Your Target Group<a name="target-group-tags"></a>
+# Tags for your target group<a name="target-group-tags"></a>
 
 Tags help you to categorize your target groups in different ways, for example, by purpose, owner, or environment\.
 

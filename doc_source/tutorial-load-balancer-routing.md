@@ -1,12 +1,12 @@
-# Tutorial: Use Path\-Based Routing with Your Application Load Balancer<a name="tutorial-load-balancer-routing"></a>
+# Tutorial: Use path\-based routing with your Application Load Balancer<a name="tutorial-load-balancer-routing"></a>
 
 You can create a listener with rules to forward requests based on the URL path\. This is known as *path\-based routing*\. If you are running microservices, you can route traffic to multiple back\-end services using path\-based routing\. For example, you can route general requests to one target group and requests to render images to another target group\.
 
-## Before You Begin<a name="routing-prerequisites"></a>
-+ Launch your EC2 instances in a virtual private cloud \(VPC\)\. Ensure that the security groups for these instances allow access on the listener port and the health check port\. For more information, see [Target Security Groups](target-group-register-targets.md#target-security-groups)\.
+## Before you begin<a name="routing-prerequisites"></a>
++ Launch your EC2 instances in a virtual private cloud \(VPC\)\. Ensure that the security groups for these instances allow access on the listener port and the health check port\. For more information, see [Target security groups](target-group-register-targets.md#target-security-groups)\.
 + Verify that your microservices are deployed on the EC2 instances that you plan to register\.
 
-## Create Your Load Balancer<a name="routing-create-load-balancer"></a>
+## Create your load balancer<a name="routing-create-load-balancer"></a>
 
 **To create a load balancer that uses path\-based routing**
 
@@ -104,7 +104,7 @@ You can create a listener with rules to forward requests based on the URL path\.
 
    1. Choose **Insert Rule**\.
 
-   1. Choose **Add condition**, **Path is** and type the exact pattern to be used for path\-based routing \(for example, `/img/*`\)\. To save the condition, choose the checkmark icon\. For more information, see [Listener Rules](load-balancer-listeners.md#listener-rules)\.
+   1. Choose **Add condition**, **Path is** and type the exact pattern to be used for path\-based routing \(for example, `/img/*`\)\. To save the condition, choose the checkmark icon\. For more information, see [Listener rules](load-balancer-listeners.md#listener-rules)\.
 
    1. Choose **Add action**, **Forward to** and then choose the second target group that you created\. To save the action, choose the checkmark icon\.
 

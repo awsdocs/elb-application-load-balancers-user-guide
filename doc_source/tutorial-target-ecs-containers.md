@@ -1,15 +1,15 @@
-# Tutorial: Use Microservices as Targets with Your Application Load Balancer<a name="tutorial-target-ecs-containers"></a>
+# Tutorial: Use microservices as targets with your Application Load Balancer<a name="tutorial-target-ecs-containers"></a>
 
 You can use a microservices architecture to structure your application as services that you can develop and deploy independently\. You can install one or more of these services on each EC2 instance, with each service accepting connections on a different port\. You can use a single Application Load Balancer to route requests to all the services for your application\. When you register an EC2 instance with a target group, you can register it multiple times; for each service, register the instance using the port for the service\.
 
 **Important**  
-When you deploy your services using Amazon Elastic Container Service \(Amazon ECS\), you can use dynamic port mapping to support multiple tasks from a single service on the same container instance\. Amazon ECS manages updates to your services by automatically registering and deregistering containers with your target group using the instance ID and port for each container\. For more information, see [Service Load Balancing](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-load-balancing.html) in the *Amazon Elastic Container Service Developer Guide*\.
+When you deploy your services using Amazon Elastic Container Service \(Amazon ECS\), you can use dynamic port mapping to support multiple tasks from a single service on the same container instance\. Amazon ECS manages updates to your services by automatically registering and deregistering containers with your target group using the instance ID and port for each container\. For more information, see [Service load balancing](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-load-balancing.html) in the *Amazon Elastic Container Service Developer Guide*\.
 
-## Before You Begin<a name="containers-prerequisites"></a>
-+ Launch your EC2 instances\. Ensure that the security groups for the instances allow access from the load balancer security group on the listener ports and the health check ports\. For more information, see [Target Security Groups](target-group-register-targets.md#target-security-groups)\.
+## Before you begin<a name="containers-prerequisites"></a>
++ Launch your EC2 instances\. Ensure that the security groups for the instances allow access from the load balancer security group on the listener ports and the health check ports\. For more information, see [Target security groups](target-group-register-targets.md#target-security-groups)\.
 + Deploy your services to your EC2 instances \(for example, using containers\.\)
 
-## Create Your Load Balancer<a name="containers-create-load-balancer"></a>
+## Create your load balancer<a name="containers-create-load-balancer"></a>
 
 **To create a load balancer that uses multiple services as targets**
 

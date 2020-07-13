@@ -11,11 +11,11 @@ The recommended rules depend on the type of load balancer \(Internet\-facing or 
 
 | 
 | 
-| Inbound | 
+| Inbound (Internet-facing) | 
 | --- |
 |  Source  |  Port Range  |  Comment  | 
 | 0\.0\.0\.0/0 | *listener* | Allow all inbound traffic on the load balancer listener port | 
-|   Outbound   | 
+|   Outbound (Internet-facing)  | 
 | --- |
 |  Destination  |  Port Range  |  Comment  | 
 | *instance security group* | *instance listener* | Allow outbound traffic to instances on the instance listener port | 
@@ -26,11 +26,11 @@ The recommended rules depend on the type of load balancer \(Internet\-facing or 
 
 | 
 | 
-| Inbound | 
+| Inbound (Internal) | 
 | --- |
 |  Source  |  Port Range  |  Comment  | 
 | *VPC CIDR* | *listener* | Allow inbound traffic from the VPC CIDR on the load balancer listener port | 
-|   Outbound   | 
+|   Outbound (Internal) | 
 | --- |
 |  Destination  |  Port Range  |  Comment  | 
 | *instance security group* | *instance listener* | Allow outbound traffic to instances on the instance listener port | 

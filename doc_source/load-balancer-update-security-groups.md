@@ -4,14 +4,12 @@ You must ensure that your load balancer can communicate with registered targets 
 
 ## Recommended rules<a name="security-group-recommended-rules"></a>
 
-The recommended rules depend on the type of load balancer \(Internet\-facing or internal\)\.
+The following rules are recommended for an Internet\-facing load balancer\.
 
-
-**Internet\-facing load balancer**  
 
 | 
 | 
-| Inbound (Internet-facing) | 
+| Inbound | 
 | --- |
 |  Source  |  Port Range  |  Comment  | 
 | 0\.0\.0\.0/0 | *listener* | Allow all inbound traffic on the load balancer listener port | 
@@ -21,12 +19,12 @@ The recommended rules depend on the type of load balancer \(Internet\-facing or 
 | *instance security group* | *instance listener* | Allow outbound traffic to instances on the instance listener port | 
 | *instance security group* | *health check* | Allow outbound traffic to instances on the health check port | 
 
+The following rules are recommended for an internal load balancer\.
 
-**Internal load balancer**  
 
 | 
 | 
-| Inbound (Internal) | 
+| Inbound | 
 | --- |
 |  Source  |  Port Range  |  Comment  | 
 | *VPC CIDR* | *listener* | Allow inbound traffic from the VPC CIDR on the load balancer listener port | 

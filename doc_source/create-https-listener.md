@@ -86,7 +86,7 @@ We recommend the `ELBSecurityPolicy-2016-08` policy for compatibility\. You can 
 The following table describes the default policy, `ELBSecurityPolicy-2016-08`, and the `ELBSecurityPolicy-TLS` polices\. The `ELBSecurityPolicy-` has been removed from policy names in the heading row so that they fit\.
 
 
-| Security policy | 2016\-08 | TLS\-1\-0\-2015\-04 † | TLS\-1\-1\-2017\-01 | TLS\-1\-2\-2017\-01 | TLS\-1\-2\-ext\-2018\-06 | 
+| Security policy | 2016\-08 | TLS\-1\-0\-2015\-04 † | TLS\-1\-1\-2017\-01 | TLS\-1\-2\-2017\-01 | TLS\-1\-2\-Ext\-2018\-06 | 
 | --- |--- |--- |--- |--- |--- |
 | **TLS Protocols** | 
 | --- |
@@ -120,7 +120,7 @@ The following table describes the default policy, `ELBSecurityPolicy-2016-08`, a
 The following table describes the default policy, `ELBSecurityPolicy-2016-08`, and the `ELBSecurityPolicy-FS` policies\. The `ELBSecurityPolicy-` has been removed from policy names in the heading row so that they fit\.
 
 
-| Security policy | 2016\-08 | FS\-2018\-06 | FS\-1\-1\-2019\-08 | FS\-1\-2\-2019\-08 | FS\-1\-2\-res\-2019\-08 | 
+| Security policy | 2016\-08 | FS\-2018\-06 | FS\-1\-1\-2019\-08 | FS\-1\-2\-2019\-08 | FS\-1\-2\-Res\-2019\-08 | 
 | --- |--- |--- |--- |--- |--- |
 | **TLS Protocols** | 
 | --- |

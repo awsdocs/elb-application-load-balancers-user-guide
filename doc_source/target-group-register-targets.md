@@ -24,8 +24,8 @@ When you register EC2 instances as targets, you must ensure that the security gr
 | Inbound | 
 | --- |
 |  Source  |  Port Range  |  Comment  | 
-| *load balancer security group* | *instance listener* | Allow traffic from the load balancer on the instance listener port | 
-| *load balancer security group* | *health check* | Allow traffic from the load balancer on the health check port | 
+| load balancer security group | instance listener | Allow traffic from the load balancer on the instance listener port | 
+| load balancer security group | health check | Allow traffic from the load balancer on the health check port | 
 
 We also recommend that you allow inbound ICMP traffic to support Path MTU Discovery\. For more information, see [Path MTU Discovery](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/network_mtu.html#path_mtu_discovery) in the *Amazon EC2 User Guide for Linux Instances*\.
 
@@ -43,7 +43,27 @@ The target type of your target group determines how you register targets with th
 
 The instance must be in the virtual private cloud \(VPC\) that you specified for the target group\. The instance must also be in the `running` state when you register it\.
 
-**To register or deregister targets by instance ID**
+------
+#### [ New console ]
+
+**To register or deregister targets by instance ID using the new console**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. On the navigation pane, under **LOAD BALANCING**, choose **Target Groups**\.
+
+1. Choose the name of the target group to open its details page\.
+
+1. Choose the **Targets** tab\.
+
+1. To register instances, choose **Register targets**\. Select one or more instances, enter the default instance port as needed, and then choose **Include as pending below**\. When you are finished adding instances, choose **Register pending targets**\.
+
+1. To deregister instances, select the instances and then choose **Deregister**\.
+
+------
+#### [ Old console ]
+
+**To register or deregister targets by instance ID using the old console**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -61,6 +81,8 @@ The instance must be in the virtual private cloud \(VPC\) that you specified for
 
 1. Choose **Save**\.
 
+------
+
 ### Register or deregister targets by IP address<a name="register-ip-addresses"></a>
 
 The IP addresses that you register must be from one of the following CIDR blocks:
@@ -72,6 +94,26 @@ The IP addresses that you register must be from one of the following CIDR blocks
 
 **Limits**
 + You cannot register the IP addresses of another Application Load Balancer in the same VPC\. If the other Application Load Balancer is in a VPC that is peered to the load balancer VPC, you can register its IP addresses\.
+
+------
+#### [ New console ]
+
+**To register or deregister targets by IP address using the new console**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. On the navigation pane, under **LOAD BALANCING**, choose **Target Groups**\.
+
+1. Chose the name of the target group to open its details page\.
+
+1. Choose the **Targets** tab\.
+
+1. To register IP addresses, choose **Register targets**\. For each IP address, select the network, enter the IP address and port, and choose **Include as pending below**\. When you are finished specifying addresses, choose **Register pending targets**\.
+
+1. To deregister IP addresses, select the IP addresses and then choose **Deregister**\. If you have many registered IP addresses, you might find it helpful to add a filter or change the sort order\.
+
+------
+#### [ Old console ]
 
 **To register or deregister targets by IP address**
 
@@ -91,11 +133,33 @@ The IP addresses that you register must be from one of the following CIDR blocks
 
 1. To leave this screen, choose the **Back to target group** icon \(the back button\) in the menu bar\.
 
+------
+
 ### Register or deregister a Lambda function<a name="register-lambda-function"></a>
 
 You can register a single Lambda function with each target group\. Elastic Load Balancing must have permissions to invoke the Lambda function\. If you no longer need to send traffic to your Lambda function, you can deregister it\. After you deregister a Lambda function, in\-flight requests fail with HTTP 5XX errors\. To replace a Lambda function, it is better to create a new target group instead\. For more information, see [Lambda functions as targets](lambda-functions.md)\.
 
-**To register or deregister a Lambda function**
+------
+#### [ New console ]
+
+**To register or deregister a Lambda function using the new console**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. On the navigation pane, under **LOAD BALANCING**, choose **Target Groups**\.
+
+1. Choose the name of the target group to open its details page\.
+
+1. Choose the **Targets** tab\.
+
+1. If there is no Lambda function registered, choose **Register**\. Select the Lambda function and choose **Register**\.
+
+1. To deregister a Lambda function, choose **Deregister**\. When prompted for confirmation, choose **Deregister**\.
+
+------
+#### [ Old console ]
+
+**To register or deregister a Lambda function using the old console**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -106,6 +170,8 @@ You can register a single Lambda function with each target group\. Elastic Load 
 1. If there is no Lambda function registered, choose **Register**\. Select the Lambda function and choose **Register**\.
 
 1. To deregister a Lambda function, choose **Deregister**\. When prompted for confirmation, choose **Deregister**\.
+
+------
 
 ### Register or deregister targets using the AWS CLI<a name="register-cli"></a>
 

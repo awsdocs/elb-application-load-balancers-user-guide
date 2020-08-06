@@ -199,7 +199,7 @@ The port \(1 to 65535\)\.
 The absolute path, starting with the leading "/"\. A path is case\-sensitive, can be up to 128 characters in length, and consists of alpha\-numeric characters, wildcards \(\* and ?\), & \(using &amp;\), and the following special characters: \_\-\.$/\~"'@:\+\.
 
 *query*  
-The query parameters\.
+The query parameters\. The maximum length is 128 characters\.
 
 You can reuse URI components of the original URL in the target URL using the following reserved keywords:
 + `#{protocol}` \- Retains the protocol\. Use in the protocol and query components\.

@@ -45,7 +45,41 @@ The load balancer waits until your Lambda function responds or times out\. We re
 
 Create a target group, which is used in request routing\. If the request content matches a listener rule with an action to forward it to this target group, the load balancer invokes the registered Lambda function\.
 
-**To create a target group and register the Lambda function**
+------
+#### [ New console ]
+
+**To create a target group and register the Lambda function using the new console**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. On the navigation pane, under **LOAD BALANCING**, choose **Target Groups**\.
+
+1. Choose **Create target group**\.
+
+1. For **Choose a target type**, select **Lambda function**\.
+
+1. For **Target group name**, type a name for the target group\.
+
+1. \(Optional\) To enable health checks, choose **Enable** in the **Health checks** section\.
+
+1. \(Optional\) Add one or more tags as follows:
+
+   1. Expand the **Tags** section\.
+
+   1. Choose **Add tag**\.
+
+   1. Enter the tag key and the tag value\.
+
+1. Choose **Next**\.
+
+1. Specify a single Lambda function or omit this step and specify a Lambda function later\.
+
+1. Choose **Create target group**\.
+
+------
+#### [ Old console ]
+
+**To create a target group and register the Lambda function using the old console**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -65,6 +99,8 @@ Create a target group, which is used in request routing\. If the request content
 1. \(Optional\) To enable health checks, choose **Health check**, **Enable**\.
 
 1. Choose **Create**\.
+
+------
 
 **To create a target group and deregister the Lambda function using the AWS CLI**  
 Use the [create\-target\-group](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-target-group.html) and [register\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/register-targets.html) commands\.
@@ -221,7 +257,27 @@ If you enable multi\-value headers, you must specify multiple cookies as follows
 
 You can enable or disable multi\-value headers for a target group with the target type `lambda`\.
 
-**To enable multi\-value headers using the console**
+------
+#### [ New console ]
+
+**To enable multi\-value headers using the new console**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. On the navigation pane, under **LOAD BALANCING**, choose **Target Groups**\.
+
+1. Choose the name of the target group to open its details page\.
+
+1. On the **Group details** tab, in the **Attributes** section, choose **Edit**\.
+
+1. Select or clear **Multi value headers**\.
+
+1. Choose **Save changes**\.
+
+------
+#### [ Old console ]
+
+**To enable multi\-value headers using the old console**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -234,6 +290,8 @@ You can enable or disable multi\-value headers for a target group with the targe
 1. For **Multi value headers**, select **Enable**\.
 
 1. Choose **Save**\.
+
+------
 
 **To enable multi\-value headers using the AWS CLI**  
 Use the [modify\-target\-group\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-target-group-attributes.html) command with the `lambda.multi_value_headers.enabled` attribute\.
@@ -264,7 +322,27 @@ The following is the format of the health check event sent to your Lambda functi
 }
 ```
 
-**To enable health checks for a target group**
+------
+#### [ New console ]
+
+**To enable health checks for a target group using the new console**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. On the navigation pane, under **LOAD BALANCING**, choose **Target Groups**\.
+
+1. Choose the name of the target group to open its details page\.
+
+1. On the **Group details** tab, in the **Health check settings** section, choose **Edit**\.
+
+1. For **Health checks**, select **Enable**\.
+
+1. Choose **Save changes**\.
+
+------
+#### [ Old console ]
+
+**To enable health checks for a target group using the old console**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -278,6 +356,8 @@ The following is the format of the health check event sent to your Lambda functi
 
 1. Choose **Save**\.
 
+------
+
 **To enable health checks for a target group using the AWS CLI**  
 Use the [modify\-target\-group](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-target-group.html) command with the `--health-check-enabled` option\.
 
@@ -287,7 +367,25 @@ If you no longer need to send traffic to your Lambda function, you can deregiste
 
 To replace a Lambda function, we recommend that you create a new target group, register the new function with the new target group, and update the listener rules to use the new target group instead of the existing one\.
 
-**To deregister the Lambda function**
+------
+#### [ New console ]
+
+**To deregister the Lambda function using the new console**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. On the navigation pane, under **LOAD BALANCING**, choose **Target Groups**\.
+
+1. Choose the name of the target group to open its details page\.
+
+1. On the **Targets** tab, choose **Deregister**\.
+
+1. When prompted for confirmation, choose **Deregister**\.
+
+------
+#### [ Old console ]
+
+**To deregister the Lambda function using the old console**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -297,7 +395,9 @@ To replace a Lambda function, we recommend that you create a new target group, r
 
 1. On the **Targets** tab, choose **Deregister**\.
 
-1. Choose **Deregister**\.
+1. When prompted for confirmation, choose **Deregister**\.
+
+------
 
 **To deregister the Lambda function using the AWS CLI**  
 Use the [deregister\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/deregister-targets.html) command\.

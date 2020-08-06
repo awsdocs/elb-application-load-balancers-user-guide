@@ -13,7 +13,7 @@ The following rules are recommended for an Internet\-facing load balancer\.
 | --- |
 |  Source  |  Port Range  |  Comment  | 
 | 0\.0\.0\.0/0 | *listener* | Allow all inbound traffic on the load balancer listener port | 
-|   Outbound (Internet-facing)  | 
+|   Outbound   | 
 | --- |
 |  Destination  |  Port Range  |  Comment  | 
 | *instance security group* | *instance listener* | Allow outbound traffic to instances on the instance listener port | 
@@ -28,7 +28,7 @@ The following rules are recommended for an internal load balancer\.
 | --- |
 |  Source  |  Port Range  |  Comment  | 
 | *VPC CIDR* | *listener* | Allow inbound traffic from the VPC CIDR on the load balancer listener port | 
-|   Outbound (Internal) | 
+|   Outbound   | 
 | --- |
 |  Destination  |  Port Range  |  Comment  | 
 | *instance security group* | *instance listener* | Allow outbound traffic to instances on the instance listener port | 

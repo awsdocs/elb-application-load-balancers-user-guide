@@ -40,6 +40,10 @@ First, provide some basic configuration information for your load balancer, such
 
 1. For **Availability Zones**, select at least two Availability Zones from your VPC\. If there is one subnet for an Availability Zone, it is selected\. If there is more than one subnet for an Availability Zone, select one of the subnets\. You can select only one subnet per Availability Zone\. If you enabled dual\-stack mode for the load balancer, select subnets with associated IPv6 CIDR blocks\.
 
+1. \(Optional\) You can use **Add\-on services**, **AWS Global Accelerator** to create an accelerator and associate the load balancer with the accelerator\. 
+
+1. \(Optional\) For **Tags**, specify the key and value for each tag to add to your load balancer\.
+
 1. Choose **Next: Configure Security Settings**\.
 
 ## Step 2: Configure security settings for an HTTPS listener<a name="configure-security-settings"></a>

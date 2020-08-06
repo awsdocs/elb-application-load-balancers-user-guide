@@ -113,7 +113,27 @@ Consider using least outstanding requests when the requests for your application
 + With HTTP/2, the load balancer converts the request to multiple HTTP/1\.1 requests, so least outstanding request treats each HTTP/2 request as multiple requests\.
 + When you use least outstanding requests with WebSockets, the target is selected using least outstanding requests\. The load balancer creates a connection to this target and sends all messages over this connection\.
 
-**To modify the routing algorithm using the console**
+------
+#### [ New console ]
+
+**To modify the routing algorithm using the new console**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. On the navigation pane, under **LOAD BALANCING**, choose **Target Groups**\.
+
+1. Choose the name of the target group to open its details page\.
+
+1. On the **Group details** tab, in the **Attributes** section, choose **Edit**\.
+
+1. On the **Edit attributes** page, for **Load balancing algorithm**, choose **Round robin** or **Least outstanding requests**\.
+
+1. Choose **Save changes**\.
+
+------
+#### [ Old console ]
+
+**To modify the routing algorithm using the old console**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -124,6 +144,8 @@ Consider using least outstanding requests when the requests for your application
 1. On the **Description** tab, choose **Edit attributes**\.
 
 1. On the **Edit attributes** page, for **Load balancing algorithm**, choose **Round robin** or **Least outstanding requests**, and then choose **Save**\.
+
+------
 
 **To modify the routing algorithm using the AWS CLI**  
 Use the [modify\-target\-group\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-target-group-attributes.html) command with the `load_balancing.algorithm.type` attribute\.
@@ -138,17 +160,39 @@ If a deregistering target has no in\-flight requests and no active connections, 
 
 If a deregistering target terminates the connection before the deregistration delay elapses, the client receives a 500\-level error response\.
 
-**To update the deregistration delay value using the console**
+------
+#### [ New console ]
+
+**To update the deregistration delay value using the new console**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
 1. On the navigation pane, under **LOAD BALANCING**, choose **Target Groups**\.
 
-1. Select the target group\. The current value is displayed on the **Description** tab as **Deregistration delay**\.
+1. Choose the name of the target group to open its details page\.
+
+1. On the **Group details** tab, in the **Attributes** section, choose **Edit**\.
+
+1. On the **Edit attributes** page, change the value of **Deregistration delay** as needed\.
+
+1. Choose **Save changes**\.
+
+------
+#### [ Old console ]
+
+**To update the deregistration delay value using the old console**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. On the navigation pane, under **LOAD BALANCING**, choose **Target Groups**\.
+
+1. Select the target group\.
 
 1. On the **Description** tab, choose **Edit attributes**\.
 
 1. On the **Edit attributes** page, change the value of **Deregistration delay** as needed, and then choose **Save**\.
+
+------
 
 **To update the deregistration delay value using the AWS CLI**  
 Use the [modify\-target\-group\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-target-group-attributes.html) command with the `deregistration_delay.timeout_seconds` attribute\.
@@ -166,17 +210,39 @@ After you enable slow start for a target group, its targets enter slow start mod
 + If a target in slow start mode becomes unhealthy, the target exits slow start mode\. When the target becomes healthy, it enters slow start mode again\.
 + You cannot enable both slow start mode and least outstanding requests\.
 
-**To update the slow start duration value using the console**
+------
+#### [ New console ]
+
+**To update the slow start duration value using the new console**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
 1. On the navigation pane, under **LOAD BALANCING**, choose **Target Groups**\.
 
-1. Select the target group\. The current value is displayed on the **Description** tab as **Slow start duration**\.
+1. Choose the name of the target group to open its details page\.
+
+1. On the **Group details** tab, in the **Attributes** section, choose **Edit**\.
+
+1. On the **Edit attributes** page, change the value of **Slow start duration** as needed\. To disable slow start mode, set the duration to 0\.
+
+1. Choose **Save changes**\.
+
+------
+#### [ Old console ]
+
+**To update the slow start duration value using the old console**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. On the navigation pane, under **LOAD BALANCING**, choose **Target Groups**\.
+
+1. Select the target group\.
 
 1. On the **Description** tab, choose **Edit attributes**\.
 
 1. On the **Edit attributes** page, change the value of **Slow start duration** as needed, and then choose **Save**\. To disable slow start mode, set the duration to 0\.
+
+------
 
 **To update the slow start duration value using the AWS CLI**  
 Use the [modify\-target\-group\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-target-group-attributes.html) command with the `slow_start.duration_seconds` attribute\.
@@ -199,7 +265,31 @@ Application Load Balancers support load balancer\-generated cookies only\. The c
 + Application Load Balancers use the Expires attribute in the cookie header instead of the Max\-Age header\.
 + Application Load Balancers do not support cookie values that are URL encoded\.
 
-**To enable sticky sessions using the console**
+------
+#### [ New console ]
+
+**To enable sticky sessions using the new console**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. On the navigation pane, under **LOAD BALANCING**, choose **Target Groups**\.
+
+1. Choose the name of the target group to open its details page\.
+
+1. On the **Group details** tab, in the **Attributes** section, choose **Edit**\.
+
+1. On the **Edit attributes** page, do the following:
+
+   1. Select **Stickiness**\.
+
+   1. For **Stickiness duration**, specify a value between 1 second and 7 days\.
+
+   1. Choose **Save changes**\.
+
+------
+#### [ Old console ]
+
+**To enable sticky sessions using the old console**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -216,6 +306,8 @@ Application Load Balancers support load balancer\-generated cookies only\. The c
    1. For **Stickiness duration**, specify a value between 1 second and 7 days\.
 
    1. Choose **Save**\.
+
+------
 
 **To enable sticky sessions using the AWS CLI**  
 Use the [modify\-target\-group\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-target-group-attributes.html) command with the `stickiness.enabled` and `stickiness.lb_cookie.duration_seconds` attributes\.

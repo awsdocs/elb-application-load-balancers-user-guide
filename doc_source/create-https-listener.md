@@ -166,7 +166,7 @@ You configure a listener with a protocol and a port for connections from clients
 
 1. Select a load balancer, and choose **Listeners**, **Add listener**\.
 
-1. For **Protocol : port**, choose **HTTPS** and keep the default port or type a different port\.
+1. For **Protocol : port**, choose **HTTPS** and keep the default port or enter a different port\.
 
 1. \(Optional\) To authenticate users, for **Default actions**, choose **Add action**, **Authenticate** and provide the requested information\. To save the action, choose the checkmark icon\. For more information, see [Authenticate users using an Application Load Balancer](listener-authenticate-users.md)\.
 

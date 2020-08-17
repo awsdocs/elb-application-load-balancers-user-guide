@@ -35,7 +35,7 @@ By default, the success code is 200, but you can optionally specify additional s
 
 If the load balancer is not responding to requests, check for the following:
 
-**Your Internet\-facing load balancer is attached to a private subnet**  
+**Your internet\-facing load balancer is attached to a private subnet**  
 Verify that you specified public subnets for your load balancer\. A public subnet has a route to the Internet Gateway for your virtual private cloud \(VPC\)\.
 
 **A security group or network ACL does not allow traffic**  

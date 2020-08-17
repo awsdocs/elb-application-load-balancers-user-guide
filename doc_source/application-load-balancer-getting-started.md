@@ -42,7 +42,7 @@ On the **Configure Load Balancer** page, complete the following procedure\.
 
 **To configure your load balancer and listener**
 
-1. For **Name**, type a name for your load balancer\.
+1. For **Name**, enter a name for your load balancer\.
 
    The name of your Application Load Balancer must be unique within your set of Application Load Balancers and Network Load Balancers for the region, can have a maximum of 32 characters, can contain only alphanumeric characters and hyphens, must not begin or end with a hyphen, and must not begin with "internal\-"\.
 
@@ -78,7 +78,7 @@ Create a target group, which is used in request routing\. The default rule for y
 
 1. For **Target group**, keep the default, **New target group**\.
 
-1. For **Name**, type a name for the new target group\.
+1. For **Name**, enter a name for the new target group\.
 
 1. Keep the default target type \(**Instance**\), protocol \(**HTTP**\), and port \(**80**\)\.
 

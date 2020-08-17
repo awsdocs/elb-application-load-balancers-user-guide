@@ -73,6 +73,7 @@ Elastic Load Balancing logs requests on a best\-effort basis\. We recommend that
 **Topics**
 + [Syntax](#access-log-entry-syntax)
 + [Actions taken](#actions-taken)
++ [Classification reasons](#classification-reasons)
 + [Error reason codes](#error-reason-codes)
 + [Examples](#access-log-entry-examples)
 
@@ -110,6 +111,8 @@ The following table describes the fields of an access log entry, in order\. All 
 | "error\_reason" |  The error reason code, enclosed in double quotes\. If the request failed, this is one of the error codes described in [Error reason codes](#error-reason-codes)\. If the actions taken do not include an authenticate action or the target is not a Lambda function, this value is set to \-\.  | 
 | "target:port\_list" |  A space\-delimited list of IP addresses and ports for the targets that processed this request, enclosed in double quotes\. Currently, this list can contain one item and it matches the target:port field\. If the client didn't send a full request, the load balancer can't dispatch the request to a target, and this value is set to \-\. If the target is a Lambda function, this value is set to \-\. If the request is blocked by AWS WAF, this value is set to \- and the value of elb\_status\_code is set to 403\.  | 
 | "target\_status\_code\_list" |  A space\-delimited list of status codes from the responses of the targets, enclosed in double quotes\. Currently, this list can contain one item and it matches the target\_status\_code field\. This value is recorded only if a connection was established to the target and the target sent a response\. Otherwise, it is set to \-\. | 
+| "classification" |  The classification for desync mitigation, enclosed in double quotes\. If the request does not comply with RFC 7230, the possible values are Acceptable, Ambiguous, and Severe\. If the request complies with RFC 7230, this value is set to \-\.  | 
+| "classification\_reason" |  The classification reason code, enclosed in double quotes\. If the request does not comply with RFC 7230, this is one of the classification codes described in [Classification reasons](#classification-reasons)\. If the request complies with RFC 7230, this value is set to \-\.  | 
 
 ### Actions taken<a name="actions-taken"></a>
 
@@ -120,6 +123,33 @@ The load balancer stores the actions that it takes in the actions\_executed fiel
 + `redirect` — The load balancer redirected the request to another URL, as specified by the rule configuration\.
 + `waf` — The load balancer forwarded the request to AWS WAF to determine whether the request should be forwarded to the target\. If this is the final action, AWS WAF determined that the request should be rejected\.
 + `waf-failed` — The load balancer attempted to forward the request to AWS WAF, but this process failed\.
+
+### Classification reasons<a name="classification-reasons"></a>
+
+If a request does not comply with RFC 7230, the load balancer stores one of the following codes in the classification\_reason field of the access log\. For more information, see [Desync mitigation mode](application-load-balancers.md#desync-mitigation-mode)\.
+
+
+| Code | Description | Classification | 
+| --- | --- | --- | 
+| `AmbiguousUri` | The request URI contains control characters\. | Ambiguous | 
+| `BadContentLength` | The Content\-Length header contains a value that cannot be parsed or is not a valid number\. | Severe | 
+| `BadHeader` | A header contains a null character or carriage return\. | Severe | 
+| `BadTransferEncoding` | The Transfer\-Encoding header contains a bad value\. | Severe | 
+| `BadUri` | The request URI contains a null character or carriage return\. | Severe | 
+| `BadMethod` | The request method is malformed\. | Severe | 
+| `BadVersion` | The request version is malformed\. | Severe | 
+| `BothTeClPresent` | The request contains both a Transfer\-Encoding header and a Content\-Length header\. | Ambiguous | 
+| `DuplicateContentLength` | There are multiple Content\-Length headers with the same value\. | Ambiguous | 
+| `EmptyHeader` | A header is empty or there is a line with only spaces\. | Ambiguous | 
+| `GetHeadZeroContentLength` | There is a Content\-Length header with a value of 0 for a GET or HEAD request\. | Acceptable | 
+| `MultipleContentLength` | There are multiple Content\-Length headers with different values\. | Severe | 
+| `MultipleTransferEncodingChunked` | There are multiple Transfer\-Encoding: chunked headers\. | Severe | 
+| `NonCompliantHeader` | A header contains a non\-ASCII or control character\. | Acceptable | 
+| `NonCompliantVersion` | The request version contains a bad value\. | Acceptable | 
+| `SpaceInUri` | The request URI contains a space that is not URL encoded\. | Acceptable | 
+| `SuspiciousHeader` | There is a header that can be normalized to Transfer\-Encoding or Content\-Length using common text normalization techniques\. | Ambiguous | 
+| `UndefinedContentLengthSemantics` | There is no Content\-Length header defined for a GET or HEAD request\. | Ambiguous | 
+| `UndefinedTransferEncodingSemantics` | There is no Transfer\-Encoding header defined for GET or HEAD request\. | Ambiguous | 
 
 ### Error reason codes<a name="error-reason-codes"></a>
 
@@ -206,7 +236,7 @@ http 2018-07-02T22:23:00.186641Z app/my-loadbalancer/50dc6c495c0c9188
 "GET http://www.example.com:80/ HTTP/1.1" "curl/7.46.0" - - 
 arn:aws:elasticloadbalancing:us-east-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067
 "Root=1-58337262-36d228ad5d99923122bbe354" "-" "-" 
-0 2018-07-02T22:22:48.364000Z "forward" "-" "-"
+0 2018-07-02T22:22:48.364000Z "forward" "-" "-" 10.0.0.1:80 200 "-" "-"
 ```
 
 **Example HTTPS Entry**  
@@ -218,7 +248,7 @@ https 2018-07-02T22:23:00.186641Z app/my-loadbalancer/50dc6c495c0c9188
 "GET https://www.example.com:443/ HTTP/1.1" "curl/7.46.0" ECDHE-RSA-AES128-GCM-SHA256 TLSv1.2 
 arn:aws:elasticloadbalancing:us-east-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067
 "Root=1-58337281-1d84f3d73c47ec4e58577259" "www.example.com" "arn:aws:acm:us-east-2:123456789012:certificate/12345678-1234-1234-1234-123456789012"
-1 2018-07-02T22:22:48.364000Z "authenticate,forward" "-" "-"
+1 2018-07-02T22:22:48.364000Z "authenticate,forward" "-" "-" 10.0.0.1:80 200 "-" "-"
 ```
 
 **Example HTTP/2 Entry**  
@@ -230,7 +260,7 @@ h2 2018-07-02T22:23:00.186641Z app/my-loadbalancer/50dc6c495c0c9188
 "GET https://10.0.2.105:773/ HTTP/2.0" "curl/7.46.0" ECDHE-RSA-AES128-GCM-SHA256 TLSv1.2
 arn:aws:elasticloadbalancing:us-east-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067
 "Root=1-58337327-72bd00b0343d75b906739c42" "-" "-"
-1 2018-07-02T22:22:48.364000Z "redirect" "https://example.com:80/" "-"
+1 2018-07-02T22:22:48.364000Z "redirect" "https://example.com:80/" "-" 10.0.0.66:9000 200 "-" "-"
 ```
 
 **Example WebSockets Entry**  
@@ -242,7 +272,7 @@ ws 2018-07-02T22:23:00.186641Z app/my-loadbalancer/50dc6c495c0c9188
 "GET http://10.0.0.30:80/ HTTP/1.1" "-" - - 
 arn:aws:elasticloadbalancing:us-east-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067
 "Root=1-58337364-23a8c76965a2ef7629b185e3" "-" "-"
-1 2018-07-02T22:22:48.364000Z "forward" "-" "-"
+1 2018-07-02T22:22:48.364000Z "forward" "-" "-" 10.0.1.192:8010 101 "-" "-"
 ```
 
 **Example Secured WebSockets Entry**  
@@ -254,7 +284,7 @@ wss 2018-07-02T22:23:00.186641Z app/my-loadbalancer/50dc6c495c0c9188
 "GET https://10.0.0.30:443/ HTTP/1.1" "-" ECDHE-RSA-AES128-GCM-SHA256 TLSv1.2 
 arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067
 "Root=1-58337364-23a8c76965a2ef7629b185e3" "-" "-"
-1 2018-07-02T22:22:48.364000Z "forward" "-" "-"
+1 2018-07-02T22:22:48.364000Z "forward" "-" "-" 10.0.0.171:8010 101 "-" "-"
 ```
 
 **Example Entries for Lambda Functions**  
@@ -266,7 +296,7 @@ http 2018-11-30T22:23:00.186641Z app/my-loadbalancer/50dc6c495c0c9188
 "GET http://www.example.com:80/ HTTP/1.1" "curl/7.46.0" - -
 arn:aws:elasticloadbalancing:us-east-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067
 "Root=1-58337364-23a8c76965a2ef7629b185e3" "-" "-"
-0 2018-11-30T22:22:48.364000Z "forward" "-" "-"
+0 2018-11-30T22:22:48.364000Z "forward" "-" "-" "-" "-" "-" "-"
 ```
 
 The following is an example log entry for a request to a Lambda function that failed:
@@ -277,7 +307,7 @@ http 2018-11-30T22:23:00.186641Z app/my-loadbalancer/50dc6c495c0c9188
 "GET http://www.example.com:80/ HTTP/1.1" "curl/7.46.0" - -
 arn:aws:elasticloadbalancing:us-east-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067
 "Root=1-58337364-23a8c76965a2ef7629b185e3" "-" "-"
-0 2018-11-30T22:22:48.364000Z "forward" "-" "LambdaInvalidResponse"
+0 2018-11-30T22:22:48.364000Z "forward" "-" "LambdaInvalidResponse" "-" "-" "-" "-"
 ```
 
 ## Bucket permissions<a name="access-logging-bucket-permissions"></a>
@@ -376,7 +406,7 @@ When you enable access logging for your load balancer, you must specify the name
 
    1. For **Access logs**, select **Enable**\.
 
-   1. For **S3 location**, type the name of your S3 bucket, including any prefix \(for example, `my-loadbalancer-logs/my-app`\)\. You can specify the name of an existing bucket or a name for a new bucket\. If you specify an existing bucket, be sure that you own this bucket and that you configured the required bucket policy\.
+   1. For **S3 location**, enter the name of your S3 bucket, including any prefix \(for example, `my-loadbalancer-logs/my-app`\)\. You can specify the name of an existing bucket or a name for a new bucket\. If you specify an existing bucket, be sure that you own this bucket and that you configured the required bucket policy\.
 
    1. \(Optional\) If the bucket does not exist, choose **Create this location for me**\. You must specify a name that is unique across all existing bucket names in Amazon S3 and follows the DNS naming conventions\. For more information, see [Rules for bucket naming](https://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html#bucketnamingrules) in the *Amazon Simple Storage Service Developer Guide*\.
 

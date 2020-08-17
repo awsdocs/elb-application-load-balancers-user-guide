@@ -4,7 +4,7 @@ You must ensure that your load balancer can communicate with registered targets 
 
 ## Recommended rules<a name="security-group-recommended-rules"></a>
 
-The following rules are recommended for an Internet\-facing load balancer\.
+The following rules are recommended for an internet\-facing load balancer\.
 
 
 | 
@@ -33,8 +33,6 @@ The following rules are recommended for an internal load balancer\.
 |  Destination  |  Port Range  |  Comment  | 
 | *instance security group* | *instance listener* | Allow outbound traffic to instances on the instance listener port | 
 | *instance security group* | *health check* | Allow outbound traffic to instances on the health check port | 
-
-We also recommend that you allow inbound ICMP traffic to support Path MTU Discovery\. For more information, see [Path MTU discovery](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/network_mtu.html#path_mtu_discovery) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 ## Update the associated security groups<a name="update-group"></a>
 

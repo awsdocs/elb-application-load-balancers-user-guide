@@ -19,7 +19,7 @@ You configure a listener with a protocol and a port for connections from clients
 
 1. Select a load balancer, and choose **Listeners**, **Add listener**\.
 
-1. For **Protocol : port**, choose **HTTP** and keep the default port or type a different port\.
+1. For **Protocol : port**, choose **HTTP** and keep the default port or enter a different port\.
 
 1. For **Default actions**, do one of the following:
    + Choose **Add action**, **Forward to** and choose a target group\.

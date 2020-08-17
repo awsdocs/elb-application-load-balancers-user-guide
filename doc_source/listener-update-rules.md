@@ -34,15 +34,15 @@ You define a default rule when you create a listener, and you can define additio
 
 1. Add one or more conditions as follows:
 
-   1. To add a host header condition, choose **Add condition**, **Host header** and type the hostname \(for example, **\*\.example\.com**\)\. To save the condition, choose the checkmark icon\.
+   1. To add a host header condition, choose **Add condition**, **Host header** and enter the hostname \(for example, **\*\.example\.com**\)\. To save the condition, choose the checkmark icon\.
 
       The maximum size of each string is 128 characters\. The comparison is not case\-sensitive\. The following wildcard characters are supported: \* and ?\.
 
-   1. To add a path condition, choose **Add condition**, **Path** and type the path pattern \(for example, `/img/*`\)\. To save the condition, choose the checkmark icon\.
+   1. To add a path condition, choose **Add condition**, **Path** and enter the path pattern \(for example, `/img/*`\)\. To save the condition, choose the checkmark icon\.
 
       The maximum size of each string is 128 characters\. The comparison is case\-sensitive\. The following wildcard characters are supported: \* and ?\.
 
-   1. To add an HTTP header condition, choose **Add condition**, **Http header**\. Type the name of the header and add one or more comparison strings\. To save the condition, choose the checkmark icon\.
+   1. To add an HTTP header condition, choose **Add condition**, **Http header**\. Enter the name of the header and add one or more comparison strings\. To save the condition, choose the checkmark icon\.
 
       The maximum size of each header name is 40 characters, the header name is not case\-sensitive, and wildcards are not supported\. The maximum size of each comparison string is 128 characters and the following wildcard characters are supported: \* and ?\. The comparison is not case\-sensitive\.
 

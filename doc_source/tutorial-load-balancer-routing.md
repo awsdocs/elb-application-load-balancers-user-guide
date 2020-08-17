@@ -52,11 +52,11 @@ You can create a listener with rules to forward requests based on the URL path\.
 
 1. Complete the **Configure Load Balancer** page as follows:
 
-   1. For **Name**, type a name for your load balancer\.
+   1. For **Name**, enter a name for your load balancer\.
 
       The name of your Application Load Balancer must be unique within your set of Application Load Balancers and Network Load Balancers for the region, can have a maximum of 32 characters, can contain only alphanumeric characters and hyphens, and must not begin or end with a hyphen\.
 
-   1. For **Scheme**, an Internet\-facing load balancer routes requests from clients over the Internet to targets\. An internal load balancer routes requests to targets using private IP addresses\.
+   1. For **Scheme**, an internet\-facing load balancer routes requests from clients over the Internet to targets\. An internal load balancer routes requests to targets using private IP addresses\.
 
    1. For **Listeners**, the default is a listener that accepts HTTP traffic on port 80\. You can keep the default listener settings, modify the protocol or port of the listener, or choose **Add** to add another listener\.
 
@@ -70,7 +70,7 @@ You can create a listener with rules to forward requests based on the URL path\.
 
    1. If you uploaded a certificate using IAM, select **Choose an existing certificate from AWS Identity and Access Management \(IAM\)**, and then select your certificate from **Certificate name**\.
 
-   1. If you have a certificate to upload but ACM is not supported in your region, choose **Upload a new SSL Certificate to AWS Identity and Access Management \(IAM\)**\. For **Certificate name**, type a name for the certificate\. For **Private Key**, copy and paste the contents of the private key file \(PEM\-encoded\)\. In **Public Key Certificate**, copy and paste the contents of the public key certificate file \(PEM\-encoded\)\. In **Certificate Chain**, copy and paste the contents of the certificate chain file \(PEM\-encoded\), unless you are using a self\-signed certificate and it's not important that browsers implicitly accept the certificate\.
+   1. If you have a certificate to upload but ACM is not supported in your region, choose **Upload a new SSL Certificate to AWS Identity and Access Management \(IAM\)**\. For **Certificate name**, enter a name for the certificate\. For **Private Key**, copy and paste the contents of the private key file \(PEM\-encoded\)\. In **Public Key Certificate**, copy and paste the contents of the public key certificate file \(PEM\-encoded\)\. In **Certificate Chain**, copy and paste the contents of the certificate chain file \(PEM\-encoded\), unless you are using a self\-signed certificate and it's not important that browsers implicitly accept the certificate\.
 
    1. For **Select policy**, keep the default security policy\.
 
@@ -104,7 +104,7 @@ You can create a listener with rules to forward requests based on the URL path\.
 
    1. Choose **Insert Rule**\.
 
-   1. Choose **Add condition**, **Path is** and type the exact pattern to be used for path\-based routing \(for example, `/img/*`\)\. To save the condition, choose the checkmark icon\. For more information, see [Listener rules](load-balancer-listeners.md#listener-rules)\.
+   1. Choose **Add condition**, **Path is** and enter the exact pattern to be used for path\-based routing \(for example, `/img/*`\)\. To save the condition, choose the checkmark icon\. For more information, see [Listener rules](load-balancer-listeners.md#listener-rules)\.
 
    1. Choose **Add action**, **Forward to** and then choose the second target group that you created\. To save the action, choose the checkmark icon\.
 

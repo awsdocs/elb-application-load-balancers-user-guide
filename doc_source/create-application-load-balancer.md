@@ -30,11 +30,11 @@ First, provide some basic configuration information for your load balancer, such
 
 1. For **Application Load Balancer**, choose **Create**\.
 
-1. For **Name**, type a name for your load balancer\. For example, **my\-alb**\.
+1. For **Name**, enter a name for your load balancer\. For example, **my\-alb**\.
 
-1. For **Scheme**, an Internet\-facing load balancer routes requests from clients over the Internet to targets\. An internal load balancer routes requests to targets using private IP addresses\.
+1. For **Scheme**, an internet\-facing load balancer routes requests from clients over the internet to targets\. An internal load balancer routes requests to targets using private IP addresses\.
 
-1. For **IP address type**, choose **ipv4** if your clients use IPv4 addresses to communicate with the load balancer or **dualstack** if your clients use both IPv4 and IPv6 addresses to communicate with the load balancer\. If the load balancer is an internal load balancer, you must choose **ipv4**\.
+1. For **IP address type**, choose **ipv4** if your clients use IPv4 addresses to communicate with the load balancer, or choose **dualstack** if your clients use both IPv4 and IPv6 addresses to communicate with the load balancer\. If the load balancer is an internal load balancer, you must choose **ipv4**\.
 
 1. For **Listeners**, the default is a listener that accepts HTTP traffic on port 80\. You can keep the default listener settings, modify the protocol, or modify the port\. Choose **Add** to add another listener \(for example, an HTTPS listener\)\.
 
@@ -70,7 +70,7 @@ The security group for your load balancer must allow it to communicate with regi
 
 1. Choose **Create a new security group**\.
 
-1. Type a name and description for the security group, or keep the default name and description\. This new security group contains a rule that allows traffic to the port that you selected for your load balancer on the **Configure Load Balancer** page\.
+1. Enter a name and description for the security group, or keep the default name and description\. This new security group contains a rule that allows traffic to the port that you selected for your load balancer on the **Configure Load Balancer** page\.
 
 1. Choose **Next: Configure Routing**\.
 
@@ -82,7 +82,7 @@ You register targets with a target group\. The target group that you configure i
 
 1. For **Target group**, keep the default, **New target group**\.
 
-1. For **Name**, type a name for the target group\.
+1. For **Name**, enter a name for the target group\.
 
 1. For **Target type**, select **Instance** to register targets by instance ID, **IP** to register IP addresses, and **Lambda function** to register a Lambda function\.
 
@@ -102,7 +102,7 @@ With an Application Load Balancer, the target type of your target group determin
 
 1. For **Instances**, select one or more instances\.
 
-1. Type the instance listener port, and then choose **Add to registered**\.
+1. Enter the instance listener port, and then choose **Add to registered**\.
 
 1. When you have finished registering instances, choose **Next: Review**\.
 
@@ -112,9 +112,9 @@ With an Application Load Balancer, the target type of your target group determin
 
    1. For **Network**, if the IP address is from a subnet of the target group VPC, select the VPC\. Otherwise, select **Other private IP address**\.
 
-   1. For **IP**, type the IP address\.
+   1. For **IP**, enter the IP address\.
 
-   1. For **Port**, type the port\.
+   1. For **Port**, enter the port\.
 
    1. Choose **Add to list**\.
 

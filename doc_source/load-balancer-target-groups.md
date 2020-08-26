@@ -52,7 +52,7 @@ When the target type is `ip`, you can specify IP addresses from one of the follo
 + 172\.16\.0\.0/12 \(RFC 1918\)
 + 192\.168\.0\.0/16 \(RFC 1918\)
 
-These supported CIDR blocks enable you to register the following with a target group: ClassicLink instances, instances in a VPC that is peered to the load balancer VPC, AWS resources that are addressable by IP address and port \(for example, databases\), and on\-premises resources linked to AWS through AWS Direct Connect or a VPN connection\.
+These supported CIDR blocks enable you to register the following with a target group: ClassicLink instances, instances in a VPC that is peered to the load balancer VPC (same Region or different Region), AWS resources that are addressable by IP address and port \(for example, databases\), and on\-premises resources linked to AWS through AWS Direct Connect or a VPN connection\.
 
 **Important**  
 You can't specify publicly routable IP addresses\.

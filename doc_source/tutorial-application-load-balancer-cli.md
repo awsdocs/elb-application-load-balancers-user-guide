@@ -22,7 +22,7 @@ To create your first load balancer, complete the following steps\.
 
    ```
    aws elbv2 create-load-balancer --name my-load-balancer  \
-   --subnets subnet-12345678 subnet-23456789 --security-groups sg-12345678
+   --subnets subnet-0e3f5cac72EXAMPLE subnet-081ec835f3EXAMPLE --security-groups sg-07e8ffd50fEXAMPLE
    ```
 
    The output includes the Amazon Resource Name \(ARN\) of the load balancer, with the following format:
@@ -35,7 +35,7 @@ To create your first load balancer, complete the following steps\.
 
    ```
    aws elbv2 create-target-group --name my-targets --protocol HTTP --port 80 \
-   --vpc-id vpc-12345678
+   --vpc-id vpc-0598c7d356EXAMPLE
    ```
 
    The output includes the ARN of the target group, with this format:
@@ -48,7 +48,7 @@ To create your first load balancer, complete the following steps\.
 
    ```
    aws elbv2 register-targets --target-group-arn targetgroup-arn  \
-   --targets Id=i-12345678 Id=i-23456789
+   --targets Id=i-0abcdef1234567890 Id=i-1234567890abcdef0
    ```
 
 1. Use the [create\-listener](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-listener.html) command to create a listener for your load balancer with a default rule that forwards requests to your target group:
@@ -90,33 +90,6 @@ If you have a load balancer with an HTTP listener, you can add an HTTPS listener
    --default-actions Type=forward,TargetGroupArn=targetgroup-arn
    ```
 
-## Add targets using port overrides<a name="port-overrides-aws-cli"></a>
-
-If you have multiple ECS containers on a single instance, each container accepts connections on a different port\. You can register the instance with the target group multiple times, each time with a different port\.
-
-**To add targets using port overrides**
-
-1. Use the [create\-target\-group](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-target-group.html) command to create a target group:
-
-   ```
-   aws elbv2 create-target-group --name my-targets --protocol HTTP --port 80 \
-   --vpc-id vpc-12345678
-   ```
-
-1. Use the [register\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/register-targets.html) command to register your instances with your target group\. Notice that the instance IDs are the same for each container, but the ports are different\.
-
-   ```
-   aws elbv2 register-targets --target-group-arn targetgroup-arn  \
-   --targets Id=i-12345678,Port=80 Id=i-12345678,Port=766
-   ```
-
-1. Use the [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) command to add a rule to your listener that forwards requests to the target group:
-
-   ```
-   aws elbv2 create-rule --listener-arn listener-arn --priority 10 \
-   --actions Type=forward,TargetGroupArn=targetgroup-arn
-   ```
-
 ## Add path\-based routing<a name="path-based-routing-aws-cli"></a>
 
 If you have a listener with a default rule that forwards requests to one target group, you can add a rule that forwards requests to another target group based on URL\. For example, you can route general requests to one target group and requests to display images to another target group\.
@@ -127,14 +100,14 @@ If you have a listener with a default rule that forwards requests to one target 
 
    ```
    aws elbv2 create-target-group --name my-targets --protocol HTTP --port 80 \
-   --vpc-id vpc-12345678
+   --vpc-id vpc-0598c7d356EXAMPLE
    ```
 
 1. Use the [register\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/register-targets.html) command to register your instances with your target group:
 
    ```
    aws elbv2 register-targets --target-group-arn targetgroup-arn  \
-   --targets Id=i-12345678 Id=i-23456789
+   --targets Id=i-0abcdef1234567890 Id=i-1234567890abcdef0
    ```
 
 1. Use the [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) command to add a rule to your listener that forwards requests to the target group if the URL contains the specified pattern:

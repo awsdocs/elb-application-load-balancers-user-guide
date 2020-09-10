@@ -79,7 +79,7 @@ You can use `fixed-response` actions to drop client requests and return a custom
 
 When a `fixed-response` action is taken, the action and the URL of the redirect target are recorded in the access logs\. For more information, see [Access log entries](load-balancer-access-logs.md#access-log-entry-format)\. The count of successful `fixed-response` actions is reported in the `HTTP_Fixed_Response_Count` metric\. For more information, see [Application Load Balancer metrics](load-balancer-cloudwatch-metrics.md#load-balancer-metrics-alb)\.
 
-**Example Example fixed response action for the AWS CLI**  
+**Example fixed response action for the AWS CLI**  
 You can specify an action when you create or modify a rule\. For more information, see the [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) and [modify\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-rule.html) commands\. The following action sends a fixed response with the specified status code and message body\.  
 
 ```
@@ -105,7 +105,7 @@ Application Load Balancers do not support cookie values that are URL encoded\.
 
 With CORS \(cross\-origin resource sharing\) requests, some browsers require `SameSite=None; Secure` to enable stickiness\. In this case, Elastic Load Balancing generates a second cookie, AWSALBTGCORS, which includes the same information as the original stickiness cookie plus this `SameSite` attribute\. Clients receive both cookies\.
 
-**Example Example forward action with one target group**  
+**Example forward action with one target group**  
 You can specify an action when you create or modify a rule\. For more information, see the [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) and [modify\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-rule.html) commands\. The following action forwards requests to the specified target group\.  
 
 ```
@@ -123,7 +123,7 @@ You can specify an action when you create or modify a rule\. For more informatio
 ]
 ```
 
-**Example Example forward action with two weighted target groups**  
+**Example forward action with two weighted target groups**  
 The following action forwards requests to the two specified target groups, based on the weight of each target group\.  
 
 ```
@@ -146,7 +146,7 @@ The following action forwards requests to the two specified target groups, based
 ]
 ```
 
-**Example Example forward action with stickiness enabled**  
+**Example forward action with stickiness enabled**  
 If you have a forward rule with multiple target groups and one or more of the target groups has [sticky sessions](load-balancer-target-groups.md#sticky-sessions) enabled, you must enable target group stickiness\.  
 The following action forwards requests to the two specified target groups, with target group stickiness enabled\. Requests that do not contain the stickiness cookies are routed based on the weight of each target group\.  
 
@@ -210,7 +210,7 @@ You can reuse URI components of the original URL in the target URL using the fol
 
 When a `redirect` action is taken, the action is recorded in the access logs\. For more information, see [Access log entries](load-balancer-access-logs.md#access-log-entry-format)\. The count of successful `redirect` actions is reported in the `HTTP_Redirect_Count` metric\. For more information, see [Application Load Balancer metrics](load-balancer-cloudwatch-metrics.md#load-balancer-metrics-alb)\.
 
-**Example Example redirect actions using the console**  
+**Example redirect actions using the console**  
 The following rule sets up a permanent redirect to a URL that uses the HTTPS protocol and the specified port \(40443\), but retains the original hostname, path, and query parameters\. This screen is equivalent to "https://\#\{host\}:40443/\#\{path\}?\#\{query\}"\.  
 
 ![\[A rule that redirects the request to a URL that uses the HTTPS protocol and the specified port (40443), but retains the original domain, path, and query parameters of the original URL.\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/redirect_https_port.png)
@@ -218,7 +218,7 @@ The following rule sets up a permanent redirect to a URL that retains the origin
 
 ![\[A rule that redirects the request to a URL that retains the original protocol, port, hostname, and query parameters, and uses the #{path} keyword to create a modified path.\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/redirect_path.png)
 
-**Example Example redirect action for the AWS CLI**  
+**Example redirect action for the AWS CLI**  
 You can specify an action when you create or modify a rule\. For more information, see the [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) and [modify\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-rule.html) commands\. The following action redirects an HTTP request to an HTTPS request on port 443, with the same host name, path, and query string as the HTTP request\.  
 
 ```
@@ -275,7 +275,7 @@ For demos, see [Advanced request routing](https://exampleloadbalancer.com/advanc
 
 You can use HTTP header conditions to configure rules that route requests based on the HTTP headers for the request\. You can specify the names of standard or custom HTTP header fields\. The header name and the match evaluation are not case\-sensitive\. The following wildcard characters are supported in the comparison strings: \* \(matches 0 or more characters\) and ? \(matches exactly 1 character\)\. Wildcard characters are not supported in the header name\.
 
-**Example Example HTTP header condition for the AWS CLI**  
+**Example HTTP header condition for the AWS CLI**  
 You can specify conditions when you create or modify a rule\. For more information, see the [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) and [modify\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify_rule.html) commands\. The following condition is satisfied by requests with a User\-Agent header that matches one of the specified strings\.  
 
 ```
@@ -296,7 +296,7 @@ You can use HTTP request method conditions to configure rules that route request
 
 We recommend that you route GET and HEAD requests in the same way, because the response to a HEAD request may be cached\.
 
-**Example Example HTTP method condition for the AWS CLI**  
+**Example HTTP method condition for the AWS CLI**  
 You can specify conditions when you create or modify a rule\. For more information, see the [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) and [modify\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify_rule.html) commands\. The following condition is satisfied by requests that use the specified method\.  
 
 ```
@@ -329,7 +329,7 @@ You must include at least one "\." character\. You can include only alphabetical
 
 The rule **\*\.example\.com** matches **test\.example\.com** but doesn't match **example\.com**\.
 
-**Example Example host header condition for the AWS CLI**  
+**Example host header condition for the AWS CLI**  
 You can specify conditions when you create or modify a rule\. For more information, see the [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) and [modify\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify_rule.html) commands\. The following condition is satisfied by requests with a host header that matches the specified string\.  
 
 ```
@@ -362,7 +362,7 @@ A path pattern is case\-sensitive, can be up to 128 characters in length, and ca
 
 The path pattern is used to route requests but does not alter them\. For example, if a rule has a path pattern of `/img/*`, the rule would forward a request for `/img/picture.jpg` to the specified target group as a request for `/img/picture.jpg`\.
 
-**Example Example path pattern condition for the AWS CLI**  
+**Example path pattern condition for the AWS CLI**  
 You can specify conditions when you create or modify a rule\. For more information, see the [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) and [modify\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify_rule.html) commands\. The following condition is satisfied by requests with a URL that contains the specified string\.  
 
 ```
@@ -380,7 +380,7 @@ You can specify conditions when you create or modify a rule\. For more informati
 
 You can use query string conditions to configure rules that route requests based on key/value pairs or values in the query string\. The match evaluation is not case\-sensitive\. The following wildcard characters are supported: \* \(matches 0 or more characters\) and ? \(matches exactly 1 character\)\.
 
-**Example Example query string condition for the AWS CLI**  
+**Example query string condition for the AWS CLI**  
 You can specify conditions when you create or modify a rule\. For more information, see the [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) and [modify\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify_rule.html) commands\. The following condition is satisfied by requests with a query string that includes either a key/value pair of "version=v1" or any key set to "example"\.  
 
 ```
@@ -410,7 +410,7 @@ If a client is behind a proxy, this is the IP address of the proxy, not the IP a
 
 This condition is not satisfied by the addresses in the X\-Forwarded\-For header\. To search for addresses in the X\-Forwarded\-For header, use an `http-header` condition\.
 
-**Example Example source IP condition for the AWS CLI**  
+**Example source IP condition for the AWS CLI**  
 You can specify conditions when you create or modify a rule\. For more information, see the [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) and [modify\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify_rule.html) commands\. The following condition is satisfied by requests with a source IP address in one of the specified CIDR blocks\.  
 
 ```

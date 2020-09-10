@@ -33,7 +33,7 @@ The log files include events for all AWS API calls for your AWS account, not jus
 
 The following are example CloudTrail log records for Elastic Load Balancing for a user who created an Application Load Balancer and then deleted it using the AWS CLI\. You can identify the CLI using the `userAgent` elements\. You can identify the requested API calls using the `eventName` elements\. Information about the user \(`Alice`\) can be found in the `userIdentity` element\.
 
-**Example Example: CreateLoadBalancer**  
+**Example: CreateLoadBalancer**  
 
 ```
 {
@@ -84,7 +84,7 @@ The following are example CloudTrail log records for Elastic Load Balancing for 
 }
 ```
 
-**Example Example: DeleteLoadBalancer**  
+**Example: DeleteLoadBalancer**  
 
 ```
 {

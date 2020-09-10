@@ -14,7 +14,7 @@ After you disable an Availability Zone, the targets in that Availability Zone re
 
 1. On the **Description** tab, under **Basic Configuration**, choose **Edit Availability Zones**\.
 
-1. To enable an Availability Zone, select the check box for that Availability Zone\. If there is one subnet for that Availability Zone, it is selected\. If there is more than one subnet for that Availability Zone, select one of the subnets\. Note that you can select only one subnet per Availability Zone\.
+1. To enable a zone, select the check box for that zone and select one subnet\. If there is only one subnet for that zone, it is selected\. If there is more than one subnet for that zone, select one of the subnets\.
 
 1. To change the subnet for an enabled Availability Zone, choose **Change subnet** and select one of the other subnets\.
 

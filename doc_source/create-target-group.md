@@ -71,8 +71,7 @@ You can add or remove targets from your target group at any time\. For more info
 
    1. \(Optional\) For **Protocol** and **Port**, modify the default values as needed\.
 
-   1. For **VPC**, select a virtual private cloud \(VPC\)\.  
-![\[The Create target group dialog box if the target type is Instance or IP.\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/create_target_group.png)
+   1. For **VPC**, select a virtual private cloud \(VPC\)\.
 
 1. If the target type is **Lambda function**, do the following:
 
@@ -81,8 +80,7 @@ You can add or remove targets from your target group at any time\. For more info
       + Create a new Lambda function and select it
       + Register the Lambda function after you create the target group
 
-   1. \(Optional\) To enable health checks, choose **Health check**, **Enable**\.  
-![\[The Create target group dialog box if the target type is Lambda.\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/create_target_group_lambda.png)
+   1. \(Optional\) To enable health checks, choose **Health check**, **Enable**\.
 
 1. \(Optional\) For **Health check settings** and **Advanced health check settings**, modify the default settings as needed\.
 

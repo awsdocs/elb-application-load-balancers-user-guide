@@ -48,13 +48,6 @@ Using an Application Load Balancer instead of a Classic Load Balancer has the fo
 
 For more information about the features supported by each load balancer type, see [Comparison of Elastic Load Balancing products](https://aws.amazon.com/elasticloadbalancing/details/#compare)\.
 
-## How to get started<a name="application-load-balancer-getting-started"></a>
-
-To create an Application Load Balancer, try one of the following tutorials:
-+ [Getting started with Elastic Load Balancing](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/load-balancer-getting-started.html) in the *Elastic Load Balancing User Guide*\.
-+ [Tutorial: Use path\-based routing with your Application Load Balancer](tutorial-load-balancer-routing.md)
-+ [Tutorial: Use microservices as targets with your Application Load Balancer](tutorial-target-ecs-containers.md)
-
 ## Related services<a name="application-load-balancer-related-services"></a>
 
 Elastic Load Balancing works with the following services to improve the availability and scalability of your applications\.

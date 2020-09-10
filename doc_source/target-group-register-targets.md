@@ -73,11 +73,9 @@ The instance must be in the virtual private cloud \(VPC\) that you specified for
 
 1. On the **Targets** tab, choose **Edit**\.
 
-1. To register instances, select them from **Instances**, modify the default instance port as needed, and choose **Add to registered**\.  
-![\[The Register and deregister dialog box.\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/register_instances.png)
+1. To register instances, select them from **Instances**, modify the default instance port as needed, and choose **Add to registered**\.
 
-1. To deregister instances, select them from **Registered instances** and choose **Remove**\.  
-![\[The Register and deregister dialog box.\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/deregister_instances.png)
+1. To deregister instances, select them from **Registered instances** and choose **Remove**\.
 
 1. Choose **Save**\.
 
@@ -125,11 +123,9 @@ The IP addresses that you register must be from one of the following CIDR blocks
 
 1. On the **Targets** tab, choose **Edit**\.
 
-1. To register IP addresses, choose the **Register targets** icon \(the plus sign\) in the menu bar\. For each IP address, select the network, type the IP address and port, and choose **Add to list**\. When you are finished specifying addresses, choose **Register**\.  
-![\[The Register targets screen.\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/register_ip_addresses.png)
+1. To register IP addresses, choose the **Register targets** icon \(the plus sign\) in the menu bar\. For each IP address, select the network, type the IP address and port, and choose **Add to list**\. When you are finished specifying addresses, choose **Register**\.
 
-1. To deregister IP addresses, choose the **Deregister targets** icon \(the minus sign\) in the menu bar\. If you have many registered IP addresses, you might find it helpful to add a filter or change the sort order\. Select the IP addresses and then choose **Deregister**\.  
-![\[The Deregister targets screen.\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/deregister_ip_addresses.png)
+1. To deregister IP addresses, choose the **Deregister targets** icon \(the minus sign\) in the menu bar\. If you have many registered IP addresses, you might find it helpful to add a filter or change the sort order\. Select the IP addresses and then choose **Deregister**\.
 
 1. To leave this screen, choose the **Back to target group** icon \(the back button\) in the menu bar\.
 

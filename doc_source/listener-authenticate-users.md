@@ -12,7 +12,7 @@ The following use cases are supported:
 Do the following if you are using an OIDC\-compliant IdP with your Application Load Balancer:
 + Create a new OIDC app in your IdP\. You must configure a client ID and a client secret\.
 + Get the following endpoints published by the IdP: authorization, token, and user info\. You can locate this information in the well\-known config\.
-+ Whitelist one of the following redirect URLs in your IdP app, whichever your users will use, where DNS is the domain name of your load balancer and CNAME is the DNS alias for your application:
++ Allow one of the following redirect URLs in your IdP app, whichever your users will use, where DNS is the domain name of your load balancer and CNAME is the DNS alias for your application:
   + https://*DNS*/oauth2/idpresponse
   + https://*CNAME*/oauth2/idpresponse
 
@@ -24,10 +24,10 @@ Do the following if you are using Amazon Cognito user pools with your Applicatio
 + Create a user pool domain\. For more information, see [Adding a Domain name for your user pool](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-domain.html) in the *Amazon Cognito Developer Guide*\.
 + Verify that the requested scope returns an ID token\. For example, the default scope, `openid` returns an ID token but the `aws.cognito.signin.user.admin` scope does not\.
 + To federate with a social or corporate IdP, enable the IdP in the federation section\. For more information, see [Add social sign\-in to a user pool](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-configuring-federation-with-social-idp.html) or [Add sign\-in with a SAML IdP to a user pool](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-configuring-federation-with-saml-2-0-idp.html) in the *Amazon Cognito Developer Guide*\.
-+ Whitelist the following redirect URLs in the callback URL field for Amazon Cognito, where DNS is the domain name of your load balancer, and CNAME is the DNS alias for your application \(if you are using one\):
++ Allow the following redirect URLs in the callback URL field for Amazon Cognito, where DNS is the domain name of your load balancer, and CNAME is the DNS alias for your application \(if you are using one\):
   + https://*DNS*/oauth2/idpresponse
   + https://*CNAME*/oauth2/idpresponse
-+ Whitelist your user pool domain on your IdP app's callback URL\. Use the format for your IdP\. For example:
++ Allow your user pool domain on your IdP app's callback URL\. Use the format for your IdP\. For example:
   + https://*domain\-prefix*\.auth\.*region*\.amazoncognito\.com/saml2/idpresponse
   + https://*user\-pool\-domain*/oauth2/idpresponse
 
@@ -249,7 +249,7 @@ payload = jwt.decode(encoded_jwt, pub_key, algorithms=['ES256'])
 
 ## Authentication logout and session timeout<a name="authentication-logout-timeout"></a>
 
-When an application needs to log out an authenticated user, it should set the expiration time of the authentication session cookie to \-1 and redirect the client to the IdP logout endpoint \(if the IdP supports one\)\. To prevent users from reusing a deleted cookie, we recommend that you configure as short an expiration time for the access token as is reasonable\. If a client provides a load balancer with an authorization session cookie that has an expired access token with a non\-NULL refresh token, the load balancer contacts the IdP to determine whether the user is still logged in\.
+When an application needs to log out an authenticated user, it should set the expiration time of the authentication session cookie to \-1 and redirect the client to the IdP logout endpoint \(if the IdP supports one\)\. To prevent users from reusing a deleted cookie, we recommend that you configure as short an expiration time for the access token as is reasonable\. If a client provides a load balancer with a session cookie that has an expired access token with a non\-NULL refresh token, the load balancer contacts the IdP to determine whether the user is still logged in\.
 
 The refresh token and the session timeout work together as follows:
 + If the session timeout is shorter than the access token expiration, the load balancer honors the session timeout\. If the user has an active session with the IdP, the user might not be prompted to log in again\. Otherwise, the user is redirected to log in\.

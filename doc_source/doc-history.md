@@ -5,6 +5,7 @@ The following table describes the releases for Application Load Balancers\.
 
 | Feature | Description | Date | 
 | --- | --- | --- | 
+| Outpost support | You can provision an Application Load Balancer on your Outpost\. The load balancer operates in a single subnet and scales automatically using capacity from the Outpost\. | September 8, 2020 | 
 | Desync mitigation mode | This release adds support for desync migitation mode\. For more information, see [Desync mitigation mode](application-load-balancers.md#desync-mitigation-mode)\. | August 17, 2020 | 
 | Least outstanding requests | This release adds support for the least outstanding requests algorithm\. For more information, see [Routing algorithm](load-balancer-target-groups.md#modify-routing-algorithm)\. | November 25, 2019 | 
 | Weighted target groups | This release adds support for forward actions with multiple target groups\. Requests are distributed to these target groups based on the weight you specify for each target group\. For more information, see [Forward actions](load-balancer-listeners.md#forward-actions)\. | November 19, 2019 | 

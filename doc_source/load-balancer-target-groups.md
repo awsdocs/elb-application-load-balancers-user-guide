@@ -28,7 +28,7 @@ Target groups support the following protocols and ports:
 + **Protocols**: HTTP, HTTPS
 + **Ports**: 1\-65535
 
-If a target group is configured with the HTTPS protocol or uses HTTPS health checks, the TLS connections to the targets use the security settings from the `ELBSecurityPolicy2016-08` policy\. The load balancer establishes TLS connections with the targets using certificates that you install on the targets\. The load balancer does not validate these certificates\. Therefore, you can use self\-signed certificates or certificates that have expired\. Because the load balancer is in a virtual private cloud \(VPC\), traffic between the load balancer and the targets is authenticated at the packet level, so it is not at risk of man\-in\-the\-middle attacks or spoofing even if the certificates on the targets are not valid\.
+If a target group is configured with the HTTPS protocol or uses HTTPS health checks, the TLS connections to the targets use the security settings from the `ELBSecurityPolicy-2016-08` policy\. The load balancer establishes TLS connections with the targets using certificates that you install on the targets\. The load balancer does not validate these certificates\. Therefore, you can use self\-signed certificates or certificates that have expired\. Because the load balancer is in a virtual private cloud \(VPC\), traffic between the load balancer and the targets is authenticated at the packet level, so it is not at risk of man\-in\-the\-middle attacks or spoofing even if the certificates on the targets are not valid\.
 
 ## Target type<a name="target-type"></a>
 
@@ -52,7 +52,7 @@ When the target type is `ip`, you can specify IP addresses from one of the follo
 + 172\.16\.0\.0/12 \(RFC 1918\)
 + 192\.168\.0\.0/16 \(RFC 1918\)
 
-These supported CIDR blocks enable you to register the following with a target group: ClassicLink instances, instances in a VPC that is peered to the load balancer VPC (same Region or different Region), AWS resources that are addressable by IP address and port \(for example, databases\), and on\-premises resources linked to AWS through AWS Direct Connect or a VPN connection\.
+These supported CIDR blocks enable you to register the following with a target group: ClassicLink instances, instances in a VPC that is peered to the load balancer VPC \(same Region or different Region\), AWS resources that are addressable by IP address and port \(for example, databases\), and on\-premises resources linked to AWS through AWS Direct Connect or a VPN connection\.
 
 **Important**  
 You can't specify publicly routable IP addresses\.
@@ -63,7 +63,7 @@ If the target type of your target group is `lambda`, you can register a single L
 
 ## Registered targets<a name="registered-targets"></a>
 
-Your load balancer serves as a single point of contact for clients and distributes incoming traffic across its healthy registered targets\. You can register each target with one or more target groups\. You can register each EC2 instance or IP address with the same target group multiple times using different ports, which enables the load balancer to route requests to microservices\.
+Your load balancer serves as a single point of contact for clients and distributes incoming traffic across its healthy registered targets\. You can register each target with one or more target groups\.
 
 If demand on your application increases, you can register additional targets with one or more target groups in order to handle the demand\. The load balancer starts routing requests to a newly registered target as soon as the registration process completes and the target passes the initial health checks\.
 

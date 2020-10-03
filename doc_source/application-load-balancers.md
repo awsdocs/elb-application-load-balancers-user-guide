@@ -202,7 +202,7 @@ The following table describes how Application Load Balancers treat requests base
 | Ambiguous | Allowed | Allowed¹ | Blocked | 
 | Severe | Allowed | Blocked | Blocked | 
 
-¹ Routes the requests but closes the client and target connections\.
+¹ Routes the requests but closes the client and target connections\. You might incur additional charges if your load balancer receives a large number of Ambiguous requests in Defensive mode\. This is because the increased number of new connections per second contributes to the Load Balancer Capacity Units \(LCU\) used per hour\. You can use the `NewConnectionCount` metric to compare how your load balancer establishes new connections in Monitor mode and Defensive mode\.
 
 **To update desync mitigation mode using the console**
 

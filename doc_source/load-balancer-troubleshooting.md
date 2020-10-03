@@ -78,7 +78,13 @@ Possible causes:
 
 ### HTTP 401: Unauthorized<a name="http-401-issues"></a>
 
-You configured a listener rule to authenticate users\. Either you configured `OnUnauthenticatedRequest` to deny unauthenticated users or the IdP denied access\.
+You configured a listener rule to authenticate users, but one of the following is true:
++ You configured `OnUnauthenticatedRequest` to deny unauthenticated users or the IdP denied access\.
++ The load balancer is unable to communicate with the IdP token endpoint or the IdP user info endpoint\. Verify that the security groups for your load balancer and the network ACLs for your VPC allow outbound access to these endpoints\. Verify that your VPC has internet access\. If you have an internal\-facing load balancer, use a NAT gateway to enable internet access\.
++ The size of the claims returned by the IdP exceeded the maximum size supported by the load balancer\.
++ A client submitted an HTTP/1\.0 request without a host header, and the load balancer was unable to generate a redirect URL\.
++ A client submitted a request without an HTTP protocol, and the load balancer was unable to generate a redirect URL\.
++ The requested scope doesn't return an ID token\.
 
 ### HTTP 403: Forbidden<a name="http-403-issues"></a>
 
@@ -112,14 +118,7 @@ The load balancer received an **X\-Forwarded\-For** request header with more tha
 
 ### HTTP 500: Internal server error<a name="http-500-issues"></a>
 
-Possible causes:
-+ You configured an AWS WAF web access control list \(web ACL\) and there was an error executing the web ACL rules\.
-+ You configured a listener rule to authenticate users, but one of the following is true:
-  + The load balancer is unable to communicate with the IdP token endpoint or the IdP user info endpoint\. Verify that the security groups for your load balancer and the network ACLs for your VPC allow outbound access to these endpoints\. Verify that your VPC has internet access\. If you have an internal\-facing load balancer, use a NAT gateway to enable internet access\.
-  + The size of the claims returned by the IdP exceeded the maximum size supported by the load balancer\.
-  + A client submitted an HTTP/1\.0 request without a host header, and the load balancer was unable to generate a redirect URL\.
-  + A client submitted a request without an HTTP protocol, and the load balancer was unable to generate a redirect URL\.
-  + The requested scope doesn't return an ID token\.
+You configured an AWS WAF web access control list \(web ACL\) and there was an error executing the web ACL rules\.
 
 ### HTTP 501: Not implemented<a name="http-501-issues"></a>
 

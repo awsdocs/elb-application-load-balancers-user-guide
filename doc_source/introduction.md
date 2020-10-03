@@ -46,7 +46,7 @@ Using an Application Load Balancer instead of a Classic Load Balancer has the fo
 + Access logs contain additional information and are stored in compressed format\.
 + Improved load balancer performance\.
 
-For more information about the features supported by each load balancer type, see [Comparison of Elastic Load Balancing products](https://aws.amazon.com/elasticloadbalancing/details/#compare)\.
+For more information about the features supported by each load balancer type, see [Product comparisons](http://aws.amazon.com/elasticloadbalancing/features/#Product_comparisons) for Elastic Load Balancing\.
 
 ## Related services<a name="application-load-balancer-related-services"></a>
 

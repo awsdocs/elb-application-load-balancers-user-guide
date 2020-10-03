@@ -396,7 +396,7 @@ Use one of the following options to prepare an S3 bucket for access logging\.
        "Principal": {
            "Service": "logdelivery.elb.amazonaws.com"
        },
-       "Action": "s3.PutObject",
+       "Action": "s3:PutObject",
        "Resource": "arn:aws:s3:::bucket-name/prefix/AWSLogs/your-aws-account-id/*",
        "Condition": {
            "StringEquals": {

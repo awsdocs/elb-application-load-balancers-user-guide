@@ -201,7 +201,7 @@ Use the [modify\-target\-group\-attributes](https://docs.aws.amazon.com/cli/late
 
 By default, a target starts to receive its full share of requests as soon as it is registered with a target group and passes an initial health check\. Using slow start mode gives targets time to warm up before the load balancer sends them a full share of requests\.
 
-After you enable slow start for a target group, its targets enter slow start mode when they are considered healthy by the target group\. A target in slow start mode exits slow start mode when the configured slow start duration period elapses or the target becomes unhealthy\. The load balancer linearly increases the number of requests that it can send to a target in slow start mode\. After a healthy target exits slow start mode, the load balancer can send it a a full share of requests\.
+After you enable slow start for a target group, its targets enter slow start mode when they are considered healthy by the target group\. A target in slow start mode exits slow start mode when the configured slow start duration period elapses or the target becomes unhealthy\. The load balancer linearly increases the number of requests that it can send to a target in slow start mode\. After a healthy target exits slow start mode, the load balancer can send it a full share of requests\.
 
 **Considerations**
 + When you enable slow start for a target group, the healthy targets registered with the target group do not enter slow start mode\.

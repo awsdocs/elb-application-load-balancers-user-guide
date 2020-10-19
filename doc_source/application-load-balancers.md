@@ -97,7 +97,7 @@ Indicates whether HTTP/2 is enabled\. The default is `true`\.
 
 ## IP address type<a name="ip-address-type"></a>
 
-You can set the types of IP addresses that clients can use with your internet\-facing load balancer\. Clients must use IPv4 addresses with internal load balancers\.
+You can set the types of IP addresses that clients can use with your load balancer\. For internet-facing locad balancer it can be either ipv4 or dualstack. For internal load balancer, clients can only use ipv4 (dualstak is not supported)\.
 
 The following are the IP address types:
 

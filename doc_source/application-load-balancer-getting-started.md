@@ -46,7 +46,7 @@ On the **Configure Load Balancer** page, complete the following procedure\.
 
    The name of your Application Load Balancer must be unique within your set of Application Load Balancers and Network Load Balancers for the region, can have a maximum of 32 characters, can contain only alphanumeric characters and hyphens, must not begin or end with a hyphen, and must not begin with "internal\-"\.
 
-1. For **Scheme** and **IP address type**, keep the default values\.
+1. For **Scheme** and **IP address type**, keep the default values of internet-facing and ipv4 respectively\.
 
 1. For **Listeners**, keep the default, which is a listener that accepts HTTP traffic on port 80\.
 

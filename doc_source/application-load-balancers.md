@@ -177,7 +177,7 @@ Use the [modify\-load\-balancer\-attributes](https://docs.aws.amazon.com/cli/lat
 
 ## Desync mitigation mode<a name="desync-mitigation-mode"></a>
 
-Desync mitigation mode protects your application from issues due to HTTP Desync\. The load balancer classifies each request based on its threat level, allows safe requests, and then mitigates risk as specified by the mitigation mode that you specify\. The desync mitigation modes are monitor, defensive, and strictest\. The default is the defensive mode, which provides durable mitigation against HTTP desync while maintaining the availability of your application\. You can switch to strictest mode to ensure that your application receives only requests that comply with RFC 7230\.
+Desync mitigation mode protects your application from issues due to HTTP Desync\. The load balancer classifies each request based on its threat level, allows safe requests, and then mitigates risk as specified by the mitigation mode that you specify\. The desync mitigation modes are monitor, defensive, and strictest\. The default is the defensive mode, which provides durable mitigation against HTTP desync while maintaining the availability of your application\. You can switch to strictest mode to ensure that your application receives only requests that comply with [RFC 7230](https://tools.ietf.org/html/rfc7230)\.
 
 The http\_desync\_guardian library analyzes HTTP requests to prevent HTTP Desync attacks\. For more information, see [HTTP Desync Guardian](https://github.com/aws/http-desync-guardian) on github\.
 

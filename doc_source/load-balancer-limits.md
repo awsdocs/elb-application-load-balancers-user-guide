@@ -30,7 +30,7 @@ Your AWS account has the following quotas related to Application Load Balancers\
 **Rule**
 + Target groups per action: 5
 + Match evaluations per rule: 5
-+ Wildcards per rule: 5
++ Wildcards per rule: 6
 + Actions per rule: 2 \(one optional authentication action, one required action\)
 
 **\*** This quota is shared by target groups for your Application Load Balancers and Network Load Balancers\.

@@ -63,7 +63,7 @@ You can store your log files in your bucket for as long as you want, but you can
 
 ## Access log entries<a name="access-log-entry-format"></a>
 
-Elastic Load Balancing logs requests sent to the load balancer, including requests that never made it to the targets\. For example, if a client sends a malformed request, or there are no healthy targets to respond to the request, the request is still logged\. Note that Elastic Load Balancing does not log health check requests\.
+Elastic Load Balancing logs requests sent to the load balancer, including requests that never made it to the targets\. For example, if a client sends a malformed request, or there are no healthy targets to respond to the request, the request is still logged\. Elastic Load Balancing does not log health check requests\.
 
 Each log entry contains the details of a single request \(or connection in the case of WebSockets\) made to the load balancer\. For WebSockets, an entry is written only after the connection is closed\. If the upgraded connection can't be established, the entry is the same as for an HTTP or HTTPS request\.
 
@@ -437,7 +437,7 @@ Use the [modify\-load\-balancer\-attributes](https://docs.aws.amazon.com/cli/lat
 
 **To verify that Elastic Load Balancing created a test file in your S3 bucket**
 
-After access logging is enabled for your load balancer, Elastic Load Balancing validates the S3 bucket and creates a test file to ensure that the bucket policy specifies the required permissions\. You can use the Amazon S3 console to verify that the test file was created\. Note that the test file is not an actual access log file; it doesn't contain example records\.
+After access logging is enabled for your load balancer, Elastic Load Balancing validates the S3 bucket and creates a test file to ensure that the bucket policy specifies the required permissions\. You can use the Amazon S3 console to verify that the test file was created\. The test file is not an actual access log file; it doesn't contain example records\.
 
 1. Open the Amazon S3 console at [https://console\.aws\.amazon\.com/s3/](https://console.aws.amazon.com/s3/)\.
 

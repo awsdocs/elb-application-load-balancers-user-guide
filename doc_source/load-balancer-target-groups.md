@@ -7,6 +7,7 @@ You define health check settings for your load balancer on a per target group ba
 **Topics**
 + [Routing configuration](#target-group-routing-configuration)
 + [Target type](#target-type)
++ [Protocol version](#target-group-protocol-version)
 + [Registered targets](#registered-targets)
 + [Target group attributes](#target-group-attributes)
 + [Routing algorithm](#modify-routing-algorithm)
@@ -60,6 +61,41 @@ You can't specify publicly routable IP addresses\.
 If you specify targets using an instance ID, traffic is routed to instances using the primary private IP address specified in the primary network interface for the instance\. If you specify targets using IP addresses, you can route traffic to an instance using any private IP address from one or more network interfaces\. This enables multiple applications on an instance to use the same port\. Each network interface can have its own security group\.
 
 If the target type of your target group is `lambda`, you can register a single Lambda function\. When the load balancer receives a request for the Lambda function, it invokes the Lambda function\. For more information, see [Lambda functions as targets](lambda-functions.md)\.
+
+## Protocol version<a name="target-group-protocol-version"></a>
+
+By default, Application Load Balancers send requests to targets using HTTP/1\.1\. You can use the protocol version to send requests to targets using HTTP/2 or gRPC\.
+
+The following table summarizes the result for the combinations of request protocol and target group protocol version\.
+
+
+| Request protocol | Protocol version | Result | 
+| --- | --- | --- | 
+| HTTP/1\.1 | HTTP/1\.1 | Success | 
+| HTTP/2 | HTTP/1\.1 | Success | 
+| gRPC | HTTP/1\.1 | Error | 
+| HTTP/1\.1 | HTTP/2 | Error | 
+| HTTP/2 | HTTP/2 | Success | 
+| gRPC | HTTP/2 | Success if targets support gRPC | 
+| HTTP/1\.1 | gRPC | Error | 
+| HTTP/2 | gRPC | Success if a POST request | 
+| gRPC | gRPC | Success | 
+
+**Considerations for the gRPC protocol version**
++ The only supported listener protocol is HTTPS\.
++ The only supported action type for listener rules is `forward`\.
++ The only supported target types are `instance` and `ip`\.
++ The load balancer parses gRPC requests and routes the gRPC calls to the appropriate target groups based on the package, service, and method\.
++ The load balancer supports unary, client\-side streaming, server\-side streaming, and bi\-directional streaming\.
++ You must provide a custom health check method with the format `/package.service/method`\.
++ You must specify the gRPC status codes to use when checking for a successful response from a target\.
++ You cannot use Lambda functions as targets\.
+
+**Considerations for the HTTP/2 protocol version**
++ The only supported listener protocol is HTTPS\.
++ The only supported action type for listener rules is `forward`\.
++ The only supported target types are `instance` and `ip`\.
++ The load balancer supports streaming from clients\. The load balancer does not support streaming to the targets\.
 
 ## Registered targets<a name="registered-targets"></a>
 
@@ -261,6 +297,7 @@ Application Load Balancers support load balancer\-generated cookies only\. The c
 
 **Considerations**
 + If you are using multiple layers of Application Load Balancers, you can enable sticky sessions on one layer only, because the load balancers would use the same cookie name\.
++ If you have a [forward action](load-balancer-listeners.md#forward-actions) with multiple target groups and one or more of the target groups has sticky sessions enabled, you must enable target group stickiness\.
 + WebSockets connections are inherently sticky\. If the client requests a connection upgrade to WebSockets, the target that returns an HTTP 101 status code to accept the connection upgrade is the target used in the WebSockets connection\. After the WebSockets upgrade is complete, cookie\-based stickiness is not used\.
 + Application Load Balancers use the Expires attribute in the cookie header instead of the Max\-Age header\.
 + Application Load Balancers do not support cookie values that are URL encoded\.

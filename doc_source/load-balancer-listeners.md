@@ -54,7 +54,7 @@ Each rule condition has a type and configuration information\. When the conditio
 
 ## Rule action types<a name="rule-action-types"></a>
 
-The following are the supported action types for a rule:
+The following are the supported action types for a listener rule:
 
 `authenticate-cognito`  
 \[HTTPS listeners\] Use Amazon Cognito to authenticate users\. For more information, see [Authenticate users using an Application Load Balancer](listener-authenticate-users.md)\.
@@ -72,6 +72,8 @@ Forward requests to the specified target groups\. For more information, see [For
 Redirect requests from one URL to another\. For more information, see [Redirect actions](#redirect-actions)\.
 
 The action with the lowest order value is performed first\. Each rule must include exactly one of the following actions: `forward`, `redirect`, or `fixed-response`, and it must be the last action to be performed\.
+
+If the protocol version is gRPC or HTTPS, the only supported actions are `forward` actions\.
 
 ### Fixed\-response actions<a name="fixed-response-actions"></a>
 
@@ -147,7 +149,7 @@ The following action forwards requests to the two specified target groups, based
 ```
 
 **Example forward action with stickiness enabled**  
-If you have a forward rule with multiple target groups and one or more of the target groups has [sticky sessions](load-balancer-target-groups.md#sticky-sessions) enabled, you must enable target group stickiness\.  
+If you have a forward action with multiple target groups and one or more of the target groups has [sticky sessions](load-balancer-target-groups.md#sticky-sessions) enabled, you must enable target group stickiness\.  
 The following action forwards requests to the two specified target groups, with target group stickiness enabled\. Requests that do not contain the stickiness cookies are routed based on the weight of each target group\.  
 
 ```
@@ -356,11 +358,18 @@ A path pattern is case\-sensitive, can be up to 128 characters in length, and ca
 + \* \(matches 0 or more characters\)
 + ? \(matches exactly 1 character\)
 
-**Example path patterns**
+If the protocol version is gRPC, conditions can be specific to a package, service, or method\.
+
+**Example HTTP path patterns**
 + `/img/*`
 + `/img/*/pics`
 
-The path pattern is used to route requests but does not alter them\. For example, if a rule has a path pattern of `/img/*`, the rule would forward a request for `/img/picture.jpg` to the specified target group as a request for `/img/picture.jpg`\.
+**Example gRPC path patterns**
++ /package
++ /package\.service/
++ /package\.service/method
+
+The path pattern is used to route requests but does not alter them\. For example, if a rule has a path pattern of `/img/*`, the rule forwards a request for `/img/picture.jpg` to the specified target group as a request for `/img/picture.jpg`\.
 
 **Example path pattern condition for the AWS CLI**  
 You can specify conditions when you create or modify a rule\. For more information, see the [create\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-rule.html) and [modify\-rule](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify_rule.html) commands\. The following condition is satisfied by requests with a URL that contains the specified string\.  

@@ -23,19 +23,19 @@ For more information, see [How Elastic Load Balancing works](https://docs.aws.am
 
 ## Subnets for your load balancer<a name="subnets-load-balancer"></a>
 
-When you create an Application Load Balancer, you must specify one of the following types of subnets: Availability Zone, Local Zone, or Outpost\.
+When you create an Application Load Balancer, you must specify one of the following types of subnets: Availability Zone, Local Zone, or Outpost\.<a name="availability-zones"></a>
 
 **Availability Zones**
 
 You must select at least two Availability Zone subnets\. The following restrictions apply:
 + Each subnet must be from a different Availability Zone\.
-+ To ensure that your load balancer can scale properly, verify that each Availability Zone subnet for your load balancer has a CIDR block with at least a `/27` bitmask \(for example, `10.0.0.0/27`\) and at least 8 free IP addresses\. Your load balancer uses these IP addresses to establish connections with the targets\.
++ To ensure that your load balancer can scale properly, verify that each Availability Zone subnet for your load balancer has a CIDR block with at least a `/27` bitmask \(for example, `10.0.0.0/27`\) and at least 8 free IP addresses\. Your load balancer uses these IP addresses to establish connections with the targets\.<a name="local-zones"></a>
 
 **Local Zones**
 
 You can specify a one or more Local Zone subnets\. The following restrictions apply:
 + You cannot use AWS WAF with the load balancer\.
-+ You cannot use a Lambda function as a target\.
++ You cannot use a Lambda function as a target\.<a name="outposts"></a>
 
 **Outposts**
 

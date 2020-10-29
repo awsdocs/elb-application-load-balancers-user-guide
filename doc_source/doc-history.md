@@ -5,6 +5,7 @@ The following table describes the releases for Application Load Balancers\.
 
 | Feature | Description | Date | 
 | --- | --- | --- | 
+| gRPC and HTTP/2 support | This release adds support for gRPC workloads and end\-to\-end HTTP/2\. For more information, see [Protocol version](load-balancer-target-groups.md#target-group-protocol-version)\. | October 29, 2020 | 
 | Outpost support | You can provision an Application Load Balancer on your Outpost\. The load balancer operates in a single subnet and scales automatically using capacity from the Outpost\. | September 8, 2020 | 
 | Desync mitigation mode | This release adds support for desync migitation mode\. For more information, see [Desync mitigation mode](application-load-balancers.md#desync-mitigation-mode)\. | August 17, 2020 | 
 | Least outstanding requests | This release adds support for the least outstanding requests algorithm\. For more information, see [Routing algorithm](load-balancer-target-groups.md#modify-routing-algorithm)\. | November 25, 2019 | 

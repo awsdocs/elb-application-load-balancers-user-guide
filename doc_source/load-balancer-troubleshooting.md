@@ -14,7 +14,7 @@ The following information can help you troubleshoot issues with your Application
 
 If a target is taking longer than expected to enter the `InService` state, it might be failing health checks\. Your target is not in service until it passes one health check\. For more information, see [Health checks for your target groups](target-group-health-checks.md)\.
 
-Verify that your instance is failing health checks and then check for the following:
+Verify that your instance is failing health checks and then check for the following issues:
 
 **A security group does not allow traffic**  
 The security group associated with an instance must allow traffic from the load balancer using the health check port and health check protocol\. You can add a rule to the instance security group to allow all traffic from the load balancer security group\. Also, the security group for your load balancer must allow traffic to the instances\.
@@ -33,10 +33,10 @@ By default, the success code is 200, but you can optionally specify additional s
 
 ## Clients cannot connect to an internet\-facing load balancer<a name="client-cannot-connect"></a>
 
-If the load balancer is not responding to requests, check for the following:
+If the load balancer is not responding to requests, check for the following issues:
 
 **Your internet\-facing load balancer is attached to a private subnet**  
-Verify that you specified public subnets for your load balancer\. A public subnet has a route to the Internet Gateway for your virtual private cloud \(VPC\)\.
+You must specify public subnets for your load balancer\. A public subnet has a route to the Internet Gateway for your virtual private cloud \(VPC\)\.
 
 **A security group or network ACL does not allow traffic**  
 The security group for the load balancer and any network ACLs for the load balancer subnets must allow inbound traffic from the clients and outbound traffic to the clients on the listener ports\.

@@ -27,6 +27,8 @@ You can add or remove targets from your target group at any time\. For more info
 
    1. \(Optional\) For **Protocol** and **Port**, modify the default values as needed\.
 
+   1. \(Optional\) For **Protocol version**, modify the default value as needed\.
+
    1. For **VPC**, select a virtual private cloud \(VPC\)\.
 
    1. \(Optional\) In the **Health checks** section, modify the default settings as needed\.
@@ -70,6 +72,8 @@ You can add or remove targets from your target group at any time\. For more info
 1. If the target type is **Instance** or **IP**, do the following:
 
    1. \(Optional\) For **Protocol** and **Port**, modify the default values as needed\.
+
+   1. \(Optional\) For **Protocol version**, modify the default value as needed\.
 
    1. For **VPC**, select a virtual private cloud \(VPC\)\.
 

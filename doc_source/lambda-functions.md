@@ -23,7 +23,7 @@ For a demo, see [Lambda target on Application Load Balancer](https://exampleload
 
 The following recommendations apply if you are using your Lambda function with an Application Load Balancer\.
 
-**Permissions to Invoke the Lambda Function**  
+**Permissions to invoke the Lambda function**  
 If you create the target group and register the Lambda function using the AWS Management Console, the console adds the required permissions to your Lambda function policy on your behalf\. Otherwise, after you create the target group and register the function using the AWS CLI, you must use the [add\-permission](https://docs.aws.amazon.com/cli/latest/reference/lambda/add-permission.html) command to grant Elastic Load Balancing permission to invoke your Lambda function\. We recommend that you include the `--source-arn` parameter to restrict function invocation to the specified target group\.
 
 ```
@@ -35,7 +35,7 @@ aws lambda add-permission \
 --source-arn target-group-arn
 ```
 
-**Lambda Function Versioning**  
+**Lambda function versioning**  
 You can register one Lambda function per target group\. To ensure that you can change your Lambda function and that the load balancer always invokes the current version of the Lambda function, create a function alias and include the alias in the function ARN when you register the Lambda function with the load balancer\. For more information, see [AWS Lambda function versioning and aliases](https://docs.aws.amazon.com/lambda/latest/dg/versioning-aliases.html) and [Traffic shifting using aliases](https://docs.aws.amazon.com/lambda/latest/dg/lambda-traffic-shifting-using-aliases.html) in the *AWS Lambda Developer Guide*\.
 
 **Function Timeout**  
@@ -109,7 +109,9 @@ Use the [create\-target\-group](https://docs.aws.amazon.com/cli/latest/reference
 
 The load balancer supports Lambda invocation for requests over both HTTP and HTTPS\. The load balancer sends an event in JSON format\. The load balancer adds the following headers to every request: `X-Amzn-Trace-Id`, `X-Forwarded-For`, `X-Forwarded-Port`, and `X-Forwarded-Proto`\.
 
-If the content type is one of the following types, the load balancer sends the body to the Lambda function as is and sets `isBase64Encoded` to `false`: text/\*, application/json, application/javascript, and application/xml\. For all other types, the load balancer Base64 encodes the body and sets `isBase64Encoded` to `true`\.
+If the `content-encoding` header is present, the load balancer Base64 encodes the body and sets `isBase64Encoded` to `true`\.
+
+If the `content-encoding` header is not present, Base64 encoding depends on the content type\. For the following types, the load balancer sends the body as is and sets `isBase64Encoded` to `false`: text/\*, application/json, application/javascript, and application/xml\. Otherwise, the load balancer Base64 encodes the body and sets `isBase64Encoded` to `true`\.
 
 The following is an example event\.
 

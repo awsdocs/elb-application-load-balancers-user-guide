@@ -12,8 +12,6 @@ This tutorial provides a hands\-on introduction to Application Load Balancers th
 + [Step 6: Create and test your load balancer](#test-load-balancer)
 + [Step 7: Delete your load balancer \(optional\)](#delete-load-balancer)
 
-Alternatively, to create a Network Load Balancer, see [Getting started with Network Load Balancers](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancer-getting-started.html) in the *User Guide for Network Load Balancers*\. To create a Classic Load Balancer, see [Create a Classic Load Balancer](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-getting-started.html) in the *User Guide for Classic Load Balancers*\.
-
 For demos of common load balancer configurations, see [Elastic Load Balancing demos](https://exampleloadbalancer.com/)\.
 
 ## Before you begin<a name="prerequisites"></a>
@@ -22,7 +20,7 @@ For demos of common load balancer configurations, see [Elastic Load Balancing de
 
 ## Step 1: Select a load balancer type<a name="select-load-balancer-type"></a>
 
-Elastic Load Balancing supports three types of load balancers\. For this tutorial, you create an Application Load Balancer\.
+Elastic Load Balancing supports different types of load balancers\. For this tutorial, you create an Application Load Balancer\.
 
 **To create an Application Load Balancer**
 

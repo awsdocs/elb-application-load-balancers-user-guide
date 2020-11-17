@@ -95,6 +95,9 @@ Indicates whether HTTP headers with header fields that are not valid are removed
 `routing.http2.enabled`  
 Indicates whether HTTP/2 is enabled\. The default is `true`\.
 
+`waf.fail_open.enabled`  
+Indicates whether to allow a WAF\-enabled load balancer to route requests to targets if it is unable to forward the request to AWS WAF\. The value is `true` or `false`\. The default is `false`\.
+
 ## IP address type<a name="ip-address-type"></a>
 
 You can set the types of IP addresses that clients can use with your internet\-facing load balancer\. Clients must use IPv4 addresses with internal load balancers\.
@@ -226,3 +229,22 @@ Use the [modify\-load\-balancer\-attributes](https://docs.aws.amazon.com/cli/lat
 You can use AWS WAF with your Application Load Balancer to allow or block requests based on the rules in a web access control list \(web ACL\)\. For more information, see [Working with web ACLs](https://docs.aws.amazon.com/waf/latest/developerguide/web-acl-working-with.html) in the *AWS WAF Developer Guide*\.
 
 To check whether your load balancer integrates with AWS WAF, select your load balancer in the AWS Management Console and choose the **Integrated services** tab\.
+
+By default, if the load balancer cannot get a response from AWS WAF, it returns an HTTP 500 error and does not forward the request\. If you need your load balancer to forward requests to targets even if it is unable to contact AWS WAF, you can enable the WAF fail open attribute\.
+
+**To enable WAF fail open using the console**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. On the navigation pane, under **LOAD BALANCING**, choose **Load Balancers**\.
+
+1. Select the load balancer\.
+
+1. On the **Description** tab, choose **Edit attributes**\.
+
+1. For **WAF fail open**, choose **Enable**\.
+
+1. Choose **Save**\.
+
+**To enable WAF fail open using the AWS CLI**  
+Use the [modify\-load\-balancer\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-load-balancer-attributes.html) command with the `waf.fail_open.enabled` attribute set to `true`\.

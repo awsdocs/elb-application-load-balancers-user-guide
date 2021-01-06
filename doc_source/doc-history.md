@@ -5,6 +5,7 @@ The following table describes the releases for Application Load Balancers\.
 
 | Feature | Description | Date | 
 | --- | --- | --- | 
+| Security policy for FS supporting TLS version 1\.2 | This release adds a security policy for Forward Secrecy \(FS\) supporting TLS version 1\.2\. For more information, see [Security policies](create-https-listener.md#describe-ssl-policies)\. | November 24, 2020 | 
 | WAF fail open support | This release adds support for configuring the behavior of your load balancer if it integrates with AWS WAF\. For more information, see [Application Load Balancers and AWS WAF](application-load-balancers.md#load-balancer-waf)\. | November 13, 2020 | 
 | gRPC and HTTP/2 support | This release adds support for gRPC workloads and end\-to\-end HTTP/2\. For more information, see [Protocol version](load-balancer-target-groups.md#target-group-protocol-version)\. | October 29, 2020 | 
 | Outpost support | You can provision an Application Load Balancer on your Outpost\. The load balancer operates in a single subnet and scales automatically using capacity from the Outpost\. | September 8, 2020 | 

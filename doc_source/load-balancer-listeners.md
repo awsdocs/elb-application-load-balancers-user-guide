@@ -12,6 +12,7 @@ Before you start using your Application Load Balancer, you must add one or more 
 + [Update listener rules](listener-update-rules.md)
 + [Update an HTTPS listener](listener-update-certificates.md)
 + [Authenticate users](listener-authenticate-users.md)
++ [X\-forwarded headers](x-forwarded-headers.md)
 + [Delete a listener](delete-listener.md)
 
 ## Listener configuration<a name="listener-configuration"></a>
@@ -22,7 +23,7 @@ Listeners support the following protocols and ports:
 
 You can use an HTTPS listener to offload the work of encryption and decryption to your load balancer so that your applications can focus on their business logic\. If the listener protocol is HTTPS, you must deploy at least one SSL server certificate on the listener\. For more information, see [Create an HTTPS listener for your Application Load Balancer](create-https-listener.md)\.
 
-Application Load Balancers provide native support for WebSockets\. You can use WebSockets with both HTTP and HTTPS listeners\.
+Application Load Balancers provide native support for WebSockets\. You can upgrade an existing HTTP/1\.1 connection into a WebSocket \(`ws` or `wss`\) connection by using an HTTP connection upgrade\. When you upgrade, the TCP connection used for requests \(to the load balancer as well as to the target\) becomes a persistent WebSocket connection between the client and the target through the load balancer\. You can use WebSockets with both HTTP and HTTPS listeners\. The options that you choose for your listener apply to WebSocket connections as well as to HTTP traffic\. For more information, see [How the WebSocket Protocol Works](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-working-with.websockets.html#distribution-working-with.websockets.how-it-works) in the *Amazon CloudFront Developer Guide*\.
 
 Application Load Balancers provide native support for HTTP/2 with HTTPS listeners\. You can send up to 128 requests in parallel using one HTTP/2 connection\. By default, the load balancer converts these to individual HTTP/1\.1 requests and distributes them across the healthy targets in the target group\. However, you can use the protocol version to send the request to the targets using HTTP/2\. For more information, see [Protocol version](load-balancer-target-groups.md#target-group-protocol-version)\. Because HTTP/2 uses front\-end connections more efficiently, you might notice fewer connections between clients and the load balancer\. You can't use the server\-push feature of HTTP/2\.
 

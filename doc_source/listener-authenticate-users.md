@@ -154,7 +154,9 @@ The subject field \(`sub`\) from the user info endpoint, in plain text\.
 `x-amzn-oidc-data`  
 The user claims, in JSON web tokens \(JWT\) format\.
 
-Applications that require the full user claims can use any standard JWT library to verify the JWT tokens\. These tokens follow the JWT format but are not ID tokens\. The JWT format includes a header, payload, and signature that are base64 URL encoded and includes padding characters at the end\. The JWT signature is ECDSA \+ P\-256 \+ SHA256\.
+Access tokens and user claims are different from ID tokens\. Access tokens and user claims only allow access to server resources, while ID tokens carry additional information to authenticate a user\. The Application Load Balancer authenticates the user and only passes access tokens and claims to the backend but does not pass the ID token information\. 
+
+Applications that require the full user claims can use any standard JWT library to verify the JWT tokens\. These tokens follow the JWT format but are not ID tokens\. The JWT format includes a header, payload, and signature that are base64 URL encoded and includes padding characters at the end\. The JWT signature is ECDSA \+ P\-256 \+ SHA256\. 
 
 The JWT header is a JSON object with the following fields:
 

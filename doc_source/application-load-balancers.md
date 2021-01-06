@@ -43,7 +43,7 @@ You can specify a single Outpost subnet\. The following restrictions apply:
 + You must have installed and configured an Outpost in your on\-premises data center\. You must have a reliable network connection between your Outpost and its AWS Region\. For more information, see the [AWS Outposts User Guide](https://docs.aws.amazon.com/outposts/latest/userguide/)\.
 + The load balancer requires two instances on the Outpost for the load balancer nodes\. The supported instances are the general purpose, compute optimized, and memory optimized instances\. Initially, the instances are `large` instances\. The load balancer scales as needed, from `large` to `xlarge`, `xlarge` to `2xlarge`, and `2xlarge` to `4xlarge`\. If you need additional capacity, the load balancer adds `4xlarge` instances\. If you do not have sufficient instance capacity or available IP addresses to scale the load balancer, the load balancer reports an event to the [AWS Personal Health Dashboard](https://phd.aws.amazon.com/) and the load balancer state is `active_impaired`\.
 + You can register targets by instance ID or IP address\. If you register targets in the AWS Region for the Outpost, they are not used\.
-+ The following features are not available: Lambda functions as targets, AWS WAF integration, authentication support, and integration with AWS Global Accelerator\.
++ The following features are not available: Lambda functions as targets, AWS WAF integration, sticky sessions, authentication support, and integration with AWS Global Accelerator\.
 
 ## Load balancer security groups<a name="load-balancer-security-groups"></a>
 

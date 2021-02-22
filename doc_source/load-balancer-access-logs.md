@@ -255,13 +255,7 @@ arn:aws:elasticloadbalancing:us-east-2:123456789012:targetgroup/my-targets/73e2d
 The following is an example log entry for an HTTP/2 stream\.
 
 ```
-h2 2018-07-02T22:23:00.186641Z app/my-loadbalancer/50dc6c495c0c9188 
-10.0.1.252:48160 10.0.0.66:9000 0.000 0.002 0.000 200 200 5 257 
-"GET https://10.0.2.105:773/ HTTP/2.0" "curl/7.46.0" ECDHE-RSA-AES128-GCM-SHA256 TLSv1.2
-arn:aws:elasticloadbalancing:us-east-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067
-"Root=1-58337327-72bd00b0343d75b906739c42" "-" "-"
-1 2018-07-02T22:22:48.364000Z "redirect" "https://example.com:80/" "-" 10.0.0.66:9000 200 "-" "-"
-```
+h2 2018-07-02T22:23:00.186641Z app/my-loadbalancer/50dc6c495c0c9188 10.0.1.252:48160 120.01.101.66:9000 0.000 0.002 0.000 200 200 5 257 "GET https://api.website.com:773/ HTTP/2.0" "curl/7.46.0" ECDHE-RSA-AES128-GCM-SHA256 TLSv1.2 arn:aws:elasticloadbalancing:us-east-2:123456789012:targetgroup/my-targets/73e2d6bc24d8a067 "Root=1-58337327-72bd00b0343d75b906739c42" "-" "-" 1 2018-07-02T22:22:48.364000Z "redirect" "https://example.com:80/" "-" "10.0.0.66:9000" "200" "-" "-"```
 
 **Example WebSockets Entry**  
 The following is an example log entry for a WebSockets connection\.

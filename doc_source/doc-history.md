@@ -5,6 +5,7 @@ The following table describes the releases for Application Load Balancers\.
 
 | Feature | Description | Date | 
 | --- | --- | --- | 
+| Application\-based stickiness | This release adds an application\-based cookie to support sticky sessions for your load balancer\. For more information, see [Application\-based stickiness](sticky-sessions.md#application-based-stickiness)\. | February 08, 2021 | 
 | Security policy for FS supporting TLS version 1\.2 | This release adds a security policy for Forward Secrecy \(FS\) supporting TLS version 1\.2\. For more information, see [Security policies](create-https-listener.md#describe-ssl-policies)\. | November 24, 2020 | 
 | WAF fail open support | This release adds support for configuring the behavior of your load balancer if it integrates with AWS WAF\. For more information, see [Application Load Balancers and AWS WAF](application-load-balancers.md#load-balancer-waf)\. | November 13, 2020 | 
 | gRPC and HTTP/2 support | This release adds support for gRPC workloads and end\-to\-end HTTP/2\. For more information, see [Protocol version](load-balancer-target-groups.md#target-group-protocol-version)\. | October 29, 2020 | 

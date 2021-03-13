@@ -36,6 +36,7 @@ Amazon's trademarks and trade dress may not be used in
    + [Create a target group](create-target-group.md)
    + [Health checks for your target groups](target-group-health-checks.md)
    + [Register targets with your target group](target-group-register-targets.md)
+   + [Sticky sessions for your Application Load Balancer](sticky-sessions.md)
    + [Lambda functions as targets](lambda-functions.md)
    + [Tags for your target group](target-group-tags.md)
    + [Delete a target group](delete-target-group.md)

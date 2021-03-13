@@ -13,10 +13,10 @@ You define health check settings for your load balancer on a per target group ba
 + [Routing algorithm](#modify-routing-algorithm)
 + [Deregistration delay](#deregistration-delay)
 + [Slow start mode](#slow-start-mode)
-+ [Sticky sessions](#sticky-sessions)
 + [Create a target group](create-target-group.md)
 + [Health checks for your target groups](target-group-health-checks.md)
 + [Register targets with your target group](target-group-register-targets.md)
++ [Sticky sessions for your Application Load Balancer](sticky-sessions.md)
 + [Lambda functions as targets](lambda-functions.md)
 + [Tags for your target group](target-group-tags.md)
 + [Delete a target group](delete-target-group.md)
@@ -124,13 +124,19 @@ The load balancing algorithm determines how the load balancer selects targets wh
 The time period, in seconds, during which the load balancer sends a newly registered target a linearly increasing share of the traffic to the target group\. The range is 30–900 seconds \(15 minutes\)\. The default is 0 seconds \(disabled\)\.
 
 `stickiness.enabled`  
-Indicates whether sticky sessions are enabled\.
+Indicates whether sticky sessions are enabled\. The value is `true` or `false`\. The default is `false`\.
+
+`stickiness.app_cookie.cookie_name`  
+The name of the application cookie\. The application cookie name cannot have the following prefixes: `AWSALB`, `AWSALBAPP`, or `AWSALBTG`; they're reserved for use by the load balancer\.
+
+`stickiness.app_cookie.duration_seconds`  
+The application\-based cookie expiration period, in seconds\. After this period, the cookie is considered stale\. The minimum value is 1 second and the maximum value is 7 days \(604800 seconds\)\. The default value is 1 day \(86400 seconds\)\.
 
 `stickiness.lb_cookie.duration_seconds`  
-The cookie expiration period, in seconds\. After this period, the cookie is considered stale\. The minimum value is 1 second and the maximum value is 7 days \(604800 seconds\)\. The default value is 1 day \(86400 seconds\)\.
+The duration\-based cookie expiration period, in seconds\. After this period, the cookie is considered stale\. The minimum value is 1 second and the maximum value is 7 days \(604800 seconds\)\. The default value is 1 day \(86400 seconds\)\.
 
 `stickiness.type`  
-The type of stickiness\. The possible value is `lb_cookie`\.
+The type of stickiness\. The possible values are `lb_cookie` and `app_cookie`\.
 
 The following target group attribute is supported if the target group type is `lambda`:
 
@@ -145,7 +151,7 @@ Consider using least outstanding requests when the requests for your application
 
 **Considerations**
 + You cannot enable both least outstanding requests and slow start mode\.
-+ If you enable sticky sessions, this overrides the routing algorithm of the target group after the initial target selection\.
++ If you enable sticky sessions, the routing algorithm of the target group is overridden after the initial target selection\.
 + With HTTP/2, the load balancer converts the request to multiple HTTP/1\.1 requests, so least outstanding request treats each HTTP/2 request as multiple requests\.
 + When you use least outstanding requests with WebSockets, the target is selected using least outstanding requests\. The load balancer creates a connection to this target and sends all messages over this connection\.
 
@@ -282,69 +288,3 @@ After you enable slow start for a target group, its targets enter slow start mod
 
 **To update the slow start duration value using the AWS CLI**  
 Use the [modify\-target\-group\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-target-group-attributes.html) command with the `slow_start.duration_seconds` attribute\.
-
-## Sticky sessions<a name="sticky-sessions"></a>
-
-Sticky sessions are a mechanism to route requests to the same target in a target group\. This is useful for servers that maintain state information in order to provide a continuous experience to clients\. To use sticky sessions, the clients must support cookies\.
-
-When a load balancer first receives a request from a client, it routes the request to a target, generates a cookie named AWSALB that encodes information about the selected target, encrypts the cookie, and includes the cookie in the response to the client\. The client should include the cookie that it receives in subsequent requests to the load balancer\. When the load balancer receives a request from a client that contains the cookie, if sticky sessions are enabled for the target group and the request goes to the same target group, the load balancer detects the cookie and routes the request to the same target\. If the cookie is present but cannot be decoded, or if it refers to a target that was deregistered or is unhealthy, the load balancer selects a new target and updates the cookie with information about the new target\.
-
-You enable sticky sessions at the target group level\. You can also set the duration for the stickiness of the load balancer\-generated cookie, in seconds\. The duration is set with each request\. Therefore, if the client sends a request before each duration period expires, the sticky session continues\.
-
-With CORS \(cross\-origin resource sharing\) requests, some browsers require `SameSite=None; Secure` to enable stickiness\. In this case, Elastic Load Balancing generates a second stickiness cookie, AWSALBCORS, which includes the same information as the original stickiness cookie plus this `SameSite` attribute\. Clients receive both cookies\.
-
-Application Load Balancers support load balancer\-generated cookies only\. The contents of these cookies are encrypted using a rotating key\. You cannot decrypt or modify load balancer\-generated cookies\.
-
-**Considerations**
-+ If you are using multiple layers of Application Load Balancers, you can enable sticky sessions on one layer only, because the load balancers would use the same cookie name\.
-+ If you have a [forward action](load-balancer-listeners.md#forward-actions) with multiple target groups and one or more of the target groups has sticky sessions enabled, you must enable target group stickiness\.
-+ WebSockets connections are inherently sticky\. If the client requests a connection upgrade to WebSockets, the target that returns an HTTP 101 status code to accept the connection upgrade is the target used in the WebSockets connection\. After the WebSockets upgrade is complete, cookie\-based stickiness is not used\.
-+ Application Load Balancers use the Expires attribute in the cookie header instead of the Max\-Age header\.
-+ Application Load Balancers do not support cookie values that are URL encoded\.
-
-------
-#### [ New console ]
-
-**To enable sticky sessions using the new console**
-
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
-
-1. On the navigation pane, under **LOAD BALANCING**, choose **Target Groups**\.
-
-1. Choose the name of the target group to open its details page\.
-
-1. On the **Group details** tab, in the **Attributes** section, choose **Edit**\.
-
-1. On the **Edit attributes** page, do the following:
-
-   1. Select **Stickiness**\.
-
-   1. For **Stickiness duration**, specify a value between 1 second and 7 days\.
-
-   1. Choose **Save changes**\.
-
-------
-#### [ Old console ]
-
-**To enable sticky sessions using the old console**
-
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
-
-1. On the navigation pane, under **LOAD BALANCING**, choose **Target Groups**\.
-
-1. Select the target group\.
-
-1. On the **Description** tab, choose **Edit attributes**\.
-
-1. On the **Edit attributes** page, do the following:
-
-   1. Select **Enable load balancer generated cookie stickiness**\.
-
-   1. For **Stickiness duration**, specify a value between 1 second and 7 days\.
-
-   1. Choose **Save**\.
-
-------
-
-**To enable sticky sessions using the AWS CLI**  
-Use the [modify\-target\-group\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-target-group-attributes.html) command with the `stickiness.enabled` and `stickiness.lb_cookie.duration_seconds` attributes\.

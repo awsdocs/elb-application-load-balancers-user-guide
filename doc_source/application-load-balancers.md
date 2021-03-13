@@ -29,7 +29,7 @@ When you create an Application Load Balancer, you must specify one of the follow
 
 You must select at least two Availability Zone subnets\. The following restrictions apply:
 + Each subnet must be from a different Availability Zone\.
-+ To ensure that your load balancer can scale properly, verify that each Availability Zone subnet for your load balancer has a CIDR block with at least a `/27` bitmask \(for example, `10.0.0.0/27`\) and at least 8 free IP addresses\. Your load balancer uses these IP addresses to establish connections with the targets\.<a name="local-zones"></a>
++ To ensure that your load balancer can scale properly, verify that each Availability Zone subnet for your load balancer has a CIDR block with at least a `/27` bitmask \(for example, `10.0.0.0/27`\) and at least 8 free IP addresses per subnet\. Your load balancer uses these IP addresses to establish connections with the targets\. Depending on your traffic profile, the load balancer can scale higher and consume up to a maximum of 100 IP addresses distributed across all enabled subnets\. <a name="local-zones"></a>
 
 **Local Zones**
 
@@ -41,9 +41,30 @@ You can specify a one or more Local Zone subnets\. The following restrictions ap
 
 You can specify a single Outpost subnet\. The following restrictions apply:
 + You must have installed and configured an Outpost in your on\-premises data center\. You must have a reliable network connection between your Outpost and its AWS Region\. For more information, see the [AWS Outposts User Guide](https://docs.aws.amazon.com/outposts/latest/userguide/)\.
-+ The load balancer requires two instances on the Outpost for the load balancer nodes\. The supported instances are the general purpose, compute optimized, and memory optimized instances\. Initially, the instances are `large` instances\. The load balancer scales as needed, from `large` to `xlarge`, `xlarge` to `2xlarge`, and `2xlarge` to `4xlarge`\. If you need additional capacity, the load balancer adds `4xlarge` instances\. If you do not have sufficient instance capacity or available IP addresses to scale the load balancer, the load balancer reports an event to the [AWS Personal Health Dashboard](https://phd.aws.amazon.com/) and the load balancer state is `active_impaired`\.
++ The load balancer requires two instances on the Outpost for the load balancer nodes\. The supported instances are shown in the table below\. Initially, the instances are `large` instances\. The load balancer scales as needed, from `large` to `xlarge`, `xlarge` to `2xlarge`, and `2xlarge` to `4xlarge`\. If you need additional capacity, the load balancer adds `4xlarge` instances\. If you do not have sufficient instance capacity or available IP addresses to scale the load balancer, the load balancer reports an event to the [AWS Personal Health Dashboard](https://phd.aws.amazon.com/) and the load balancer state is `active_impaired`\.
 + You can register targets by instance ID or IP address\. If you register targets in the AWS Region for the Outpost, they are not used\.
 + The following features are not available: Lambda functions as targets, AWS WAF integration, sticky sessions, authentication support, and integration with AWS Global Accelerator\.
+
+An Application Load Balancer can be deployed on c5/c5d, m5/m5d, or r5/r5d instances on an Outpost\. The following table shows the size and EBS volume per instance type that the load balancer can use on an Outpost: 
+
+
+| Instance type and size | EBS volume \(GB\) | 
+| --- | --- | 
+| c5/c5d | 
+| large | 50 | 
+| xlarge | 50 | 
+| 2xlarge | 50 | 
+| 4xlarge | 100 | 
+| m5/m5d | 
+| large | 50 | 
+| xlarge | 50 | 
+| 2xlarge | 100 | 
+| 4xlarge | 100 | 
+| r5/r5d | 
+| large | 50 | 
+| xlarge | 100 | 
+| 2xlarge | 100 | 
+| 4xlarge | 100 | 
 
 ## Load balancer security groups<a name="load-balancer-security-groups"></a>
 

@@ -7,6 +7,7 @@ You can register your Lambda functions as targets and configure a listener rule 
 + The maximum size of the request body that you can send to a Lambda function is 1 MB\. For related size limits, see [HTTP header limits](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/how-elastic-load-balancing-works.html#http-header-limits)\.
 + The maximum size of the response JSON that the Lambda function can send is 1 MB\.
 + WebSockets are not supported\. Upgrade requests are rejected with an HTTP 400 code\.
++ Local Zones are not supported\.
 
 **Topics**
 + [Prepare the Lambda function](#prepare-lambda-function)

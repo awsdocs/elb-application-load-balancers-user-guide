@@ -90,13 +90,70 @@ We recommend the `ELBSecurityPolicy-2016-08` policy for compatibility\. You can 
 
 The following table describes the default policy, `ELBSecurityPolicy-2016-08`, and the `ELBSecurityPolicy-FS` policies\. The `ELBSecurityPolicy-` has been removed from policy names in the heading row so that they fit\.
 
-![\[FS Security Policies for Application Load Balancer\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/security_policy_fs.png)
+
+| Security policy | ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/FS-default.png) | ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/FS-1-2-Res-2020-10.png) | ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/FS-1-2-Res-2019-08.png) | ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/FS-1-2-2019-08.png) | ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/FS-1-1-2019-08.png) | ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/FS-2018-06.png) | 
+| --- |--- |--- |--- |--- |--- |--- |
+| **TLS Protocols** | 
+| --- |
+| Protocol\-TLSv1 | ♦ |  |  |  |  | ♦ | 
+| Protocol\-TLSv1\.1 | ♦ |  |  |  | ♦ | ♦ | 
+| Protocol\-TLSv1\.2 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| **TLS Ciphers** | 
+| --- |
+| ECDHE\-ECDSA\-AES128\-GCM\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES128\-GCM\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-ECDSA\-AES128\-SHA256 | ♦ |  | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES128\-SHA256 | ♦ |  | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-ECDSA\-AES128\-SHA | ♦ |  |  | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES128\-SHA | ♦ |  |  | ♦ | ♦ | ♦ | 
+| ECDHE\-ECDSA\-AES256\-GCM\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES256\-GCM\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-ECDSA\-AES256\-SHA384 | ♦ |  | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES256\-SHA384 | ♦ |  | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES256\-SHA | ♦ |  |  | ♦ | ♦ | ♦ | 
+| ECDHE\-ECDSA\-AES256\-SHA | ♦ |  |  | ♦ | ♦ | ♦ | 
+| AES128\-GCM\-SHA256 | ♦ |  |  |  |  |  | 
+| AES128\-SHA256 | ♦ |  |  |  |  |  | 
+| AES128\-SHA | ♦ |  |  |  |  |  | 
+| AES256\-GCM\-SHA384 | ♦ |  |  |  |  |  | 
+| AES256\-SHA256 | ♦ |  |  |  |  |  | 
+| AES256\-SHA | ♦ |  |  |  |  |  | 
+
+\*`ELBSecurityPolicy-FS-1-2-Res-2020-10` is a highly secure and restrictive forward secrecy policy supporting TLS version 1\.2\. It is based on `ELBSecurityPolicy-FS-1-2-Res-2019-08`, but excludes the CBC ciphers\.
 
 ### TLS security policies<a name="tls-security-policies"></a>
 
 The following table describes the default policy, `ELBSecurityPolicy-2016-08`, and the `ELBSecurityPolicy-TLS` policies\. The `ELBSecurityPolicy-` has been removed from policy names in the heading row so that they fit\.
 
-![\[TLS Security Policies for Application Load Balancer\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/security_policy_tls.png)
+
+| Security policy | Default | TLS\-1\-2\-Ext\-2018\-06 | TLS\-1\-2\-2017\-01 | TLS\-1\-1\-2017\-01 | TLS\-1\-0\-2015\-04 † | 
+| --- |--- |--- |--- |--- |--- |
+| **TLS Protocols** | 
+| --- |
+| Protocol\-TLSv1 | ♦ |  |  |  | ♦ | 
+| Protocol\-TLSv1\.1 | ♦ |  |  | ♦ | ♦ | 
+| Protocol\-TLSv1\.2 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| **TLS Ciphers** | 
+| --- |
+| ECDHE\-ECDSA\-AES128\-GCM\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES128\-GCM\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-ECDSA\-AES128\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES128\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-ECDSA\-AES128\-SHA | ♦ | ♦ |  | ♦ | ♦ | 
+| ECDHE\-RSA\-AES128\-SHA | ♦ | ♦ |  | ♦ | ♦ | 
+| ECDHE\-ECDSA\-AES256\-GCM\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES256\-GCM\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-ECDSA\-AES256\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES256\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| ECDHE\-RSA\-AES256\-SHA | ♦ | ♦ |  | ♦ | ♦ | 
+| ECDHE\-ECDSA\-AES256\-SHA | ♦ | ♦ |  | ♦ | ♦ | 
+| AES128\-GCM\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| AES128\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| AES128\-SHA | ♦ | ♦ |  | ♦ | ♦ | 
+| AES256\-GCM\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| AES256\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| AES256\-SHA | ♦ | ♦ |  | ♦ | ♦ | 
+| DES\-CBC3\-SHA |  |  |  |  | ♦ | 
 
 **\*** Do not use this policy unless you must support a legacy client that requires the DES\-CBC3\-SHA cipher, which is a weak cipher\.
 

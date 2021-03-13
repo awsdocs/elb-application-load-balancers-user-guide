@@ -150,7 +150,7 @@ The following action forwards requests to the two specified target groups, based
 ```
 
 **Example forward action with stickiness enabled**  
-If you have a forward action with multiple target groups and one or more of the target groups has [sticky sessions](load-balancer-target-groups.md#sticky-sessions) enabled, you must enable target group stickiness\.  
+If you have a forward action with multiple target groups and one or more of the target groups has [sticky sessions](sticky-sessions.md) enabled, you must enable target group stickiness\.  
 The following action forwards requests to the two specified target groups, with target group stickiness enabled\. Requests that do not contain the stickiness cookies are routed based on the weight of each target group\.  
 
 ```

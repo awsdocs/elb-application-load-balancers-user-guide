@@ -5,7 +5,7 @@ The rules that you define for your listener determine how the load balancer rout
 Each rule consists of a priority, one or more actions, and one or more conditions\. For more information, see [Listener rules](load-balancer-listeners.md#listener-rules)\.
 
 **Note**  
-The console displays a relative sequence number for each rule, not the rule priority\. You can get the priority of a rule by describing it using the AWS CLI or the Elastic Load Balancing API\.
+The console displays the rules in priority order\. However, the console displays a sequence number for each rule, which might differ from the rule priority displayed by the AWS CLI or the Elastic Load Balancing API\.
 
 ## Requirements<a name="update-rule-requirements"></a>
 + Each rule must include exactly one of the following actions: `forward`, `redirect`, or `fixed-response`, and it must be the last action to be performed\.

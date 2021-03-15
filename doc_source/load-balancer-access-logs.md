@@ -454,7 +454,7 @@ After you enable access logging, be sure to disable access logging before you de
 
 ## Disable access logging<a name="disable-access-logging"></a>
 
-You can disable access logging for your load balancer at any time\. After you disable access logging, your access logs remain in your S3 bucket until you delete the them\. For more information, see [Working with buckets](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/BucketOperations.html) in the *Amazon Simple Storage Service Console User Guide*\.
+You can disable access logging for your load balancer at any time\. After you disable access logging, your access logs remain in your S3 bucket until you delete them\. For more information, see [Working with buckets](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/BucketOperations.html) in the *Amazon Simple Storage Service Console User Guide*\.
 
 **To disable access logging using the console**
 

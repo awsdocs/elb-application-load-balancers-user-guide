@@ -103,7 +103,7 @@ Create a target group, which is used in request routing\. If the request content
 
 ------
 
-**To create a target group and deregister the Lambda function using the AWS CLI**  
+**To create a target group and register the Lambda function using the AWS CLI**  
 Use the [create\-target\-group](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-target-group.html) and [register\-targets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/register-targets.html) commands\.
 
 ## Receive events from the load balancer<a name="receive-event-from-load-balancer"></a>

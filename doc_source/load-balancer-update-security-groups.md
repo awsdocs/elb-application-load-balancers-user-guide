@@ -12,12 +12,12 @@ The following rules are recommended for an internet\-facing load balancer\.
 | Inbound | 
 | --- |
 |  Source  |  Port Range  |  Comment  | 
-| 0\.0\.0\.0/0 | *listener* | Allow all inbound traffic on the load balancer listener port | 
+|  0\.0\.0\.0/0  |  *listener*  |  Allow all inbound traffic on the load balancer listener port  | 
 |   Outbound   | 
 | --- |
 |  Destination  |  Port Range  |  Comment  | 
-| *instance security group* | *instance listener* | Allow outbound traffic to instances on the instance listener port | 
-| *instance security group* | *health check* | Allow outbound traffic to instances on the health check port | 
+|  *instance security group*  |  *instance listener*  |  Allow outbound traffic to instances on the instance listener port  | 
+|  *instance security group*  |  *health check*  |  Allow outbound traffic to instances on the health check port  | 
 
 The following rules are recommended for an internal load balancer\.
 
@@ -27,12 +27,31 @@ The following rules are recommended for an internal load balancer\.
 | Inbound | 
 | --- |
 |  Source  |  Port Range  |  Comment  | 
-| *VPC CIDR* | *listener* | Allow inbound traffic from the VPC CIDR on the load balancer listener port | 
+|  *VPC CIDR*  |  *listener*  |  Allow inbound traffic from the VPC CIDR on the load balancer listener port  | 
 |   Outbound   | 
 | --- |
 |  Destination  |  Port Range  |  Comment  | 
-| *instance security group* | *instance listener* | Allow outbound traffic to instances on the instance listener port | 
-| *instance security group* | *health check* | Allow outbound traffic to instances on the health check port | 
+|  *instance security group*  |  *instance listener*  |  Allow outbound traffic to instances on the instance listener port  | 
+|  *instance security group*  |  *health check*  |  Allow outbound traffic to instances on the health check port  | 
+
+The following rules are recommended for an Application Load Balancer used as a target of a Network Load Balancer\.
+
+
+| 
+| 
+| Inbound | 
+| --- |
+|  Source  |  Port Range  |  Comment  | 
+|  *client IP addresses/CIDR*  |  *`alb `listener*  |  Allow inbound client traffic on the load balancer listener port  | 
+|  *VPC CIDR*  |  *`alb `listener*  |  Allow inbound client traffic via AWS PrivateLink on the load balancer listener port  | 
+|  *VPC CIDR*  |  *`alb `listener*  |  Allow inbound health traffic from the Network Load Balancer  | 
+|   Outbound   | 
+| --- |
+|  Destination  |  Port Range  |  Comment  | 
+|  *instance security group*  |  *instance listener*  |  Allow outbound traffic to instances on the instance listener port  | 
+|  *instance security group*  |  *health check*  |  Allow outbound traffic to instances on the health check port  | 
+
+Note that the security groups for your Application Load Balancer use connection tracking to track information about traffic coming from the Network Load Balancer\. This happens regardless of the security group rules set for your Application Load Balancer\. To learn more about Amazon EC2 connection tracking, see [Security group connection tracking](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-connection-tracking.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 We also recommend that you allow inbound ICMP traffic to support Path MTU Discovery\. For more information, see [Path MTU Discovery](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/network_mtu.html#path_mtu_discovery) in the *Amazon EC2 User Guide for Linux Instances*\.
 

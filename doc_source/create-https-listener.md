@@ -25,10 +25,7 @@ The load balancer requires X\.509 certificates \(SSL/TLS server certificates\)\.
 
 When you create a certificate for use with your load balancer, you must specify a domain name\.
 
-We recommend that you create certificates for your load balancer using [AWS Certificate Manager \(ACM\)](https://aws.amazon.com/certificate-manager/)\. ACM integrates with Elastic Load Balancing so that you can deploy the certificate on your load balancer\. For more information, see the [AWS Certificate Manager User Guide](https://docs.aws.amazon.com/acm/latest/userguide/)\.
-
-**Important**  
-ACM supports RSA certificates with a 4096 key length and EC certificates\. However, you cannot install these certificates on your load balancer through integration with ACM\. You must upload these certificates to IAM in order to use them with your load balancer\.
+We recommend that you create certificates for your load balancer using [AWS Certificate Manager \(ACM\)](https://aws.amazon.com/certificate-manager/)\. ACM supports RSA certificates with 2048, 3072, and 4096\-bit key lengths, and all ECDSA certificates\. ACM integrates with Elastic Load Balancing so that you can deploy the certificate on your load balancer\. For more information, see the [AWS Certificate Manager User Guide](https://docs.aws.amazon.com/acm/latest/userguide/)\.
 
 Alternatively, you can use SSL/TLS tools to create a certificate signing request \(CSR\), then get the CSR signed by a CA to produce a certificate, then import the certificate into ACM or upload the certificate to AWS Identity and Access Management \(IAM\)\. For more information about importing certificates into ACM, see [Importing certificates](https://docs.aws.amazon.com/acm/latest/userguide/import-certificate.html) in the *AWS Certificate Manager User Guide*\. For more information about uploading certificates to IAM, see [Working with server certificates](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_server-certs.html) in the *IAM User Guide*\.
 
@@ -91,69 +88,67 @@ We recommend the `ELBSecurityPolicy-2016-08` policy for compatibility\. You can 
 The following table describes the default policy, `ELBSecurityPolicy-2016-08`, and the `ELBSecurityPolicy-FS` policies\. The `ELBSecurityPolicy-` has been removed from policy names in the heading row so that they fit\.
 
 
-| Security policy | ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/FS-default.png) | ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/FS-1-2-Res-2020-10.png) | ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/FS-1-2-Res-2019-08.png) | ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/FS-1-2-2019-08.png) | ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/FS-1-1-2019-08.png) | ![\[Image NOT FOUND\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/FS-2018-06.png) | 
+| Security policies | ![\[ELBSecurityPolicy-2016-08\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/FS-default.png) | ![\[ELBSecurityPolicy-FS-1-2-Res-2020-10\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/FS-1-2-Res-2020-10.png)  | ![\[ELBSecurityPolicy-FS-1-2-Res-2019-08\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/FS-1-2-Res-2019-08.png)  | ![\[ELBSecurityPolicy-FS-1-2-2019-08\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/FS-1-2-2019-08.png)  | ![\[ELBSecurityPolicy-FS-1-1-2019-08\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/FS-1-1-2019-08.png)  | ![\[ELBSecurityPolicy-FS-2018-06\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/FS-2018-06.png)  | 
 | --- |--- |--- |--- |--- |--- |--- |
 | **TLS Protocols** | 
 | --- |
-| Protocol\-TLSv1 | ♦ |  |  |  |  | ♦ | 
-| Protocol\-TLSv1\.1 | ♦ |  |  |  | ♦ | ♦ | 
-| Protocol\-TLSv1\.2 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
+| Protocol\-TLSv1 | ✓ |  |  |  |  | ✓ | 
+| Protocol\-TLSv1\.1 | ✓ |  |  |  | ✓ | ✓ | 
+| Protocol\-TLSv1\.2 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | 
 | **TLS Ciphers** | 
 | --- |
-| ECDHE\-ECDSA\-AES128\-GCM\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-RSA\-AES128\-GCM\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-ECDSA\-AES128\-SHA256 | ♦ |  | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-RSA\-AES128\-SHA256 | ♦ |  | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-ECDSA\-AES128\-SHA | ♦ |  |  | ♦ | ♦ | ♦ | 
-| ECDHE\-RSA\-AES128\-SHA | ♦ |  |  | ♦ | ♦ | ♦ | 
-| ECDHE\-ECDSA\-AES256\-GCM\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-RSA\-AES256\-GCM\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-ECDSA\-AES256\-SHA384 | ♦ |  | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-RSA\-AES256\-SHA384 | ♦ |  | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-RSA\-AES256\-SHA | ♦ |  |  | ♦ | ♦ | ♦ | 
-| ECDHE\-ECDSA\-AES256\-SHA | ♦ |  |  | ♦ | ♦ | ♦ | 
-| AES128\-GCM\-SHA256 | ♦ |  |  |  |  |  | 
-| AES128\-SHA256 | ♦ |  |  |  |  |  | 
-| AES128\-SHA | ♦ |  |  |  |  |  | 
-| AES256\-GCM\-SHA384 | ♦ |  |  |  |  |  | 
-| AES256\-SHA256 | ♦ |  |  |  |  |  | 
-| AES256\-SHA | ♦ |  |  |  |  |  | 
-
-\*`ELBSecurityPolicy-FS-1-2-Res-2020-10` is a highly secure and restrictive forward secrecy policy supporting TLS version 1\.2\. It is based on `ELBSecurityPolicy-FS-1-2-Res-2019-08`, but excludes the CBC ciphers\.
+| ECDHE\-ECDSA\-AES128\-GCM\-SHA256 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | 
+| ECDHE\-RSA\-AES128\-GCM\-SHA256 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | 
+| ECDHE\-ECDSA\-AES128\-SHA256 | ✓ |  | ✓ | ✓ | ✓ | ✓ | 
+| ECDHE\-RSA\-AES128\-SHA256 | ✓ |  | ✓ | ✓ | ✓ | ✓ | 
+| ECDHE\-ECDSA\-AES128\-SHA | ✓ |  |  | ✓ | ✓ | ✓ | 
+| ECDHE\-RSA\-AES128\-SHA | ✓ |  |  | ✓ | ✓ | ✓ | 
+| ECDHE\-ECDSA\-AES256\-GCM\-SHA384 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | 
+| ECDHE\-RSA\-AES256\-GCM\-SHA384 | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | 
+| ECDHE\-ECDSA\-AES256\-SHA384 | ✓ |  | ✓ | ✓ | ✓ | ✓ | 
+| ECDHE\-RSA\-AES256\-SHA384 | ✓ |  | ✓ | ✓ | ✓ | ✓ | 
+| ECDHE\-RSA\-AES256\-SHA | ✓ |  |  | ✓ | ✓ | ✓ | 
+| ECDHE\-ECDSA\-AES256\-SHA | ✓ |  |  | ✓ | ✓ | ✓ | 
+| AES128\-GCM\-SHA256 | ✓ |  |  |  |  |  | 
+| AES128\-SHA256 | ✓ |  |  |  |  |  | 
+| AES128\-SHA | ✓ |  |  |  |  |  | 
+| AES256\-GCM\-SHA384 | ✓ |  |  |  |  |  | 
+| AES256\-SHA256 | ✓ |  |  |  |  |  | 
+| AES256\-SHA | ✓ |  |  |  |  |  | 
 
 ### TLS security policies<a name="tls-security-policies"></a>
 
 The following table describes the default policy, `ELBSecurityPolicy-2016-08`, and the `ELBSecurityPolicy-TLS` policies\. The `ELBSecurityPolicy-` has been removed from policy names in the heading row so that they fit\.
 
 
-| Security policy | Default | TLS\-1\-2\-Ext\-2018\-06 | TLS\-1\-2\-2017\-01 | TLS\-1\-1\-2017\-01 | TLS\-1\-0\-2015\-04 † | 
+| Security policies | ![\[ELBSecurityPolicy-2016-08\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/FS-default.png) | ![\[ELBSecurityPolicy-TLS-1-2-Ext-2018-06\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/TLS-1-2-Ext-2018-06.png)  | ![\[ELBSecurityPolicy-TLS-1-2-2017-01\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/TLS-1-2-2017-01.png)  | ![\[ELBSecurityPolicy-TSL-1-1-2017-01\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/TSL-1-1-2017-01.png)  | ![\[ELBSecurityPolicy-TLS-1-0-2015-04\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/TLS-1-0-2015-04.png)  | 
 | --- |--- |--- |--- |--- |--- |
 | **TLS Protocols** | 
 | --- |
-| Protocol\-TLSv1 | ♦ |  |  |  | ♦ | 
-| Protocol\-TLSv1\.1 | ♦ |  |  | ♦ | ♦ | 
-| Protocol\-TLSv1\.2 | ♦ | ♦ | ♦ | ♦ | ♦ | 
+|  Protocol\-TLSv1  | ✓ |  |  |  | ✓ | 
+|  Protocol\-TLSv1\.1  | ✓ |  |  | ✓ | ✓ | 
+|  Protocol\-TLSv1\.2  | ✓ | ✓ | ✓ | ✓ | ✓ | 
 | **TLS Ciphers** | 
 | --- |
-| ECDHE\-ECDSA\-AES128\-GCM\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-RSA\-AES128\-GCM\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-ECDSA\-AES128\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-RSA\-AES128\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-ECDSA\-AES128\-SHA | ♦ | ♦ |  | ♦ | ♦ | 
-| ECDHE\-RSA\-AES128\-SHA | ♦ | ♦ |  | ♦ | ♦ | 
-| ECDHE\-ECDSA\-AES256\-GCM\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-RSA\-AES256\-GCM\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-ECDSA\-AES256\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-RSA\-AES256\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | 
-| ECDHE\-RSA\-AES256\-SHA | ♦ | ♦ |  | ♦ | ♦ | 
-| ECDHE\-ECDSA\-AES256\-SHA | ♦ | ♦ |  | ♦ | ♦ | 
-| AES128\-GCM\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | 
-| AES128\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | 
-| AES128\-SHA | ♦ | ♦ |  | ♦ | ♦ | 
-| AES256\-GCM\-SHA384 | ♦ | ♦ | ♦ | ♦ | ♦ | 
-| AES256\-SHA256 | ♦ | ♦ | ♦ | ♦ | ♦ | 
-| AES256\-SHA | ♦ | ♦ |  | ♦ | ♦ | 
-| DES\-CBC3\-SHA |  |  |  |  | ♦ | 
+|  ECDHE\-ECDSA\-AES128\-GCM\-SHA256  | ✓ | ✓ | ✓ | ✓ | ✓ | 
+|  ECDHE\-RSA\-AES128\-GCM\-SHA256  | ✓ | ✓ | ✓ | ✓ | ✓ | 
+|  ECDHE\-ECDSA\-AES128\-SHA256  | ✓ | ✓ | ✓ | ✓ | ✓ | 
+|  ECDHE\-RSA\-AES128\-SHA256  | ✓ | ✓ | ✓ | ✓ | ✓ | 
+|  ECDHE\-ECDSA\-AES128\-SHA  | ✓ | ✓ |  | ✓ | ✓ | 
+|  ECDHE\-RSA\-AES128\-SHA  | ✓ | ✓ |  | ✓ | ✓ | 
+|  ECDHE\-ECDSA\-AES256\-GCM\-SHA384  | ✓ | ✓ | ✓ | ✓ | ✓ | 
+|  ECDHE\-RSA\-AES256\-GCM\-SHA384  | ✓ | ✓ | ✓ | ✓ | ✓ | 
+|  ECDHE\-ECDSA\-AES256\-SHA384  | ✓ | ✓ | ✓ | ✓ | ✓ | 
+|  ECDHE\-RSA\-AES256\-SHA384  | ✓ | ✓ | ✓ | ✓ | ✓ | 
+|  ECDHE\-RSA\-AES256\-SHA  | ✓ | ✓ |  | ✓ | ✓ | 
+|  ECDHE\-ECDSA\-AES256\-SHA  | ✓ | ✓ |  | ✓ | ✓ | 
+|  AES128\-GCM\-SHA256  | ✓ | ✓ | ✓ | ✓ | ✓ | 
+|  AES128\-SHA256  | ✓ | ✓ | ✓ | ✓ | ✓ | 
+|  AES128\-SHA  | ✓ | ✓ |  | ✓ | ✓ | 
+|  AES256\-GCM\-SHA384  | ✓ | ✓ | ✓ | ✓ | ✓ | 
+|  AES256\-SHA256  | ✓ | ✓ | ✓ | ✓ | ✓ | 
+|  AES256\-SHA  | ✓ | ✓ |  | ✓ | ✓ | 
+|  DES\-CBC3\-SHA  |  |  |  |  | ✓ | 
 
 **\*** Do not use this policy unless you must support a legacy client that requires the DES\-CBC3\-SHA cipher, which is a weak cipher\.
 

@@ -12,7 +12,7 @@ After you disable an Availability Zone, the targets in that Availability Zone re
 
 1. Select the load balancer\.
 
-1. On the **Description** tab, under **Basic Configuration**, choose **Edit Availability Zones**\.
+1. On the **Description** tab, under **Basic Configuration**, choose **Edit subnets**\.
 
 1. To enable a zone, select the check box for that zone and select one subnet\. If there is only one subnet for that zone, it is selected\. If there is more than one subnet for that zone, select one of the subnets\.
 

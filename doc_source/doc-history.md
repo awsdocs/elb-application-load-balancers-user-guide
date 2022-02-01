@@ -5,6 +5,10 @@ The following table describes the releases for Application Load Balancers\.
 
 | Feature | Description | Date | 
 | --- | --- | --- | 
+| IPv6 target groups for Application Load Balancers | This release adds support to configure IPv6 target groups for Application Load Balancers\. For more information, see [IP address type](load-balancer-target-groups.md#target-group-ip-address-type)\. | October 11, 2021 | 
+| Client port preservation  | This release adds an attribute to preserve the source port that the client used to connect to the load balancer\.  | July 29, 2021 | 
+| TLS headers | This release adds an attribute to indicate that the TLS headers, which contain information about the negotiated TLS version and cipher suite, are added to the client request before sending it to the target | July 21, 2021 | 
+| Additional ACM certificates | This release supports RSA certificates with 2048, 3072, and 4096\-bit key lengths, and all ECDSA certificates\.  | July 14, 2021 | 
 | Application\-based stickiness | This release adds an application\-based cookie to support sticky sessions for your load balancer\. For more information, see [Application\-based stickiness](sticky-sessions.md#application-based-stickiness)\. | February 08, 2021 | 
 | Security policy for FS supporting TLS version 1\.2 | This release adds a security policy for Forward Secrecy \(FS\) supporting TLS version 1\.2\. For more information, see [Security policies](create-https-listener.md#describe-ssl-policies)\. | November 24, 2020 | 
 | WAF fail open support | This release adds support for configuring the behavior of your load balancer if it integrates with AWS WAF\. For more information, see [Application Load Balancers and AWS WAF](application-load-balancers.md#load-balancer-waf)\. | November 13, 2020 | 

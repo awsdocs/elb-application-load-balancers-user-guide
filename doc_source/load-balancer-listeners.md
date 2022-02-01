@@ -25,7 +25,7 @@ You can use an HTTPS listener to offload the work of encryption and decryption t
 
 Application Load Balancers provide native support for WebSockets\. You can upgrade an existing HTTP/1\.1 connection into a WebSocket \(`ws` or `wss`\) connection by using an HTTP connection upgrade\. When you upgrade, the TCP connection used for requests \(to the load balancer as well as to the target\) becomes a persistent WebSocket connection between the client and the target through the load balancer\. You can use WebSockets with both HTTP and HTTPS listeners\. The options that you choose for your listener apply to WebSocket connections as well as to HTTP traffic\. For more information, see [How the WebSocket Protocol Works](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-working-with.websockets.html#distribution-working-with.websockets.how-it-works) in the *Amazon CloudFront Developer Guide*\.
 
-Application Load Balancers provide native support for HTTP/2 with HTTPS listeners\. You can send up to 128 requests in parallel using one HTTP/2 connection\. By default, the load balancer converts these to individual HTTP/1\.1 requests and distributes them across the healthy targets in the target group\. However, you can use the protocol version to send the request to the targets using HTTP/2\. For more information, see [Protocol version](load-balancer-target-groups.md#target-group-protocol-version)\. Because HTTP/2 uses front\-end connections more efficiently, you might notice fewer connections between clients and the load balancer\. You can't use the server\-push feature of HTTP/2\.
+Application Load Balancers provide native support for HTTP/2 with HTTPS listeners\. You can send up to 128 requests in parallel using one HTTP/2 connection\. You can use the protocol version to send the request to the targets using HTTP/2\. For more information, see [Protocol version](load-balancer-target-groups.md#target-group-protocol-version)\. Because HTTP/2 uses front\-end connections more efficiently, you might notice fewer connections between clients and the load balancer\. You can't use the server\-push feature of HTTP/2\.
 
 For more information, see [Request routing](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/how-elastic-load-balancing-works.html#request-routing) in the *Elastic Load Balancing User Guide*\.
 
@@ -74,7 +74,7 @@ Redirect requests from one URL to another\. For more information, see [Redirect 
 
 The action with the lowest order value is performed first\. Each rule must include exactly one of the following actions: `forward`, `redirect`, or `fixed-response`, and it must be the last action to be performed\.
 
-If the protocol version is gRPC or HTTPS, the only supported actions are `forward` actions\.
+If the protocol version is gRPC or HTTP/2, the only supported actions are `forward` actions\.
 
 ### Fixed\-response actions<a name="fixed-response-actions"></a>
 
@@ -367,7 +367,7 @@ If the protocol version is gRPC, conditions can be specific to a package, servic
 
 **Example gRPC path patterns**
 + /package
-+ /package\.service/
++ /package\.service
 + /package\.service/method
 
 The path pattern is used to route requests but does not alter them\. For example, if a rule has a path pattern of `/img/*`, the rule forwards a request for `/img/picture.jpg` to the specified target group as a request for `/img/picture.jpg`\.
@@ -414,7 +414,7 @@ You can specify conditions when you create or modify a rule\. For more informati
 
 ### Source IP address conditions<a name="source-ip-conditions"></a>
 
-You can use source IP address conditions to configure rules that route requests based on the source IP address of the request\. The IP address must be specified in CIDR format\. You can use both IPv4 and IPv6 addresses\. Wildcard characters are not supported\.
+You can use source IP address conditions to configure rules that route requests based on the source IP address of the request\. The IP address must be specified in CIDR format\. You can use both IPv4 and IPv6 addresses\. Wildcard characters are not supported\. You cannot specify the `255.255.255.255/32` CIDR for the source IP rule condition\. 
 
 If a client is behind a proxy, this is the IP address of the proxy, not the IP address of the client\.
 

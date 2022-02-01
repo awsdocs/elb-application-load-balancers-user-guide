@@ -23,15 +23,17 @@ You can add or remove targets from your target group at any time\. For more info
 
 1. For **Target group name**, type a name for the target group\. This name must be unique per region per account, can have a maximum of 32 characters, must contain only alphanumeric characters or hyphens, and must not begin or end with a hyphen\.
 
-1. If the target type is **Instances** or **IP addresses**, do the following:
+1. \(Optional\) For **Protocol** and **Port**, modify the default values as needed\.
 
-   1. \(Optional\) For **Protocol** and **Port**, modify the default values as needed\.
+1. If the target type is **IP addresses**, choose **IPv4** or **IPv6** as the **IP address type**, otherwise skip to the next step\.
 
-   1. \(Optional\) For **Protocol version**, modify the default value as needed\.
+   Note that only targets that have the selected IP address type can be included in this target group\. The IP address type cannot be changed after the target group is created\.
 
-   1. For **VPC**, select a virtual private cloud \(VPC\)\.
+1. For **VPC**, select a virtual private cloud \(VPC\)\. Note that for **IP addresses** target types, the VPCs available for selection are those that support the **IP address type** that you chose in the previous step\. 
 
-   1. \(Optional\) In the **Health checks** section, modify the default settings as needed\.
+1. \(Optional\) For **Protocol version**, modify the default value as needed\.
+
+1. \(Optional\) In the **Health checks** section, modify the default settings as needed\.
 
 1. If the target type is **Lambda function**, you can enable health checks by selecting **Enable** in the **Health checks** section\.
 
@@ -47,8 +49,16 @@ You can add or remove targets from your target group at any time\. For more info
 
 1. \(Optional\) Add one or more targets as follows:
    + If the target type is **Instances**, select one or more instances, enter one or more ports, and then choose **Include as pending below**\.
-   + If the target type is **IP addresses**, select the network, enter the IP address and ports, and then choose **Include as pending below**\.
-   + If the target type is **Lambda function**, specify a single Lambda function or omit this step and specify a Lambda function later\.
+   + If the target type is **IP addresses**, do the following:
+
+     1. Select a network **VPC** from the list, or choose **Other private IP addresses**\.
+
+     1. Enter the IP address manually, or find the IP address using instance details\. You can enter up to five IP addresses at a time\.
+
+     1. Enter the ports for routing traffic to the specified IP addresses\. 
+
+     1. Choose **Include as pending below**\. 
+   + If the target type is a **Lambda function**, specify a single Lambda function or omit this step and specify a Lambda function later\.
 
 1. Choose **Create target group**\.
 

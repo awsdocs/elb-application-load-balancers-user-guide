@@ -31,6 +31,9 @@ First, verify that you can connect to the target directly from within the networ
 **The target did not return a successful response code**  
 By default, the success code is 200, but you can optionally specify additional success codes when you configure health checks\. Confirm the success codes that the load balancer is expecting and that your application is configured to return these codes on success\.
 
+**The target response code was malformed or there was an error connecting to the target**  
+Verify that your application responds to the load balancer's health check requests\. Some applications require additional configuration to respond to health checks, such as a virtual host configuration to respond to the HTTP host header sent by the load balancer\. The host header value contains the private IP address of the target, followed by the health check port\. For example, if your target’s private IP address is `10.0.0.10` and health check port is `8080`, the HTTP Host header sent by the load balancer in health checks is `Host: 10.0.0.10:8080`\. A virtual host configuration to respond to that host, or a default configuration, may be required to successfully health check your application\. Health check requests have the following attributes: the `User-Agent` is set to `ELB-HealthChecker/2.0`, the line terminator for message\-header fields is the sequence CRLF, and the header terminates at the first empty line followed by a CRLF\.
+
 ## Clients cannot connect to an internet\-facing load balancer<a name="client-cannot-connect"></a>
 
 If the load balancer is not responding to requests, check for the following issues:
@@ -47,7 +50,7 @@ If there is at least one healthy target in a target group, the load balancer rou
 
 ## The load balancer sends a response code of 000<a name="response-code-000"></a>
 
-With HTTP/2 connections, if the compressed length of any of the headers exceeds 8K, the load balancer sends a GOAWAY frame and closes the connection with a TCP FIN\.
+With HTTP/2 connections, if the compressed length of any of the headers exceeds 8K bytes or if the number of requests served through one connection exceeds 10,000, the load balancer sends a GOAWAY frame and closes the connection with a TCP FIN\.
 
 ## The load balancer generates an HTTP error<a name="load-balancer-http-error-codes"></a>
 
@@ -85,6 +88,7 @@ You configured a listener rule to authenticate users, but one of the following i
 + The size of the claims returned by the IdP exceeded the maximum size supported by the load balancer\.
 + A client submitted an HTTP/1\.0 request without a host header, and the load balancer was unable to generate a redirect URL\.
 + The requested scope doesn't return an ID token\.
++ You don't complete the login process before the client login timeout expires\. For more information see, [Client login timeout](listener-authenticate-users.md#client-login-timeout)\.
 
 ### HTTP 403: Forbidden<a name="http-403-issues"></a>
 
@@ -146,6 +150,7 @@ Possible causes:
 + The deregistration delay period elapsed for a request being handled by a target that was deregistered\. Increase the delay period so that lengthy operations can complete\.
 + The target is a Lambda function and the response body exceeds 1 MB\.
 + The target is a Lambda function that did not respond before its configured timeout was reached\.
++ The target is a Lambda function that returned an error or the function was throttled by the Lambda service\.
 
 ### HTTP 503: Service unavailable<a name="http-503-issues"></a>
 

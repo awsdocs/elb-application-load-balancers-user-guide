@@ -13,7 +13,7 @@ For more information, see [How Elastic Load Balancing works](https://docs.aws.am
 + [Connection idle timeout](#connection-idle-timeout)
 + [Deletion protection](#deletion-protection)
 + [Desync mitigation mode](#desync-mitigation-mode)
-+ [Application Load Balancers and AWS WAF](#load-balancer-waf)
++ [AWS WAF](#load-balancer-waf)
 + [Create a load balancer](create-application-load-balancer.md)
 + [Update Availability Zones](load-balancer-subnets.md)
 + [Update security groups](load-balancer-update-security-groups.md)
@@ -33,7 +33,7 @@ You must select at least two Availability Zone subnets\. The following restricti
 
 **Local Zones**
 
-You can specify a one or more Local Zone subnets\. The following restrictions apply:
+You can specify one or more Local Zone subnets\. The following restrictions apply:
 + You cannot use AWS WAF with the load balancer\.
 + You cannot use a Lambda function as a target\.<a name="outposts"></a>
 
@@ -41,7 +41,7 @@ You can specify a one or more Local Zone subnets\. The following restrictions ap
 
 You can specify a single Outpost subnet\. The following restrictions apply:
 + You must have installed and configured an Outpost in your on\-premises data center\. You must have a reliable network connection between your Outpost and its AWS Region\. For more information, see the [AWS Outposts User Guide](https://docs.aws.amazon.com/outposts/latest/userguide/)\.
-+ The load balancer requires two instances on the Outpost for the load balancer nodes\. The supported instances are shown in the table below\. Initially, the instances are `large` instances\. The load balancer scales as needed, from `large` to `xlarge`, `xlarge` to `2xlarge`, and `2xlarge` to `4xlarge`\. If you need additional capacity, the load balancer adds `4xlarge` instances\. If you do not have sufficient instance capacity or available IP addresses to scale the load balancer, the load balancer reports an event to the [AWS Personal Health Dashboard](https://phd.aws.amazon.com/) and the load balancer state is `active_impaired`\.
++ The load balancer requires two instances on the Outpost for the load balancer nodes\. The supported instances are shown in the following table \. Initially, the instances are `large` instances\. The load balancer scales as needed, from `large` to `xlarge`, `xlarge` to `2xlarge`, and `2xlarge` to `4xlarge`\. If you need additional capacity, the load balancer adds `4xlarge` instances\. If you do not have sufficient instance capacity or available IP addresses to scale the load balancer, the load balancer reports an event to the [AWS Personal Health Dashboard](https://phd.aws.amazon.com/) and the load balancer state is `active_impaired`\.
 + You can register targets by instance ID or IP address\. If you register targets in the AWS Region for the Outpost, they are not used\.
 + The following features are not available: Lambda functions as targets, AWS WAF integration, sticky sessions, authentication support, and integration with AWS Global Accelerator\.
 
@@ -105,23 +105,32 @@ The prefix for the location in the Amazon S3 bucket\.
 Indicates whether deletion protection is enabled\. The default is `false`\.
 
 `idle_timeout.timeout_seconds`  
-The idle timeout value, in seconds\. The default is 60 seconds\.
+The idle timeout value, in seconds\. The default is 60 seconds\. 
+
+`ipv6.deny_all_igw_traffic`  
+Blocks internet gateway \(IGW\) access to the load balancer, preventing unintended access to your internal load balancer through an internet gateway\. It is set to `false` for internet\-facing load balancers and `true` for internal load balancers\. This attribute does not prevent non\-IGW internet access \(such as, through peering, Transit Gateway, AWS Direct Connect, or AWS VPN\)\.
 
 `routing.http.desync_mitigation_mode`  
 Determines how the load balancer handles requests that might pose a security risk to your application\. The possible values are `monitor`, `defensive`, and `strictest`\. The default is `defensive`\.
 
 `routing.http.drop_invalid_header_fields.enabled`  
-Indicates whether HTTP headers with header fields that are not valid are removed by the load balancer \(`true`\), or routed to targets \(`false`\)\. The default is `false`\. Elastic Load Balancing requires that message header names contain only alphanumeric characters and hyphens\.
+Indicates whether HTTP headers with header fields that are not valid are removed by the load balancer \(`true`\), or routed to targets \(`false`\)\. The default is `false`\. Elastic Load Balancing requires that message header names conform to the regular expression `[-A-Za-z0-9]+`, which describes all registered internet message headers\. Each name consists of alphanumeric characters or hyphens\.
+
+`routing.http.x_amzn_tls_version_and_cipher_suite.enabled`  
+Indicates whether the two headers \(`x-amzn-tls-version` and `x-amzn-tls-cipher-suite`\), which contain information about the negotiated TLS version and cipher suite, are added to the client request before sending it to the target\. The `x-amzn-tls-version` header has information about the TLS protocol version negotiated with the client, and the `x-amzn-tls-cipher-suite` header has information about the cipher suite negotiated with the client\. Both headers are in OpenSSL format\. The possible values for the attribute are `true` and `false`\. The default is `false`\.
+
+`routing.http.xff_client_port.enabled`  
+Indicates whether the `X-Forwarded-For` header should preserve the source port that the client used to connect to the load balancer\. The possible values are `true` and `false`\. The default is `false`\.
 
 `routing.http2.enabled`  
 Indicates whether HTTP/2 is enabled\. The default is `true`\.
 
 `waf.fail_open.enabled`  
-Indicates whether to allow a WAF\-enabled load balancer to route requests to targets if it is unable to forward the request to AWS WAF\. The value is `true` or `false`\. The default is `false`\.
+Indicates whether to allow a AWS WAF\-enabled load balancer to route requests to targets if it is unable to forward the request to AWS WAF\. The possible values are `true` and `false`\. The default is `false`\.
 
 ## IP address type<a name="ip-address-type"></a>
 
-You can set the types of IP addresses that clients can use with your internet\-facing load balancer\. Clients must use IPv4 addresses with internal load balancers\.
+You can set the types of IP addresses that clients can use to access your internet\-facing and internal load balancers\.
 
 The following are the IP address types:
 
@@ -131,17 +140,16 @@ Clients must connect to the load balancer using IPv4 addresses \(for example, 19
 `dualstack`  
 Clients can connect to the load balancer using both IPv4 addresses \(for example, 192\.0\.2\.1\) and IPv6 addresses \(for example, 2001:0db8:85a3:0:0:8a2e:0370:7334\)\.
 
-When you enable dual\-stack mode for the load balancer, Elastic Load Balancing provides an AAAA DNS record for the load balancer\. Clients that communicate with the load balancer using IPv4 addresses resolve the A DNS record\. Clients that communicate with the load balancer using IPv6 addresses resolve the AAAA DNS record\.
-
-The load balancer communicates with targets using IPv4 addresses, regardless of how the client communicates with the load balancer\. Therefore, the targets do not need IPv6 addresses\.
-
-For more information, see [IP address types for your Application Load Balancer](load-balancer-ip-address-type.md)\.
+**Dualstack load balancer considerations**
++ The load balancer communicates with targets based on the IP address type of the target group\.
++ When you enable dualstack mode for the load balancer, Elastic Load Balancing provides an AAAA DNS record for the load balancer\. Clients that communicate with the load balancer using IPv4 addresses resolve the A DNS record\. Clients that communicate with the load balancer using IPv6 addresses resolve the AAAA DNS record\.
++ Access to your internal dualstack load balancers through the internet gateway is blocked to prevent unintended internet access\. However, this does not prevent non\-IWG internet access \(such as, through peering, Transit Gateway, AWS Direct Connect, or AWS VPN\)\. 
 
 ## Connection idle timeout<a name="connection-idle-timeout"></a>
 
-For each request that a client makes through a load balancer, the load balancer maintains two connections\. The front\-end connection is between a client and the load balancer\. The back\-end connection is between the load balancer and a target\. The load balancer has a configured idle timeout period that applies to its connections\. If no data has been sent or received by the time that the idle timeout period elapses, the load balancer closes the connection\. To ensure that lengthy operations such as file uploads have time to complete, send at least 1 byte of data before each idle timeout period elapses, and increase the length of the idle timeout period as needed\.
+For each request that a client makes through a load balancer, the load balancer maintains two connections\. The front\-end connection is between a client and the load balancer\. The backend connection is between the load balancer and a target\. The load balancer has a configured idle timeout period that applies to its connections\. If no data has been sent or received by the time that the idle timeout period elapses, the load balancer closes the connection\. To ensure that lengthy operations such as file uploads have time to complete, send at least 1 byte of data before each idle timeout period elapses, and increase the length of the idle timeout period as needed\.
 
-For back\-end connections, we recommend that you enable the HTTP keep\-alive option for your EC2 instances\. You can enable HTTP keep\-alive in the web server settings for your EC2 instances\. If you enable HTTP keep\-alive, the load balancer can reuse back\-end connections until the keep\-alive timeout expires\. We also recommend that you configure the idle timeout of your application to be larger than the idle timeout configured for the load balancer\.
+For backend connections, we recommend that you enable the HTTP keep\-alive option for your EC2 instances\. You can enable HTTP keep\-alive in the web server settings for your EC2 instances\. If you enable HTTP keep\-alive, the load balancer can reuse backend connections until the keep\-alive timeout expires\. We also recommend that you configure the idle timeout of your application to be larger than the idle timeout configured for the load balancer\.
 
 By default, Elastic Load Balancing sets the idle timeout value for your load balancer to 60 seconds\. Use the following procedure to set a different idle timeout value\.
 
@@ -155,7 +163,7 @@ By default, Elastic Load Balancing sets the idle timeout value for your load bal
 
 1. On the **Description** tab, choose **Edit attributes**\.
 
-1. On the **Edit load balancer attributes** page, enter a value for **Idle timeout**, in seconds\. The valid range is 1\-4000\.
+1. On the **Edit load balancer attributes** page, enter a value for **Idle timeout**, in seconds\. The valid range is from 1 through 4000\.
 
 1. Choose **Save**\.
 
@@ -201,19 +209,21 @@ Use the [modify\-load\-balancer\-attributes](https://docs.aws.amazon.com/cli/lat
 
 ## Desync mitigation mode<a name="desync-mitigation-mode"></a>
 
-Desync mitigation mode protects your application from issues due to HTTP Desync\. The load balancer classifies each request based on its threat level, allows safe requests, and then mitigates risk as specified by the mitigation mode that you specify\. The desync mitigation modes are monitor, defensive, and strictest\. The default is the defensive mode, which provides durable mitigation against HTTP desync while maintaining the availability of your application\. You can switch to strictest mode to ensure that your application receives only requests that comply with [RFC 7230](https://tools.ietf.org/html/rfc7230)\.
+Desync mitigation mode protects your application from issues due to HTTP desync\. The load balancer classifies each request based on its threat level, allows safe requests, and then mitigates risk as specified by the mitigation mode that you specify\. The desync mitigation modes are monitor, defensive, and strictest\. The default is the defensive mode, which provides durable mitigation against HTTP desync while maintaining the availability of your application\. You can switch to strictest mode to ensure that your application receives only requests that comply with [RFC 7230](https://tools.ietf.org/html/rfc7230)\.
 
-The http\_desync\_guardian library analyzes HTTP requests to prevent HTTP Desync attacks\. For more information, see [HTTP Desync Guardian](https://github.com/aws/http-desync-guardian) on github\.
+The http\_desync\_guardian library analyzes HTTP requests to prevent HTTP desync attacks\. For more information, see [HTTP Desync Guardian](https://github.com/aws/http-desync-guardian) on GitHub\.
 
 **Classifications**
 
-The classifications are as follows\. For more information, see [Classification reasons](load-balancer-access-logs.md#classification-reasons)\.
+The classifications are as follows:
 + Compliant — Request complies with RFC 7230 and poses no known security threats\.
 + Acceptable — Request does not comply with RFC 7230 but poses no known security threats\.
 + Ambiguous — Request does not comply with RFC 7230 but poses a risk, as various web servers and proxies could handle it differently\.
 + Severe — Request poses a high security risk\. The load balancer blocks the request, serves a 400 response to the client, and closes the client connection\.
 
 If a request does not comply with RFC 7230, the load balancer increments the `DesyncMitigationMode_NonCompliant_Request_Count` metric\. For more information, see [Application Load Balancer metrics](load-balancer-cloudwatch-metrics.md#load-balancer-metrics-alb)\.
+
+The classification for each request is included in the load balancer access logs\. If the request does not comply, the access logs include a classification reason code\. For more information, see [Classification reasons](load-balancer-access-logs.md#classification-reasons)\.
 
 **Modes**  
 The following table describes how Application Load Balancers treat requests based on mode and classification\.
@@ -251,9 +261,9 @@ You can use AWS WAF with your Application Load Balancer to allow or block reques
 
 To check whether your load balancer integrates with AWS WAF, select your load balancer in the AWS Management Console and choose the **Integrated services** tab\.
 
-By default, if the load balancer cannot get a response from AWS WAF, it returns an HTTP 500 error and does not forward the request\. If you need your load balancer to forward requests to targets even if it is unable to contact AWS WAF, you can enable the WAF fail open attribute\.
+By default, if the load balancer cannot get a response from AWS WAF, it returns an HTTP 500 error and does not forward the request\. If you need your load balancer to forward requests to targets even if it is unable to contact AWS WAF, you can enable the AWS WAF fail open attribute\.
 
-**To enable WAF fail open using the console**
+**To enable AWS WAF fail open using the console**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
@@ -263,9 +273,9 @@ By default, if the load balancer cannot get a response from AWS WAF, it returns 
 
 1. On the **Description** tab, choose **Edit attributes**\.
 
-1. For **WAF fail open**, choose **Enable**\.
+1. For **AWS WAF fail open**, choose **Enable**\.
 
 1. Choose **Save**\.
 
-**To enable WAF fail open using the AWS CLI**  
+**To enable AWS WAF fail open using the AWS CLI**  
 Use the [modify\-load\-balancer\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-load-balancer-attributes.html) command with the `waf.fail_open.enabled` attribute set to `true`\.

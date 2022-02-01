@@ -4,7 +4,7 @@ Your Application Load Balancer periodically sends requests to its registered tar
 
 Each load balancer node routes requests only to the healthy targets in the enabled Availability Zones for the load balancer\. Each load balancer node checks the health of each target, using the health check settings for the target groups with which the target is registered\. After your target is registered, it must pass one health check to be considered healthy\. After each health check is completed, the load balancer node closes the connection that was established for the health check\.
 
-If a target group contains only unhealthy registered targets, the load balancer nodes route requests across its unhealthy targets\.
+If a target group contains only unhealthy registered targets, the load balancer routes requests to all those targets, regardless of their health status\. This means that if all targets fail health checks at the same time in all enabled Availability Zones, the load balancer fails open\. The effect of the fail\-open is to allow traffic to all targets in all enabled Availability Zones, regardless of their health status, based on the load balancing algorithm\.
 
 Health checks do not support WebSockets\.
 

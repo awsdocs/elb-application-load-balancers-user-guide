@@ -2,7 +2,7 @@
 
 Tags help you to categorize your load balancers in different ways, for example, by purpose, owner, or environment\.
 
-You can add multiple tags to each load balancer\. Tag keys must be unique for each load balancer\. If you add a tag with a key that is already associated with the load balancer, it updates the value of that tag\.
+You can add multiple tags to each load balancer\. If you add a tag with a key that is already associated with the load balancer, it updates the value of that tag\.
 
 When you are finished with a tag, you can remove it from your load balancer\.
 

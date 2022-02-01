@@ -7,6 +7,7 @@ You define health check settings for your load balancer on a per target group ba
 **Topics**
 + [Routing configuration](#target-group-routing-configuration)
 + [Target type](#target-type)
++ [IP address type](#target-group-ip-address-type)
 + [Protocol version](#target-group-protocol-version)
 + [Registered targets](#registered-targets)
 + [Target group attributes](#target-group-attributes)
@@ -61,6 +62,17 @@ You can't specify publicly routable IP addresses\.
 If you specify targets using an instance ID, traffic is routed to instances using the primary private IP address specified in the primary network interface for the instance\. If you specify targets using IP addresses, you can route traffic to an instance using any private IP address from one or more network interfaces\. This enables multiple applications on an instance to use the same port\. Each network interface can have its own security group\.
 
 If the target type of your target group is `lambda`, you can register a single Lambda function\. When the load balancer receives a request for the Lambda function, it invokes the Lambda function\. For more information, see [Lambda functions as targets](lambda-functions.md)\.
+
+## IP address type<a name="target-group-ip-address-type"></a>
+
+When creating a new target group, you can select the IP address type of your target group\. This controls the IP version used to communicate with targets and check their health status\. 
+
+Application Load Balancers support both IPv4 and IPv6 target groups\. The default selection is IPv4\.
+
+**Considerations**
++ All IP addresses within a target group must have the same IP address type\. For example, you can't register an IPv4 target with an IPv6 target group\.
++ IPv6 target groups can only be used with `dualstack` load balancers\. 
++ IPv6 target groups only support IP type targets\.
 
 ## Protocol version<a name="target-group-protocol-version"></a>
 
@@ -198,7 +210,7 @@ Elastic Load Balancing stops sending requests to targets that are deregistering\
 
 The initial state of a deregistering target is `draining`\. After the deregistration delay elapses, the deregistration process completes and the state of the target is `unused`\. If the target is part of an Auto Scaling group, it can be terminated and replaced\.
 
-If a deregistering target has no in\-flight requests and no active connections, Elastic Load Balancing immediately completes the deregistration process, without waiting for the deregistration delay to elapse\. However, even though target deregistration is complete, the status of the target will be displayed as `draining` until the deregistration delay elapses\.
+If a deregistering target has no in\-flight requests and no active connections, Elastic Load Balancing immediately completes the deregistration process, without waiting for the deregistration delay to elapse\. However, even though target deregistration is complete, the status of the target is displayed as `draining` until the deregistration delay timeout expires\. After the timeout expires, the target transitions to an `unused` state\.
 
 If a deregistering target terminates the connection before the deregistration delay elapses, the client receives a 500\-level error response\.
 

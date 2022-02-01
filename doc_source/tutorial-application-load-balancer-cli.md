@@ -11,6 +11,7 @@ This tutorial provides a hands\-on introduction to Application Load Balancers th
 
   If you get an error message that elbv2 is not a valid choice, update your AWS CLI\. For more information, see [Installing the AWS Command Line Interface](https://docs.aws.amazon.com/cli/latest/userguide/installing.html) in the *AWS Command Line Interface User Guide*\.
 + Launch your EC2 instances in a virtual private cloud \(VPC\)\. Ensure that the security groups for these instances allow access on the listener port and the health check port\. For more information, see [Target security groups](target-group-register-targets.md#target-security-groups)\.
++ Decide if you will create an IPv4 or dualstack load balancer\. Use IPv4 if you want clients to communicate with the load balancer using IPv4 addresses only\. Use dualstack if you want clients to communicate with the load balancer using IPv4 and IPv6 addresses\. You can also use dualstack to communicate with backend targets, such as IPv6 applications or dualstack subnets, using IPv6\. 
 
 ## Create your load balancer<a name="create-load-balancer-aws-cli"></a>
 
@@ -25,17 +26,28 @@ To create your first load balancer, complete the following steps\.
    --subnets subnet-0e3f5cac72EXAMPLE subnet-081ec835f3EXAMPLE --security-groups sg-07e8ffd50fEXAMPLE
    ```
 
+   Use the [create\-load\-balancer](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-load-balancer.html) command to create a `dualstack` load balancer\. 
+
+   ```
+   aws elbv2 create-load-balancer --name my-load-balancer  \
+   --subnets subnet-0e3f5cac72EXAMPLE subnet-081ec835f3EXAMPLE --security-groups sg-07e8ffd50fEXAMPLE --ip-address-type dualstack
+   ```
+
    The output includes the Amazon Resource Name \(ARN\) of the load balancer, with the following format:
 
    ```
    arn:aws:elasticloadbalancing:us-east-2:123456789012:loadbalancer/app/my-load-balancer/1234567890123456
    ```
 
-1. Use the [create\-target\-group](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-target-group.html) command to create a target group, specifying the same VPC that you used for your EC2 instances:
+1. Use the [create\-target\-group](https://docs.aws.amazon.com/cli/latest/reference/elbv2/create-target-group.html) command to create a target group, specifying the same VPC that you used for your EC2 instances\. 
+
+   You can create IPv4 and IPv6 target groups to associate with dualstack load balancers\. The target group's IP address type determines the IP version that the load balancer will use to both communicate with, and check the health of, your backend targets\. 
+
+   IPv4 target groups support IP and instance type targets\. IPv6 targets only support IP targets\.
 
    ```
    aws elbv2 create-target-group --name my-targets --protocol HTTP --port 80 \
-   --vpc-id vpc-0598c7d356EXAMPLE
+   --vpc-id vpc-0598c7d356EXAMPLE --ip-address-type [ipv4 or ipv6]
    ```
 
    The output includes the ARN of the target group, with this format:

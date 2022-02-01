@@ -1,6 +1,6 @@
 # HTTP headers and Application Load Balancers<a name="x-forwarded-headers"></a>
 
-HTTP requests and HTTP responses use header fields to send information about the HTTP messages\. HTTP headers are added automatically\. Header fields are colon\-separated name\-value pairs that are separated by a carriage return \(CR\) and a line feed \(LF\)\. A standard set of HTTP header fields is defined in RFC 2616, [Message Headers](http://tools.ietf.org/html/rfc2616#section-4.2)\. There are also non\-standard HTTP headers available that are automatically added and widely used by the applications\. Some of the non\-standard HTTP headers have an `X-Forwarded` prefix\. Application Load Balancers support the following `X-Forwarded` headers\.
+HTTP requests and HTTP responses use header fields to send information about the HTTP messages\. HTTP headers are added automatically\. Header fields are colon\-separated name\-value pairs that are separated by a carriage return \(CR\) and a line feed \(LF\)\. A standard set of HTTP header fields is defined in RFC 2616, [Message Headers](https://datatracker.ietf.org/doc/html/rfc2616)\. There are also non\-standard HTTP headers available that are automatically added and widely used by the applications\. Some of the non\-standard HTTP headers have an `X-Forwarded` prefix\. Application Load Balancers support the following `X-Forwarded` headers\.
 
 For more information about HTTP connections, see [Request routing](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/how-elastic-load-balancing-works.html#request-routing) in the *Elastic Load Balancing User Guide*\.
 
@@ -11,7 +11,7 @@ For more information about HTTP connections, see [Request routing](https://docs.
 
 ## X\-Forwarded\-For<a name="x-forwarded-for"></a>
 
-The `X-Forwarded-For` request header is automatically added and helps you identify the IP address of a client when you use an HTTP or HTTPS load balancer\. Because load balancers intercept traffic between clients and servers, your server access logs contain only the IP address of the load balancer\. To see the IP address of the client, use the `X-Forwarded-For` request header\. Elastic Load Balancing stores the IP address of the client in the `X-Forwarded-For` request header and passes the header to your server\. If the `X-Forwarded-For` request header is not included in the request, the load balancer creates one with the client IP address as the request value\. Otherwise, the load balancer appends the client IP address to the existing header and passes the header to your server\. The `X-Forwarded-For` request header may contain multiple IP addresses that are comma separated\. The left\-most address is the client IP address where the request was first made\. This is followed by any subsequent proxy identifiers, in a chain\. 
+The `X-Forwarded-For` request header is automatically added and helps you identify the IP address of a client when you use an HTTP or HTTPS load balancer\. Because load balancers intercept traffic between clients and servers, your server access logs contain only the IP address of the load balancer\. To see the IP address of the client, use the `X-Forwarded-For` request header\. Elastic Load Balancing stores the IP address of the client in the `X-Forwarded-For` request header and passes the header to your server\. If the `X-Forwarded-For` request header is not included in the request, the load balancer creates one with the client IP address as the request value\. Otherwise, the load balancer adds the client IP address to the existing header and passes the header to your server\. The `X-Forwarded-For` request header may contain multiple IP addresses that are comma separated\. The left\-most address is the client IP address where the request was first made\. This is followed by any subsequent proxy identifiers, in a chain\. 
 
 The `X-Forwarded-For` request header takes the following form:
 
@@ -29,6 +29,30 @@ The following is an example `X-Forwarded-For` request header for a client with a
 
 ```
 X-Forwarded-For: 2001:DB8::21f:5bff:febf:ce22:8a2e
+```
+
+When the client port preservation attribute is enabled on the load balancer \(`routing.http.xff_client_port.enabled`\), the `X-Forwarded-For` request header includes the `client-port-number` appended to the `client-ip-address` separated by a colon\. It takes the following form:
+
+```
+IPv4 -- X-Forwarded-For: client-ip-address:client-port-number
+```
+
+```
+IPv6 -- X-Forwarded-For: [client-ip-address]:client-port-number
+```
+
+For IPv6, note that when the load balancer appends the `client-ip-address` to the existing header, it encloses it in square brackets\.
+
+The following is an example `X-Forwarded-For` request header for a client with an IPv4 address of `12.34.56.78` and a port number of `8080`\.
+
+```
+X-Forwarded-For: 12.34.56.78:8080
+```
+
+The following is an example `X-Forwarded-For` request header for a client with an IPv6 address of `2001:db8:85a3:8d3:1319:8a2e:370:7348` and a port number of `8080`\.
+
+```
+X-Forwarded-For: [2001:db8:85a3:8d3:1319:8a2e:370:7348]:8080
 ```
 
 ## X\-Forwarded\-Proto<a name="x-forwarded-proto"></a>

@@ -83,6 +83,8 @@ The instance must be in the virtual private cloud \(VPC\) that you specified for
 
 ### Register or deregister targets by IP address<a name="register-ip-addresses"></a>
 
+**IPv4 targets**
+
 The IP addresses that you register must be from one of the following CIDR blocks:
 + The subnets of the VPC for the target group
 + 10\.0\.0\.0/8 \(RFC 1918\)
@@ -90,8 +92,10 @@ The IP addresses that you register must be from one of the following CIDR blocks
 + 172\.16\.0\.0/12 \(RFC 1918\)
 + 192\.168\.0\.0/16 \(RFC 1918\)
 
-**Limits**
-+ You cannot register the IP addresses of another Application Load Balancer in the same VPC\. If the other Application Load Balancer is in a VPC that is peered to the load balancer VPC, you can register its IP addresses\.
+You cannot register the IP addresses of another Application Load Balancer in the same VPC\. If the other Application Load Balancer is in a VPC that is peered to the load balancer VPC, you can register its IP addresses\.
+
+**IPv6 targets**
++ The IP addresses that you register must be within the VPC CIDR block or within a peered VPC CIDR block\.
 
 ------
 #### [ New console ]

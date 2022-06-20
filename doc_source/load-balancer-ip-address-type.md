@@ -3,7 +3,7 @@
 You can configure your Application Load Balancer so that clients can communicate with the load balancer using IPv4 addresses only, or using both IPv4 and IPv6 addresses \(dualstack\)\. The load balancer communicates with targets based on the IP address type of the target group\. For more information, see [IP address type](application-load-balancers.md#ip-address-type)\.
 
 **Dualstack requirements**
-+ You can set the IP address type when you create the load balancer and update it at any time\. Note that an existing internal Application Load Balancer can't be updated to dualstack mode\. You must recreate the Application Load Balancer and configure it as dualstack\.
++ You can set the IP address type when you create the load balancer and update it at any time\. 
 + The virtual private cloud \(VPC\) and subnets that you specify for the load balancer must have associated IPv6 CIDR blocks\. For more information, see [IPv6 addresses](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#ipv6-addressing) in the *Amazon EC2 User Guide*\.
 + The route tables for the load balancer subnets must route IPv6 traffic\.
 + The security groups for the load balancer must allow IPv6 traffic\.

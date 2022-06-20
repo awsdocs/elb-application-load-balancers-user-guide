@@ -25,7 +25,7 @@ For a demo, see [Lambda target on Application Load Balancer](https://exampleload
 The following recommendations apply if you are using your Lambda function with an Application Load Balancer\.
 
 **Permissions to invoke the Lambda function**  
-If you create the target group and register the Lambda function using the AWS Management Console, the console adds the required permissions to your Lambda function policy on your behalf\. Otherwise, after you create the target group and register the function using the AWS CLI, you must use the [add\-permission](https://docs.aws.amazon.com/cli/latest/reference/lambda/add-permission.html) command to grant Elastic Load Balancing permission to invoke your Lambda function\. We recommend that you include the `--source-arn` parameter to restrict function invocation to the specified target group\.
+If you create the target group and register the Lambda function using the AWS Management Console, the console adds the required permissions to your Lambda function policy on your behalf\. Otherwise, after you create the target group and register the function using the AWS CLI, you must use the [add\-permission](https://docs.aws.amazon.com/cli/latest/reference/lambda/add-permission.html) command to grant Elastic Load Balancing permission to invoke your Lambda function\. We recommend that you use the `aws:SourceAccount` and `aws:SourceArn` condition keys to restrict function invocation to the specified target group\. For more information, see [The confused deputy problem](https://docs.aws.amazon.com/IAM/latest/UserGuide/confused-deputy.html) in the *IAM User Guide*,
 
 ```
 aws lambda add-permission \
@@ -33,7 +33,8 @@ aws lambda add-permission \
 --statement-id elb1 \
 --principal elasticloadbalancing.amazonaws.com \
 --action lambda:InvokeFunction \
---source-arn target-group-arn
+--source-arn target-group-arn \
+--source-account target-group-account-id
 ```
 
 **Lambda function versioning**  

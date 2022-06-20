@@ -2,9 +2,6 @@
 
 After you create an HTTPS listener, you can replace the default certificate, update the certificate list, or replace the security policy\.
 
-**Limitation**  
-ACM supports RSA certificates with a 4096 key length and EC certificates\. However, you cannot install these certificates on your load balancer through integration with ACM\. You must upload these certificates to IAM in order to use them with your load balancer\.
-
 **Topics**
 + [Replace the default certificate](#replace-default-certificate)
 + [Add certificates to the certificate list](#add-certificates)

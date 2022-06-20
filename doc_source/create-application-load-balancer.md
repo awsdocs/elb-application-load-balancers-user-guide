@@ -114,7 +114,7 @@ To create an Application Load Balancer, you must first provide basic configurati
 
    \(Optional\) To create a new security group for your load balancer, choose **Create a new security group**\.
 
-1. For **Listeners and routing**, the default is a listener that accepts HTTP traffic on port 80\. You can keep the default listener settings, modify the protocol, or modify the port\. Choose **Add listener** to add a new listener \(for example, an HTTPS listener\)\.
+1. For **Listeners and routing**, the default listener accepts HTTP traffic on port 80\. You can keep the default protocol and port, or choose different ones\. For **Default action**, choose the target group that you created\. You can optionally choose **Add listener** to add another listener \(for example, an HTTPS listener\)\.
 
    If you create an HTTPS listener, configure the required **Secure listener settings**\. Otherwise, go to the next step\.
 

@@ -28,7 +28,7 @@ bucket[/prefix]/AWSLogs/aws-account-id/elasticloadbalancing/region/yyyy/mm/dd/aw
 The name of the S3 bucket\.
 
 *prefix*  
-The prefix \(logical hierarchy\) in the bucket\. If you don't specify a prefix, the logs are placed at the root level of the bucket\.
+The prefix \(logical hierarchy\) in the bucket\. If you don't specify a prefix, the logs are placed at the root level of the bucket\. The prefix that you specify must not include `AWSLogs`\. We add the portion of the file name starting with `AWSLogs` after the bucket name and prefix that you specify\.
 
 *aws\-account\-id*  
 The AWS account ID of the owner\.
@@ -85,7 +85,7 @@ The following table describes the fields of an access log entry, in order\. All 
 |  type  |  The type of request or connection\. The possible values are as follows \(ignore any other values\): [\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html)  | 
 |  time  |  The time when the load balancer generated a response to the client, in ISO 8601 format\. For WebSockets, this is the time when the connection is closed\.  | 
 |  elb  |  The resource ID of the load balancer\. If you are parsing access log entries, note that resources IDs can contain forward slashes \(/\)\.  | 
-|  client:port  |  The IP address and port of the requesting client\.  | 
+|  client:port  |  The IP address and port of the requesting client\. If there is a proxy in front of the load balancer, this field contains the IP address of the proxy\.  | 
 |  target:port  |  The IP address and port of the target that processed this request\. If the client didn't send a full request, the load balancer can't dispatch the request to a target, and this value is set to \-\. If the target is a Lambda function, this value is set to \-\. If the request is blocked by AWS WAF, this value is set to \- and the value of elb\_status\_code is set to 403\.  | 
 |  request\_processing\_time  |  The total time elapsed \(in seconds, with millisecond precision\) from the time the load balancer received the request until the time it sent the request to a target\. This value is set to \-1 if the load balancer can't dispatch the request to a target\. This can happen if the target closes the connection before the idle timeout or if the client sends a malformed request\. This value can also be set to \-1 if the registered target does not respond before the idle timeout\.  | 
 |  target\_processing\_time  |  The total time elapsed \(in seconds, with millisecond precision\) from the time the load balancer sent the request to a target until the target started to send the response headers\. This value is set to \-1 if the load balancer can't dispatch the request to a target\. This can happen if the target closes the connection before the idle timeout or if the client sends a malformed request\. This value can also be set to \-1 if the registered target does not respond before the idle timeout\.  | 
@@ -316,6 +316,7 @@ When you enable access logging, you must specify an S3 bucket for the access log
 
 **Requirements**
 + The bucket must be located in the same Region as the load balancer\.
++ The prefix that you specify must not include `AWSLogs`\. We add the portion of the file name starting with `AWSLogs` after the bucket name and prefix that you specify\.
 + The bucket must have a bucket policy that grants Elastic Load Balancing permission to write the access logs to your bucket\. Bucket policies are a collection of JSON statements written in the access policy language to define access permissions for your bucket\. Each statement includes information about a single permission and contains a series of elements\.
 
 You can enable server\-side encryption for your Amazon S3 access log bucket using Amazon S3\-Managed Encryption Keys \(SSE\-S3\)\.
@@ -347,7 +348,7 @@ Use one of the following options to prepare an S3 bucket for access logging\.
 
 1. If you are creating a new bucket policy, copy the entire policy document to the policy editor, then replace the placeholders with the corresponding information\. If you are editing an existing bucket policy, copy only the new statement from the policy document \(the text between the \[ and \] of the `Statement` element\)\.
 
-   \[Availability Zones and Local Zones\] Use the following policy\. Update the placeholders for the name and prefix for your bucket, the ID of the AWS account for Elastic Load Balancing \(based on the Region for your load balancer\), and the ID of your AWS account\.
+   \[Availability Zones and Local Zones\] Use the following policy\. Update the placeholders for the name and prefix for your bucket, the ID of the AWS account for Elastic Load Balancing \(based on the Region for your load balancer\), and the ID of your AWS account\. 
 
    ```
    {
@@ -360,27 +361,6 @@ Use one of the following options to prepare an S3 bucket for access logging\.
          },
          "Action": "s3:PutObject",
          "Resource": "arn:aws:s3:::bucket-name/prefix/AWSLogs/your-aws-account-id/*"
-       },
-       {
-         "Effect": "Allow",
-         "Principal": {
-           "Service": "delivery.logs.amazonaws.com"
-         },
-         "Action": "s3:PutObject",
-         "Resource": "arn:aws:s3:::bucket-name/prefix/AWSLogs/your-aws-account-id/*",
-         "Condition": {
-           "StringEquals": {
-             "s3:x-amz-acl": "bucket-owner-full-control"
-           }
-         }
-       },
-       {
-         "Effect": "Allow",
-         "Principal": {
-           "Service": "delivery.logs.amazonaws.com"
-         },
-         "Action": "s3:GetBucketAcl",
-         "Resource": "arn:aws:s3:::bucket-name"
        }
      ]
    }
@@ -429,7 +409,9 @@ When you enable access logging for your load balancer, you must specify the name
 
    1. For **Access logs**, select **Enable**\.
 
-   1. For **S3 location**, enter the name of your S3 bucket, including any prefix \(for example, `my-loadbalancer-logs/my-app`\)\. You can specify the name of an existing bucket or a name for a new bucket\. If you specify an existing bucket, be sure that you own this bucket and that you configured the required bucket policy\.
+   1. For **S3 location**, enter the name of your S3 bucket, including any prefix \(for example, `my-loadbalancer-logs/my-app`\)\. The prefix that you specify must not include `AWSLogs`\. We add the portion of the file name starting with `AWSLogs` after the bucket name and prefix that you specify\.
+
+      You can specify the name of an existing bucket or a name for a new bucket\. If you specify an existing bucket, be sure that you own this bucket and that you configured the required bucket policy\.
 
    1. \(Optional\) If the bucket does not exist, choose **Create this location for me**\. You must specify a name that is unique across all existing bucket names in Amazon S3 and follows the DNS naming conventions\. For more information, see [Rules for bucket naming](https://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html#bucketnamingrules) in the *Amazon Simple Storage Service User Guide*\.
 

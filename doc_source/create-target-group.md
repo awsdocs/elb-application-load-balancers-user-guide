@@ -4,7 +4,7 @@ You register your targets with a target group\. By default, the load balancer se
 
 After you create a target group, you can add tags\.
 
-To route traffic to the targets in a target group, specify the target group in an action when you create a listener or create a rule for your listener\. For more information, see [Listener rules](load-balancer-listeners.md#listener-rules)\.
+To route traffic to the targets in a target group, specify the target group in an action when you create a listener or create a rule for your listener\. For more information, see [Listener rules](load-balancer-listeners.md#listener-rules)\. You can specify the same target group in multiple listeners, but these listeners must belong to the same Application Load Balancer\. To use a target group with a load balancer, you must verify that the target group is not in use by a listener for any other load balancer\.
 
 You can add or remove targets from your target group at any time\. For more information, see [Register targets with your target group](target-group-register-targets.md)\. You can also modify the health check settings for your target group\. For more information, see [Modify the health check settings of a target group](target-group-health-checks.md#modify-health-check-settings)\.
 

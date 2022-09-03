@@ -10,7 +10,8 @@ The following use cases are supported:
 ## Prepare to use an OIDC\-compliant IdP<a name="oidc-requirements"></a>
 
 Do the following if you are using an OIDC\-compliant IdP with your Application Load Balancer:
-+ Create a new OIDC app in your IdP\. You must configure a client ID and a client secret\.
++ Create a new OIDC app in your IdP\. The IdP's DNS must be publicly resolvable\.
++ You must configure a client ID and a client secret\.
 + Get the following endpoints published by the IdP: authorization, token, and user info\. You can locate this information in the config\.
 + Allow one of the following redirect URLs in your IdP app, whichever your users will use, where DNS is the domain name of your load balancer and CNAME is the DNS alias for your application:
   + https://*DNS*/oauth2/idpresponse

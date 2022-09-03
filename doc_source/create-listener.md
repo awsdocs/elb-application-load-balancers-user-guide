@@ -6,6 +6,7 @@ The information on this page helps you create an HTTP listener for your load bal
 
 ## Prerequisites<a name="listener-prereqs"></a>
 + To add a forward action to the default listener rule, you must specify an available target group\. For more information, see [Create a target group](create-target-group.md)\.
++ You can specify the same target group in multiple listeners, but these listeners must belong to the same load balancer\. To use a target group with a load balancer, you must verify that it is not used by a listener for any other load balancer\.
 
 ## Add an HTTP listener<a name="add-listener"></a>
 

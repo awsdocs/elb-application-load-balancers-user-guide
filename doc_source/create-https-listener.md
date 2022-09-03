@@ -4,6 +4,10 @@ A listener is a process that checks for connection requests\. You define a liste
 
 You can create an HTTPS listener, which uses encrypted connections \(also known as *SSL offload*\)\. This feature enables traffic encryption between your load balancer and the clients that initiate SSL or TLS sessions\.
 
+If you need to pass encrypted traffic to targets without the load balancer decrypting it, you can create a Network Load Balancer or Classic Load Balancer with a TCP listener on port 443\. With a TCP listener, the load balancer passes encrypted traffic through to the targets without decrypting it\.
+
+Application Load Balancers do not support mutual TLS authentication \(mTLS\)\. For mTLS support, create a TCP listener using a Network Load Balancer or a Classic Load Balancer and implement mTLS on the target\.
+
 The information on this page helps you create an HTTPS listener for your load balancer\. To add an HTTP listener to your load balancer, see [Create an HTTP listener for your Application Load Balancer](create-listener.md)\.
 
 **Contents**
@@ -64,7 +68,7 @@ Elastic Load Balancing uses a Secure Socket Layer \(SSL\) negotiation configurat
 
 Application Load Balancers do not support SSL renegotiation for client or target connections\.
 
-When you create a TLS listener, you must select a security policy\. You can update the security policy as needed\. For more information, see [Update the security policy](listener-update-certificates.md#update-security-policy)\.
+When you create an HTTPS listener, you must select a security policy\. You can update the security policy as needed\. For more information, see [Update the security policy](listener-update-certificates.md#update-security-policy)\.
 
 You can choose the security policy that is used for front\-end connections\. The `ELBSecurityPolicy-2016-08` security policy is always used for backend connections\. Application Load Balancers do not support custom security policies\.
 
@@ -159,8 +163,9 @@ To view the configuration of a security policy for Application Load Balancers us
 You configure a listener with a protocol and a port for connections from clients to the load balancer, and a target group for the default listener rule\. For more information, see [Listener configuration](load-balancer-listeners.md#listener-configuration)\.
 
 **Prerequisites**
-+ To add a forward action to the default listener rule, you must specify an available target group\. For more information, see [Create a target group](create-target-group.md)\.
 + To create an HTTPS listener, you must specify a certificate and a security policy\. The load balancer uses the certificate to terminate the connection and decrypt requests from clients before routing them to targets\. The load balancer uses the security policy when negotiating SSL connections with the clients\.
++ To add a forward action to the default listener rule, you must specify an available target group\. For more information, see [Create a target group](create-target-group.md)\.
++ You can specify the same target group in multiple listeners, but these listeners must belong to the same load balancer\. To use a target group with a load balancer, you must verify that it is not used by a listener for any other load balancer\.
 
 **To add an HTTPS listener using the console**
 

@@ -13,8 +13,8 @@ This tutorial provides a hands\-on introduction to Application Load Balancers th
 For demos of common load balancer configurations, see [Elastic Load Balancing demos](https://exampleloadbalancer.com/)\.
 
 ## Before you begin<a name="prerequisites"></a>
-+ Decide which two Availability Zones you will use for your EC2 instances\. Configure your virtual private cloud \(VPC\) with at least one public subnet in each of these Availability Zones\. These public subnets are used to configure the load balancer\. You can launch your EC2 instances in other subnets of these Availability Zones instead\. For more information, see [VPCs and subnets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html) in the *Amazon VPC User Guide*\. 
-+ Launch at least one EC2 instance in each Availability Zone\. Be sure to install a web server, such as Apache or Internet Information Services \(IIS\), on each EC2 instance\. Ensure that the security groups for these instances allow HTTP access on port 80\. For more information, see [Security group rules](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html#SecurityGroupRules) in the *Amazon VPC User Guide*\.
++ Decide which two Availability Zones you will use for your EC2 instances\. Configure your virtual private cloud \(VPC\) with at least one public subnet in each of these Availability Zones\. These public subnets are used to configure the load balancer\. You can launch your EC2 instances in other subnets of these Availability Zones instead\.
++ Launch at least one EC2 instance in each Availability Zone\. Be sure to install a web server, such as Apache or Internet Information Services \(IIS\), on each EC2 instance\. Ensure that the security groups for these instances allow HTTP access on port 80\.
 
 ## Step 1: Configure your target group<a name="configure-target-group"></a>
 

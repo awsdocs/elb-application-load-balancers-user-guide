@@ -13,6 +13,7 @@ For more information, see [How Elastic Load Balancing works](https://docs.aws.am
 + [Connection idle timeout](#connection-idle-timeout)
 + [Deletion protection](#deletion-protection)
 + [Desync mitigation mode](#desync-mitigation-mode)
++ [Host header preservation](#host-header-preservation)
 + [AWS WAF](#load-balancer-waf)
 + [Create a load balancer](create-application-load-balancer.md)
 + [Update Availability Zones](load-balancer-subnets.md)
@@ -41,7 +42,7 @@ You can specify one or more Local Zone subnets\. The following restrictions appl
 
 You can specify a single Outpost subnet\. The following restrictions apply:
 + You must have installed and configured an Outpost in your on\-premises data center\. You must have a reliable network connection between your Outpost and its AWS Region\. For more information, see the [AWS Outposts User Guide](https://docs.aws.amazon.com/outposts/latest/userguide/)\.
-+ The load balancer requires two instances on the Outpost for the load balancer nodes\. The supported instances are shown in the following table \. Initially, the instances are `large` instances\. The load balancer scales as needed, from `large` to `xlarge`, `xlarge` to `2xlarge`, and `2xlarge` to `4xlarge`\. If you need additional capacity, the load balancer adds `4xlarge` instances\. If you do not have sufficient instance capacity or available IP addresses to scale the load balancer, the load balancer reports an event to the [AWS Health Dashboard](https://phd.aws.amazon.com/) and the load balancer state is `active_impaired`\.
++ The load balancer requires two `large` instances on the Outpost for the load balancer nodes\. The supported instance types are shown in the following table\. The load balancer scales as needed, resizing the nodes one size at a time \(from `large` to `xlarge`, then `xlarge` to `2xlarge`, and then `2xlarge` to `4xlarge`\)\. After scaling the nodes to the largest instance size, if you need additional capacity, the load balancer adds `4xlarge` instances as load balancer nodes\. If you do not have sufficient instance capacity or available IP addresses to scale the load balancer, the load balancer reports an event to the [AWS Health Dashboard](https://phd.aws.amazon.com/) and the load balancer state is `active_impaired`\.
 + You can register targets by instance ID or IP address\. If you register targets in the AWS Region for the Outpost, they are not used\.
 + The following features are not available: Lambda functions as targets, AWS WAF integration, sticky sessions, authentication support, and integration with AWS Global Accelerator\.
 
@@ -96,7 +97,7 @@ The following are the load balancer attributes:
 Indicates whether access logs stored in Amazon S3 are enabled\. The default is `false`\.
 
 `access_logs.s3.bucket`  
-The name of the Amazon S3 bucket for the access logs\. This attribute is required if access logs are enabled\. For more information, see [Bucket permissions](load-balancer-access-logs.md#access-logging-bucket-permissions)\.
+The name of the Amazon S3 bucket for the access logs\. This attribute is required if access logs are enabled\. For more information, see [Enable access logs](enable-access-logging.md)\.
 
 `access_logs.s3.prefix`  
 The prefix for the location in the Amazon S3 bucket\.
@@ -114,7 +115,10 @@ Blocks internet gateway \(IGW\) access to the load balancer, preventing unintend
 Determines how the load balancer handles requests that might pose a security risk to your application\. The possible values are `monitor`, `defensive`, and `strictest`\. The default is `defensive`\.
 
 `routing.http.drop_invalid_header_fields.enabled`  
-Indicates whether HTTP headers with header fields that are not valid are removed by the load balancer \(`true`\), or routed to targets \(`false`\)\. The default is `false`\. Elastic Load Balancing requires that message header names conform to the regular expression `[-A-Za-z0-9]+`, which describes all registered internet message headers\. Each name consists of alphanumeric characters or hyphens\.
+Indicates whether HTTP headers with header fields that are not valid are removed by the load balancer \(`true`\), or routed to targets \(`false`\)\. The default is `false`\. Elastic Load Balancing requires that valid HTTP header names conform to the regular expression `[-A-Za-z0-9]+`, as described in the HTTP Field Name Registry\. Each name consists of alphanumeric characters or hyphens\. Select `true` if you want HTTP headers that do not conform to this pattern, to be removed from requests\.
+
+`routing.http.preserve_host_header.enabled`  
+Indicates whether the Application Load Balancer should preserve the `Host` header in the HTTP request and send it to targets without any change\. The possible values are `true` and `false`\. The default is `false`\.
 
 `routing.http.x_amzn_tls_version_and_cipher_suite.enabled`  
 Indicates whether the two headers \(`x-amzn-tls-version` and `x-amzn-tls-cipher-suite`\), which contain information about the negotiated TLS version and cipher suite, are added to the client request before sending it to the target\. The `x-amzn-tls-version` header has information about the TLS protocol version negotiated with the client, and the `x-amzn-tls-cipher-suite` header has information about the cipher suite negotiated with the client\. Both headers are in OpenSSL format\. The possible values for the attribute are `true` and `false`\. The default is `false`\.
@@ -122,11 +126,20 @@ Indicates whether the two headers \(`x-amzn-tls-version` and `x-amzn-tls-cipher-
 `routing.http.xff_client_port.enabled`  
 Indicates whether the `X-Forwarded-For` header should preserve the source port that the client used to connect to the load balancer\. The possible values are `true` and `false`\. The default is `false`\.
 
+`routing.http.xff_header_processing.mode`  
+Enables you to modify, preserve, or remove the `X-Forward-For` header in the HTTP request before the Application Load Balancer sends the request to the target\. The possible values are `append`, `preserve`, and `remove`\. The default is `append`\.  
++ If the value is `append`, the Application Load Balancer adds the client IP address \(of the last hop\) to the `X-Forward-For` header in the HTTP request before it sends it to targets\.
++ If the value is `preserve`, the Application Load Balancer preserves the `X-Forward-For` header in the HTTP request, and sends it to targets without any change\.
++ If the value is `remove`, the Application Load Balancer removes the `X-Forward-For` header in the HTTP request before it sends it to targets\.
+
 `routing.http2.enabled`  
 Indicates whether HTTP/2 is enabled\. The default is `true`\.
 
 `waf.fail_open.enabled`  
 Indicates whether to allow a AWS WAF\-enabled load balancer to route requests to targets if it is unable to forward the request to AWS WAF\. The possible values are `true` and `false`\. The default is `false`\.
+
+**Note**  
+The `routing.http.drop_invalid_header_fields.enabled` attribute was introduced to offer HTTP desync protection\. The `routing.http.desync_mitigation_mode` attribute was added to provide more comprehensive protection from HTTP desync for your applications\. You aren't required to use both attributes and may choose either, depending on your application's requirements\.
 
 ## IP address type<a name="ip-address-type"></a>
 
@@ -254,6 +267,43 @@ The following table describes how Application Load Balancers treat requests base
 
 **To update desync mitigation mode using the AWS CLI**  
 Use the [modify\-load\-balancer\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-load-balancer-attributes.html) command with the `routing.http.desync_mitigation_mode` attribute set to `monitor`, `defensive`, or `strictest`\.
+
+## Host header preservation<a name="host-header-preservation"></a>
+
+When you enable the **Preserve host header **attribute, the Application Load Balancer preserves the `Host` header in the HTTP request, and sends the header to targets without any modification\. If the Application Load Balancer receives multiple `Host` headers, it preserves all of them\. Listener rules are applied only to the first `Host` header received\.
+
+By default, when the **Preserve host header **attribute is not enabled, the Application Load Balancer modifies the `Host` header in the following manner: 
+
+**When host header preservation is not enabled, and listener port is a non\-default port**: When not using the default ports \(ports 80 or 443\) we append the port number to the host header if it isn’t already appended by the client\. For example, the `Host` header in the HTTP request with `Host: www.example.com` would be modified to `Host: www.example.com:8080`, if the listener port is a non\-default port such as `8080`\. 
+
+**When host header preservation is not enabled, and the listener port is a default port \(port 80 or 443\)**: For default listener ports \(either port 80 or 443\), we do not append the port number to the outgoing host header\. Any port number that was already in the incoming host header, is removed\. 
+
+The following table shows more examples of how Application Load Balancers treat host headers in the HTTP request based on listener port\.
+
+
+|  Listener port  |  Example request  |  Host header in the request  |  Host header preservation is disabled \(default behavior\)  | Host header preservation is enabled | 
+| --- | --- | --- | --- | --- | 
+| Request is sent on default HTTP/HTTPS listener\. | GET /index\.html HTTP/1\.1 Host: example\.com | example\.com | example\.com | example\.com | 
+| Request is sent on default HTTP listener and host header has a port \(80 or 443\)\. | GET /index\.html HTTP/1\.1 Host: example\.com:80 | example\.com:80 | example\.com | example\.com:80 | 
+| Request has an absolute path\. | GET https://dns\_name/index\.html HTTP/1\.1 Host: example\.com | example\.com | dns\_name | example\.com | 
+| Request is sent on a non\-default listener port and host header has port \(for example, 8080\)\. | GET /index\.html HTTP/1\.1 Host: example\.com | example\.com | example\.com:8080 | example\.com | 
+
+**To enable host header preservation**
+
+1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
+
+1. In the navigation pane, under **Load Balancing**, choose **Load Balancers**\.
+
+1. Select the load balancer you want to use\.
+
+1. On the **Description** tab, choose **Edit attributes**\.
+
+1. For **Preserve host header **, choose **Enable**\.
+
+1. Choose **Save**\.
+
+**To enable host header preservation using the AWS CLI**  
+Use the [modify\-load\-balancer\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-load-balancer-attributes.html) command with the `routing.http.preserve_host_header.enabled` attribute set to `true`\.
 
 ## Application Load Balancers and AWS WAF<a name="load-balancer-waf"></a>
 

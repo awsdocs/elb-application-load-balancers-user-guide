@@ -2,17 +2,17 @@
 
 Elastic Load Balancing provides access logs that capture detailed information about requests sent to your load balancer\. Each log contains information such as the time the request was received, the client's IP address, latencies, request paths, and server responses\. You can use these access logs to analyze traffic patterns and troubleshoot issues\.
 
-Access logging is an optional feature of Elastic Load Balancing that is disabled by default\. After you enable access logging for your load balancer, Elastic Load Balancing captures the logs and stores them in the Amazon S3 bucket that you specify as compressed files\. You can disable access logging at any time\. 
+Access logs is an optional feature of Elastic Load Balancing that is disabled by default\. After you enable access logs for your load balancer, Elastic Load Balancing captures the logs and stores them in the Amazon S3 bucket that you specify as compressed files\. You can disable access logs at any time\.
 
-There is no additional charge for access logs\. You are charged storage costs for Amazon S3, but not charged for the bandwidth used by Elastic Load Balancing to send log files to Amazon S3\. For more information about storage costs, see [Amazon S3 pricing](https://aws.amazon.com/s3/pricing/)\.
+You are charged storage costs for Amazon S3, but not charged for the bandwidth used by Elastic Load Balancing to send log files to Amazon S3\. For more information about storage costs, see [Amazon S3 pricing](https://aws.amazon.com/s3/pricing/)\.
 
 **Topics**
 + [Access log files](#access-log-file-format)
 + [Access log entries](#access-log-entry-format)
-+ [Bucket permissions](#access-logging-bucket-permissions)
-+ [Enable access logging](#enable-access-logging)
-+ [Disable access logging](#disable-access-logging)
++ [Example log entries](#access-log-entry-examples)
 + [Processing access log files](#log-processing-tools)
++ [Enable access logs](enable-access-logging.md)
++ [Disable access logs](disable-access-logging.md)
 
 ## Access log files<a name="access-log-file-format"></a>
 
@@ -73,7 +73,6 @@ Elastic Load Balancing logs requests on a best\-effort basis\. We recommend that
 + [Actions taken](#actions-taken)
 + [Classification reasons](#classification-reasons)
 + [Error reason codes](#error-reason-codes)
-+ [Examples](#access-log-entry-examples)
 
 ### Syntax<a name="access-log-entry-syntax"></a>
 
@@ -87,8 +86,8 @@ The following table describes the fields of an access log entry, in order\. All 
 |  elb  |  The resource ID of the load balancer\. If you are parsing access log entries, note that resources IDs can contain forward slashes \(/\)\.  | 
 |  client:port  |  The IP address and port of the requesting client\. If there is a proxy in front of the load balancer, this field contains the IP address of the proxy\.  | 
 |  target:port  |  The IP address and port of the target that processed this request\. If the client didn't send a full request, the load balancer can't dispatch the request to a target, and this value is set to \-\. If the target is a Lambda function, this value is set to \-\. If the request is blocked by AWS WAF, this value is set to \- and the value of elb\_status\_code is set to 403\.  | 
-|  request\_processing\_time  |  The total time elapsed \(in seconds, with millisecond precision\) from the time the load balancer received the request until the time it sent the request to a target\. This value is set to \-1 if the load balancer can't dispatch the request to a target\. This can happen if the target closes the connection before the idle timeout or if the client sends a malformed request\. This value can also be set to \-1 if the registered target does not respond before the idle timeout\.  | 
-|  target\_processing\_time  |  The total time elapsed \(in seconds, with millisecond precision\) from the time the load balancer sent the request to a target until the target started to send the response headers\. This value is set to \-1 if the load balancer can't dispatch the request to a target\. This can happen if the target closes the connection before the idle timeout or if the client sends a malformed request\. This value can also be set to \-1 if the registered target does not respond before the idle timeout\.  | 
+|  request\_processing\_time  |  The total time elapsed \(in seconds, with millisecond precision\) from the time the load balancer received the request until the time it sent the request to a target\. This value is set to \-1 if the load balancer can't dispatch the request to a target\. This can happen if the target closes the connection before the idle timeout or if the client sends a malformed request\. This value can also be set to \-1 if the registered target does not respond before the idle timeout\. If AWS WAF is enabled for your Application Load Balancer, the time it takes for the client to send the required data for POST requests is counted towards `request_processing_time`\.  | 
+|  target\_processing\_time  |  The total time elapsed \(in seconds, with millisecond precision\) from the time the load balancer sent the request to a target until the target started to send the response headers\. This value is set to \-1 if the load balancer can't dispatch the request to a target\. This can happen if the target closes the connection before the idle timeout or if the client sends a malformed request\. This value can also be set to \-1 if the registered target does not respond before the idle timeout\. If AWS WAF is not enabled for your Application Load Balancer, the time it takes for the client to send the required data for POST requests is counted towards `target_processing_time`\.  | 
 |  response\_processing\_time  |  The total time elapsed \(in seconds, with millisecond precision\) from the time the load balancer received the response header from the target until it started to send the response to the client\. This includes both the queuing time at the load balancer and the connection acquisition time from the load balancer to the client\. This value is set to \-1 if the load balancer can't send the request to a target\. This can happen if the target closes the connection before the idle timeout or if the client sends a malformed request\.  | 
 |  elb\_status\_code  |  The status code of the response from the load balancer\.  | 
 |  target\_status\_code  |  The status code of the response from the target\. This value is recorded only if a connection was established to the target and the target sent a response\. Otherwise, it is set to \-\.  | 
@@ -223,7 +222,7 @@ If the load balancer encounters an error when forwarding requests to AWS WAF, it
 |  `WAFServiceError`  |  AWS WAF returned a 5XX error\.  | 
 |  `WAFUnhandledException`  |  The load balancer encountered an unhandled exception\.  | 
 
-### Examples<a name="access-log-entry-examples"></a>
+## Example log entries<a name="access-log-entry-examples"></a>
 
 The following are example log entries\. Note that the text appears on multiple lines only to make them easier to read\.
 
@@ -309,154 +308,6 @@ arn:aws:elasticloadbalancing:us-east-2:123456789012:targetgroup/my-targets/73e2d
 "Root=1-58337364-23a8c76965a2ef7629b185e3" "-" "-"
 0 2018-11-30T22:22:48.364000Z "forward" "-" "LambdaInvalidResponse" "-" "-" "-" "-"
 ```
-
-## Bucket permissions<a name="access-logging-bucket-permissions"></a>
-
-When you enable access logging, you must specify an S3 bucket for the access logs\. The bucket must meet the following requirements\.
-
-**Requirements**
-+ The bucket must be located in the same Region as the load balancer\.
-+ The prefix that you specify must not include `AWSLogs`\. We add the portion of the file name starting with `AWSLogs` after the bucket name and prefix that you specify\.
-+ The bucket must have a bucket policy that grants Elastic Load Balancing permission to write the access logs to your bucket\. Bucket policies are a collection of JSON statements written in the access policy language to define access permissions for your bucket\. Each statement includes information about a single permission and contains a series of elements\.
-
-You can enable server\-side encryption for your Amazon S3 access log bucket using Amazon S3\-Managed Encryption Keys \(SSE\-S3\)\.
-
-For more information, see [Protecting data using server\-side encryption with Amazon S3\-managed encryption keys \(SSE\-S3\)](https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingServerSideEncryption.html) and in the *Amazon Simple Storage Service User Guide*\.
-
-**Options**
-
-Use one of the following options to prepare an S3 bucket for access logging\.
-+ To create a bucket and enable access logging using the Elastic Load Balancing console, skip to [Enable access logging](#enable-access-logging) and select the option to have the console create the bucket and bucket policy for you\.
-+ To use an existing bucket and add the required bucket policy using the Amazon S3 console, use the following procedure but skip the steps marked "\[Skip to use existing bucket\]"\.
-+ To create a bucket and add the required bucket policy using the Amazon S3 console \(for example, if you are using the AWS CLI or an API to enable access logging\), use the following procedure\.
-
-**To prepare an Amazon S3 bucket for access logging**
-
-1. Open the Amazon S3 console at [https://console\.aws\.amazon\.com/s3/](https://console.aws.amazon.com/s3/)\.
-
-1. \[Skip to use existing bucket\] Choose **Create bucket**\.
-
-1. \[Skip to use existing bucket\] On the **Create bucket** page, do the following:
-
-   1. For **Bucket name**, enter a name for your bucket\. This name must be unique across all existing bucket names in Amazon S3\. In some Regions, there might be additional restrictions on bucket names\. For more information, see [Bucket restrictions and limitations](https://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html) in the *Amazon Simple Storage Service User Guide*\.
-
-   1. For **Region**, select the Region where you created your load balancer\.
-
-   1. Choose **Create**\.
-
-1. Select the bucket\. Choose **Permissions** and then choose **Bucket Policy**\.
-
-1. If you are creating a new bucket policy, copy the entire policy document to the policy editor, then replace the placeholders with the corresponding information\. If you are editing an existing bucket policy, copy only the new statement from the policy document \(the text between the \[ and \] of the `Statement` element\)\.
-
-   \[Availability Zones and Local Zones\] Use the following policy\. Update the placeholders for the name and prefix for your bucket, the ID of the AWS account for Elastic Load Balancing \(based on the Region for your load balancer\), and the ID of your AWS account\. 
-
-   ```
-   {
-     "Version": "2012-10-17",
-     "Statement": [
-       {
-         "Effect": "Allow",
-         "Principal": {
-           "AWS": "arn:aws:iam::elb-account-id:root"
-         },
-         "Action": "s3:PutObject",
-         "Resource": "arn:aws:s3:::bucket-name/prefix/AWSLogs/your-aws-account-id/*"
-       }
-     ]
-   }
-   ```
-
-   The following table contains the account IDs to use in place of *elb\-account\-id* in your bucket policy\.    
-[\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html)
-
-   \* These Regions requires a separate account\. For more information, see [AWS GovCloud \(US\-West\)](https://aws.amazon.com/govcloud-us/) and [China \(Beijing\)](http://www.amazonaws.cn/en/)\.
-
-   \[Outpost\] Use the following policy\. Update the placeholders for the name and prefix for your bucket and the ID of your AWS account\.
-
-   ```
-   {
-       "Effect": "Allow",
-       "Principal": {
-           "Service": "logdelivery.elb.amazonaws.com"
-       },
-       "Action": "s3:PutObject",
-       "Resource": "arn:aws:s3:::bucket-name/prefix/AWSLogs/your-aws-account-id/*",
-       "Condition": {
-           "StringEquals": {
-               "s3:x-amz-acl": "bucket-owner-full-control"
-           }
-       }
-   }
-   ```
-
-1. Choose **Save**\.
-
-## Enable access logging<a name="enable-access-logging"></a>
-
-When you enable access logging for your load balancer, you must specify the name of the S3 bucket where the load balancer will store the logs\. The bucket must be in the same Region as your load balancer, and must have a bucket policy that grants Elastic Load Balancing permission to write the access logs to the bucket\. The bucket can be owned by a different account than the account that owns the load balancer\.
-
-**To enable access logging using the console**
-
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
-
-1. In the navigation pane, choose **Load Balancers**\.
-
-1. Select your load balancer\.
-
-1. On the **Description** tab, choose **Edit attributes**\.
-
-1. On the **Edit load balancer attributes** page, do the following:
-
-   1. For **Access logs**, select **Enable**\.
-
-   1. For **S3 location**, enter the name of your S3 bucket, including any prefix \(for example, `my-loadbalancer-logs/my-app`\)\. The prefix that you specify must not include `AWSLogs`\. We add the portion of the file name starting with `AWSLogs` after the bucket name and prefix that you specify\.
-
-      You can specify the name of an existing bucket or a name for a new bucket\. If you specify an existing bucket, be sure that you own this bucket and that you configured the required bucket policy\.
-
-   1. \(Optional\) If the bucket does not exist, choose **Create this location for me**\. You must specify a name that is unique across all existing bucket names in Amazon S3 and follows the DNS naming conventions\. For more information, see [Rules for bucket naming](https://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html#bucketnamingrules) in the *Amazon Simple Storage Service User Guide*\.
-
-   1. Choose **Save**\.
-
-**To enable access logging using the AWS CLI**  
-Use the [modify\-load\-balancer\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-load-balancer-attributes.html) command\.
-
-**To verify that Elastic Load Balancing created a test file in your S3 bucket**
-
-After access logging is enabled for your load balancer, Elastic Load Balancing validates the S3 bucket and creates a test file to ensure that the bucket policy specifies the required permissions\. You can use the Amazon S3 console to verify that the test file was created\. The test file is not an actual access log file; it doesn't contain example records\.
-
-1. Open the Amazon S3 console at [https://console\.aws\.amazon\.com/s3/](https://console.aws.amazon.com/s3/)\.
-
-1. For **All Buckets**, select your S3 bucket\.
-
-1. Navigate to the bucket you specified for access logging and look for `ELBAccessLogTestFile`\. For example, if you used the console to create the bucket and bucket policy, the path is as follows:
-
-   ```
-   my-bucket/prefix/AWSLogs/123456789012/ELBAccessLogTestFile
-   ```
-
-**To manage the S3 bucket for your access logs**  
-After you enable access logging, be sure to disable access logging before you delete the bucket with your access logs\. Otherwise, if there is a new bucket with the same name and the required bucket policy but created in an AWS account that you don't own, Elastic Load Balancing could write the access logs for your load balancer to this new bucket\.
-
-## Disable access logging<a name="disable-access-logging"></a>
-
-You can disable access logging for your load balancer at any time\. After you disable access logging, your access logs remain in your S3 bucket until you delete them\. For more information, see [Working with buckets](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/BucketOperations.html) in the *Amazon Simple Storage Service User Guide*\.
-
-**To disable access logging using the console**
-
-1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
-
-1. In the navigation pane, choose **Load Balancers**\.
-
-1. Select your load balancer\.
-
-1. On the **Description** tab, choose **Edit attributes**\.
-
-1. For **Access logs**, clear **Enable**\.
-
-1. Choose **Save**\.
-
-**To disable access logging using the AWS CLI**  
-Use the [modify\-load\-balancer\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-load-balancer-attributes.html) command\.
 
 ## Processing access log files<a name="log-processing-tools"></a>
 

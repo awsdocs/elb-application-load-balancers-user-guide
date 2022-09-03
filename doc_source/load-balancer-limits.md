@@ -13,7 +13,7 @@ Your AWS account has the following quotas related to Application Load Balancers\
 | Name | Default | Adjustable | 
 | --- | --- | --- | 
 | Application Load Balancers per Region |  50  | [Yes](https://console.aws.amazon.com/servicequotas/home/services/elasticloadbalancing/quotas/L-53DA6B97) | 
-| Certificates per Application Load Balancer \(not counting default certificates\) |  25  | [Yes](https://console.aws.amazon.com/servicequotas/home/services/elasticloadbalancing/quotas/L-9365A611) | 
+| Certificates per Application Load Balancer \(excluding default certificates\) |  25  | [Yes](https://console.aws.amazon.com/servicequotas/home/services/elasticloadbalancing/quotas/L-9365A611) | 
 | Listeners per Application Load Balancer |  50  | [Yes](https://console.aws.amazon.com/servicequotas/home/services/elasticloadbalancing/quotas/L-B6DF7632) | 
 | Number of times a target can be registered per Application Load Balancer |  1,000  | [Yes](https://console.aws.amazon.com/servicequotas/home/services/elasticloadbalancing/quotas/L-4E7B68E9) | 
 | Target Groups per Action per Application Load Balancer |  5  | No | 
@@ -28,7 +28,7 @@ The following quotas are for target groups\.
 | --- | --- | --- | 
 | Target Groups per Region  |  3,000 \* | [Yes](https://console.aws.amazon.com/servicequotas/home/services/elasticloadbalancing/quotas/L-B22855CB) | 
 | Targets per Target Group per Region \(instances or IP addresses\) |  1,000  | [Yes](https://console.aws.amazon.com/servicequotas/home/services/elasticloadbalancing/quotas/L-A0D0B863) | 
-| Targets per Target Group per Region\(Lambda functions\) | 1 | No | 
+| Targets per Target Group per Region \(Lambda functions\) | 1 | No | 
 
 **\*** This quota is shared by Application Load Balancers and Network Load Balancers\.
 
@@ -38,7 +38,17 @@ The following quotas are for rules\.
 
 | Name | Default | Adjustable | 
 | --- | --- | --- | 
-| Rules per Application Load Balancer \(not counting default rules\) |  100  | [Yes](https://console.aws.amazon.com/servicequotas/home/services/elasticloadbalancing/quotas/L-7EED9B64) | 
+| Rules per Application Load Balancer \(excluding default rules\) |  100  | [Yes](https://console.aws.amazon.com/servicequotas/home/services/elasticloadbalancing/quotas/L-7EED9B64) | 
 | Condition Values per Rule |  5  | No | 
 | Condition Wildcards per Rule |  5  | No | 
 | Match evaluations per rule | 5 | No | 
+
+**HTTP headers**  
+The following are the size limits for HTTP headers\.
+
+
+| Name | Default | Adjustable | 
+| --- | --- | --- | 
+| Request line | 16 K | No | 
+| Single header | 16 K | No | 
+| Entire header | 64 K | No | 

@@ -8,6 +8,8 @@ If you need to pass encrypted traffic to targets without the load balancer decry
 
 Application Load Balancers do not support mutual TLS authentication \(mTLS\)\. For mTLS support, create a TCP listener using a Network Load Balancer or a Classic Load Balancer and implement mTLS on the target\.
 
+Application Load Balancers do not support ED25519 keys\.
+
 The information on this page helps you create an HTTPS listener for your load balancer\. To add an HTTP listener to your load balancer, see [Create an HTTP listener for your Application Load Balancer](create-listener.md)\.
 
 **Contents**

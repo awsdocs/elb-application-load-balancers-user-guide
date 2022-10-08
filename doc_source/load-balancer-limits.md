@@ -51,4 +51,5 @@ The following are the size limits for HTTP headers\.
 | --- | --- | --- | 
 | Request line | 16 K | No | 
 | Single header | 16 K | No | 
-| Entire header | 64 K | No | 
+| Entire response header | 32 K | No | 
+| Entire request header | 64 K | No | 

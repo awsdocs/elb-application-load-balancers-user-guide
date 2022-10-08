@@ -13,6 +13,7 @@ Do the following if you are using an OIDC\-compliant IdP with your Application L
 + Create a new OIDC app in your IdP\. The IdP's DNS must be publicly resolvable\.
 + You must configure a client ID and a client secret\.
 + Get the following endpoints published by the IdP: authorization, token, and user info\. You can locate this information in the config\.
++ The DNS entries for the endpoints must be publicly resolvable, even if they resolve to private IP addresses\.
 + Allow one of the following redirect URLs in your IdP app, whichever your users will use, where DNS is the domain name of your load balancer and CNAME is the DNS alias for your application:
   + https://*DNS*/oauth2/idpresponse
   + https://*CNAME*/oauth2/idpresponse
@@ -31,6 +32,8 @@ Do the following if you are using Amazon Cognito user pools with your Applicatio
 + Allow your user pool domain on your IdP app's callback URL\. Use the format for your IdP\. For example:
   + https://*domain\-prefix*\.auth\.*region*\.amazoncognito\.com/saml2/idpresponse
   + https://*user\-pool\-domain*/oauth2/idpresponse
+
+The callback URL in the app client settings must use all lowercase letters\.
 
 To enable an IAM user to configure a load balancer to use Amazon Cognito to authenticate users, you must grant the user permission to call the `cognito-idp:DescribeUserPoolClient` action\.
 
@@ -161,7 +164,7 @@ Every new request goes through steps 1 through 11, while subsequent requests go 
 If the IdP provides a valid refresh token in the ID token, the load balancer saves the refresh token and uses it to refresh the user claims each time the access token expires, until the session times out or the IdP refresh fails\. If the user logs out, the refresh fails and the load balancer redirects the user to the IdP authorization endpoint\. This enables the load balancer to drop sessions after the user logs out\. For more information, see [Session timeout](#session-timeout)\.
 
 **Note**  
-The cookie expiry is different from the authentication session expiry\. The cookie expiry is an attribute of the cookie, which is set to 40 years\. The reason for the long expiry is to ensure that the browser always replays the cookie\. The actual length of the authentication session is determined by the session timeout configured on the Application Load Balancer for the authentication feature\. This session timeout is included in the Auth cookie value, which is also encrypted\. 
+The cookie expiry is different from the authentication session expiry\. The cookie expiry is an attribute of the cookie, which is set to 7 days\. The actual length of the authentication session is determined by the session timeout configured on the Application Load Balancer for the authentication feature\. This session timeout is included in the Auth cookie value, which is also encrypted\. 
 
 ## User claims encoding and signature verification<a name="user-claims-encoding"></a>
 
@@ -180,7 +183,7 @@ The user claims, in JSON web tokens \(JWT\) format\.
 
 Access tokens and user claims are different from ID tokens\. Access tokens and user claims only allow access to server resources, while ID tokens carry additional information to authenticate a user\. The Application Load Balancer authenticates the user and only passes access tokens and claims to the backend but does not pass the ID token information\. 
 
-These tokens follow the JWT format but are not ID tokens\. The JWT format includes a header, payload, and signature that are base64 URL encoded and includes padding characters at the end\. The JWT signature is ECDSA \+ P\-256 \+ SHA256\. 
+These tokens follow the JWT format but are not ID tokens\. The JWT format includes a header, payload, and signature that are base64 URL encoded, and includes padding characters at the end\. An Application Load Balancer uses ES256 \(ECDSA using P\-256 and SHA256\) to generate the JWT signature\. 
 
 The JWT header is a JSON object with the following fields:
 
@@ -219,7 +222,7 @@ https://s3-us-gov-west-1.amazonaws.com/aws-elb-public-keys-prod-us-gov-west-1/ke
 https://s3-us-gov-east-1.amazonaws.com/aws-elb-public-keys-prod-us-gov-east-1/key-id
 ```
 
-The following example shows how to get the public key in Python 3\.x:
+The following example shows how to get the key ID, public key, and payload in Python 3\.x:
 
 ```
 import jwt
@@ -244,7 +247,7 @@ pub_key = req.text
 payload = jwt.decode(encoded_jwt, pub_key, algorithms=['ES256'])
 ```
 
-The following example shows how to get the public key in Python 2\.7:
+The following example shows how to get the key ID, public key, and payload in Python 2\.7:
 
 ```
 import jwt
@@ -268,7 +271,9 @@ pub_key = req.text
 payload = jwt.decode(encoded_jwt, pub_key, algorithms=['ES256'])
 ```
 
-Note that standard libraries are not compatible with padding that is included in the Application Load Balancer authentication token in JWT format\.
+**Considerations**
++ These examples do not cover how to validate the signature of the issuer with the signature in the token\.
++ Standard libraries are not compatible with the padding that is included in the Application Load Balancer authentication token in JWT format\.
 
 ## Timeout<a name="timeout"></a>
 

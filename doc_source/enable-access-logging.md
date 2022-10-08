@@ -81,6 +81,14 @@ If you're using an existing bucket that already has an attached policy, you can 
      + US West \(N\. California\) – 027434742980
      + US West \(Oregon\) – 797873946194
      + Africa \(Cape Town\) – 098369216593
+     + Asia Pacific \(Hong Kong\) – 754344448648
+     + Asia Pacific \(Jakarta\) – 589379963580
+     + Asia Pacific \(Mumbai\) – 718504428378
+     + Asia Pacific \(Osaka\) – 383597477331
+     + Asia Pacific \(Seoul\) – 600734575887
+     + Asia Pacific \(Singapore\) – 114774131450
+     + Asia Pacific \(Sydney\) – 783225319266
+     + Asia Pacific \(Tokyo\) – 582318560864
      + Canada \(Central\) – 985666609251
      + Europe \(Frankfurt\) – 054676820928
      + Europe \(Ireland\) – 156460612806
@@ -88,13 +96,6 @@ If you're using an existing bucket that already has an attached policy, you can 
      + Europe \(Milan\) – 635631232127
      + Europe \(Paris\) – 009996457667
      + Europe \(Stockholm\) – 897822967062
-     + Asia Pacific \(Hong Kong\) – 754344448648
-     + Asia Pacific \(Tokyo\) – 582318560864
-     + Asia Pacific \(Seoul\) – 600734575887
-     + Asia Pacific \(Osaka\) – 383597477331
-     + Asia Pacific \(Singapore\) – 114774131450
-     + Asia Pacific \(Sydney\) – 783225319266
-     + Asia Pacific \(Mumbai\) – 718504428378
      + Middle East \(Bahrain\) – 076674570225
      + South America \(São Paulo\) – 507241528517
      + AWS GovCloud \(US\-West\) – 048591011584

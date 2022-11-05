@@ -22,7 +22,7 @@ When you are finished with a tag, you can remove it\.
 
 1. On the navigation pane, under **LOAD BALANCING**, choose **Target Groups**\.
 
-1. Chose the name of the target group to open its details page\.
+1. Choose the name of the target group to open its details page\.
 
 1. On the **Tags** tab, choose **Manage tags** and do one or more of the following:
 

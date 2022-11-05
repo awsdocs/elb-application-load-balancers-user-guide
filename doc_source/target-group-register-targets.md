@@ -106,7 +106,7 @@ You cannot register the IP addresses of another Application Load Balancer in the
 
 1. On the navigation pane, under **LOAD BALANCING**, choose **Target Groups**\.
 
-1. Chose the name of the target group to open its details page\.
+1. Choose the name of the target group to open its details page\.
 
 1. Choose the **Targets** tab\.
 

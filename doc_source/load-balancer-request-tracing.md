@@ -29,19 +29,19 @@ The trace identifier\.
 If the **X\-Amzn\-Trace\-Id** header is not present on an incoming request, the load balancer generates a header with a `Root` field and forwards the request\. For example:
 
 ```
-X-Amzn-Trace-Id: Root=1-67891233-abcdef012345678912345678
+X-Amzn-Trace-Id: Root=1-63441c4a-abcdef012345678912345678
 ```
 
 If the **X\-Amzn\-Trace\-Id** header is present and has a `Root` field, the load balancer inserts a `Self` field and forwards the request\. For example:
 
 ```
-X-Amzn-Trace-Id: Self=1-67891234-12456789abcdef012345678;Root=1-67891233-abcdef012345678912345678
+X-Amzn-Trace-Id: Self=1-63441c4a-12456789abcdef012345678;Root=1-67891233-abcdef012345678912345678
 ```
 
 If an application adds a header with a `Root` field and a custom field, the load balancer preserves both fields, inserts a `Self` field, and forwards the request:
 
 ```
-X-Amzn-Trace-Id: Self=1-67891234-12456789abcdef012345678;Root=1-67891233-abcdef012345678912345678;CalledFrom=app
+X-Amzn-Trace-Id: Self=1-63441c4a-12456789abcdef012345678;Root=1-67891233-abcdef012345678912345678;CalledFrom=app
 ```
 
 If the **X\-Amzn\-Trace\-Id** header is present and has a `Self` field, the load balancer updates the value of the `Self` field\.

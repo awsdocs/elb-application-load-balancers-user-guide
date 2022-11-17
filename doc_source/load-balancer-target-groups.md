@@ -16,6 +16,8 @@ You define health check settings for your load balancer on a per target group ba
 + [Slow start mode](#slow-start-mode)
 + [Create a target group](create-target-group.md)
 + [Health checks for your target groups](target-group-health-checks.md)
++ [Cross\-zone load balancing for target groups](disable-cross-zone.md)
++ [Target group health](target-group-health.md)
 + [Register targets with your target group](target-group-register-targets.md)
 + [Sticky sessions for your Application Load Balancer](sticky-sessions.md)
 + [Lambda functions as targets](lambda-functions.md)
@@ -132,6 +134,9 @@ The amount of time for Elastic Load Balancing to wait before deregistering a tar
 `load_balancing.algorithm.type`  
 The load balancing algorithm determines how the load balancer selects targets when routing requests\. The value is `round_robin` or `least_outstanding_requests`\. The default is `round_robin`\.
 
+`load_balancing.cross_zone.enabled`  
+Indicates whether cross zone load balancing is enabled\. The value is `true`, `false` or `use_load_balancer_configuration`\. The default is `use_load_balancer_configuration`\.
+
 `slow_start.duration_seconds`  
 The time period, in seconds, during which the load balancer sends a newly registered target a linearly increasing share of the traffic to the target group\. The range is 30–900 seconds \(15 minutes\)\. The default is 0 seconds \(disabled\)\.
 
@@ -149,6 +154,18 @@ The duration\-based cookie expiration period, in seconds\. After this period, th
 
 `stickiness.type`  
 The type of stickiness\. The possible values are `lb_cookie` and `app_cookie`\.
+
+`target_group_health.dns_failover.minimum_healthy_targets.count`  
+The minimum number of targets that must be healthy\. If the number of healthy targets is below this value, mark the zone as unhealthy in DNS, so that traffic is routed only to healthy zones\. The possible values are `off` or an integer from 1 to the maximum number of targets\. The default is `off`\.
+
+`target_group_health.dns_failover.minimum_healthy_targets.percentage`  
+The minimum percentage of targets that must be healthy\. If the percentage of healthy targets is below this value, mark the zone as unhealthy in DNS, so that traffic is routed only to healthy zones\. The possible values are `off` or an integer from 1 to 100\. The default is `off`\.
+
+`target_group_health.unhealthy_state_routing.minimum_healthy_targets.count`  
+The minimum number of targets that must be healthy\. If the number of healthy targets is below this value, send traffic to all targets, including unhealthy targets\. The range is 1 to the maximum number of targets\. The default is 1\.
+
+`target_group_health.unhealthy_state_routing.minimum_healthy_targets.percentage`  
+The minimum percentage of targets that must be healthy\. If the percentage of healthy targets is below this value, send traffic to all targets, including unhealthy targets\. The possible values are `off` or an integer from 1 to 100\. The default is `off`\.
 
 The following target group attribute is supported if the target group type is `lambda`:
 

@@ -15,6 +15,7 @@ For both stickiness types, the Application Load Balancer resets the expiry of th
 + At least one healthy instance in each Availability Zone\.
 
 **Considerations**
++ Sticky sessions are not supported if [cross\-zone load balancing is disabled](disable-cross-zone.md)\. Attempting to enable sticky sessions while cross\-zone load balancing is disabled will fail\.
 + For application\-based cookies, cookie names have to be specified individually for each target group\. However, for duration\-based cookies, `AWSALB` is the only name used across all target groups\.
 + If you are using multiple layers of Application Load Balancers, you can enable sticky sessions across all layers with application\-based cookies\. However, with duration\-based cookies, you can enable sticky sessions only on one layer, because `AWSALB` is the only name available\.
 + Application\-based stickiness does not work with weighted target groups\.

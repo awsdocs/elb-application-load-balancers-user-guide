@@ -10,6 +10,7 @@ For more information, see [How Elastic Load Balancing works](https://docs.aws.am
 + [Load balancer state](#load-balancer-state)
 + [Load balancer attributes](#load-balancer-attributes)
 + [IP address type](#ip-address-type)
++ [Cross\-zone load balancing](#cross-zone-load-balancing)
 + [Connection idle timeout](#connection-idle-timeout)
 + [Deletion protection](#deletion-protection)
 + [Desync mitigation mode](#desync-mitigation-mode)
@@ -157,6 +158,12 @@ Clients can connect to the load balancer using both IPv4 addresses \(for example
 + The load balancer communicates with targets based on the IP address type of the target group\.
 + When you enable dualstack mode for the load balancer, Elastic Load Balancing provides an AAAA DNS record for the load balancer\. Clients that communicate with the load balancer using IPv4 addresses resolve the A DNS record\. Clients that communicate with the load balancer using IPv6 addresses resolve the AAAA DNS record\.
 + Access to your internal dualstack load balancers through the internet gateway is blocked to prevent unintended internet access\. However, this does not prevent non\-IWG internet access \(such as, through peering, Transit Gateway, AWS Direct Connect, or AWS VPN\)\. 
+
+## Cross\-zone load balancing<a name="cross-zone-load-balancing"></a>
+
+With Application Load Balancers, cross\-zone load balancing is on by default and cannot be changed at the load balancer level\. For more information, see the [Cross\-zone load balancing](https://docs.aws.amazon.com/elasticloadbalancing/latest/userguide/how-elastic-load-balancing-works.html#cross-zone-load-balancing) section in the *Elastic Load Balancing User Guide*\.
+
+Turning off cross\-zone load balancing is possible at the target group level\. For more information, see [Turn off cross\-zone load balancing](disable-cross-zone.md#cross_zone_console_disable)\.
 
 ## Connection idle timeout<a name="connection-idle-timeout"></a>
 

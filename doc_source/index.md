@@ -35,6 +35,8 @@ sponsored by Amazon.
 + [Target groups for your Application Load Balancers](load-balancer-target-groups.md)
    + [Create a target group](create-target-group.md)
    + [Health checks for your target groups](target-group-health-checks.md)
+   + [Cross-zone load balancing for target groups](disable-cross-zone.md)
+   + [Target group health](target-group-health.md)
    + [Register targets with your target group](target-group-register-targets.md)
    + [Sticky sessions for your Application Load Balancer](sticky-sessions.md)
    + [Lambda functions as targets](lambda-functions.md)

@@ -257,6 +257,8 @@ If you enable multi\-value headers, you must specify multiple cookies as follows
 }
 ```
 
+Please note that the order of the headers which are ultimately sent to an HTTP client is *undefined*. An Application Load Balancer may send the headers in the order specified in the Lambda response payload, it may reverse the headers, or it may send them in any other implementation-defined order.
+
 ### Enable multi\-value headers<a name="enable-multi-value-headers"></a>
 
 You can enable or disable multi\-value headers for a target group with the target type `lambda`\.

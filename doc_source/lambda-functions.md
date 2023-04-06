@@ -257,6 +257,8 @@ If you enable multi\-value headers, you must specify multiple cookies as follows
 }
 ```
 
+The load baalncer might send the headers to the client in a different order then the order specified in the Lambda response payload. Therefore, do not count on headers being returned in a specific order.
+
 ### Enable multi\-value headers<a name="enable-multi-value-headers"></a>
 
 You can enable or disable multi\-value headers for a target group with the target type `lambda`\.

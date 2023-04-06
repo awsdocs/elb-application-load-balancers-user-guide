@@ -17,19 +17,19 @@ When you are finished with a tag, you can remove it from your load balancer\.
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **LOAD BALANCING**, choose **Load Balancers**\.
+1. On the navigation pane, choose **Load Balancers**\.
 
 1. Select the load balancer\.
 
-1. On the **Tags** tab, choose **Add/Edit Tags**, and then do one or more of the following:
+1. On the **Tags** tab, choose **Manage tags**, and then do one or more of the following:
 
    1. To update a tag, edit the values of **Key** and **Value**\.
 
-   1. To add a new tag, choose **Create Tag** and then enter values for **Key** and **Value**\.
+   1. To add a new tag, choose **Add tag** and then enter values for **Key** and **Value**\.
 
-   1. To delete a tag, choose the delete icon \(X\) next to the tag\.
+   1. To delete a tag, choose the **Remove** button next to the tag\.
 
-1. When you have finished updating tags, choose **Save**\.
+1. When you have finished updating tags, choose **Save changes**\.
 
 **To update the tags for a load balancer using the AWS CLI**  
 Use the [add\-tags](https://docs.aws.amazon.com/cli/latest/reference/elbv2/add-tags.html) and [remove\-tags](https://docs.aws.amazon.com/cli/latest/reference/elbv2/remove-tags.html) commands\.

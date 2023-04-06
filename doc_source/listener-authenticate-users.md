@@ -13,6 +13,7 @@ Do the following if you are using an OIDC\-compliant IdP with your Application L
 + Create a new OIDC app in your IdP\. The IdP's DNS must be publicly resolvable\.
 + You must configure a client ID and a client secret\.
 + Get the following endpoints published by the IdP: authorization, token, and user info\. You can locate this information in the config\.
++ The IdP endpoints certificates should be issued by a trusted public certificate authority\.
 + The DNS entries for the endpoints must be publicly resolvable, even if they resolve to private IP addresses\.
 + Allow one of the following redirect URLs in your IdP app, whichever your users will use, where DNS is the domain name of your load balancer and CNAME is the DNS alias for your application:
   + https://*DNS*/oauth2/idpresponse
@@ -35,7 +36,7 @@ Do the following if you are using Amazon Cognito user pools with your Applicatio
 
 The callback URL in the app client settings must use all lowercase letters\.
 
-To enable an IAM user to configure a load balancer to use Amazon Cognito to authenticate users, you must grant the user permission to call the `cognito-idp:DescribeUserPoolClient` action\.
+To enable a user to configure a load balancer to use Amazon Cognito to authenticate users, you must grant the user permission to call the `cognito-idp:DescribeUserPoolClient` action\.
 
 ## Prepare to use Amazon CloudFront<a name="cloudfront-requirements"></a>
 

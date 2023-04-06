@@ -12,11 +12,11 @@ Note that deleting a load balancer does not affect its registered targets\. For 
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **LOAD BALANCING**, choose **Load Balancers**\.
+1. On the navigation pane, choose **Load Balancers**\.
 
-1. Select the load balancer, and then choose **Actions**, **Delete**\.
+1. Select the load balancer, and then choose **Actions**, **Delete load balancer**\.
 
-1. When prompted for confirmation, choose **Yes, Delete**\.
+1. When prompted for confirmation, enter **confirm** and then choose **Delete**\.
 
 **To delete a load balancer using the AWS CLI**  
 Use the [delete\-load\-balancer](https://docs.aws.amazon.com/cli/latest/reference/elbv2/delete-load-balancer.html) command\.

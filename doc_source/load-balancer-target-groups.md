@@ -1,6 +1,8 @@
 # Target groups for your Application Load Balancers<a name="load-balancer-target-groups"></a>
 
-Each *target group* is used to route requests to one or more registered targets\. When you create each listener rule, you specify a target group and conditions\. When a rule condition is met, traffic is forwarded to the corresponding target group\. You can create different target groups for different types of requests\. For example, create one target group for general requests and other target groups for requests to the microservices for your application\. For more information, see [Application Load Balancer components](introduction.md#application-load-balancer-components)\.
+Target groups route requests to one or more registered targets, such as EC2 instances, using the protocol and port number that you specify\. You can register a target with multiple target groups\. You can configure health checks on a per target group basis\. Health checks are performed on all targets registered to a target group that is specified in a listener rule for your load balancer\.
+
+Each target group is used to route requests to one or more registered targets\. When you create each listener rule, you specify a target group and conditions\. When a rule condition is met, traffic is forwarded to the corresponding target group\. You can create different target groups for different types of requests\. For example, create one target group for general requests and other target groups for requests to the microservices for your application\. You can use each target group with only one load balancer\. For more information, see [Application Load Balancer components](introduction.md#application-load-balancer-components)\.
 
 You define health check settings for your load balancer on a per target group basis\. Each target group uses the default health check settings, unless you override them when you create the target group or modify them later on\. After you specify a target group in a rule for a listener, the load balancer continually monitors the health of all targets registered with the target group that are in an Availability Zone enabled for the load balancer\. The load balancer routes requests to the registered targets that are healthy\.
 
@@ -181,7 +183,7 @@ Consider using least outstanding requests when the requests for your application
 **Considerations**
 + You cannot enable both least outstanding requests and slow start mode\.
 + If you enable sticky sessions, the routing algorithm of the target group is overridden after the initial target selection\.
-+ With HTTP/2, the load balancer converts the request to multiple HTTP/1\.1 requests, so least outstanding request treats each HTTP/2 request as multiple requests\.
++ When the load balancer supports HTTP/2 to targets that can only support HTTP/1\.1, it converts the request to multiple HTTP/1\.1 requests, so least outstanding request treats each HTTP/2 request as multiple requests\.
 + When you use least outstanding requests with WebSockets, the target is selected using least outstanding requests\. The load balancer creates a connection to this target and sends all messages over this connection\.
 
 ------

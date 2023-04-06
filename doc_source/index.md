@@ -24,6 +24,7 @@ sponsored by Amazon.
    + [IP address types for your Application Load Balancer](load-balancer-ip-address-type.md)
    + [Tags for your Application Load Balancer](load-balancer-tags.md)
    + [Delete an Application Load Balancer](load-balancer-delete.md)
+   + [Zonal shift](zonal-shift.md)
 + [Listeners for your Application Load Balancers](load-balancer-listeners.md)
    + [Create an HTTP listener for your Application Load Balancer](create-listener.md)
    + [Create an HTTPS listener for your Application Load Balancer](create-https-listener.md)

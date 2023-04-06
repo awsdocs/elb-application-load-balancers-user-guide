@@ -1,8 +1,8 @@
 # Request tracing for your Application Load Balancer<a name="load-balancer-request-tracing"></a>
 
-You can use request tracing to track HTTP requests from clients to targets or other services\. When the load balancer receives a request from a client, it adds or updates the **X\-Amzn\-Trace\-Id** header before sending the request to the target\. Any services or applications between the load balancer and the target can also add or update this header\.
+When the load balancer receives a request from a client, it adds or updates the **X\-Amzn\-Trace\-Id** header before sending the request to the target\. Any services or applications between the load balancer and the target can also add or update this header\.
 
-If you enable access logs, the contents of the **X\-Amzn\-Trace\-Id** header are logged\. For more information, see [Access logs for your Application Load Balancer](load-balancer-access-logs.md)\.
+You can use request tracing to track HTTP requests from clients to targets or other services\. If you enable access logs, the contents of the **X\-Amzn\-Trace\-Id** header are logged\. For more information, see [Access logs for your Application Load Balancer](load-balancer-access-logs.md)\.
 
 ## Syntax<a name="request-tracing-syntax"></a>
 

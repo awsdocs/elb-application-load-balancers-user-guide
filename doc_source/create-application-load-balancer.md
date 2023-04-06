@@ -22,13 +22,13 @@ Configuring a target group allows you to register targets such as EC2 instances\
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. In the left navigation pane, under **Load Balancing**, choose **Target Groups**\.
+1. In the navigation pane, choose **Target Groups**\.
 
 1. Choose **Create target group**\.
 
 1. In the **Basic configuration** section, set the following parameters:
 
-   1. For **Choose a target type**, select **Instance** to specify targets by instance ID or **IP addresses** to specify targets by IP address\. If the target type is a **Lambda function**, you can enable health checks by selecting **Enable** in the **Health checks** section\.
+   1. For **Choose a target type**, select **Instances** to specify targets by instance ID or **IP addresses** to specify targets by IP address\. If the target type is a **Lambda function**, you can enable health checks by selecting **Enable** in the **Health checks** section\.
 
    1. For **Target group name**, enter a name for the target group\.
 
@@ -38,7 +38,7 @@ Configuring a target group allows you to register targets such as EC2 instances\
 
       Note that only targets that have the selected IP address type can be included in this target group\. The IP address type cannot be changed after the target group is created\.
 
-   1. For VPC, select a virtual private cloud \(VPC\) with the targets that you want to include in your target group\.
+   1. For **VPC**, select a virtual private cloud \(VPC\) with the targets that you want to include in your target group\.
 
    1. For **Protocol version**, select **HTTP1** when the request protocol is HTTP/1\.1 or HTTP/2; select **HTTP2**, when the request protocol is HTTP/2 or gRPC; and select **gRPC**, when the request protocol is gRPC\. 
 
@@ -81,7 +81,7 @@ To create an Application Load Balancer, you must first provide basic configurati
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. In the navigation pane, under **Load Balancing**, choose **Load Balancers**\.
+1. In the navigation pane, choose **Load Balancers**\.
 
 1. Choose **Create Load Balancer**\.
 
@@ -141,13 +141,13 @@ To create an Application Load Balancer, you must first provide basic configurati
 
 1. After the load balancer is created, choose **Close**\.
 
-1. In the navigation pane, under **Load Balancing**, choose **Target Groups**\.
+1. In the navigation pane, choose **Target Groups**\.
 
 1. Select the newly created target group\.
 
 1. Choose **Targets** and verify that your instances are ready\. If the status of an instance is `initial`, it's typically because the instance is still in the process of being registered\. This status can also indicate that the instance has not passed the minimum number of health checks to be considered healthy\. After the status of at least one instance is healthy, you can test your load balancer\. For more information, see [Target health status](target-group-health-checks.md#target-health-states)\.
 
-1. In the navigation pane, under **Load Balancing**, choose **Load Balancers**\.
+1. In the navigation pane, choose **Load Balancers**\.
 
 1. Select the newly created load balancer\.
 

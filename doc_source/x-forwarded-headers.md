@@ -79,21 +79,21 @@ The following table shows examples of the `X-Forwarded-For` header that the targ
 | Request is sent with an XFF header and a client IP address\. | GET /index\.html HTTP/1\.1 Host: example\.com X\-Forwarded\-For: 127\.0\.0\.4 | X\-Forwarded\-For: 127\.0\.0\.4, 127\.0\.0\.1 | X\-Forwarded\-For: 127\.0\.0\.4 | Not present | 
 | Request is sent with an XFF header with multiple client IP addresses\. | GET /index\.html HTTP/1\.1 Host: example\.com X\-Forwarded\-For: 127\.0\.0\.4, 127\.0\.0\.8 | X\-Forwarded\-For: 127\.0\.0\.4, 127\.0\.0\.8, 127\.0\.0\.1 | X\-Forwarded\-For: 127\.0\.0\.4, 127\.0\.0\.8 | Not present | 
 
-**To modify, preserve, or remove the `X-Forwarded-For` header using the console**
+**To modify, preserve, or remove the X\-Forwarded\-For header using the console**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **LOAD BALANCING**, choose **Load Balancers**\.
+1. On the navigation pane, choose **Load Balancers**\.
 
 1. Select the load balancer\.
 
-1. On the **Description** tab, choose **Edit attributes**\.
+1. On the **Attributes** tab, choose **Edit**\.
 
-1. On the **Edit load balancer attributes** page, select **Append** \(default\), **Preserve**, or **Remove**\.
+1. For **X\-Forward\-For header**, choose **Append** \(default\), **Preserve**, or **Remove**\.
 
-1. Choose **Save**\.
+1. Choose **Save changes**\.
 
-**To modify, preserve, or remove the `X-Forwarded-For` header using the AWS CLI**  
+**To modify, preserve, or remove the X\-Forwarded\-For header using the AWS CLI**  
 Use the [modify\-load\-balancer\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-load-balancer-attributes.html) command with the `routing.http.xff_header_processing.mode` attribute\.
 
 ## X\-Forwarded\-Proto<a name="x-forwarded-proto"></a>

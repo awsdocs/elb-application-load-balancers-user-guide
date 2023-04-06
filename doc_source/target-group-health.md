@@ -6,17 +6,18 @@ By default, a target group is considered healthy as long as it has at least one 
 
 You can configure healthy thresholds for the following actions:
 + DNS failover – When the healthy targets in a zone fall below the threshold, we mark the IP addresses of the load balancer node for the zone as unhealthy in DNS\. Therefore, when clients resolve the load balancer DNS name, the traffic is routed only to healthy zones\.
-+ Routing failover – When the healthy targets in a zone fall below the threshold, the load balancer sends traffic to all targets available to the load balancer node, including unhealthy targets\. This increases the chances that a client connection succeeds, especially when targets temporarily fail to pass health checks, and reduces the risk of overloading the healthy targets\.
++ Routing failover – When the healthy targets in a zone fall below the threshold, the load balancer sends traffic to all targets that are available to the load balancer node, including unhealthy targets\. This increases the chances that a client connection succeeds, especially when targets temporarily fail to pass health checks, and reduces the risk of overloading the healthy targets\.
 
 ## Requirements and considerations<a name="target-group-health-considerations"></a>
++ You can't use this feature with target groups where the target is a Lambda function\. If the Application Load Balancer is the target of a Network Load Balancer or Global Accelerator, do not configure a threshold for DNS failover\.
 + If you specify both types of thresholds for an action \(count and percentage\), the load balancer takes the action when either threshold is breached\.
 + If you specify thresholds for both actions, the threshold for DNS failover must be greater than or equal to the threshold for routing failover, so that DNS failover occurs either with or before routing failover\.
-+ If you specify the threshold as a percentage, we calculate the value dynamically, based on the total number of targets registered with the target groups\.
++ If you specify the threshold as a percentage, we calculate the value dynamically, based on the total number of targets that are registered with the target groups\.
 + The total number of targets is based on whether cross\-zone load balancing is off or on\. If cross\-zone load balancing is off, each node sends traffic only to the targets in its own zone, which means that the thresholds apply to the number of targets in each enabled zone separately\. If cross\-zone load balancing is on, each node sends traffic to all targets in all enabled zones, which means that the specified thresholds apply to the total number targets in all enabled zones\.
 + With DNS failover, we remove the IP addresses for the unhealthy zones from the DNS hostname for the load balancer\. However, the local client DNS cache might contain these IP addresses until the time\-to\-live \(TTL\) in the DNS record expires \(60 seconds\)\.
 + When DNS failover occurs, this impacts all target groups associated with the load balancer\. Ensure that you have enough capacity in your remaining zones to handle this additional traffic, especially if cross\-zone load balancing is off\.
 + With DNS failover, if all load balancer zones are considered unhealthy, the load balancer sends traffic to all zones, including the unhealthy zones\.
-+ There are factors other than whether there are enough healthy targets that might lead to DNS failover, such as the health of the Availability Zone\.
++ There are factors other than whether there are enough healthy targets that might lead to DNS failover, such as the health of the zone\.
 
 ## Monitoring<a name="target-group-health-monitoring"></a>
 
@@ -60,7 +61,7 @@ You can modify the target group health settings for your target group as follows
 
 1. On the **Attributes** tab, choose **Edit**\.
 
-1. Check whether cross\-zone load balancing is turned on or turned off\. Update this setting as needed to ensure you have enough capacity to handle the additional traffic if a zone fails\.
+1. Check whether cross\-zone load balancing is turned on or turned off\. Update this setting as needed to ensure that you have enough capacity to handle the additional traffic if a zone fails\.
 
 1. Expand **Target group health requirements**\.
 

@@ -17,9 +17,9 @@ The following diagram illustrates the basic components\. Notice that each listen
 ![\[The components of a basic Application Load Balancer\]](http://docs.aws.amazon.com/elasticloadbalancing/latest/application/images/component_architecture.png)
 
 For more information, see the following documentation:
-+ [Load Balancers](application-load-balancers.md)
++ [Load balancers](application-load-balancers.md)
 + [Listeners](load-balancer-listeners.md)
-+ [Target Groups](load-balancer-target-groups.md)
++ [Target groups](load-balancer-target-groups.md)
 
 ## Application Load Balancer overview<a name="application-load-balancer-overview"></a>
 

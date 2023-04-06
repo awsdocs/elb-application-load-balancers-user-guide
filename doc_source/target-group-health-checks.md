@@ -15,7 +15,7 @@ You configure health checks for the targets in a target group as described in th
 
 | Setting | Description | 
 | --- | --- | 
-| **HealthCheckProtocol** |  The protocol the load balancer uses when performing health checks on targets\. The possible protocols are HTTP and HTTPS\. The default is the HTTP protocol\.  | 
+| **HealthCheckProtocol** |  The protocol the load balancer uses when performing health checks on targets\. The possible protocols are HTTP and HTTPS\. The default is the HTTP protocol\. These protocols use the HTTP GET method to send health check requests\.  | 
 | **HealthCheckPort** |  The port the load balancer uses when performing health checks on targets\. The default is to use the port on which each target receives traffic from the load balancer\.  | 
 | **HealthCheckPath** |  The destination for health checks on the targets\. If the protocol version is HTTP/1\.1 or HTTP/2, specify a valid URI \(/*path*?*query*\)\. The default is /\. If the protocol version is gRPC, specify the path of a custom health check method with the format `/package.service/method`\. The default is `/AWS.ALB/healthcheck`\.  | 
 | **HealthCheckTimeoutSeconds** |  The amount of time, in seconds, during which no response from a target means a failed health check\. The range is 2–120 seconds\. The default is 5 seconds if the target type is `instance` or `ip` and 30 seconds if the target type is `lambda`\.  | 

@@ -76,7 +76,7 @@ To create an Application Load Balancer, you must first provide basic configurati
 
 1. For **Network mapping**, select the VPC that you used for your EC2 instances\. Select at least two Availability Zones and one subnet per zone\. For each Availability Zone that you used to launch your EC2 instances, select the Availability Zone and then select one public subnet for that Availability Zone\.
 
-1. For **Security groups**, keep the default\. This is the default security group that the console creates for the load balancer on your behalf\. It includes rules that allow it to communicate with registered targets on both the listener port and the health check port\. 
+1. For **Security groups**, we select the default security group for the VPC that you selected in the previous step\. You can choose a different security group instead\. The security group must include rules that allow the load balancer to communicate with registered targets on both the listener port and the health check port\. For more information, see [Security group rules](load-balancer-update-security-groups.md)\.
 
 1. For **Listeners and routing**, keep the default protocol and port, and select your target group from the list\. This configures a listener that accepts HTTP traffic on port 80 and forwards traffic to the selected target group by default\. For this tutorial, you are not creating an HTTPS listener\.
 

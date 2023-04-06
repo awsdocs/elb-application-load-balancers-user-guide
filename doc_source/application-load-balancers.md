@@ -22,6 +22,7 @@ For more information, see [How Elastic Load Balancing works](https://docs.aws.am
 + [Update the address type](load-balancer-ip-address-type.md)
 + [Update tags](load-balancer-tags.md)
 + [Delete a load balancer](load-balancer-delete.md)
++ [Zonal shift](zonal-shift.md)
 
 ## Subnets for your load balancer<a name="subnets-load-balancer"></a>
 
@@ -177,15 +178,15 @@ By default, Elastic Load Balancing sets the idle timeout value for your load bal
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **LOAD BALANCING**, choose **Load Balancers**\.
+1. On the navigation pane, choose **Load Balancers**\.
 
 1. Select the load balancer\.
 
-1. On the **Description** tab, choose **Edit attributes**\.
+1. On the **Attributes** tab, choose **Edit**\.
 
-1. On the **Edit load balancer attributes** page, enter a value for **Idle timeout**, in seconds\. The valid range is from 1 through 4000\.
+1. Under **Traffic configuration**, enter a value for **Idle timeout**, in seconds\. The valid range is from 1 through 4000\.
 
-1. Choose **Save**\.
+1. Choose **Save changes**\.
 
 **To update the idle timeout value using the AWS CLI**  
 Use the [modify\-load\-balancer\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-load-balancer-attributes.html) command with the `idle_timeout.timeout_seconds` attribute\.
@@ -200,29 +201,29 @@ If you enable deletion protection for your load balancer, you must disable it be
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **LOAD BALANCING**, choose **Load Balancers**\.
+1. On the navigation pane, choose **Load Balancers**\.
 
 1. Select the load balancer\.
 
-1. On the **Description** tab, choose **Edit attributes**\.
+1. On the **Attributes** tab, choose **Edit**\.
 
-1. On the **Edit load balancer attributes** page, select **Enable** for **Delete Protection**, and then choose **Save**\.
+1. Under **Configuration**, turn on **Deletion protection**\.
 
-1. Choose **Save**\.
+1. Choose **Save changes**\.
 
 **To disable deletion protection using the console**
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **LOAD BALANCING**, choose **Load Balancers**\.
+1. On the navigation pane, choose **Load Balancers**\.
 
 1. Select the load balancer\.
 
-1. On the **Description** tab, choose **Edit attributes**\.
+1. On the **Attributes** tab, choose **Edit**\.
 
-1. On the **Edit load balancer attributes** page, clear **Enable** for **Delete Protection**, and then choose **Save**\.
+1. Under **Configuration** page, turn off **Deletion protection**\.
 
-1. Choose **Save**\.
+1. Choose **Save changes**\.
 
 **To enable or disable deletion protection using the AWS CLI**  
 Use the [modify\-load\-balancer\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-load-balancer-attributes.html) command with the `deletion_protection.enabled` attribute\.
@@ -262,15 +263,15 @@ The following table describes how Application Load Balancers treat requests base
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **LOAD BALANCING**, choose **Load Balancers**\.
+1. On the navigation pane, choose **Load Balancers**\.
 
 1. Select the load balancer\.
 
-1. On the **Description** tab, choose **Edit attributes**\.
+1. On the **Attributes** tab, choose **Edit**\.
 
-1. For **Desync mitigation mode**, choose **Monitor**, **Defensive**, or **Strictest**\.
+1. Under **Packet handling**, for **Desync mitigation mode**, choose **Defensive**, **Strictest**, or **Monitor**\.
 
-1. Choose **Save**\.
+1. Choose **Save changes**\.
 
 **To update desync mitigation mode using the AWS CLI**  
 Use the [modify\-load\-balancer\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-load-balancer-attributes.html) command with the `routing.http.desync_mitigation_mode` attribute set to `monitor`, `defensive`, or `strictest`\.
@@ -299,15 +300,15 @@ The following table shows more examples of how Application Load Balancers treat 
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. In the navigation pane, under **Load Balancing**, choose **Load Balancers**\.
+1. In the navigation pane, choose **Load Balancers**\.
 
-1. Select the load balancer you want to use\.
+1. Select the load balancer\.
 
-1. On the **Description** tab, choose **Edit attributes**\.
+1. On the **Attributes** tab, choose **Edit**\.
 
-1. For **Preserve host header **, choose **Enable**\.
+1. Under **Packet handling**, turn on **Preserve host header**\.
 
-1. Choose **Save**\.
+1. Choose **Save changes**\.
 
 **To enable host header preservation using the AWS CLI**  
 Use the [modify\-load\-balancer\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-load-balancer-attributes.html) command with the `routing.http.preserve_host_header.enabled` attribute set to `true`\.
@@ -324,15 +325,15 @@ By default, if the load balancer cannot get a response from AWS WAF, it returns 
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **LOAD BALANCING**, choose **Load Balancers**\.
+1. On the navigation pane, choose **Load Balancers**\.
 
 1. Select the load balancer\.
 
-1. On the **Description** tab, choose **Edit attributes**\.
+1. On the **Attributes** tab, choose **Edit**\.
 
-1. For **AWS WAF fail open**, choose **Enable**\.
+1. Under **Traffic configuration**, turn on **WAF fail open**\.
 
-1. Choose **Save**\.
+1. Choose **Save changes**\.
 
 **To enable AWS WAF fail open using the AWS CLI**  
 Use the [modify\-load\-balancer\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-load-balancer-attributes.html) command with the `waf.fail_open.enabled` attribute set to `true`\.

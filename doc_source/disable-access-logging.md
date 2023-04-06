@@ -8,13 +8,13 @@ You can disable access logs for your load balancer at any time\. After you disab
 
 1. In the navigation pane, choose **Load Balancers**\.
 
-1. Select your load balancer\.
+1. Select the name of your load balancer to open its details page\.
 
-1. On the **Description** tab, choose **Edit attributes**\.
+1. On the **Attributes** tab, choose **Edit**\.
 
-1. For **Access logs**, clear **Enable**\.
+1. For **Monitoring**, turn off **Access logs**\.
 
-1. Choose **Save**\.
+1. Choose **Save changes**\.
 
 **To disable access logs using the AWS CLI**  
 Use the [modify\-load\-balancer\-attributes](https://docs.aws.amazon.com/cli/latest/reference/elbv2/modify-load-balancer-attributes.html) command\.

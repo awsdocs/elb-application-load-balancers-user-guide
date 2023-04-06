@@ -8,19 +8,19 @@ After you disable an Availability Zone, the targets in that Availability Zone re
 
 1. Open the Amazon EC2 console at [https://console\.aws\.amazon\.com/ec2/](https://console.aws.amazon.com/ec2/)\.
 
-1. On the navigation pane, under **LOAD BALANCING**, choose **Load Balancers**\.
+1. On the navigation pane, choose **Load Balancers**\.
 
 1. Select the load balancer\.
 
-1. On the **Description** tab, under **Basic Configuration**, choose **Edit subnets**\.
+1. On the **Network mapping** tab, choose **Edit subnets**\.
 
-1. To enable a zone, select the check box for that zone and select one subnet\. If there is only one subnet for that zone, it is selected\. If there is more than one subnet for that zone, select one of the subnets\.
+1. To enable an Availability Zone, select its check box and select one subnet\. If there is only one available subnet, it is selected for you\.
 
-1. To change the subnet for an enabled Availability Zone, choose **Change subnet** and select one of the other subnets\.
+1. To change the subnet for an enabled Availability Zone, choose one of the other subnets from the list\.
 
-1. To remove an Availability Zone, clear the check box for that Availability Zone\.
+1. To disable an Availability Zone, clear its check box\.
 
-1. Choose **Save**\.
+1. Choose **Save changes**\.
 
 **To update Availability Zones using the AWS CLI**  
 Use the [set\-subnets](https://docs.aws.amazon.com/cli/latest/reference/elbv2/set-subnets.html) command\.

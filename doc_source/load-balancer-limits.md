@@ -15,7 +15,7 @@ Your AWS account has the following quotas related to Application Load Balancers\
 | Application Load Balancers per Region |  50  | [Yes](https://console.aws.amazon.com/servicequotas/home/services/elasticloadbalancing/quotas/L-53DA6B97) | 
 | Certificates per Application Load Balancer \(excluding default certificates\) |  25  | [Yes](https://console.aws.amazon.com/servicequotas/home/services/elasticloadbalancing/quotas/L-9365A611) | 
 | Listeners per Application Load Balancer |  50  | [Yes](https://console.aws.amazon.com/servicequotas/home/services/elasticloadbalancing/quotas/L-B6DF7632) | 
-| Number of times a target can be registered per Application Load Balancer |  1,000  | [Yes](https://console.aws.amazon.com/servicequotas/home/services/elasticloadbalancing/quotas/L-4E7B68E9) | 
+| Number of times a target can be registered per Application Load Balancer |  1,000  | No | 
 | Target Groups per Action per Application Load Balancer |  5  | No | 
 | Target Groups per Application Load Balancer |  100  | No | 
 | Targets per Application Load Balancer |  1,000  | [Yes](https://console.aws.amazon.com/servicequotas/home/services/elasticloadbalancing/quotas/L-7E6692B2) | 
@@ -29,6 +29,7 @@ The following quotas are for target groups\.
 | Target Groups per Region  |  3,000 \* | [Yes](https://console.aws.amazon.com/servicequotas/home/services/elasticloadbalancing/quotas/L-B22855CB) | 
 | Targets per Target Group per Region \(instances or IP addresses\) |  1,000  | [Yes](https://console.aws.amazon.com/servicequotas/home/services/elasticloadbalancing/quotas/L-A0D0B863) | 
 | Targets per Target Group per Region \(Lambda functions\) | 1 | No | 
+| Load balancers per target group | 1 | No | 
 
 **\*** This quota is shared by Application Load Balancers and Network Load Balancers\.
 
